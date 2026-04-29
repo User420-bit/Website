@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pharrel Sandjo Djomou — Weiterleitung</title>
+    <meta name="robots" content="noindex" />
+    <script>
+      // GitHub Pages SPA fallback: encode pathname into ?p= and redirect to base.
+      (function () {
+        var base = '/Website/'
+        var loc = window.location
+        var path = loc.pathname
+        // Strip the base prefix to get the SPA path
+        var rel = path.indexOf(base) === 0 ? path.slice(base.length - 1) : path
+        var search = loc.search
+        var hash = loc.hash
+        var redirect = base + '?p=' + encodeURIComponent(rel) + (search ? '&' + search.slice(1) : '') + hash
+        window.location.replace(redirect)
+      })()
+    </script>
+  </head>
+  <body>
+    <noscript>
+      Diese Seite benötigt JavaScript. <a href="/Website/">Zur Startseite</a>.
+    </noscript>
+  </body>
+</html>
