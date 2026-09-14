@@ -23,22 +23,22 @@ Das Fazit: Kein Redesign auf dem bestehenden Fundament. Das Fundament (Client-Ro
 
 ### 1.1 Technischer Stand
 
-| Bereich | Befund | Tag |
-|---|---|---|
-| Stack | React 19, Vite 7, Tailwind 4, shadcn/ui-Komponenten (Radix), framer-motion, Zod | Sicher |
-| Build | `npm run check` und `npm run build` laufen lokal durch (0 Fehler, 3 Lint-Warnungen) | Sicher |
-| Bundle | 553 KB JS / 166 KB gzip, 46 KB CSS, ein einziger Chunk, Vite warnt bei > 500 KB | Sicher |
-| Deploy | `deploy.yml` Run #1 fehlgeschlagen (Job `build`), keine weiteren Läufe, keine PRs im Repo | Sicher |
-| Deploy-Ursache | Logs abgelaufen. Da `npm ci` und `npm run build` lokal mit Node 22 durchlaufen, ist die wahrscheinlichste Ursache der Schritt `actions/configure-pages`, der scheitert, wenn Pages in den Repo-Settings nicht auf „GitHub Actions“ steht. Alternativ Node 20 vs. Vite 7 (braucht 20.19+). | Wahrscheinlich |
-| Routing | Eigener `useRouter`-Hook, Zustand pro Instanz, kein Broadcast. In-App-Navigation und 404-Redirect funktionieren nicht. | Sicher (Browser-Test) |
-| Content | `DEFAULT_CONTENT` im Code, Admin-Änderungen nur im localStorage des Bearbeiters | Sicher |
-| Rechtliches | Platzhalter-Anschrift in Impressum und Datenschutz, Footer-Jahr 2025 | Sicher |
-| Ungenutzte Dependencies | `react-hook-form`, `@hookform/resolvers`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tooltip`, `gh-pages`, `postcss`/`autoprefixer` (Tailwind 4 via Vite-Plugin braucht die PostCSS-Config nicht) | Sicher |
-| Repo-Hygiene | `tsconfig.*.tsbuildinfo` sind eingecheckt und ändern sich bei jedem Build | Sicher |
-| Qualitätssicherung | Keine Tests, kein CI auf Pull Requests, nur Deploy bei Push auf `main` | Sicher |
-| SEO/Sharing | Keine Open-Graph-/Twitter-Meta-Tags, keine `sitemap.xml`, keine strukturierten Daten, `robots.txt` erlaubt alles (auch `/admin`) | Sicher |
-| Externer Link | Profil-Link zeigt auf `github.com/pharrelsandjo`; der Repo-Owner heißt `User420-bit`. Der Link ist vermutlich tot. | Wahrscheinlich |
-| E-Mail | Kontakt-Adresse im Content und im Impressum ist eine Gmail-Adresse. Muss Pharrel bestätigen. | Vermutung |
+| Bereich                 | Befund                                                                                                                                                                                                                                                                                    | Tag                   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Stack                   | React 19, Vite 7, Tailwind 4, shadcn/ui-Komponenten (Radix), framer-motion, Zod                                                                                                                                                                                                           | Sicher                |
+| Build                   | `npm run check` und `npm run build` laufen lokal durch (0 Fehler, 3 Lint-Warnungen)                                                                                                                                                                                                       | Sicher                |
+| Bundle                  | 553 KB JS / 166 KB gzip, 46 KB CSS, ein einziger Chunk, Vite warnt bei > 500 KB                                                                                                                                                                                                           | Sicher                |
+| Deploy                  | `deploy.yml` Run #1 fehlgeschlagen (Job `build`), keine weiteren Läufe, keine PRs im Repo                                                                                                                                                                                                 | Sicher                |
+| Deploy-Ursache          | Logs abgelaufen. Da `npm ci` und `npm run build` lokal mit Node 22 durchlaufen, ist die wahrscheinlichste Ursache der Schritt `actions/configure-pages`, der scheitert, wenn Pages in den Repo-Settings nicht auf „GitHub Actions“ steht. Alternativ Node 20 vs. Vite 7 (braucht 20.19+). | Wahrscheinlich        |
+| Routing                 | Eigener `useRouter`-Hook, Zustand pro Instanz, kein Broadcast. In-App-Navigation und 404-Redirect funktionieren nicht.                                                                                                                                                                    | Sicher (Browser-Test) |
+| Content                 | `DEFAULT_CONTENT` im Code, Admin-Änderungen nur im localStorage des Bearbeiters                                                                                                                                                                                                           | Sicher                |
+| Rechtliches             | Platzhalter-Anschrift in Impressum und Datenschutz, Footer-Jahr 2025                                                                                                                                                                                                                      | Sicher                |
+| Ungenutzte Dependencies | `react-hook-form`, `@hookform/resolvers`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tooltip`, `gh-pages`, `postcss`/`autoprefixer` (Tailwind 4 via Vite-Plugin braucht die PostCSS-Config nicht)                                                                                  | Sicher                |
+| Repo-Hygiene            | `tsconfig.*.tsbuildinfo` sind eingecheckt und ändern sich bei jedem Build                                                                                                                                                                                                                 | Sicher                |
+| Qualitätssicherung      | Keine Tests, kein CI auf Pull Requests, nur Deploy bei Push auf `main`                                                                                                                                                                                                                    | Sicher                |
+| SEO/Sharing             | Keine Open-Graph-/Twitter-Meta-Tags, keine `sitemap.xml`, keine strukturierten Daten, `robots.txt` erlaubt alles (auch `/admin`)                                                                                                                                                          | Sicher                |
+| Externer Link           | Profil-Link zeigt auf `github.com/pharrelsandjo`; der Repo-Owner heißt `User420-bit`. Der Link ist vermutlich tot.                                                                                                                                                                        | Wahrscheinlich        |
+| E-Mail                  | Kontakt-Adresse im Content und im Impressum ist eine Gmail-Adresse. Muss Pharrel bestätigen.                                                                                                                                                                                              | Vermutung             |
 
 ### 1.2 Was auf dem Bildschirm passiert (Screenshots vom lokalen Build, Desktop 1280 px und Mobil 390 px)
 
@@ -68,16 +68,16 @@ Sekundär: Professoren, Kommilitonen, spätere Praktikums- und Einstiegsarbeitge
 
 ### 2.2 Messbare Ziele
 
-| Ziel | Messgröße | Zielwert |
-|---|---|---|
-| Live und stabil | Deploy-Workflow grün, Seite unter der Pages-URL erreichbar | Pflicht in Phase 0 |
-| Schnell | Lighthouse Performance, Mobil | ≥ 95 |
-| Zugänglich | Lighthouse Accessibility, axe-Verstöße | ≥ 95, 0 Verstöße |
-| Leicht | Initiales JavaScript auf der Startseite (gzip) | ≤ 50 KB, Ziel 0 KB ohne Interaktion |
-| Auffindbar | Jede Seite hat eigene URL, Title, Description, OG-Tags; `sitemap.xml` vorhanden | Pflicht in Phase 1 |
-| Scannbar | Alle Projekte und alle Skill-Gruppen ohne Klick sichtbar | Pflicht in Phase 2 |
-| Rechtssicher | Impressum und Datenschutz vollständig, keine Platzhalter | Pflicht vor Go-Live |
-| Wartbar | Inhalt ändern = eine Markdown-Datei editieren und committen | Pflicht in Phase 1 |
+| Ziel            | Messgröße                                                                       | Zielwert                            |
+| --------------- | ------------------------------------------------------------------------------- | ----------------------------------- |
+| Live und stabil | Deploy-Workflow grün, Seite unter der Pages-URL erreichbar                      | Pflicht in Phase 0                  |
+| Schnell         | Lighthouse Performance, Mobil                                                   | ≥ 95                                |
+| Zugänglich      | Lighthouse Accessibility, axe-Verstöße                                          | ≥ 95, 0 Verstöße                    |
+| Leicht          | Initiales JavaScript auf der Startseite (gzip)                                  | ≤ 50 KB, Ziel 0 KB ohne Interaktion |
+| Auffindbar      | Jede Seite hat eigene URL, Title, Description, OG-Tags; `sitemap.xml` vorhanden | Pflicht in Phase 1                  |
+| Scannbar        | Alle Projekte und alle Skill-Gruppen ohne Klick sichtbar                        | Pflicht in Phase 2                  |
+| Rechtssicher    | Impressum und Datenschutz vollständig, keine Platzhalter                        | Pflicht vor Go-Live                 |
+| Wartbar         | Inhalt ändern = eine Markdown-Datei editieren und committen                     | Pflicht in Phase 1                  |
 
 ### 2.3 Nicht-Ziele
 
@@ -96,6 +96,7 @@ Sekundär: Professoren, Kommilitonen, spätere Praktikums- und Einstiegsarbeitge
 **Empfehlung:** Migration auf Astro 5 mit Content Collections, Tailwind 4 und React nur als Insel, wo echte Interaktivität nötig ist (voraussichtlich: gar nicht auf der Startseite; höchstens ein Projekt-Filter).
 
 **Begründung:**
+
 - Jede Route wird zu echtem HTML. Deep-Links (`/impressum`, `/projekte/wawi-mvp`) funktionieren auf GitHub Pages ohne den 404-Redirect-Hack. Der aktuelle Routing-Bug und seine ganze Fehlerklasse verschwinden.
 - Content Collections verwenden Zod-Schemata. Die bestehenden Schemata aus `content-validation.ts` lassen sich fast unverändert übernehmen; der Inhalt wandert aus `content-model.ts` in Markdown-/JSON-Dateien.
 - Null JavaScript im Standardfall. Das Ziel „≤ 50 KB“ ist damit trivial, mit React-SPA ohne Prerendering unerreichbar.
@@ -228,74 +229,74 @@ Aufwandsangaben sind **[Vermutung]** für eine Person, die mit Claude Code arbei
 
 Ziel: Der aktuelle Stand ist erreichbar und blamiert niemanden. Alles hier ist klein und wird beim Neuaufbau nicht weggeworfen, sondern mitgenommen.
 
-| # | Aufgabe | Akzeptanzkriterium |
-|---|---|---|
-| 0.1 | Deploy-Workflow manuell erneut starten (`workflow_dispatch`), Logs lesen, Ursache beheben. Prüfen, ob in den Repo-Settings Pages auf „GitHub Actions“ steht. Node-Version im Workflow auf 22 heben. | Run grün, Pages-URL liefert die Seite |
-| 0.2 | `useRouter` reparieren: Zustand in einen Kontext oder ein globales Event heben, `navigate` feuert ein `popstate`-ähnliches Event, `?p=`-Redirect setzt den Pfad in den Router | Playwright-Test: Klick auf „Impressum“ zeigt H1 „Impressum“, `?p=/impressum` ebenso |
-| 0.3 | `ThemeLabControl` und `CrimsonFogBlobs` aus `App.tsx` entfernen | Kein schwebender Button mehr |
-| 0.4 | Impressum und Datenschutz mit echten Angaben füllen (Anschrift, E-Mail); Footer-Jahr dynamisch | Keine eckigen Klammern mehr im Rechtstext |
-| 0.5 | GitHub-Profil-Link und E-Mail-Adresse im Content prüfen und korrigieren | Beide Links im Browser getestet |
-| 0.6 | `tsbuildinfo` aus Git entfernen und in `.gitignore` aufnehmen; ungenutzte Dependencies entfernen | `git status` nach Build sauber, `npm ls` ohne verwaiste Pakete |
-| 0.7 | `robots.txt`: `/admin` per `Disallow` ausschließen, solange die Route existiert | Datei aktualisiert |
+| #   | Aufgabe                                                                                                                                                                                             | Akzeptanzkriterium                                                                  |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 0.1 | Deploy-Workflow manuell erneut starten (`workflow_dispatch`), Logs lesen, Ursache beheben. Prüfen, ob in den Repo-Settings Pages auf „GitHub Actions“ steht. Node-Version im Workflow auf 22 heben. | Run grün, Pages-URL liefert die Seite                                               |
+| 0.2 | `useRouter` reparieren: Zustand in einen Kontext oder ein globales Event heben, `navigate` feuert ein `popstate`-ähnliches Event, `?p=`-Redirect setzt den Pfad in den Router                       | Playwright-Test: Klick auf „Impressum“ zeigt H1 „Impressum“, `?p=/impressum` ebenso |
+| 0.3 | `ThemeLabControl` und `CrimsonFogBlobs` aus `App.tsx` entfernen                                                                                                                                     | Kein schwebender Button mehr                                                        |
+| 0.4 | Impressum und Datenschutz mit echten Angaben füllen (Anschrift, E-Mail); Footer-Jahr dynamisch                                                                                                      | Keine eckigen Klammern mehr im Rechtstext                                           |
+| 0.5 | GitHub-Profil-Link und E-Mail-Adresse im Content prüfen und korrigieren                                                                                                                             | Beide Links im Browser getestet                                                     |
+| 0.6 | `tsbuildinfo` aus Git entfernen und in `.gitignore` aufnehmen; ungenutzte Dependencies entfernen                                                                                                    | `git status` nach Build sauber, `npm ls` ohne verwaiste Pakete                      |
+| 0.7 | `robots.txt`: `/admin` per `Disallow` ausschließen, solange die Route existiert                                                                                                                     | Datei aktualisiert                                                                  |
 
 ### Phase 1: Neues Fundament (2 bis 3 Tage)
 
-| # | Aufgabe | Akzeptanzkriterium |
-|---|---|---|
+| #   | Aufgabe                                                                                                                 | Akzeptanzkriterium                                                                                 |
+| --- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | 1.1 | Astro-Projekt im selben Repo aufsetzen (`base: '/Website/'`, Tailwind 4, `@astrojs/sitemap`, optional `@astrojs/react`) | `npm run build` erzeugt `dist/` mit `index.html`, `impressum/index.html`, `datenschutz/index.html` |
-| 1.2 | Content Collections nach Abschnitt 6 anlegen, Inhalte aus `DEFAULT_CONTENT` migrieren | `astro check` grün, alle Inhalte in Dateien |
-| 1.3 | Layout, `SeoHead`, Header, Footer, 404-Seite | Jede Seite hat eigenen Title, Description, Canonical, OG-Tags |
-| 1.4 | Startseite mit allen Sektionen in neuer Reihenfolge, noch mit Basis-Styling | Alle Inhalte sichtbar ohne Klick |
-| 1.5 | Projekt-Detailseiten aus der Collection generieren | `/projekte/wawi-mvp` rendert alle Felder |
-| 1.6 | Alten React-Code, Admin, Themes, Radix, framer-motion entfernen | Keine ungenutzten Dateien oder Pakete, Bundle-Ziel aus 2.2 erreicht |
-| 1.7 | Deploy-Workflow auf `withastro/action` umstellen | Deploy grün, Deep-Link `/Website/impressum` liefert direkt HTTP 200 ohne Redirect |
+| 1.2 | Content Collections nach Abschnitt 6 anlegen, Inhalte aus `DEFAULT_CONTENT` migrieren                                   | `astro check` grün, alle Inhalte in Dateien                                                        |
+| 1.3 | Layout, `SeoHead`, Header, Footer, 404-Seite                                                                            | Jede Seite hat eigenen Title, Description, Canonical, OG-Tags                                      |
+| 1.4 | Startseite mit allen Sektionen in neuer Reihenfolge, noch mit Basis-Styling                                             | Alle Inhalte sichtbar ohne Klick                                                                   |
+| 1.5 | Projekt-Detailseiten aus der Collection generieren                                                                      | `/projekte/wawi-mvp` rendert alle Felder                                                           |
+| 1.6 | Alten React-Code, Admin, Themes, Radix, framer-motion entfernen                                                         | Keine ungenutzten Dateien oder Pakete, Bundle-Ziel aus 2.2 erreicht                                |
+| 1.7 | Deploy-Workflow auf `withastro/action` umstellen                                                                        | Deploy grün, Deep-Link `/Website/impressum` liefert direkt HTTP 200 ohne Redirect                  |
 
 ### Phase 2: Design (2 bis 3 Tage)
 
-| # | Aufgabe | Akzeptanzkriterium |
-|---|---|---|
-| 2.1 | Tokens und Dark Mode nach Abschnitt 5.2 | Beide Modi bestehen den Kontrast-Check |
-| 2.2 | Hero mit Foto und Positionierungszeile | Foto als optimiertes Bild, LCP < 2,5 s mobil |
-| 2.3 | Projektkarten mit Kategorie-Badge, optional Vorschaubild | Alle Projekte auf einen Blick |
-| 2.4 | Kenntnisse-Grid, Studium-Liste, Über-mich-Sektion | Kein Karussell, kein abgeschnittener Text bei 390 px |
-| 2.5 | Bewegung und Fokus-Zustände | `prefers-reduced-motion` schaltet alles ab, Tastaturnavigation vollständig |
-| 2.6 | Review auf drei Breiten (390, 768, 1280) mit Screenshots im PR | Screenshots im PR angehängt |
+| #   | Aufgabe                                                        | Akzeptanzkriterium                                                         |
+| --- | -------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| 2.1 | Tokens und Dark Mode nach Abschnitt 5.2                        | Beide Modi bestehen den Kontrast-Check                                     |
+| 2.2 | Hero mit Foto und Positionierungszeile                         | Foto als optimiertes Bild, LCP < 2,5 s mobil                               |
+| 2.3 | Projektkarten mit Kategorie-Badge, optional Vorschaubild       | Alle Projekte auf einen Blick                                              |
+| 2.4 | Kenntnisse-Grid, Studium-Liste, Über-mich-Sektion              | Kein Karussell, kein abgeschnittener Text bei 390 px                       |
+| 2.5 | Bewegung und Fokus-Zustände                                    | `prefers-reduced-motion` schaltet alles ab, Tastaturnavigation vollständig |
+| 2.6 | Review auf drei Breiten (390, 768, 1280) mit Screenshots im PR | Screenshots im PR angehängt                                                |
 
 ### Phase 3: Qualitätssicherung (1 Tag)
 
-| # | Aufgabe | Akzeptanzkriterium |
-|---|---|---|
-| 3.1 | `ci.yml` mit Check, Lint, Format, Build, Playwright-Smoke, Lighthouse CI | Läuft auf jedem PR, blockiert Merge bei Rot |
-| 3.2 | Branch-Protection auf `main` | Direkter Push abgelehnt |
-| 3.3 | axe-Lauf über alle Seiten | 0 Verstöße |
-| 3.4 | README neu schreiben: Inhalt ändern, lokal starten, deployen | Ein Kommilitone kann in 10 Minuten einen Text ändern |
+| #   | Aufgabe                                                                  | Akzeptanzkriterium                                   |
+| --- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
+| 3.1 | `ci.yml` mit Check, Lint, Format, Build, Playwright-Smoke, Lighthouse CI | Läuft auf jedem PR, blockiert Merge bei Rot          |
+| 3.2 | Branch-Protection auf `main`                                             | Direkter Push abgelehnt                              |
+| 3.3 | axe-Lauf über alle Seiten                                                | 0 Verstöße                                           |
+| 3.4 | README neu schreiben: Inhalt ändern, lokal starten, deployen             | Ein Kommilitone kann in 10 Minuten einen Text ändern |
 
 ### Phase 4: Inhalt (laufend, beginnt parallel zu Phase 1)
 
 Das ist der Teil, den kein Code löst und der am Ende über Zusagen entscheidet.
 
-| # | Aufgabe | Wer |
-|---|---|---|
-| 4.1 | Portraitfoto in guter Qualität | Pharrel |
-| 4.2 | Ladungsfähige Anschrift für das Impressum | Pharrel |
-| 4.3 | Korrekte GitHub-Profil-URL, LinkedIn-URL, E-Mail | Pharrel |
+| #   | Aufgabe                                                                                                                                       | Wer     |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| 4.1 | Portraitfoto in guter Qualität                                                                                                                | Pharrel |
+| 4.2 | Ladungsfähige Anschrift für das Impressum                                                                                                     | Pharrel |
+| 4.3 | Korrekte GitHub-Profil-URL, LinkedIn-URL, E-Mail                                                                                              | Pharrel |
 | 4.4 | Pro Projekt: 1 bis 2 Screenshots, ein echtes Code-Beispiel (nicht nur `java -jar`), ein ehrlicher Satz zu „was würde ich heute anders machen“ | Pharrel |
-| 4.5 | „Availably“ hat weder Link noch Learnings. Entweder ausbauen oder rausnehmen. Ein dünnes Projekt schadet mehr als keines. | Pharrel |
-| 4.6 | Verfügbarkeitsdatum und Stundenumfang für die Werkstudentenstelle in den Hero | Pharrel |
-| 4.7 | Optional: Lebenslauf als PDF unter `/lebenslauf.pdf` | Pharrel |
+| 4.5 | „Availably“ hat weder Link noch Learnings. Entweder ausbauen oder rausnehmen. Ein dünnes Projekt schadet mehr als keines.                     | Pharrel |
+| 4.6 | Verfügbarkeitsdatum und Stundenumfang für die Werkstudentenstelle in den Hero                                                                 | Pharrel |
+| 4.7 | Optional: Lebenslauf als PDF unter `/lebenslauf.pdf`                                                                                          | Pharrel |
 
 ---
 
 ## 8. Risiken und offene Fragen
 
-| Risiko / Frage | Einschätzung | Umgang |
-|---|---|---|
-| Deploy-Fehler hat eine andere Ursache als vermutet | Wahrscheinlich Pages-Einstellung, aber unbelegt | Phase 0.1 ist der erste Schritt, bevor irgendetwas anderes passiert |
-| Repo ist privat und Pages braucht dafür einen bezahlten Plan | Vermutung; das Konto hat laut GitHub-API genau ein öffentliches Repo, also ist dieses wahrscheinlich öffentlich | In den Repo-Settings prüfen |
-| Astro-Lernkurve | Flach, aber vorhanden | Phase 1 klein halten, React-Inseln als Ausweg |
-| Der Rechtstext wird nach Go-Live vergessen | Hoch, weil unangenehm | Phase 0.4 ist Blocker für den Merge auf `main`, nicht „später“ |
-| Zu wenige Projekte für eine Projekt-first-Startseite | Real: derzeit ein vorzeigbares Projekt mit Link | Phase 4.4/4.5; im Zweifel zwei starke Projekte statt drei halbe |
-| Ich habe Pharrels Geschmack nicht gesehen | Design-Phase ohne Briefing | Phase 2 startet mit einem Vorschlag in drei Breiten als PR-Screenshot, nicht mit fertigem Code |
+| Risiko / Frage                                               | Einschätzung                                                                                                    | Umgang                                                                                         |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Deploy-Fehler hat eine andere Ursache als vermutet           | Wahrscheinlich Pages-Einstellung, aber unbelegt                                                                 | Phase 0.1 ist der erste Schritt, bevor irgendetwas anderes passiert                            |
+| Repo ist privat und Pages braucht dafür einen bezahlten Plan | Vermutung; das Konto hat laut GitHub-API genau ein öffentliches Repo, also ist dieses wahrscheinlich öffentlich | In den Repo-Settings prüfen                                                                    |
+| Astro-Lernkurve                                              | Flach, aber vorhanden                                                                                           | Phase 1 klein halten, React-Inseln als Ausweg                                                  |
+| Der Rechtstext wird nach Go-Live vergessen                   | Hoch, weil unangenehm                                                                                           | Phase 0.4 ist Blocker für den Merge auf `main`, nicht „später“                                 |
+| Zu wenige Projekte für eine Projekt-first-Startseite         | Real: derzeit ein vorzeigbares Projekt mit Link                                                                 | Phase 4.4/4.5; im Zweifel zwei starke Projekte statt drei halbe                                |
+| Ich habe Pharrels Geschmack nicht gesehen                    | Design-Phase ohne Briefing                                                                                      | Phase 2 startet mit einem Vorschlag in drei Breiten als PR-Screenshot, nicht mit fertigem Code |
 
 ---
 
