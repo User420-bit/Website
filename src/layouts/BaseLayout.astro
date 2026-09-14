@@ -1,0 +1,32 @@
+---
+import BaseHead from '@/components/BaseHead.astro'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import { getEntry } from 'astro:content'
+import '@/styles/global.css'
+
+interface Props {
+  title: string
+  description: string
+  isHome?: boolean
+  noindex?: boolean
+}
+
+const { title, description, isHome = false, noindex = false } = Astro.props
+const profile = await getEntry('profile', 'main')
+if (!profile) throw new Error('src/content/profile.json: Eintrag "main" fehlt.')
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <BaseHead title={title} description={description} noindex={noindex} />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <Header isHome={isHome} name={profile.data.name} />
+    <main id="inhalt" class="mx-auto w-full max-w-5xl flex-1 px-4">
+      <slot />
+    </main>
+    <Footer name={profile.data.name} />
+  </body>
+</html>

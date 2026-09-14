@@ -1,0 +1,83 @@
+---
+import { getEntry } from 'astro:content'
+import ProseLayout from '@/layouts/ProseLayout.astro'
+import IncompleteLegalNotice from '@/components/IncompleteLegalNotice.astro'
+
+const legal = (await getEntry('legal', 'main'))!.data
+const addressComplete = legal.street !== null && legal.zipCity !== null
+---
+
+<ProseLayout
+  title="Impressum"
+  description="Impressum und Anbieterkennzeichnung nach § 5 DDG."
+  subtitle="Angaben gemäß § 5 DDG"
+  noindex={!addressComplete}
+>
+  <IncompleteLegalNotice complete={addressComplete} />
+
+  <section>
+    <h2>Diensteanbieter</h2>
+    <p>
+      {legal.name}<br />
+      {
+        addressComplete ? (
+          <>
+            {legal.street}
+            <br />
+            {legal.zipCity}
+            <br />
+          </>
+        ) : null
+      }
+      {legal.country}
+    </p>
+  </section>
+
+  <section>
+    <h2>Kontakt</h2>
+    <p>
+      E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
+    </p>
+  </section>
+
+  <section>
+    <h2>Verantwortlich i. S. d. § 18 Abs. 2 MStV</h2>
+    <p>{legal.name}, Anschrift wie oben.</p>
+  </section>
+
+  <section>
+    <h2>Haftung für Inhalte</h2>
+    <p>
+      Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den
+      allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch
+      nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder
+      nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+    </p>
+  </section>
+
+  <section>
+    <h2>Haftung für Links</h2>
+    <p>
+      Diese Seite enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss
+      habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber
+      verantwortlich. Bei Bekanntwerden von Rechtsverletzungen entferne ich derartige Links
+      umgehend.
+    </p>
+  </section>
+
+  <section>
+    <h2>Urheberrecht</h2>
+    <p>
+      Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
+      deutschen Urheberrecht. Der Quellcode dieser Website steht unter der MIT-Lizenz.
+    </p>
+  </section>
+
+  <section>
+    <h2>Streitbeilegung</h2>
+    <p>
+      Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+      Verbraucherschlichtungsstelle teilzunehmen.
+    </p>
+  </section>
+</ProseLayout>

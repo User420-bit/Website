@@ -1,0 +1,135 @@
+@import 'tailwindcss';
+
+/*
+ * Design-Tokens nach Rework-Plan Abschnitt 5.2: eine Akzentfarbe (aus dem
+ * bisherigen Blau abgeleitet), neutrale Grautöne, sonst nichts. Die acht
+ * Test-Themes, das Nebel-Raster und der schwebende "Theme Lab"-Button sind
+ * ersatzlos entfallen.
+ *
+ * Farbmodus kommt ausschliesslich aus der Systemeinstellung. Es gibt bewusst
+ * keinen Umschalter: damit speichert die Seite nichts im Browser, und die
+ * Datenschutzerklaerung bleibt bei "gar keine Speicherung". Die
+ * `[data-theme]`-Selektoren stehen trotzdem hier, damit ein Umschalter spaeter
+ * nachruestbar ist, ohne die Tokens umzubauen.
+ */
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-bg: oklch(0.99 0.004 250);
+  --color-bg-elevated: oklch(1 0 0);
+  --color-fg: oklch(0.2 0.015 250);
+  --color-fg-muted: oklch(0.44 0.012 250);
+  --color-accent: oklch(0.45 0.15 250);
+  --color-accent-fg: oklch(0.99 0 0);
+  --color-border: oklch(0.89 0.006 250);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+@layer theme {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --color-bg: oklch(0.17 0.015 250);
+      --color-bg-elevated: oklch(0.22 0.017 250);
+      --color-fg: oklch(0.96 0.005 250);
+      --color-fg-muted: oklch(0.74 0.012 250);
+      --color-accent: oklch(0.72 0.13 250);
+      --color-accent-fg: oklch(0.17 0.02 250);
+      --color-border: oklch(0.38 0.015 250);
+    }
+  }
+
+  :root[data-theme='dark'] {
+    --color-bg: oklch(0.17 0.015 250);
+    --color-bg-elevated: oklch(0.22 0.017 250);
+    --color-fg: oklch(0.96 0.005 250);
+    --color-fg-muted: oklch(0.74 0.012 250);
+    --color-accent: oklch(0.72 0.13 250);
+    --color-accent-fg: oklch(0.17 0.02 250);
+    --color-border: oklch(0.38 0.015 250);
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    /*
+     * Einziger Scroll-Offset im Projekt. Der Sticky-Header misst 81 px bei
+     * 390 px Breite und 61 px darueber; 6rem deckt beide Faelle mit etwas
+     * Luft ab. Sektionen tragen bewusst KEIN zusaetzliches `scroll-margin`,
+     * sonst addieren sich die Werte.
+     */
+    scroll-padding-top: 6rem;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Sichtbarer Fokus ueberall, nicht nur dort, wo an ihn gedacht wurde. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Dezentes Einblenden beim ersten Scroll (Plan 5.1). Ohne JavaScript und
+   * ohne `prefers-reduced-motion` bleibt alles sofort sichtbar — die
+   * Animation darf Inhalt niemals verstecken.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+      }
+    }
+  }
+
+  @keyframes reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Aktiver Navigationszustand, gesetzt vom IntersectionObserver im Header. */
+  .nav-link[aria-current='true'] {
+    color: var(--color-fg);
+  }
+  .nav-link[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+}

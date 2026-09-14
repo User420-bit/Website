@@ -1,0 +1,33 @@
+---
+import { href } from '@/lib/site'
+
+interface Props {
+  name: string
+}
+
+const { name } = Astro.props
+// Jahr aus dem Build-Datum statt hart auf 2025 (alter Stand).
+const year = new Date().getFullYear()
+---
+
+<footer class="mt-24 border-t border-border">
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="m-0">&copy; {year} {name}</p>
+    <nav aria-label="Rechtliches">
+      <ul class="flex list-none gap-4 p-0">
+        <li>
+          <a class="underline underline-offset-4 hover:text-fg" href={href('/impressum')}
+            >Impressum</a
+          >
+        </li>
+        <li>
+          <a class="underline underline-offset-4 hover:text-fg" href={href('/datenschutz')}
+            >Datenschutz</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>

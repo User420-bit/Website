@@ -1,0 +1,224 @@
+---
+import { getCollection, getEntry, render } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import Section from '@/components/Section.astro'
+import { href } from '@/lib/site'
+import { Image } from 'astro:assets'
+
+const profile = (await getEntry('profile', 'main'))!.data
+const contact = (await getEntry('contact', 'main'))!.data
+const aboutEntry = (await getEntry('about', 'about'))!
+const { Content: AboutBody } = await render(aboutEntry)
+
+const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
+const study = (await getCollection('study')).sort((a, b) => a.data.order - b.data.order)
+
+const description = `${profile.name} – ${profile.subtitle} an der ${profile.institution}. Projekte, Kenntnisse und Kontakt.`
+---
+
+<BaseLayout title={`${profile.name} – Portfolio`} description={description} isHome>
+  {
+    /*
+    1. Hero — so hoch wie sein Inhalt, kein erzwungenes Full-Height.
+    Zweispaltig erst, wenn ein Portrait hinterlegt ist. Ohne Foto bleibt es
+    einspaltig, statt eine halbe Bildschirmbreite leer zu lassen.
+  */
+  }
+  <section
+    class:list={[
+      'py-14 sm:py-20',
+      profile.portrait && 'lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-12',
+    ]}
+  >
+    <div>
+      <p class="text-sm font-medium tracking-wide text-accent uppercase">
+        {profile.subtitle} · {profile.institution}
+      </p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        {profile.name}
+      </h1>
+      {
+        profile.availability && (
+          <p class="mt-3 text-base font-medium text-fg">{profile.availability}</p>
+        )
+      }
+      <p class="mt-5 max-w-[60ch] text-lg leading-relaxed text-fg-muted">{profile.intro}</p>
+
+      <ul class="mt-6 max-w-[60ch] list-none space-y-2 p-0 text-fg-muted">
+        {
+          profile.bullets.map((bullet) => (
+            <li class="flex gap-3">
+              <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              <span>{bullet}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          class="inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none"
+          href={`mailto:${profile.social.email}`}
+        >
+          E-Mail schreiben
+        </a>
+        <a
+          class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+          href={href('/#projekte')}
+        >
+          Projekte ansehen
+        </a>
+      </div>
+    </div>
+
+    {
+      profile.portrait && (
+        <Image
+          class="mt-10 w-48 rounded-lg border border-border object-cover lg:mt-0 lg:w-64"
+          src={profile.portrait}
+          alt={profile.portraitAlt ?? profile.name}
+          widths={[192, 256, 512]}
+          sizes="(min-width: 1024px) 16rem, 12rem"
+          loading="eager"
+          fetchpriority="high"
+        />
+      )
+    }
+  </section>
+
+  {/* 2. Projekte — der Beweis kommt vor der Selbstbeschreibung. */}
+  <Section
+    id="projekte"
+    title="Projekte"
+    intro="Alle Projekte auf einen Blick. Das Badge sagt, ob eigenständig oder AI-unterstützt entstanden — beides steht hier nebeneinander, nichts liegt hinter einem Tab."
+    class="reveal"
+  >
+    <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        projekte.map((projekt) => (
+          <li class="flex">
+            <ProjectCard
+              slug={projekt.id}
+              title={projekt.data.title}
+              summary={projekt.data.summary}
+              techStack={projekt.data.techStack}
+              category={projekt.data.category}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {/* 3. Kenntnisse — frühere Unterseite "Coding", jetzt sichtbar auf der Startseite. */}
+  <Section
+    id="kenntnisse"
+    title="Kenntnisse"
+    intro="Ohne Prozentbalken und Sterne. Stattdessen eine kurze Einordnung pro Eintrag."
+    class="reveal"
+  >
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skills.map((group) => (
+          <div>
+            <h3 class="text-base font-semibold tracking-tight">{group.data.title}</h3>
+            <p class="mt-1 text-sm text-fg-muted">{group.data.description}</p>
+            <ul class="mt-4 list-none space-y-3 p-0">
+              {group.data.items.map((item) => (
+                <li>
+                  <span class="block text-sm font-medium">{item.name}</span>
+                  <span class="block text-sm text-fg-muted">{item.note}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* 4. Studium — kompakte Liste statt 3D-Karussell. */}
+  <Section id="studium" title="Studium" class="reveal">
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        study.map((section) => (
+          <div>
+            <p class="text-xs font-medium tracking-wide text-accent uppercase">
+              {section.data.category}
+            </p>
+            <h3 class="mt-1 text-base font-semibold tracking-tight">{section.data.title}</h3>
+            <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-fg-muted">
+              {section.data.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            {section.data.note && <p class="mt-2 text-sm text-fg-muted">{section.data.note}</p>}
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* 5. Über mich. */}
+  <Section id="ueber-mich" title="Über mich" class="reveal">
+    <div class="max-w-[65ch] space-y-4 leading-relaxed text-fg-muted">
+      <AboutBody />
+    </div>
+
+    <ul class="mt-10 grid list-none grid-cols-1 gap-x-8 gap-y-6 p-0 sm:grid-cols-2">
+      {
+        aboutEntry.data.values.map((value) => (
+          <li class="border-l-2 border-accent/40 pl-4">
+            <span class="block font-medium">{value.title}</span>
+            <span class="mt-1 block text-sm text-fg-muted">{value.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {/* 6. Kontakt. */}
+  <Section id="kontakt" title={contact.heading} intro={contact.description} class="reveal">
+    <ul class="flex list-none flex-wrap gap-3 p-0">
+      <li>
+        <a
+          class="inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none"
+          href={`mailto:${profile.social.email}`}
+        >
+          {profile.social.email}
+        </a>
+      </li>
+      {
+        profile.social.linkedin && (
+          <li>
+            <a
+              class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+              href={profile.social.linkedin}
+              rel="me noopener noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
+          </li>
+        )
+      }
+      {
+        profile.social.github && (
+          <li>
+            <a
+              class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+              href={profile.social.github}
+              rel="me noopener noreferrer"
+              target="_blank"
+            >
+              GitHub
+            </a>
+          </li>
+        )
+      }
+    </ul>
+    <p class="mt-4 text-sm text-fg-muted">{profile.location}</p>
+  </Section>
+</BaseLayout>

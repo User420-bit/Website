@@ -1,0 +1,23 @@
+---
+interface Props {
+  complete: boolean
+}
+
+const { complete } = Astro.props
+---
+
+{
+  !complete && (
+    <aside
+      class="not-prose rounded-lg border border-accent/50 bg-accent/10 p-4 text-sm"
+      role="note"
+    >
+      <p class="m-0 font-medium text-fg">Diese Angaben sind noch unvollständig.</p>
+      <p class="mt-1 mb-0 text-fg-muted">
+        Die ladungsfähige Anschrift fehlt. Die Seite ist deshalb auf <code>noindex</code> gesetzt.
+        Nachzutragen in <code>src/content/legal.json</code>; der Deploy-Workflow bricht ab, solange
+        die Felder leer sind.
+      </p>
+    </aside>
+  )
+}
