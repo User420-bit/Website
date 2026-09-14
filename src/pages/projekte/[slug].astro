@@ -1,0 +1,130 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection, render } from 'astro:content'
+import Badge from '@/components/Badge.astro'
+import CodeBlock from '@/components/CodeBlock.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { CATEGORY_LABELS, href } from '@/lib/site'
+import { Image } from 'astro:assets'
+
+export const getStaticPaths = (async () => {
+  const projekte = await getCollection('projekte')
+  return projekte.map((projekt) => ({
+    params: { slug: projekt.id },
+    props: { projekt },
+  }))
+}) satisfies GetStaticPaths
+
+const { projekt } = Astro.props
+const { Content } = await render(projekt)
+const data = projekt.data
+---
+
+<BaseLayout title={`${data.title} – Projekt`} description={data.summary}>
+  <article class="py-12 sm:py-16">
+    <a class="text-sm text-fg-muted no-underline hover:text-accent" href={href('/#projekte')}>
+      &larr; Alle Projekte
+    </a>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <h1 class="m-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+        {data.title}
+      </h1>
+      <Badge tone={data.category === 'eigenstaendig' ? 'accent' : 'muted'}>
+        {CATEGORY_LABELS[data.category] ?? data.category}
+      </Badge>
+    </div>
+
+    <p class="mt-4 max-w-[65ch] text-lg leading-relaxed text-fg-muted">{data.summary}</p>
+
+    <ul class="mt-5 flex list-none flex-wrap gap-1.5 p-0">
+      {
+        data.techStack.map((tech) => (
+          <li class="rounded-sm border border-border px-2 py-0.5 font-mono text-xs text-fg-muted">
+            {tech}
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      data.github && (
+        <p class="mt-5">
+          <a
+            class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+            href={data.github}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Code auf GitHub
+          </a>
+        </p>
+      )
+    }
+
+    <div
+      class="mt-10 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+    >
+      <Content />
+    </div>
+
+    {
+      data.features.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-xl font-semibold tracking-tight">Funktionen</h2>
+          <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
+            {data.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      data.screenshots.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-xl font-semibold tracking-tight">Screenshots</h2>
+          <ul class="mt-4 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2">
+            {data.screenshots.map((shot) => (
+              <li>
+                <figure class="m-0">
+                  <Image
+                    class="w-full rounded-lg border border-border"
+                    src={shot.image}
+                    alt={shot.caption}
+                    widths={[400, 800]}
+                    sizes="(min-width: 640px) 45vw, 92vw"
+                  />
+                  <figcaption class="mt-2 text-sm text-fg-muted">{shot.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      data.codeExample && (
+        <section class="mt-12">
+          <h2 class="text-xl font-semibold tracking-tight">Code</h2>
+          <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
+        </section>
+      )
+    }
+
+    {
+      data.learnings.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-xl font-semibold tracking-tight">Was ich gelernt habe</h2>
+          <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
+            {data.learnings.map((learning) => (
+              <li>{learning}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

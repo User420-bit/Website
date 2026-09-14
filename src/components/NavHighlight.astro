@@ -1,0 +1,56 @@
+{
+  /*
+  Markiert den Anker, dessen Abschnitt gerade im Viewport steht. Wird nur auf
+  der Startseite eingebunden — die Unterseiten haben keine Abschnitte.
+
+  Das ist die einzige Stelle mit JavaScript (Plan 4.3). Ohne JS funktioniert die
+  Navigation unverändert, nur ohne aktiven Zustand.
+*/
+}
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-target]')
+  const byId = new Map<string, HTMLAnchorElement>()
+  for (const link of links) {
+    const id = link.dataset.navTarget
+    if (id) byId.set(id, link)
+  }
+
+  const sections = [...byId.keys()]
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null)
+
+  if (sections.length > 0) {
+    const visible = new Set<string>()
+
+    const paint = () => {
+      // Der UNTERSTE sichtbare Abschnitt gewinnt. Beim Sprung zu "Kenntnisse"
+      // ragt das Ende von "Projekte" noch ins Beobachtungsband; wer den
+      // obersten Treffer nimmt, markiert dann den falschen Anker.
+      let current: string | null = null
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (visible.has(sections[i]!.id)) {
+          current = sections[i]!.id
+          break
+        }
+      }
+      for (const [id, link] of byId) {
+        if (id === current) link.setAttribute('aria-current', 'true')
+        else link.removeAttribute('aria-current')
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id)
+          else visible.delete(entry.target.id)
+        }
+        paint()
+      },
+      // Beobachtungsband: von knapp unter dem Header bis 40 % der Fensterhoehe.
+      { rootMargin: '-96px 0px -60% 0px' },
+    )
+
+    for (const section of sections) observer.observe(section)
+  }
+</script>

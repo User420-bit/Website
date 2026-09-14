@@ -1,0 +1,71 @@
+{
+  "sprachen": {
+    "order": 1,
+    "title": "Sprachen",
+    "description": "Womit ich Code schreibe, und wie sicher.",
+    "items": [
+      {
+        "name": "Java",
+        "note": "Hauptsprache im Studium"
+      },
+      {
+        "name": "Swift",
+        "note": "Eigene Vertiefung für iOS"
+      },
+      {
+        "name": "TypeScript / JavaScript",
+        "note": "Web-Frontend und kleine Tools"
+      },
+      {
+        "name": "SQL",
+        "note": "Datenbankabfragen und -modellierung"
+      }
+    ]
+  },
+  "werkzeuge": {
+    "order": 2,
+    "title": "Werkzeuge",
+    "description": "Womit ich täglich arbeite.",
+    "items": [
+      {
+        "name": "IntelliJ IDEA",
+        "note": "IDE für Java-Projekte"
+      },
+      {
+        "name": "VS Code",
+        "note": "Editor für Web-Projekte"
+      },
+      {
+        "name": "Git / GitHub",
+        "note": "Versionskontrolle und Hosting"
+      },
+      {
+        "name": "macOS",
+        "note": "Hauptbetriebssystem für Entwicklung"
+      }
+    ]
+  },
+  "ai": {
+    "order": 3,
+    "title": "AI-Werkzeuge",
+    "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen.",
+    "items": [
+      {
+        "name": "ChatGPT",
+        "note": "Brainstorming, Erklärungen, Code-Reviews"
+      },
+      {
+        "name": "GitHub Copilot",
+        "note": "Inline-Vorschläge im Editor"
+      },
+      {
+        "name": "Perplexity",
+        "note": "Recherche mit Quellenangabe"
+      },
+      {
+        "name": "GitHub Spark",
+        "note": "Rapid Prototyping von Web-Apps"
+      }
+    ]
+  }
+}

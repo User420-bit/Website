@@ -1,11 +1,14 @@
 node_modules
 dist
 dist-ssr
+.astro
 *.local
+*.tsbuildinfo
 .DS_Store
 .vscode/*
 !.vscode/extensions.json
 .idea
 *.log
 .env
-.env.local
+.env.*
+!.env.example

@@ -1,0 +1,52 @@
+---
+import NavHighlight from '@/components/NavHighlight.astro'
+import { href, NAV_ITEMS } from '@/lib/site'
+
+interface Props {
+  /** Auf der Startseite markiert ein IntersectionObserver den aktiven Anker. */
+  isHome?: boolean
+  name: string
+}
+
+const { isHome = false, name } = Astro.props
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-border bg-bg/85 backdrop-blur-sm supports-[not(backdrop-filter:blur(0))]:bg-bg"
+>
+  <a
+    href="#inhalt"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-fg"
+  >
+    Zum Inhalt springen
+  </a>
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-4"
+  >
+    <a
+      href={href('/')}
+      class="text-sm font-semibold tracking-tight text-fg no-underline sm:text-base"
+    >
+      {name}
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="-mx-1 flex list-none flex-wrap gap-x-1 gap-y-1 p-0 text-sm">
+        {
+          NAV_ITEMS.map((item) => (
+            <li>
+              <a
+                class="nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:after:scale-x-100 motion-reduce:after:transition-none"
+                href={href(`/#${item.id}`)}
+                data-nav-target={item.id}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+{isHome && <NavHighlight />}

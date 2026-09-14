@@ -2,6 +2,11 @@
 
 Stand: 2026-09-14 · Basis: Commit `0275011` auf `main` · Autor: erstellt per Claude Code Session, Review durch Pharrel ausstehend
 
+> **Umgesetzt am 2026-09-14.** Die Phasen 1 und 2 sind gebaut, die nicht wegwerfbaren
+> Phase-0-Punkte sind mit eingeflossen. Was abweichend entschieden wurde, was gemessen
+> wurde und was noch offen ist, steht in [`REWORK_STATUS.md`](REWORK_STATUS.md).
+> Dieses Dokument bleibt als Begründung und Analyse unverändert stehen.
+
 Konfidenz-Tags in diesem Dokument: **[Sicher]** = mit Build, Browser-Test oder GitHub-API belegt · **[Wahrscheinlich]** = starke Schlussfolgerung aus dem Code · **[Vermutung]** = Annahme, die Pharrel bestätigen muss.
 
 ---

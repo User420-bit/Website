@@ -19,21 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      # Blockiert den Deploy, solange das Impressum unvollständig ist.
+      # Läuft vor `npm ci`, weil das Skript keine Dependencies braucht.
+      - name: Rechtstext prüfen
+        run: node scripts/guard-legal.mjs
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        env:
-          VITE_ADMIN_PASSPHRASE: ${{ secrets.VITE_ADMIN_PASSPHRASE }}
         run: npm run build
+
+      - name: Build prüfen
+        run: npm run test:build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
