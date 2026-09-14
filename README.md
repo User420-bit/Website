@@ -6,6 +6,10 @@ Single-Page-Portfolio-Website (React 19 + Vite 7 + Tailwind CSS 4) für Pharrel 
 - Inhalte werden ausschließlich lokal (`localStorage`) im Browser bearbeitet (Admin-Bereich)
 - Bereitstellung als statische Seite via GitHub Pages
 
+## Rework
+
+Der vollständige Rework-Plan (Ist-Analyse, Architektur-Entscheidungen, Phasenplan) liegt in [`docs/REWORK_PLAN.md`](docs/REWORK_PLAN.md).
+
 ## Schnellstart
 
 ```bash
