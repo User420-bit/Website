@@ -1,16 +1,10 @@
 {
   "main": {
     "name": "Pharrel Sandjo Djomou",
+    "role": "Inhaber",
     "subtitle": "Wirtschaftsinformatik (B.Sc.)",
     "institution": "TH Rosenheim",
-    "location": "Rosenheim, Bayern",
-    "availability": null,
-    "intro": "Student der Wirtschaftsinformatik mit Fokus auf saubere Software-Architektur, pragmatische Lösungen und ehrliche Kommunikation. Auf der Suche nach einer Werkstudentenstelle im Raum Rosenheim.",
-    "bullets": [
-      "Fundament in Informatik, BWL und Mathematik",
-      "Erfahrung mit Java, Swift, TypeScript und SQL",
-      "Strukturiert, lernbereit, transparent über Stärken und Lücken"
-    ],
+    "openTo": "Neben Klartext offen für eine Werkstudentenstelle im Raum Rosenheim.",
     "social": {
       "email": "studsandph@gmail.com",
       "github": null,

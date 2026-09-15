@@ -16,7 +16,7 @@ const BASE = '/Website/'
 
 /** Route -> erwartete H1. */
 const ROUTES = {
-  '': 'Pharrel Sandjo Djomou',
+  '': 'Kleine Software, klar gebaut.',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
   'projekte/wawi-mvp': 'wawi-mvp',

@@ -1,6 +1,9 @@
-# Pharrel Sandjo Djomou — Portfolio
+# Klartext — Website
 
-Statisch generierte Portfolio-Website (Astro 7 + Tailwind CSS 4).
+Statisch generierte Website des Einzelunternehmens Klartext (Astro 7 + Tailwind CSS 4):
+Insellösungen, Websites und Web-Apps aus Rosenheim. Die Person hinter Klartext wird auf der
+Startseite nur in der Sektion "Über Klartext" genannt und im Impressum, wo § 5 DDG den Namen
+verlangt.
 
 - **Kein JavaScript** auf den Unterseiten, ein kleines Inline-Script auf der Startseite
 - **Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser
@@ -25,17 +28,27 @@ Alle Texte liegen als Dateien im Repository. Es gibt keinen Admin-Bereich und ke
 Datenbank — ändern heißt: Datei editieren, committen, fertig. Der Deploy läuft
 automatisch.
 
-| Was                          | Datei                            |
-| ---------------------------- | -------------------------------- |
-| Name, Intro, Links, Portrait | `src/content/profile.json`       |
-| Text und Werte "Über mich"   | `src/content/about.md`           |
-| Ein Projekt                  | `src/content/projekte/<name>.md` |
-| Kenntnisse-Gruppen           | `src/content/skills.json`        |
-| Studium-Schwerpunkte         | `src/content/study.json`         |
-| Kontakt-Abschnitt            | `src/content/contact.json`       |
-| Impressum und Datenschutz    | `src/content/legal.json`         |
+| Was                                       | Datei                            |
+| ----------------------------------------- | -------------------------------- |
+| Firmenname, Claim (H1), Intro, Leistungen | `src/content/company.json`       |
+| Inhaber, Werkstudenten-Hinweis, Portrait  | `src/content/profile.json`       |
+| Text und Werte "Über Klartext"            | `src/content/about.md`           |
+| Eine Referenz                             | `src/content/projekte/<name>.md` |
+| Werkzeug-Gruppen                          | `src/content/skills.json`        |
+| Kontakt-Abschnitt                         | `src/content/contact.json`       |
+| Impressum und Datenschutz                 | `src/content/legal.json`         |
 
-### Ein Projekt hinzufügen
+Wer den Claim in `company.json` ändert, muss ihn auch in `scripts/verify-build.mjs` unter
+`ROUTES['']` nachziehen — der Build-Check prüft die H1 der Startseite gegen diesen Text.
+
+### Logo einbauen
+
+Das Klartext-Logo liegt noch nicht als Datei vor. Bis dahin steht im Header ein oranges
+Quadrat mit "K" (`src/components/Header.astro`) und dasselbe Motiv als `public/favicon.svg`.
+Sobald das Logo da ist: SVG unter `src/assets/` ablegen, im Header statt des Platzhalter-Spans
+einbinden und `public/favicon.svg` ersetzen. Die Akzentfarbe steht in `src/styles/global.css`.
+
+### Eine Referenz hinzufügen
 
 Neue Datei `src/content/projekte/mein-projekt.md`:
 
@@ -50,10 +63,10 @@ order: 4 # Reihenfolge auf der Startseite
 features:
   - Was es kann
 learnings:
-  - Was ich dabei gelernt habe
+  - Welche Erkenntnis das Projekt gebracht hat
 ---
 
-Der Fließtext hier erscheint als Überblick auf der Projektseite.
+Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
 Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf der Startseite
@@ -68,7 +81,7 @@ optimiert.
 
 ### Felder, die `null` sein dürfen
 
-`github`, `linkedin`, `portrait`, `availability`, `street` und `zipCity` akzeptieren
+`github`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity` akzeptieren
 `null`. Das bedeutet "noch nicht bestätigt" und wird nirgends gerendert — ein toter
 Link ist schlechter als kein Link. Ein Platzhalter in eckigen Klammern (`[PLZ Ort]`)
 wird vom Schema abgelehnt und bricht den Build.

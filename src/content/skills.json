@@ -2,30 +2,30 @@
   "sprachen": {
     "order": 1,
     "title": "Sprachen",
-    "description": "Womit ich Code schreibe, und wie sicher.",
+    "description": "Womit Klartext Code schreibt, und wofür.",
     "items": [
       {
         "name": "Java",
-        "note": "Hauptsprache im Studium"
+        "note": "Backend und Domänenlogik, etwa in wawi-mvp"
       },
       {
         "name": "Swift",
-        "note": "Eigene Vertiefung für iOS"
+        "note": "Native iOS-Apps, etwa Sonor"
       },
       {
         "name": "TypeScript / JavaScript",
-        "note": "Web-Frontend und kleine Tools"
+        "note": "Websites, Web-Apps und kleine Werkzeuge"
       },
       {
         "name": "SQL",
-        "note": "Datenbankabfragen und -modellierung"
+        "note": "Datenmodellierung und Abfragen"
       }
     ]
   },
   "werkzeuge": {
     "order": 2,
     "title": "Werkzeuge",
-    "description": "Womit ich täglich arbeite.",
+    "description": "Womit täglich gearbeitet wird.",
     "items": [
       {
         "name": "IntelliJ IDEA",
@@ -37,18 +37,18 @@
       },
       {
         "name": "Git / GitHub",
-        "note": "Versionskontrolle und Hosting"
+        "note": "Versionskontrolle, Hosting, automatischer Deploy"
       },
       {
         "name": "macOS",
-        "note": "Hauptbetriebssystem für Entwicklung"
+        "note": "Entwicklungsumgebung"
       }
     ]
   },
   "ai": {
     "order": 3,
     "title": "AI-Werkzeuge",
-    "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen.",
+    "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen – und an jeder Referenz offen deklariert.",
     "items": [
       {
         "name": "ChatGPT",

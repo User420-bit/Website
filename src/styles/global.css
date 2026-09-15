@@ -1,8 +1,10 @@
 @import 'tailwindcss';
 
 /*
- * Design-Tokens nach Rework-Plan Abschnitt 5.2: eine Akzentfarbe (aus dem
- * bisherigen Blau abgeleitet), neutrale Grautöne, sonst nichts. Die acht
+ * Design-Tokens nach Rework-Plan Abschnitt 5.2: eine Akzentfarbe, neutrale
+ * Grautöne, sonst nichts. Der Akzent ist das Orange aus dem Klartext-Logo
+ * (weisser Grund, schwarze Schrift, oranges Symbol). Als Textfarbe muss er
+ * 4,5:1 auf Weiss halten, deshalb im Light-Mode bewusst dunkel gehalten. Die acht
  * Test-Themes, das Nebel-Raster und der schwebende "Theme Lab"-Button sind
  * ersatzlos entfallen.
  *
@@ -18,13 +20,13 @@
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --color-bg: oklch(0.99 0.004 250);
+  --color-bg: oklch(0.99 0.002 80);
   --color-bg-elevated: oklch(1 0 0);
-  --color-fg: oklch(0.2 0.015 250);
-  --color-fg-muted: oklch(0.44 0.012 250);
-  --color-accent: oklch(0.45 0.15 250);
+  --color-fg: oklch(0.18 0.005 80);
+  --color-fg-muted: oklch(0.43 0.008 80);
+  --color-accent: oklch(0.52 0.16 50);
   --color-accent-fg: oklch(0.99 0 0);
-  --color-border: oklch(0.89 0.006 250);
+  --color-border: oklch(0.89 0.004 80);
 
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
@@ -34,24 +36,24 @@
 @layer theme {
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) {
-      --color-bg: oklch(0.17 0.015 250);
-      --color-bg-elevated: oklch(0.22 0.017 250);
-      --color-fg: oklch(0.96 0.005 250);
-      --color-fg-muted: oklch(0.74 0.012 250);
-      --color-accent: oklch(0.72 0.13 250);
-      --color-accent-fg: oklch(0.17 0.02 250);
-      --color-border: oklch(0.38 0.015 250);
+      --color-bg: oklch(0.17 0.004 80);
+      --color-bg-elevated: oklch(0.22 0.005 80);
+      --color-fg: oklch(0.96 0.003 80);
+      --color-fg-muted: oklch(0.74 0.008 80);
+      --color-accent: oklch(0.78 0.15 60);
+      --color-accent-fg: oklch(0.17 0.02 60);
+      --color-border: oklch(0.38 0.006 80);
     }
   }
 
   :root[data-theme='dark'] {
-    --color-bg: oklch(0.17 0.015 250);
-    --color-bg-elevated: oklch(0.22 0.017 250);
-    --color-fg: oklch(0.96 0.005 250);
-    --color-fg-muted: oklch(0.74 0.012 250);
-    --color-accent: oklch(0.72 0.13 250);
-    --color-accent-fg: oklch(0.17 0.02 250);
-    --color-border: oklch(0.38 0.015 250);
+    --color-bg: oklch(0.17 0.004 80);
+    --color-bg-elevated: oklch(0.22 0.005 80);
+    --color-fg: oklch(0.96 0.003 80);
+    --color-fg-muted: oklch(0.74 0.008 80);
+    --color-accent: oklch(0.78 0.15 60);
+    --color-accent-fg: oklch(0.17 0.02 60);
+    --color-border: oklch(0.38 0.006 80);
   }
 }
 

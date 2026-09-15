@@ -1,0 +1,23 @@
+{
+  "main": {
+    "name": "Klartext",
+    "claim": "Kleine Software, klar gebaut.",
+    "intro": "Klartext baut Insellösungen, Websites und Web-Apps für kleine Unternehmen und Teams. Verständlich erklärt, ohne Fachchinesisch, mit ehrlichen Aussagen zu Aufwand, Nutzen und Grenzen – bevor eine Zeile Code entsteht.",
+    "location": "Rosenheim, Bayern",
+    "email": "studsandph@gmail.com",
+    "services": [
+      {
+        "title": "Insellösungen",
+        "description": "Kleine Werkzeuge für einen konkreten Prozess: eine Bestandsliste, ein Kalender, ein Export, der bisher von Hand lief. Klein genug, um in Wochen fertig zu sein, nicht in Quartalen."
+      },
+      {
+        "title": "Websites",
+        "description": "Statisch gebaute Seiten, die schnell laden, ohne Cookies auskommen und sich ohne Agentur pflegen lassen. Inhalt ändern heißt: eine Datei bearbeiten."
+      },
+      {
+        "title": "Web-Apps",
+        "description": "Anwendungen im Browser, wenn eine Tabelle nicht mehr reicht: mit sauberer Datenstruktur, nachvollziehbarer Logik und Dokumentation, die auch später noch jemand versteht."
+      }
+    ]
+  }
+}

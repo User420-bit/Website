@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#1a1f3a"/>
+  <!-- Platzhalter bis das Klartext-Logo als Datei vorliegt: oranges Symbol, weisses K. -->
+  <rect width="64" height="64" rx="14" fill="#d95f0e"/>
   <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle"
-    font-family="ui-sans-serif,system-ui,sans-serif" font-size="28" font-weight="700" fill="#f0f4ff">P</text>
+    font-family="ui-sans-serif,system-ui,sans-serif" font-size="34" font-weight="700" fill="#ffffff">K</text>
 </svg>
