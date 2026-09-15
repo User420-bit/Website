@@ -18,7 +18,8 @@ const addressComplete = legal.street !== null && legal.zipCity !== null
   <section>
     <h2>Diensteanbieter</h2>
     <p>
-      {legal.name}<br />
+      {legal.company}<br />
+      Inhaber: {legal.name}<br />
       {
         addressComplete ? (
           <>

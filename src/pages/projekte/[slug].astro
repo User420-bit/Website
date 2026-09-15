@@ -20,10 +20,10 @@ const { Content } = await render(projekt)
 const data = projekt.data
 ---
 
-<BaseLayout title={`${data.title} – Projekt`} description={data.summary}>
+<BaseLayout title={`${data.title} – Klartext`} description={data.summary}>
   <article class="py-12 sm:py-16">
-    <a class="text-sm text-fg-muted no-underline hover:text-accent" href={href('/#projekte')}>
-      &larr; Alle Projekte
+    <a class="text-sm text-fg-muted no-underline hover:text-accent" href={href('/#arbeiten')}>
+      &larr; Alle Arbeiten
     </a>
 
     <div class="mt-6 flex flex-wrap items-center gap-3">
@@ -156,7 +156,7 @@ const data = projekt.data
     {
       data.learnings.length > 0 && (
         <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Was ich gelernt habe</h2>
+          <h2 class="text-xl font-semibold tracking-tight">Erkenntnisse</h2>
           <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
             {data.learnings.map((learning) => (
               <li>{learning}</li>

@@ -14,13 +14,14 @@ export function href(path: string): string {
 
 /**
  * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
- * "Leistungen" hat "Kenntnisse" verdrängt: Wer als Kunde kommt, sucht zuerst,
- * was er bekommen kann. Kenntnisse bleiben per Scroll und Sprungmarke erreichbar.
+ * "Leistungen" steht vorn: Wer als Kunde kommt, sucht zuerst, was er bekommen
+ * kann. "Arbeiten" sind die Belege dazu, "Werkzeuge" bleiben per Scroll und
+ * Sprungmarke erreichbar.
  */
 export const NAV_ITEMS = [
-  { id: 'projekte', label: 'Projekte' },
   { id: 'leistungen', label: 'Leistungen' },
-  { id: 'ueber-mich', label: 'Über mich' },
+  { id: 'arbeiten', label: 'Arbeiten' },
+  { id: 'ueber', label: 'Über' },
   { id: 'kontakt', label: 'Kontakt' },
 ] as const
 

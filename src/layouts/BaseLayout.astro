@@ -13,8 +13,8 @@ interface Props {
 }
 
 const { title, description, isHome = false, noindex = false } = Astro.props
-const profile = await getEntry('profile', 'main')
-if (!profile) throw new Error('src/content/profile.json: Eintrag "main" fehlt.')
+const company = await getEntry('company', 'main')
+if (!company) throw new Error('src/content/company.json: Eintrag "main" fehlt.')
 ---
 
 <!doctype html>
@@ -23,10 +23,10 @@ if (!profile) throw new Error('src/content/profile.json: Eintrag "main" fehlt.')
     <BaseHead title={title} description={description} noindex={noindex} />
   </head>
   <body class="flex min-h-dvh flex-col">
-    <Header isHome={isHome} name={profile.data.name} />
+    <Header isHome={isHome} name={company.data.name} />
     <main id="inhalt" class="mx-auto w-full max-w-5xl flex-1 px-4">
       <slot />
     </main>
-    <Footer name={profile.data.name} />
+    <Footer name={company.data.name} />
   </body>
 </html>

@@ -31,7 +31,7 @@ const projektRouten = Object.fromEntries(
 
 /** Route -> erwartete H1. */
 const ROUTES = {
-  '': 'Pharrel Sandjo Djomou',
+  '': 'Kleine Software, klar gebaut.',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
   ...projektRouten,

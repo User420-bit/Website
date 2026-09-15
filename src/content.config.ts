@@ -16,18 +16,44 @@ const socialSchema = z.object({
   linkedin: z.url().nullable(),
 })
 
+/**
+ * Das Unternehmen. Trägt Header, Footer, Hero und Leistungen — die Seite
+ * dreht sich um Klartext, nicht um die Person dahinter.
+ */
+const company = defineCollection({
+  loader: file('src/content/company.json'),
+  schema: z.object({
+    name: z.string(),
+    /** Die H1 der Startseite. `scripts/verify-build.mjs` erwartet denselben Text. */
+    claim: z.string(),
+    intro: z.string(),
+    location: z.string(),
+    email: z.email(),
+    services: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .min(1),
+  }),
+})
+
+/**
+ * Die Person hinter Klartext. Erscheint auf der Startseite nur in der
+ * Sektion "Über Klartext" und im Impressum (dort verlangt § 5 DDG den Namen).
+ */
 const profile = defineCollection({
   loader: file('src/content/profile.json'),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
+      role: z.string(),
       subtitle: z.string(),
       institution: z.string(),
-      location: z.string(),
-      /** Zeile im Hero: "sucht Werkstudentenstelle ab ..." — null blendet sie aus. */
-      availability: z.string().nullable(),
-      intro: z.string(),
-      bullets: z.array(z.string()).min(1),
+      /** Dezenter Hinweis auf Werkstudentenstellen — null blendet ihn aus. */
+      openTo: z.string().nullable(),
       social: socialSchema,
       portrait: image().nullable(),
       portraitAlt: z.string().nullable(),
@@ -144,17 +170,6 @@ const leistungen = defineCollection({
   }),
 })
 
-const study = defineCollection({
-  loader: file('src/content/study.json'),
-  schema: z.object({
-    order: z.number().int(),
-    category: z.string(),
-    title: z.string(),
-    items: z.array(z.string()).min(1),
-    note: z.string().nullable(),
-  }),
-})
-
 /**
  * Rechtsangaben. `street` und `zipCity` dürfen `null` sein, damit lokale
  * Entwicklung ohne Pharrels Anschrift möglich ist — der Deploy-Workflow ruft
@@ -169,6 +184,8 @@ const placeholderMessage =
 const legal = defineCollection({
   loader: file('src/content/legal.json'),
   schema: z.object({
+    /** Bezeichnung des Einzelunternehmens; `name` bleibt der Inhaber. */
+    company: z.string().refine(noPlaceholder, placeholderMessage),
     name: z.string().refine(noPlaceholder, placeholderMessage),
     street: z.string().nullable().refine(noPlaceholder, placeholderMessage),
     zipCity: z.string().nullable().refine(noPlaceholder, placeholderMessage),
@@ -186,4 +203,13 @@ const contact = defineCollection({
   }),
 })
 
-export const collections = { profile, about, projekte, leistungen, skills, study, legal, contact }
+export const collections = {
+  company,
+  profile,
+  about,
+  projekte,
+  leistungen,
+  skills,
+  legal,
+  contact,
+}
