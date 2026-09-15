@@ -12,4 +12,8 @@ features:
 learnings: []
 ---
 
-Tool zur Koordination von Verfügbarkeiten in kleinen Teams.
+Tool zur Koordination von Verfügbarkeiten in kleinen Teams: Wer ist wann da, wo überschneidet es
+sich, was lässt sich exportieren.
+
+Stand: Prototyp. Es gibt noch keinen öffentlichen Code und keine dokumentierten Erkenntnisse; die
+Referenz steht hier, weil sie zeigt, welche Art Insellösung Klartext baut – nicht als fertiges Produkt.

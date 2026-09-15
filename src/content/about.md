@@ -1,19 +1,19 @@
 ---
 values:
-  - title: Ehrlichkeit
-    description: Transparenz über Können und Lücken – keine Show.
+  - title: Klartext
+    description: Was geht, was nicht geht und was es kostet – vor dem Projekt, nicht danach.
   - title: Struktur
     description: Saubere Architektur, lesbarer Code, dokumentierte Entscheidungen.
   - title: Pragmatismus
-    description: Die einfachste Lösung, die das Problem wirklich löst.
-  - title: Lernorientierung
-    description: Jedes Projekt soll einen klaren Lerngewinn bringen.
+    description: Die einfachste Lösung, die das Problem wirklich löst. Kein Framework um des Frameworks willen.
+  - title: Lernen
+    description: Jedes Projekt bringt einen klaren Erkenntnisgewinn, und der steht offen auf jeder Referenzseite.
 ---
 
-Ich bin Pharrel, Student der Wirtschaftsinformatik an der TH Rosenheim. Mich begeistert die
-Schnittstelle zwischen Technik und Geschäftslogik – genau dort, wo gute Software echten Mehrwert
-schafft.
+Klartext ist ein kleines Softwareunternehmen aus Rosenheim. Der Name ist das Programm: Anfragen
+werden in verständlicher Sprache beantwortet, Aufwände ehrlich geschätzt, und wo ein Werkzeug von
+der Stange reicht, wird das gesagt, statt etwas Neues zu bauen.
 
-Aktuell befinde ich mich in einer Lernphase: ich baue mein Fundament systematisch aus, vertiefe
-Konzepte praktisch in eigenen Projekten und nutze AI-Tools bewusst als Verstärker, nicht als Ersatz
-fürs Verstehen.
+Hinter Klartext steht Pharrel Sandjo Djomou, Wirtschaftsinformatik-Student an der TH Rosenheim.
+AI-Werkzeuge kommen bewusst zum Einsatz und werden offen deklariert – jede Referenz trägt ein Badge,
+ob sie eigenständig oder AI-unterstützt entstanden ist.
