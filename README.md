@@ -28,8 +28,9 @@ automatisch.
 | Was                          | Datei                            |
 | ---------------------------- | -------------------------------- |
 | Name, Intro, Links, Portrait | `src/content/profile.json`       |
-| Text und Werte "Über mich"   | `src/content/about.md`           |
+| Text, Werte, Arbeitsweise    | `src/content/about.md`           |
 | Ein Projekt                  | `src/content/projekte/<name>.md` |
+| Leistungen-Gruppen           | `src/content/leistungen.json`    |
 | Kenntnisse-Gruppen           | `src/content/skills.json`        |
 | Studium-Schwerpunkte         | `src/content/study.json`         |
 | Kontakt-Abschnitt            | `src/content/contact.json`       |
@@ -44,11 +45,16 @@ Neue Datei `src/content/projekte/mein-projekt.md`:
 title: Mein Projekt
 summary: Ein Satz, der erklärt, was es tut.
 techStack: [Java, PostgreSQL]
-category: eigenstaendig # oder: ai-unterstuetzt
+kind: eigenes-produkt # oder: kundenprojekt, prototyp, studienprojekt
+period: März 2026
+status: Läuft, nächster Schritt ist X # oder: null
 github: https://github.com/<nutzer>/<repo> # oder: null
-order: 4 # Reihenfolge auf der Startseite
+live: https://example.com # oder: null
+order: 4 # Reihenfolge auf der Startseite, kleiner zuerst
 features:
   - Was es kann
+engineering:
+  - Welche technische Entscheidung das Projekt trägt
 learnings:
   - Was ich dabei gelernt habe
 ---
@@ -57,7 +63,9 @@ Der Fließtext hier erscheint als Überblick auf der Projektseite.
 ```
 
 Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf der Startseite
-und die Detailseite entstehen automatisch.
+und die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
+ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
+als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
 ### Ein Bild hinzufügen
 
@@ -68,7 +76,7 @@ optimiert.
 
 ### Felder, die `null` sein dürfen
 
-`github`, `linkedin`, `portrait`, `availability`, `street` und `zipCity` akzeptieren
+`github`, `live`, `status`, `linkedin`, `portrait`, `availability`, `street` und `zipCity` akzeptieren
 `null`. Das bedeutet "noch nicht bestätigt" und wird nirgends gerendert — ein toter
 Link ist schlechter als kein Link. Ein Platzhalter in eckigen Klammern (`[PLZ Ort]`)
 wird vom Schema abgelehnt und bricht den Build.

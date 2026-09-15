@@ -45,6 +45,20 @@ const about = defineCollection({
         }),
       )
       .min(1),
+    /**
+     * Arbeitsweise, aus den Commit-Historien ablesbar. Ersetzt das frühere
+     * Badge "eigenständig / AI-unterstützt" pro Projekt: Fast alles seit 2026
+     * ist mit Claude Code entstanden, ein Badge auf jeder Karte trägt dann
+     * keine Information mehr. Ehrlich ist die Beschreibung an einer Stelle.
+     */
+    workflow: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .min(1),
   }),
 })
 
@@ -55,9 +69,18 @@ const projekte = defineCollection({
       title: z.string(),
       summary: z.string(),
       techStack: z.array(z.string()).min(1),
-      category: z.enum(['eigenstaendig', 'ai-unterstuetzt']),
+      /** Art des Projekts — für Kunden und Arbeitgeber lesbarer als "eigenständig / AI-unterstützt". */
+      kind: z.enum(['kundenprojekt', 'eigenes-produkt', 'prototyp', 'studienprojekt']),
+      /** Zeitraum als Text, z. B. "Juli – September 2026". */
+      period: z.string(),
+      /** Stand oder nächster Schritt, z. B. "Live, M6 Balancing folgt". null blendet aus. */
+      status: z.string().nullable().default(null),
       github: z.url().nullable(),
+      /** Live-Demo oder Kundenseite. null = noch nicht gelauncht oder nicht öffentlich. */
+      live: z.url().nullable().default(null),
       features: z.array(z.string()).default([]),
+      /** Technische Entscheidungen, die das Projekt tragen. */
+      engineering: z.array(z.string()).default([]),
       learnings: z.array(z.string()).default([]),
       screenshots: z
         .array(
@@ -91,6 +114,30 @@ const skills = defineCollection({
         z.object({
           name: z.string(),
           note: z.string(),
+        }),
+      )
+      .min(1),
+  }),
+})
+
+/**
+ * Leistungen: was aus den gelieferten Projekten ableitbar ist. Jede Gruppe
+ * nennt in `evidence` die Projekte, die den Anspruch belegen — ohne Beleg
+ * kein Eintrag.
+ */
+const leistungen = defineCollection({
+  loader: file('src/content/leistungen.json'),
+  schema: z.object({
+    order: z.number().int(),
+    title: z.string(),
+    description: z.string(),
+    items: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          /** Slugs aus `src/content/projekte/`, werden verlinkt. */
+          evidence: z.array(z.string()).default([]),
         }),
       )
       .min(1),
@@ -139,4 +186,4 @@ const contact = defineCollection({
   }),
 })
 
-export const collections = { profile, about, projekte, skills, study, legal, contact }
+export const collections = { profile, about, projekte, leistungen, skills, study, legal, contact }

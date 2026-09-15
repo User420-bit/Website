@@ -8,20 +8,33 @@
  * genau eine H1 mit dem erwarteten Text, hat Title/Description/Canonical, und
  * kein interner Link zeigt ins Leere.
  */
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 const DIST = 'dist'
 const BASE = '/Website/'
+
+/**
+ * Projektrouten kommen aus dem Content, nicht aus einer Liste hier: Jede Datei
+ * in `src/content/projekte/` muss als Seite gebaut sein und ihren `title` als
+ * H1 tragen. Sonst veraltet diese Pruefung mit dem naechsten Projekt.
+ */
+const PROJEKTE_DIR = 'src/content/projekte'
+const projektRouten = Object.fromEntries(
+  readdirSync(PROJEKTE_DIR)
+    .filter((name) => name.endsWith('.md'))
+    .map((name) => {
+      const title = readFileSync(join(PROJEKTE_DIR, name), 'utf8').match(/^title:\s*(.+)$/m)?.[1]
+      return [`projekte/${name.replace(/\.md$/, '')}`, title?.trim()]
+    }),
+)
 
 /** Route -> erwartete H1. */
 const ROUTES = {
   '': 'Pharrel Sandjo Djomou',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
-  'projekte/wawi-mvp': 'wawi-mvp',
-  'projekte/sonor': 'Sonor',
-  'projekte/availably': 'Availably',
+  ...projektRouten,
 }
 
 const errors = []

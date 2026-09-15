@@ -2,9 +2,10 @@
 title: Sonor
 summary: Music-Discovery-App für iOS – AI-unterstützt entwickelt.
 techStack: [SwiftUI, iOS]
-category: ai-unterstuetzt
+kind: prototyp
+period: Dezember 2025
 github: null
-order: 2
+order: 10
 features:
   - Genre-basierte Empfehlungen
   - Native SwiftUI-Komponenten

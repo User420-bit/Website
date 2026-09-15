@@ -2,9 +2,10 @@
 title: wawi-mvp
 summary: Warenwirtschafts-System als CLI-Anwendung mit Domain-Driven Design.
 techStack: [Java, DDD, CLI, Maven]
-category: eigenstaendig
+kind: studienprojekt
+period: Dezember 2025
 github: null
-order: 1
+order: 9
 features:
   - Artikel-, Lager- und Bewegungsverwaltung
   - Domain Events für Bestandsänderungen

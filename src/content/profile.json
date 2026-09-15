@@ -5,11 +5,11 @@
     "institution": "TH Rosenheim",
     "location": "Rosenheim, Bayern",
     "availability": null,
-    "intro": "Student der Wirtschaftsinformatik mit Fokus auf saubere Software-Architektur, pragmatische Lösungen und ehrliche Kommunikation. Auf der Suche nach einer Werkstudentenstelle im Raum Rosenheim.",
+    "intro": "Student der Wirtschaftsinformatik, der seit März 2026 Websites, Web-Apps und ein Browser-Spiel gebaut und ausgeliefert hat – für Kunden und als eigene Produkte. Offen für Projektaufträge und eine Werkstudentenstelle im Raum Rosenheim.",
     "bullets": [
-      "Fundament in Informatik, BWL und Mathematik",
-      "Erfahrung mit Java, Swift, TypeScript und SQL",
-      "Strukturiert, lernbereit, transparent über Stärken und Lücken"
+      "Zwei Kundenprojekte 2026: eine Logistikberatung, ein Kosmetik-Shop",
+      "Stack: TypeScript, Python, Astro, Next.js, FastAPI, Postgres, Docker",
+      "Arbeitsweise: Plan vor Code, Pull Requests, dokumentierte Entscheidungen"
     ],
     "social": {
       "email": "studsandph@gmail.com",

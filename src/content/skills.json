@@ -4,67 +4,84 @@
     "title": "Sprachen",
     "description": "Womit ich Code schreibe, und wie sicher.",
     "items": [
+      { "name": "TypeScript / JavaScript", "note": "Täglich – Web, Spiele, Tooling" },
+      { "name": "Python", "note": "Backends mit FastAPI und Flask, Tooling, Tests" },
+      { "name": "Java", "note": "Hauptsprache im Studium" },
+      { "name": "SQL", "note": "Modellierung, Migrationen, Volltextsuche" },
+      { "name": "C#, Swift, Shell", "note": "Punktuell – Unity, iOS, Dev-Skripte" }
+    ]
+  },
+  "frontend": {
+    "order": 2,
+    "title": "Web-Frontend",
+    "description": "Vom statischen Portfolio bis zur animierten Kundenseite.",
+    "items": [
+      { "name": "Astro", "note": "Statische Seiten, Content Collections" },
+      { "name": "Next.js 16, React", "note": "App Router, Dashboards mit shadcn/ui" },
+      { "name": "Tailwind CSS 4", "note": "Eigene Design-Tokens statt Default-Look" },
+      { "name": "GSAP, Lenis, Vite", "note": "Scroll-Choreografie mit einer Zeitbasis" },
+      { "name": "Canvas 2D, SVG", "note": "Spiele, prozedurale Grafik, Baum-Rendering" }
+    ]
+  },
+  "backend": {
+    "order": 3,
+    "title": "Backend & Datenbanken",
+    "description": "Kleine, nachvollziehbare Backends mit sauberem Schema.",
+    "items": [
+      { "name": "FastAPI, Flask", "note": "Python-Backends, Auth, Rate-Limiting" },
+      { "name": "Next.js Server, Node", "note": "Server-Logik im selben Repo wie das UI" },
+      { "name": "SQLite, Postgres, Redis", "note": "Lokal bis Serverless, FTS5 für Suche" },
       {
-        "name": "Java",
-        "note": "Hauptsprache im Studium"
-      },
-      {
-        "name": "Swift",
-        "note": "Eigene Vertiefung für iOS"
-      },
-      {
-        "name": "TypeScript / JavaScript",
-        "note": "Web-Frontend und kleine Tools"
-      },
-      {
-        "name": "SQL",
-        "note": "Datenbankabfragen und -modellierung"
+        "name": "Drizzle, Prisma, SQLAlchemy, Alembic",
+        "note": "Migrationen als einzige Schema-Quelle"
       }
     ]
   },
-  "werkzeuge": {
-    "order": 2,
-    "title": "Werkzeuge",
-    "description": "Womit ich täglich arbeite.",
+  "deploy": {
+    "order": 4,
+    "title": "Hosting & Deploy",
+    "description": "Jeder Push geht geprüft live – oder gar nicht.",
     "items": [
-      {
-        "name": "IntelliJ IDEA",
-        "note": "IDE für Java-Projekte"
-      },
-      {
-        "name": "VS Code",
-        "note": "Editor für Web-Projekte"
-      },
-      {
-        "name": "Git / GitHub",
-        "note": "Versionskontrolle und Hosting"
-      },
-      {
-        "name": "macOS",
-        "note": "Hauptbetriebssystem für Entwicklung"
-      }
+      { "name": "GitHub Actions", "note": "CI mit Typecheck, Lint, Build-Prüfung" },
+      { "name": "GitHub Pages, Cloudflare Pages", "note": "Statische Seiten und PWAs" },
+      { "name": "Vercel", "note": "Serverless Functions und Blob Storage" },
+      { "name": "Docker, Docker Compose", "note": "Dev-Stacks, die Kunden ohne Setup starten" }
     ]
   },
   "ai": {
-    "order": 3,
+    "order": 5,
     "title": "AI-Werkzeuge",
     "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen.",
     "items": [
       {
-        "name": "ChatGPT",
-        "note": "Brainstorming, Erklärungen, Code-Reviews"
+        "name": "Claude Code",
+        "note": "Fast alle Projekte seit 2026 – in Branches, PRs und dokumentierten Entscheidungen"
+      },
+      { "name": "Ollama", "note": "Lokale Sprachmodelle in eigenen Anwendungen" },
+      { "name": "Higgsfield, Kling, Nano Banana", "note": "Bild- und Videoassets nach Briefing" },
+      { "name": "ChatGPT, GitHub Copilot", "note": "Erklärungen, Reviews, Inline-Vorschläge" }
+    ]
+  },
+  "qualitaet": {
+    "order": 6,
+    "title": "Qualität & Sicherheit",
+    "description": "Was ich prüfe, bevor ich etwas als fertig bezeichne.",
+    "items": [
+      {
+        "name": "pytest, headless Harnesse",
+        "note": "Simulationen ohne Browser, Balance-Simulatoren"
       },
       {
-        "name": "GitHub Copilot",
-        "note": "Inline-Vorschläge im Editor"
+        "name": "Playtest- und Messreports",
+        "note": "Entscheidungen mit Zahlen statt Bauchgefühl"
       },
       {
-        "name": "Perplexity",
-        "note": "Recherche mit Quellenangabe"
+        "name": "Security-Härtung",
+        "note": "CVE-Fixes, Rate-Limiting, Prototype-Pollution-Schutz, Mandanten-Isolation"
       },
       {
-        "name": "GitHub Spark",
-        "note": "Rapid Prototyping von Web-Apps"
+        "name": "Datenschutz by default",
+        "note": "Keine Tracker, Daten lokal, keine offene Registrierung ohne Grund"
       }
     ]
   }
