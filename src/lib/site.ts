@@ -12,7 +12,12 @@ export function href(path: string): string {
   return `${base}${withSlash}${hash ? `#${hash}` : ''}`
 }
 
-/** Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht. */
+/**
+ * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
+ * "Leistungen" steht vorn: Wer als Kunde kommt, sucht zuerst, was er bekommen
+ * kann. "Arbeiten" sind die Belege dazu, "Werkzeuge" bleiben per Scroll und
+ * Sprungmarke erreichbar.
+ */
 export const NAV_ITEMS = [
   { id: 'leistungen', label: 'Leistungen' },
   { id: 'arbeiten', label: 'Arbeiten' },
@@ -20,7 +25,9 @@ export const NAV_ITEMS = [
   { id: 'kontakt', label: 'Kontakt' },
 ] as const
 
-export const CATEGORY_LABELS: Record<string, string> = {
-  eigenstaendig: 'Eigenständig',
-  'ai-unterstuetzt': 'AI-unterstützt',
+export const KIND_LABELS: Record<string, string> = {
+  kundenprojekt: 'Kundenprojekt',
+  'eigenes-produkt': 'Eigenes Produkt',
+  prototyp: 'Prototyp',
+  studienprojekt: 'Studienprojekt',
 }

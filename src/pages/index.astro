@@ -13,6 +13,8 @@ const aboutEntry = (await getEntry('about', 'about'))!
 const { Content: AboutBody } = await render(aboutEntry)
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
+const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
 const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
 
 const description = `${company.name} – Insellösungen, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
@@ -45,7 +47,13 @@ const secondaryButton =
     </div>
   </section>
 
-  {/* 2. Leistungen — drei Dinge, die Klartext baut. */}
+  {
+    /*
+    2. Leistungen — erst die drei Arten Software, die Klartext baut, dann die
+    Einzelpunkte. Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne
+    Beleg kein Eintrag, sonst wäre es eine Wunschliste.
+  */
+  }
   <Section
     id="leistungen"
     title="Leistungen"
@@ -62,13 +70,53 @@ const secondaryButton =
         ))
       }
     </ul>
+
+    <h3 class="mt-12 text-base font-semibold tracking-tight">Im Einzelnen</h3>
+    <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
+      Abgeleitet aus dem, was tatsächlich gebaut wurde. Hinter jedem Punkt steht das Projekt, das
+      ihn belegt.
+    </p>
+    <div class="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2">
+      {
+        leistungen.map((group) => (
+          <div class="rounded-lg border border-border bg-bg-elevated p-5">
+            <h4 class="text-base font-semibold tracking-tight">{group.data.title}</h4>
+            <p class="mt-1 text-sm text-fg-muted">{group.data.description}</p>
+            <ul class="mt-4 list-none space-y-4 p-0">
+              {group.data.items.map((item) => (
+                <li>
+                  <span class="block text-sm font-medium">{item.title}</span>
+                  <span class="block text-sm text-fg-muted">{item.description}</span>
+                  {item.evidence.length > 0 && (
+                    <span class="mt-1 block text-xs text-fg-muted">
+                      Beleg:{' '}
+                      {item.evidence.map((slug, i) => (
+                        <>
+                          {i > 0 && ', '}
+                          <a
+                            class="text-accent underline-offset-4"
+                            href={href(`/projekte/${slug}`)}
+                          >
+                            {projektTitel.get(slug) ?? slug}
+                          </a>
+                        </>
+                      ))}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
   </Section>
 
-  {/* 3. Arbeiten — der Beweis. Das Badge sagt offen, wie es entstanden ist. */}
+  {/* 3. Arbeiten — der Beweis. Das Badge sagt, um welche Art Projekt es geht. */}
   <Section
     id="arbeiten"
     title="Arbeiten"
-    intro="Referenzen auf einen Blick. Das Badge sagt, ob eigenständig oder AI-unterstützt entstanden – beides steht hier nebeneinander, nichts liegt hinter einem Tab."
+    intro="Was seit März 2026 gebaut und ausgeliefert wurde, neueste zuerst. Kundenprojekte, eigene Produkte, Prototypen und Studienarbeiten stehen nebeneinander — das Badge sagt, was es ist, nichts liegt hinter einem Tab."
     class="reveal"
   >
     <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,7 +128,8 @@ const secondaryButton =
               title={projekt.data.title}
               summary={projekt.data.summary}
               techStack={projekt.data.techStack}
-              category={projekt.data.category}
+              kind={projekt.data.kind}
+              period={projekt.data.period}
             />
           </li>
         ))
@@ -88,7 +137,12 @@ const secondaryButton =
     </ul>
   </Section>
 
-  {/* 4. Arbeitsweise — die vier Werte aus about.md. */}
+  {
+    /*
+    4. Arbeitsweise — die vier Werte aus about.md, dahinter das, was in den
+    Commit-Historien nachlesbar ist. Ersetzt das frühere Badge pro Projekt.
+  */
+  }
   <Section id="arbeitsweise" title="Arbeitsweise" class="reveal">
     <ul class="grid list-none grid-cols-1 gap-x-8 gap-y-6 p-0 sm:grid-cols-2">
       {
@@ -100,13 +154,28 @@ const secondaryButton =
         ))
       }
     </ul>
+
+    <h3 class="mt-12 text-base font-semibold tracking-tight">Wie gearbeitet wird</h3>
+    <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
+      Aus den Commit-Historien ablesbar, nicht aus einem Leitbild.
+    </p>
+    <ul class="mt-4 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
+      {
+        aboutEntry.data.workflow.map((item) => (
+          <li>
+            <span class="block text-sm font-medium">{item.title}</span>
+            <span class="mt-1 block text-sm text-fg-muted">{item.description}</span>
+          </li>
+        ))
+      }
+    </ul>
   </Section>
 
   {/* 5. Werkzeuge — ohne Prozentbalken, mit Einordnung pro Eintrag. */}
   <Section
     id="werkzeuge"
     title="Werkzeuge"
-    intro="Womit Klartext arbeitet, und wofür. Ohne Prozentbalken und Sterne."
+    intro="Was in den letzten sechs Monaten tatsächlich im Einsatz war. Ohne Prozentbalken und Sterne, stattdessen eine kurze Einordnung pro Eintrag."
     class="reveal"
   >
     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">

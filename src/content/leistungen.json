@@ -1,0 +1,110 @@
+{
+  "websites": {
+    "order": 1,
+    "title": "Websites & Landing Pages",
+    "description": "Für Selbstständige und kleine Firmen, die aus dem Baukasten raus wollen.",
+    "items": [
+      {
+        "title": "One-Page- und Portfolio-Websites",
+        "description": "Scroll-gesteuertes Design in echtem, schnellem Code statt Template. Plan und Asset-Briefing vor der ersten Zeile.",
+        "evidence": ["pointcare"]
+      },
+      {
+        "title": "Statische Websites mit Astro",
+        "description": "Kein Tracking, keine Cookies, DSGVO-freundlich. Inhalte pflegbar über Markdown-Dateien statt Admin-Panel.",
+        "evidence": []
+      },
+      {
+        "title": "Shop- und Firmenseiten als Prototyp",
+        "description": "Ist-Analyse, Konkurrenzanalyse, Roadmap und ein klickbarer Prototyp mit echten Produktdaten.",
+        "evidence": ["justbeauty"]
+      },
+      {
+        "title": "KI-generierte Bild- und Videoassets",
+        "description": "Briefing, Prompts und Encoding-Pipeline mit Higgsfield, Kling und Nano Banana – integriert und auf Ladezeit geprüft.",
+        "evidence": ["pointcare"]
+      },
+      {
+        "title": "Deployment mit automatischem Deploy",
+        "description": "GitHub Pages, Cloudflare Pages oder Vercel. Jeder Push geht geprüft live.",
+        "evidence": ["tiefgang", "memorytree"]
+      }
+    ]
+  },
+  "webapps": {
+    "order": 2,
+    "title": "Web-Apps & interne Tools",
+    "description": "Wenn Excel nicht mehr reicht, aber eine große Suite zu viel ist.",
+    "items": [
+      {
+        "title": "Dashboards und Verwaltungstools",
+        "description": "Rechnungen, Fristen, Dokumente, Berichte, PDF- und CSV-Export – mit Next.js oder FastAPI.",
+        "evidence": ["kleinkram"]
+      },
+      {
+        "title": "Self-hosted Apps für kleine Teams",
+        "description": "Auch auf Kleinstgeräten wie einem Raspberry Pi. Die Daten bleiben bei dir.",
+        "evidence": ["notelist"]
+      },
+      {
+        "title": "Mandantenfähige Web-Apps",
+        "description": "Auth, Einladungscodes, Rate-Limiting und Security-Härtung – mit Regressionstest für die Datentrennung.",
+        "evidence": ["memorytree"]
+      },
+      {
+        "title": "Datenbankmodellierung und Migrationen",
+        "description": "SQLite, Postgres, Drizzle, Prisma, SQLAlchemy und Alembic.",
+        "evidence": ["memorytree", "kleinkram"]
+      },
+      {
+        "title": "Docker-Setups",
+        "description": "Damit Kunden oder Kollegen ein Projekt ohne Installationsaufwand starten können.",
+        "evidence": ["justbeauty", "kleinkram"]
+      }
+    ]
+  },
+  "spiele": {
+    "order": 3,
+    "title": "Browser-Spiele & Interaktives",
+    "description": "Ohne Game-Engine, ohne App-Store, direkt im Browser.",
+    "items": [
+      {
+        "title": "Vollständige Browser-Spiele",
+        "description": "TypeScript und Canvas 2D, mobile-first, als PWA offline spielbar.",
+        "evidence": ["tiefgang", "dealersim"]
+      },
+      {
+        "title": "Spielmechanik, Balancing und Simulation",
+        "description": "Deterministische Weltgenerierung, headless Balance-Simulatoren, Playtest-Auswertung mit Messdaten.",
+        "evidence": ["tiefgang"]
+      },
+      {
+        "title": "Prozedurale Grafik und generativer Sound",
+        "description": "Sprites und Klänge aus Code statt aus Asset-Dateien.",
+        "evidence": ["tiefgang"]
+      }
+    ]
+  },
+  "ki": {
+    "order": 4,
+    "title": "KI-Integration & Konzept",
+    "description": "Lokale Modelle, wo Daten nicht raus dürfen. Analyse, bevor gebaut wird.",
+    "items": [
+      {
+        "title": "Lokale LLM-Anwendungen",
+        "description": "Ollama und Flask, mit Prompt-Engineering, Grounding-Prüfungen und Testsuite.",
+        "evidence": ["feynman"]
+      },
+      {
+        "title": "Ist-Analyse und Rework-Plan",
+        "description": "Bestehende Website oder App prüfen, Plan mit Begründungen schreiben, Umsetzungsstand nachhalten.",
+        "evidence": ["justbeauty"]
+      },
+      {
+        "title": "Technische Dokumentation",
+        "description": "Hält auch verworfene Alternativen und Messdaten fest, damit Entscheidungen später nachvollziehbar bleiben.",
+        "evidence": ["feynman", "dealersim"]
+      }
+    ]
+  }
+}

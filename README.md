@@ -31,8 +31,9 @@ automatisch.
 | Was                                       | Datei                            |
 | ----------------------------------------- | -------------------------------- |
 | Firmenname, Claim (H1), Intro, Leistungen | `src/content/company.json`       |
+| Leistungen im Einzelnen, mit Belegen      | `src/content/leistungen.json`    |
 | Inhaber, Werkstudenten-Hinweis, Portrait  | `src/content/profile.json`       |
-| Text und Werte "Über Klartext"            | `src/content/about.md`           |
+| Text, Werte, Arbeitsweise                 | `src/content/about.md`           |
 | Eine Referenz                             | `src/content/projekte/<name>.md` |
 | Werkzeug-Gruppen                          | `src/content/skills.json`        |
 | Kontakt-Abschnitt                         | `src/content/contact.json`       |
@@ -57,11 +58,16 @@ Neue Datei `src/content/projekte/mein-projekt.md`:
 title: Mein Projekt
 summary: Ein Satz, der erklärt, was es tut.
 techStack: [Java, PostgreSQL]
-category: eigenstaendig # oder: ai-unterstuetzt
+kind: eigenes-produkt # oder: kundenprojekt, prototyp, studienprojekt
+period: März 2026
+status: Läuft, nächster Schritt ist X # oder: null
 github: https://github.com/<nutzer>/<repo> # oder: null
-order: 4 # Reihenfolge auf der Startseite
+live: https://example.com # oder: null
+order: 4 # Reihenfolge auf der Startseite, kleiner zuerst
 features:
   - Was es kann
+engineering:
+  - Welche technische Entscheidung das Projekt trägt
 learnings:
   - Welche Erkenntnis das Projekt gebracht hat
 ---
@@ -70,7 +76,9 @@ Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
 Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf der Startseite
-und die Detailseite entstehen automatisch.
+und die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
+ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
+als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
 ### Ein Bild hinzufügen
 
@@ -81,7 +89,8 @@ optimiert.
 
 ### Felder, die `null` sein dürfen
 
-`github`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity` akzeptieren
+`github`, `live`, `status`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity`
+akzeptieren
 `null`. Das bedeutet "noch nicht bestätigt" und wird nirgends gerendert — ein toter
 Link ist schlechter als kein Link. Ein Platzhalter in eckigen Klammern (`[PLZ Ort]`)
 wird vom Schema abgelehnt und bricht den Build.

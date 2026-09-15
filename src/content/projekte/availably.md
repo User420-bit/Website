@@ -2,9 +2,10 @@
 title: Availably
 summary: Verfügbarkeits-Management für kleine Teams – AI-unterstützt entwickelt.
 techStack: [TypeScript]
-category: ai-unterstuetzt
+kind: prototyp
+period: Dezember 2025
 github: null
-order: 3
+order: 11
 features:
   - Kalender-Sicht
   - Konfliktanzeige
