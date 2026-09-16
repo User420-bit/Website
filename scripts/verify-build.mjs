@@ -12,7 +12,7 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 const DIST = 'dist'
-const BASE = '/Website/'
+const BASE = '/'
 
 /**
  * Projektrouten kommen aus dem Content, nicht aus einer Liste hier: Jede Datei

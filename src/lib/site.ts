@@ -1,7 +1,7 @@
 /**
- * Baut einen internen Link inklusive Base-Pfad (`/Website/`) und mit
+ * Baut einen internen Link inklusive Base-Pfad und mit
  * abschliessendem Slash. Der Slash ist kein Schoenheitsfehler: GitHub Pages
- * leitet `/Website/impressum` sonst per 301 auf `/Website/impressum/` um, und
+ * leitet `/impressum` sonst per 301 auf `/impressum/` um, und
  * jeder interne Klick kostet einen zusaetzlichen Roundtrip.
  */
 export function href(path: string): string {

@@ -3,11 +3,11 @@ import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 
-// Kanonische Adresse der veröffentlichten Seite. Bei Umzug auf eine eigene
-// Domain hier und in `base` anpassen (siehe README, Abschnitt "Base-Pfad").
+// Kanonische Adresse der veröffentlichten Seite. Eigene Domain über
+// `public/CNAME`, daher kein Unterpfad (siehe README, Abschnitt "Domain").
 export default defineConfig({
-  site: 'https://user420-bit.github.io',
-  base: '/Website/',
+  site: 'https://web-klartext.de',
+  base: '/',
   trailingSlash: 'always',
   build: {
     format: 'directory',
