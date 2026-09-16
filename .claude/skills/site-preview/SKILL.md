@@ -41,15 +41,15 @@ Say so early rather than producing a broken preview:
 Find the build command and its output directory. Check `package.json` scripts and
 the framework config before guessing:
 
-| Stack | Build | Output | Base path lives in |
-| --- | --- | --- | --- |
-| Astro | `npm run build` | `dist` | `base` in `astro.config.*` |
-| Vite / SvelteKit static | `npm run build` | `dist` / `build` | `base` in `vite.config.*` / `svelte.config.js` |
-| Next static export | `npm run build` | `out` | `basePath` in `next.config.*` |
-| Nuxt generate | `npx nuxi generate` | `.output/public` | `app.baseURL` |
-| Eleventy / Jekyll | `npx @11ty/eleventy` / `bundle exec jekyll build` | `_site` | `pathPrefix` / `baseurl` |
-| Hugo | `hugo` | `public` | `baseURL` |
-| Plain HTML | — | the repo itself | usually none |
+| Stack                   | Build                                             | Output           | Base path lives in                             |
+| ----------------------- | ------------------------------------------------- | ---------------- | ---------------------------------------------- |
+| Astro                   | `npm run build`                                   | `dist`           | `base` in `astro.config.*`                     |
+| Vite / SvelteKit static | `npm run build`                                   | `dist` / `build` | `base` in `vite.config.*` / `svelte.config.js` |
+| Next static export      | `npm run build`                                   | `out`            | `basePath` in `next.config.*`                  |
+| Nuxt generate           | `npx nuxi generate`                               | `.output/public` | `app.baseURL`                                  |
+| Eleventy / Jekyll       | `npx @11ty/eleventy` / `bundle exec jekyll build` | `_site`          | `pathPrefix` / `baseurl`                       |
+| Hugo                    | `hugo`                                            | `public`         | `baseURL`                                      |
+| Plain HTML              | —                                                 | the repo itself  | usually none                                   |
 
 The base path matters more than it looks. A site built for `/Repo/` references
 every asset from there, and getting it wrong means a preview with no CSS.
