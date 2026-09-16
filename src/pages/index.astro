@@ -17,7 +17,7 @@ const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
 const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
 const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
 
-const description = `${company.name} – Insellösungen, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
+const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
 
 const primaryButton =
   'inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none'
@@ -57,7 +57,7 @@ const secondaryButton =
   <Section
     id="leistungen"
     title="Leistungen"
-    intro="Drei Arten von Software, ein Anspruch: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
+    intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
     class="reveal"
   >
     <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-3">
@@ -116,7 +116,7 @@ const secondaryButton =
   <Section
     id="arbeiten"
     title="Arbeiten"
-    intro="Was seit März 2026 gebaut und ausgeliefert wurde, neueste zuerst. Kundenprojekte, eigene Produkte, Prototypen und Studienarbeiten stehen nebeneinander — das Badge sagt, was es ist, nichts liegt hinter einem Tab."
+    intro="Kundenprojekte, eigene Produkte, Prototypen und Studienprojekte. Jede Karte sagt, um welche Art Projekt es sich handelt."
     class="reveal"
   >
     <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">

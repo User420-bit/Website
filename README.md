@@ -1,7 +1,7 @@
 # Klartext — Website
 
 Statisch generierte Website des Einzelunternehmens Klartext (Astro 7 + Tailwind CSS 4):
-Insellösungen, Websites und Web-Apps aus Rosenheim. Die Person hinter Klartext wird auf der
+kleine Programme, Websites und Web-Apps aus Rosenheim. Die Person hinter Klartext wird auf der
 Startseite nur in der Sektion "Über Klartext" genannt und im Impressum, wo § 5 DDG den Namen
 verlangt.
 

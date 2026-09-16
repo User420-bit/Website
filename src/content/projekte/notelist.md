@@ -1,6 +1,6 @@
 ---
 title: NoteList
-summary: Self-hosted Notizen auf einer Canvas mit Eltern-Kind-Verbindungen. Läuft auf einem Raspberry Pi Zero 2 W.
+summary: Notizen auf einer freien Fläche, verbunden wie ein Stammbaum. Läuft auf einem eigenen Kleinstrechner statt in einer Cloud.
 techStack: [Python, FastAPI, SQLite, Vanilla JS, Tailwind]
 kind: eigenes-produkt
 period: Mai – Juli 2026
