@@ -119,7 +119,7 @@ unter **Pages → Source** auf **GitHub Actions** stellen. Ohne diesen Schritt b
 `actions/configure-pages` mit `Get Pages site failed` ab — das war die Ursache,
 warum die Seite nie live ging.
 
-Live-URL nach der Aktivierung: <https://user420-bit.github.io/Website/>
+Live-URL nach der Aktivierung: <https://web-klartext.de/>
 
 ### Der Deploy bricht mit "Das Impressum ist unvollständig" ab
 
@@ -127,11 +127,23 @@ Das ist Absicht. Eine deutsche Website mit Impressumspflicht darf nicht ohne
 ladungsfähige Anschrift online gehen. `street` und `zipCity` in
 `src/content/legal.json` eintragen, dann läuft der Deploy.
 
-### Base-Pfad
+### Domain
 
-`astro.config.mjs` setzt `site: 'https://user420-bit.github.io'` und
-`base: '/Website/'`. Bei Umbenennung des Repositories oder Umzug auf eine eigene
-Domain beide Werte anpassen — und die Sitemap-Zeile in `public/robots.txt`.
+Die Seite läuft unter `https://web-klartext.de/`. `public/CNAME` teilt GitHub Pages
+die Domain mit, `astro.config.mjs` setzt `site: 'https://web-klartext.de'` und
+`base: '/'`. Bei einem Domainwechsel alle drei Stellen anpassen — und die
+Sitemap-Zeile in `public/robots.txt`.
+
+DNS beim Registrar:
+
+| Typ   | Name  | Wert                                                                                       |
+| ----- | ----- | ------------------------------------------------------------------------------------------ |
+| A     | `@`   | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`                 |
+| AAAA  | `@`   | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `user420-bit.github.io`                                                                    |
+
+Danach in den Repository-Settings unter **Pages** die Domain eintragen und
+**Enforce HTTPS** aktivieren, sobald das Zertifikat ausgestellt ist.
 
 Interne Links immer über den Helfer `href()` aus `src/lib/site.ts` bauen, damit der
 Base-Pfad und der abschließende Slash stimmen.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://user420-bit.github.io/Website/sitemap-index.xml
+Sitemap: https://web-klartext.de/sitemap-index.xml

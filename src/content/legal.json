@@ -2,10 +2,10 @@
   "main": {
     "company": "Klartext",
     "name": "Pharrel Sandjo Djomou",
-    "street": null,
-    "zipCity": null,
+    "street": "Kirchdorfer Straße 1b",
+    "zipCity": "83052 Bruckmühl",
     "country": "Deutschland",
-    "email": "studsandph@gmail.com",
+    "email": "info@web-klartext.de",
     "privacyLastUpdated": "2026-09"
   }
 }
