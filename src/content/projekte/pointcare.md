@@ -7,7 +7,7 @@ period: September 2026
 status: In Abnahme. Offen sind Portrait-Foto, Impressum, Kontaktformular und lokale Schriften.
 github: null
 live: null
-order: 2
+order: 1
 features:
   - Drei Leistungsbereiche (Lager & Intralogistik, Supply Chain, Transport) als Scroll-Choreografie
   - Hero mit Parallax und Standbildern mit Scroll-Zoom

@@ -7,7 +7,7 @@ period: Juli – August 2026
 status: Prototyp mit Testsuite. Latenz-Experimente dokumentiert.
 github: null
 live: null
-order: 6
+order: 7
 features:
   - Prüfer-Tutor-Architektur nach der Feynman-Methode
   - Läuft komplett lokal über Ollama – keine Daten verlassen den Rechner

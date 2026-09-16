@@ -7,7 +7,7 @@ period: Juli – September 2026
 status: Spielbar. Nächster Schritt ist M6 – Balancing und Beta mit 5 bis 10 Testspielern.
 github: null
 live: https://tiefgang.pages.dev
-order: 1
+order: 4
 features:
   - Core Loop mit drei Schichten, jede mit eigenen Gefahren
   - Vier Upgrade-Pfade und Verbrauchsgegenstände

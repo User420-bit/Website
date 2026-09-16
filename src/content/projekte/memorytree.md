@@ -7,7 +7,7 @@ period: Juli – August 2026
 status: Läuft auf Vercel. Öffentlich unter MIT-Lizenz.
 github: null
 live: null
-order: 4
+order: 5
 features:
   - Erinnerungen, Fotos und Meilensteine als organischer SVG-Baum
   - Timeline, Karte und Galerie als alternative Sichten

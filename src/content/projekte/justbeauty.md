@@ -7,7 +7,7 @@ period: September 2026
 status: Prototyp und Konzept liegen dem Kunden vor.
 github: null
 live: null
-order: 5
+order: 2
 features:
   - Ist-Analyse, Design-Rework, Tracking-Konzept und Roadmap
   - Konkurrenzanalyse als Battlecard
