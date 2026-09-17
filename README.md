@@ -44,10 +44,11 @@ Wer den Claim in `company.json` ändert, muss ihn auch in `scripts/verify-build.
 
 ### Logo einbauen
 
-Das Klartext-Logo liegt noch nicht als Datei vor. Bis dahin steht im Header ein oranges
-Quadrat mit "K" (`src/components/Header.astro`) und dasselbe Motiv als `public/favicon.svg`.
-Sobald das Logo da ist: SVG unter `src/assets/` ablegen, im Header statt des Platzhalter-Spans
-einbinden und `public/favicon.svg` ersetzen. Die Akzentfarbe steht in `src/styles/global.css`.
+Das Klartext-Logo liegt noch nicht als Datei vor. Bis dahin steht im Header die Wortmarke als
+reiner Text (`src/components/Header.astro`), und `public/favicon.svg` zeigt ein oranges Quadrat mit
+"K" als Platzhalter. Sobald das Logo da ist: SVG unter `src/assets/` ablegen, im Header neben der
+Wortmarke einbinden und `public/favicon.svg` ersetzen. Die Akzentfarbe steht in
+`src/styles/global.css`.
 
 ### Eine Referenz hinzufügen
 
@@ -75,9 +76,10 @@ learnings:
 Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
-Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf `/projekte/` (unter den
-ersten sechs nach `order` auch auf der Startseite) und die Detailseite entstehen automatisch,
-und `npm run test:build` prüft die neue Route ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
+Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/` und auf der
+Startseite (Kundenprojekte groß oben, danach die nächsten nach `order` als Index, insgesamt
+sechs) sowie die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
+ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
 ### Ein Bild hinzufügen
@@ -150,7 +152,8 @@ Base-Pfad und der abschließende Slash stimmen.
 
 ## Datenschutz
 
-Keine externen Schriften, kein Analytics, keine Cookies, keine Speicherung im
+Keine externen Schriften (die Hausschrift Instrument Sans liegt unter `src/assets/fonts/` und
+kommt vom eigenen Server; `npm run test:build` prüft das), kein Analytics, keine Cookies, keine Speicherung im
 Browser. Der Hell-/Dunkel-Modus folgt der Systemeinstellung und wird nicht
 gespeichert. Hosting durch GitHub (Microsoft) — Details in der
 Datenschutzerklärung der Seite.

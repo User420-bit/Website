@@ -5,3 +5,7 @@ package-lock.json
 .preview
 # AppleDouble-Dateien, die macOS auf exFAT-Datenträgern neben jeder Datei anlegt
 ._*
+
+# Parallele Git-Worktrees und Werkzeug-Zustand sind kein Quelltext der Seite
+.claude/worktrees
+.impeccable

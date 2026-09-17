@@ -1,18 +1,39 @@
 ---
+/**
+ * Abschnitt der Startseite. Eine Haarlinie oben, ab `lg` eine Randspalte mit
+ * Nummer und Ueberschrift, rechts der Inhalt. Die Nummer ist Ordnung fuers
+ * Auge, keine Information — deshalb `aria-hidden`.
+ */
 interface Props {
   id: string
   title: string
+  index?: string
   intro?: string
   class?: string
 }
 
-const { id, title, intro, class: className = '' } = Astro.props
+const { id, title, index, intro, class: className = '' } = Astro.props
 ---
 
-<section id={id} class:list={['py-14 sm:py-20', className]}>
-  <h2 class="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">{title}</h2>
-  {intro && <p class="mt-3 max-w-[65ch] text-fg-muted">{intro}</p>}
-  <div class="mt-8">
+<section
+  id={id}
+  class:list={[
+    'border-t border-border py-12 sm:py-16 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12',
+    className,
+  ]}
+>
+  <div>
+    {
+      index && (
+        <span aria-hidden="true" class="block text-sm text-fg-muted tabular-nums">
+          {index}
+        </span>
+      )
+    }
+    <h2 class="mt-1 text-xl font-semibold tracking-tight text-balance">{title}</h2>
+  </div>
+  <div class="mt-6 lg:mt-0">
+    {intro && <p class="prose-flow mb-8 max-w-[65ch] text-fg-muted">{intro}</p>}
     <slot />
   </div>
 </section>

@@ -23,15 +23,14 @@ export function firstSentence(text: string): string {
 
 /**
  * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
- * "Leistungen" steht vorn: Wer als Kunde kommt, sucht zuerst, was er bekommen
- * kann. "Arbeiten" sind die Belege dazu, "Werkzeuge" bleiben per Scroll und
- * Sprungmarke erreichbar.
+ * "Arbeiten" steht vorn: erst der Beleg, dann das Angebot. "Kontakt" fehlt
+ * hier, weil der Header dafuer die Schaltflaeche "Anfrage" traegt.
  */
 export const NAV_ITEMS = [
-  { id: 'leistungen', label: 'Leistungen' },
   { id: 'arbeiten', label: 'Arbeiten' },
+  { id: 'leistungen', label: 'Leistungen' },
+  { id: 'arbeitsweise', label: 'Arbeitsweise' },
   { id: 'ueber', label: 'Über' },
-  { id: 'kontakt', label: 'Kontakt' },
 ] as const
 
 /**

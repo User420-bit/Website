@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Arrow from '@/components/Arrow.astro'
+import { href } from '@/lib/site'
+
+const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
+---
+
+<BaseLayout
+  title="Werkzeuge – Klartext"
+  description="Womit Klartext arbeitet: Sprachen, Frameworks und Werkzeuge der letzten sechs Monate, jeweils mit kurzer Einordnung."
+>
+  <article class="py-12 sm:py-16">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/#ueber')}
+    >
+      <Arrow direction="left" /> Zur Startseite
+    </a>
+
+    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">Werkzeuge</h1>
+    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      Was in den letzten sechs Monaten tatsächlich im Einsatz war. Ohne Prozentbalken und Sterne,
+      stattdessen eine kurze Einordnung pro Eintrag.
+    </p>
+
+    {
+      skills.map((group) => (
+        <section class="mt-12 border-t border-border pt-6 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12">
+          <div>
+            <h2 class="m-0 text-xl font-semibold tracking-tight">{group.data.title}</h2>
+            <p class="prose-flow mt-1 mb-0 text-sm text-fg-muted">{group.data.description}</p>
+          </div>
+          <dl class="mt-6 mb-0 lg:mt-0">
+            {group.data.items.map((item) => (
+              <div class="grid gap-x-6 border-b border-border py-3 sm:grid-cols-[11rem_minmax(0,1fr)]">
+                <dt class="text-sm font-medium">{item.name}</dt>
+                <dd class="prose-flow m-0 text-sm text-fg-muted">{item.note}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
+  </article>
+</BaseLayout>

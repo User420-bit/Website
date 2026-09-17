@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-17T00:00:00Z",
+  "title": "Design System: Klartext",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Papierweiß",
+        "canonical": "oklch(0.99 0.002 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.002 80)",
+          "oklch(0.26 0.002 80)",
+          "oklch(0.38 0.002 80)",
+          "oklch(0.49 0.002 80)",
+          "oklch(0.61 0.002 80)",
+          "oklch(0.72 0.002 80)",
+          "oklch(0.84 0.002 80)",
+          "oklch(0.95 0.002 80)"
+        ]
+      },
+      "bg-elevated": {
+        "role": "neutral",
+        "displayName": "Karteikartenweiß",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0 80)",
+          "oklch(0.26 0 80)",
+          "oklch(0.38 0 80)",
+          "oklch(0.49 0 80)",
+          "oklch(0.61 0 80)",
+          "oklch(0.72 0 80)",
+          "oklch(0.84 0 80)",
+          "oklch(0.95 0 80)"
+        ]
+      },
+      "fg": {
+        "role": "neutral",
+        "displayName": "Tintenschwarz",
+        "canonical": "oklch(0.18 0.005 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 80)",
+          "oklch(0.26 0.005 80)",
+          "oklch(0.38 0.005 80)",
+          "oklch(0.49 0.005 80)",
+          "oklch(0.61 0.005 80)",
+          "oklch(0.72 0.005 80)",
+          "oklch(0.84 0.005 80)",
+          "oklch(0.95 0.005 80)"
+        ]
+      },
+      "fg-muted": {
+        "role": "neutral",
+        "displayName": "Bleistiftgrau",
+        "canonical": "oklch(0.43 0.008 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 80)",
+          "oklch(0.26 0.008 80)",
+          "oklch(0.38 0.008 80)",
+          "oklch(0.49 0.008 80)",
+          "oklch(0.61 0.008 80)",
+          "oklch(0.72 0.008 80)",
+          "oklch(0.84 0.008 80)",
+          "oklch(0.95 0.008 80)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Werkstatt-Orange",
+        "canonical": "oklch(0.52 0.16 50)",
+        "tonalRamp": [
+          "oklch(0.15 0.16 50)",
+          "oklch(0.26 0.16 50)",
+          "oklch(0.38 0.16 50)",
+          "oklch(0.49 0.16 50)",
+          "oklch(0.61 0.16 50)",
+          "oklch(0.72 0.16 50)",
+          "oklch(0.84 0.16 50)",
+          "oklch(0.95 0.16 50)"
+        ]
+      },
+      "accent-fg": {
+        "role": "primary",
+        "displayName": "Schrift auf Orange",
+        "canonical": "oklch(0.99 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0 50)",
+          "oklch(0.26 0 50)",
+          "oklch(0.38 0 50)",
+          "oklch(0.49 0 50)",
+          "oklch(0.61 0 50)",
+          "oklch(0.72 0 50)",
+          "oklch(0.84 0 50)",
+          "oklch(0.95 0 50)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Liniengrau",
+        "canonical": "oklch(0.89 0.004 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 80)",
+          "oklch(0.26 0.004 80)",
+          "oklch(0.38 0.004 80)",
+          "oklch(0.49 0.004 80)",
+          "oklch(0.61 0.004 80)",
+          "oklch(0.72 0.004 80)",
+          "oklch(0.84 0.004 80)",
+          "oklch(0.95 0.004 80)"
+        ]
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Nachtpapier",
+        "canonical": "oklch(0.17 0.004 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 80)",
+          "oklch(0.26 0.004 80)",
+          "oklch(0.38 0.004 80)",
+          "oklch(0.49 0.004 80)",
+          "oklch(0.61 0.004 80)",
+          "oklch(0.72 0.004 80)",
+          "oklch(0.84 0.004 80)",
+          "oklch(0.95 0.004 80)"
+        ]
+      },
+      "bg-elevated-dark": {
+        "role": "neutral",
+        "displayName": "Werkbankschwarz",
+        "canonical": "oklch(0.22 0.005 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 80)",
+          "oklch(0.26 0.005 80)",
+          "oklch(0.38 0.005 80)",
+          "oklch(0.49 0.005 80)",
+          "oklch(0.61 0.005 80)",
+          "oklch(0.72 0.005 80)",
+          "oklch(0.84 0.005 80)",
+          "oklch(0.95 0.005 80)"
+        ]
+      },
+      "fg-dark": {
+        "role": "neutral",
+        "displayName": "Kreideweiß",
+        "canonical": "oklch(0.96 0.003 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.003 80)",
+          "oklch(0.26 0.003 80)",
+          "oklch(0.38 0.003 80)",
+          "oklch(0.49 0.003 80)",
+          "oklch(0.61 0.003 80)",
+          "oklch(0.72 0.003 80)",
+          "oklch(0.84 0.003 80)",
+          "oklch(0.95 0.003 80)"
+        ]
+      },
+      "fg-muted-dark": {
+        "role": "neutral",
+        "displayName": "Staubgrau",
+        "canonical": "oklch(0.74 0.008 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 80)",
+          "oklch(0.26 0.008 80)",
+          "oklch(0.38 0.008 80)",
+          "oklch(0.49 0.008 80)",
+          "oklch(0.61 0.008 80)",
+          "oklch(0.72 0.008 80)",
+          "oklch(0.84 0.008 80)",
+          "oklch(0.95 0.008 80)"
+        ]
+      },
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "Werkstatt-Orange, Nacht",
+        "canonical": "oklch(0.78 0.15 60)",
+        "tonalRamp": [
+          "oklch(0.15 0.15 60)",
+          "oklch(0.26 0.15 60)",
+          "oklch(0.38 0.15 60)",
+          "oklch(0.49 0.15 60)",
+          "oklch(0.61 0.15 60)",
+          "oklch(0.72 0.15 60)",
+          "oklch(0.84 0.15 60)",
+          "oklch(0.95 0.15 60)"
+        ]
+      },
+      "accent-fg-dark": {
+        "role": "primary",
+        "displayName": "Schrift auf Orange, Nacht",
+        "canonical": "oklch(0.17 0.02 60)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 60)",
+          "oklch(0.26 0.02 60)",
+          "oklch(0.38 0.02 60)",
+          "oklch(0.49 0.02 60)",
+          "oklch(0.61 0.02 60)",
+          "oklch(0.72 0.02 60)",
+          "oklch(0.84 0.02 60)",
+          "oklch(0.95 0.02 60)"
+        ]
+      },
+      "border-dark": {
+        "role": "neutral",
+        "displayName": "Nachtlinie",
+        "canonical": "oklch(0.38 0.006 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.006 80)",
+          "oklch(0.26 0.006 80)",
+          "oklch(0.38 0.006 80)",
+          "oklch(0.49 0.006 80)",
+          "oklch(0.61 0.006 80)",
+          "oklch(0.72 0.006 80)",
+          "oklch(0.84 0.006 80)",
+          "oklch(0.95 0.006 80)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Nur die H1 der Startseite (Claim); clamp(2.5rem, 1.6rem + 4.5vw, 4.5rem), .display (−0,03em, 1,02), max. 20ch."
+      },
+      "headline-lg": {
+        "displayName": "Headline Large",
+        "purpose": "H1 der Projektseiten und von /werkzeuge/, .display; unter 640 px 2,25rem."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "H1 von Impressum, Datenschutz und 404; unter 640 px 1,875rem."
+      },
+      "title-lg": {
+        "displayName": "Title Large",
+        "purpose": "Titel der Feature-Zeile und E-Mail-Adresse im Kontakt, .display; unter 640 px 1,5rem."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Jede H2: Randspalte der Startseite, Projekt-, Werkzeug- und Rechtsseiten."
+      },
+      "title-sm": {
+        "displayName": "Title Small",
+        "purpose": "Titel der drei Leistungsspalten und Wortmarke im Header."
+      },
+      "subhead": {
+        "displayName": "Subhead",
+        "purpose": "Titel von Ledger-Zeile und Aufklapper, Name eines Werts."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "Hero-Intro und Summary auf Unterseiten."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Sektions-Intros."
+      },
+      "prose": {
+        "displayName": "Prose",
+        "purpose": "Längerer Fließtext, max. 65ch; Silbentrennung nur unter 40rem."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Beschreibungen, Zeiträume (tabular-nums), Meta-Liste, Footer, Navigation."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Button-Text, Namen von Listeneinträgen, leise Zwischenüberschriften in Bleistiftgrau."
+      },
+      "label-sm": {
+        "displayName": "Label Small",
+        "purpose": "Art des Projekts (KindLabel); Orange nur für „Kundenprojekt“."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Belegzeile."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Zeile „Technik“ der Meta-Liste, nur auf Projektseiten."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Codeblöcke auf Projektseiten."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-quiet",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "purpose": "Einzige Kurve für alle Übergänge (--ease-quiet, zugleich Tailwind-Standard)."
+      },
+      {
+        "name": "duration-fast",
+        "value": "120ms",
+        "purpose": "Kürzeste Dauer (--duration-fast)."
+      },
+      {
+        "name": "duration-base",
+        "value": "200ms",
+        "purpose": "Standarddauer aller Zustandsübergänge und des Seitenwechsels (--duration-base)."
+      },
+      {
+        "name": "duration-slow",
+        "value": "320ms",
+        "purpose": "Höhe des Aufklappers (--duration-slow)."
+      },
+      {
+        "name": "row-hover",
+        "value": "Titel translateX(4px); Unterstrich background-size 0 → 100% 1px; Pfeil translateX(2px)",
+        "purpose": "Zeilen bei Hover und Tastaturfokus (group-hover und group-focus-within sehen gleich aus)."
+      },
+      {
+        "name": "disclosure-height",
+        "value": "interpolate-size: allow-keywords; ::details-content block-size 0 → auto, 320ms; Marke rotate(90deg) → 0",
+        "purpose": "Aufklapper, nur hinter @supports und prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "header-rule",
+        "value": "border-bottom-color transparent → border; animation-timeline: scroll(root); animation-range: 0 4rem",
+        "purpose": "Header-Haarlinie erscheint nach dem Scrollen; ohne Unterstützung steht sie immer."
+      },
+      {
+        "name": "view-transition",
+        "value": "@view-transition { navigation: auto }; ::view-transition-group(root) 200ms; .site-header view-transition-name: site-header",
+        "purpose": "Nativer Seitenwechsel zwischen Dokumenten, der Header bleibt stehen."
+      },
+      {
+        "name": "copy-feedback",
+        "value": "role=status Text erscheint, verschwindet nach 2000ms",
+        "purpose": "Rückmeldung von „Adresse kopieren“."
+      },
+      {
+        "name": "scroll-smooth",
+        "value": "scroll-behavior: smooth",
+        "purpose": "Ankersprünge, nur mit prefers-reduced-motion: no-preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "layout": {
+      "containerMaxWidth": "64rem",
+      "gutter": "1rem",
+      "scrollPaddingTop": "6rem",
+      "measure": "65ch",
+      "marginColumn": "11rem",
+      "columnGap": "3rem"
+    },
+    "focus": {
+      "value": "outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: var(--radius-sm)",
+      "purpose": "Sichtbarer Fokus auf allen Elementen."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Die eine Hauptaktion eines Bereichs, z. B. „Anfrage schreiben“.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Anfrage schreiben</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.25rem; background: var(--color-accent, oklch(0.52 0.16 50)); color: var(--color-accent-fg, oklch(0.99 0 0)); transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-btn-primary { transition: none; } }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Nebenaktion mit Rand in fg/25; Rand und Schrift werden bei Hover orange.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Code auf GitHub</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.25rem; border: 1px solid color-mix(in oklab, var(--color-fg, oklch(0.18 0.005 80)) 25%, transparent); background: transparent; color: var(--color-fg, oklch(0.18 0.005 80)); transition: color 200ms cubic-bezier(0.2, 0, 0, 1), border-color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-secondary:hover { border-color: var(--color-accent, oklch(0.52 0.16 50)); color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-btn-secondary { transition: none; } }"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Leiser zweiter Weg: unterstrichener Link in Tinte mit SVG-Pfeil, der bei Hover 2 px rückt.",
+      "html": "<a class=\"ds-btn-text\" href=\"#\">Arbeiten ansehen <svg class=\"ds-arrow\" aria-hidden=\"true\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M2 8h11M9 3.5 13.5 8 9 12.5\"></path></svg></a>",
+      "css": ".ds-btn-text { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; text-decoration: none; padding: 0.625rem 0; color: var(--color-fg, oklch(0.18 0.005 80)); text-decoration: underline; text-decoration-color: var(--color-border, oklch(0.89 0.004 80)); text-underline-offset: 4px; transition: text-decoration-color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-text:hover { text-decoration-color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-arrow { display: inline-block; width: 0.85em; height: 0.85em; transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-text:hover .ds-arrow { transform: translateX(0.125rem); } .ds-btn-text:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-btn-text, .ds-arrow { transition: none; } }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Deckender Sticky-Header: Wortmarke als Text, Ankerlinks, kleiner Primary „Anfrage“ (header-cta). Aktiver Anker in Tinte mit orangem Strich.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-wordmark\" href=\"#\">Klartext</a><nav aria-label=\"Hauptnavigation\"><ul class=\"ds-nav\"><li><a class=\"ds-nav-link\" href=\"#\" aria-current=\"true\">Arbeiten</a></li><li><a class=\"ds-nav-link\" href=\"#\">Leistungen</a></li><li><a class=\"ds-nav-link\" href=\"#\">Arbeitsweise</a></li><li><a class=\"ds-nav-link\" href=\"#\">Über</a></li></ul></nav><a class=\"ds-header-cta\" href=\"#\">Anfrage</a></header>",
+      "css": ".ds-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1.5rem; padding: 1rem; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; background: var(--color-bg, oklch(0.99 0.002 80)); border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); } .ds-wordmark { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.025em; color: var(--color-fg, oklch(0.18 0.005 80)); text-decoration: none; } .ds-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; margin: 0 -0.25rem 0 auto; padding: 0; list-style: none; font-size: 0.875rem; line-height: 1.25rem; } .ds-nav-link { position: relative; display: inline-block; padding: 0.25rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); text-decoration: none; transition: color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-nav-link::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -0.125rem; height: 1px; background: var(--color-accent, oklch(0.52 0.16 50)); transform: scaleX(0); transform-origin: left; transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-nav-link:hover, .ds-nav-link[aria-current='true'] { color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-nav-link:hover::after, .ds-nav-link[aria-current='true']::after { transform: scaleX(1); } .ds-header-cta { display: inline-flex; align-items: center; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; padding: 0.375rem 0.75rem; border-radius: 0.25rem; background: var(--color-accent, oklch(0.52 0.16 50)); color: var(--color-accent-fg, oklch(0.99 0 0)); text-decoration: none; transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-header-cta:hover { opacity: 0.9; } .ds-header a:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-nav-link, .ds-nav-link::after, .ds-header-cta { transition: none; } }"
+    },
+    {
+      "name": "KindLabel",
+      "kind": "custom",
+      "refersTo": "kind-label",
+      "description": "Art des Projekts als reiner Text, keine Pille. Nur „Kundenprojekt“ trägt Orange (kind-label-accent).",
+      "html": "<p class=\"ds-kinds\"><span class=\"ds-kind ds-kind-accent\">Kundenprojekt</span><span class=\"ds-kind\">Eigenes Produkt</span><span class=\"ds-kind\">Prototyp</span></p>",
+      "css": ".ds-kinds { display: flex; gap: 1.5rem; margin: 0; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-kind { font-size: 0.8125rem; font-weight: 500; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-kind-accent { color: var(--color-accent, oklch(0.52 0.16 50)); }"
+    },
+    {
+      "name": "Ledger-Zeile",
+      "kind": "custom",
+      "refersTo": "ledger-row",
+      "description": "Zeile im Arbeiten-Index: Titel · Art · Zeitraum · Pfeil. Ganze Zeile ist der Link; Hover und Tastaturfokus sehen gleich aus.",
+      "html": "<ul class=\"ds-ledger\"><li class=\"ds-row\"><h3 class=\"ds-row-h\"><a class=\"ds-row-title\" href=\"#\">TIEFGANG</a></h3><span class=\"ds-kind\">Eigenes Produkt</span><span class=\"ds-row-period\">Juli – September 2026</span><svg class=\"ds-arrow\" aria-hidden=\"true\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M2 8h11M9 3.5 13.5 8 9 12.5\"></path></svg></li><li class=\"ds-row\"><h3 class=\"ds-row-h\"><a class=\"ds-row-title\" href=\"#\">MemoryTree</a></h3><span class=\"ds-kind\">Prototyp</span><span class=\"ds-row-period\">Mai – Juni 2026</span><svg class=\"ds-arrow\" aria-hidden=\"true\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M2 8h11M9 3.5 13.5 8 9 12.5\"></path></svg></li></ul>",
+      "css": ".ds-ledger { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border, oklch(0.89 0.004 80)); font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 9rem 11rem 1rem; align-items: baseline; column-gap: 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); } .ds-row-h { margin: 0; font-size: 1rem; line-height: 1.5rem; font-weight: 500; transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-row-title { color: var(--color-fg, oklch(0.18 0.005 80)); text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-row-title::after { content: ''; position: absolute; inset: 0; } .ds-kind { font-size: 0.8125rem; font-weight: 500; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-row-period { font-size: 0.875rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); font-variant-numeric: tabular-nums; } .ds-row .ds-arrow { align-self: center; justify-self: end; width: 0.85em; height: 0.85em; color: var(--color-fg-muted, oklch(0.43 0.008 80)); transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-row:hover .ds-row-h, .ds-row:focus-within .ds-row-h { transform: translateX(0.25rem); } .ds-row:hover .ds-row-title, .ds-row:focus-within .ds-row-title { background-size: 100% 1px; } .ds-row:hover .ds-arrow, .ds-row:focus-within .ds-arrow { transform: translateX(0.125rem); } .ds-row:hover .ds-arrow { color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-row-title:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-row-h, .ds-row-title, .ds-row .ds-arrow { transition: none; transform: none; } }"
+    },
+    {
+      "name": "Feature-Zeile",
+      "kind": "custom",
+      "refersTo": "feature-row",
+      "description": "Große linierte Zeile für Kundenprojekte: Art und Zeitraum links, Titel, Summary und „Zur Referenz“ rechts. Keine Technik-Namen.",
+      "html": "<article class=\"ds-feature\"><p class=\"ds-feature-meta\"><span class=\"ds-kind-accent\">Kundenprojekt</span><span class=\"ds-feature-period\">2026</span></p><div><h3 class=\"ds-feature-h\"><a class=\"ds-feature-title\" href=\"#\">Referenzprojekt</a></h3><p class=\"ds-feature-text\">Eine kleine, solide Anwendung für einen Betrieb aus der Region, gebaut, um verstanden zu werden und zu bleiben.</p><p class=\"ds-feature-more\">Zur Referenz <svg class=\"ds-arrow\" aria-hidden=\"true\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M2 8h11M9 3.5 13.5 8 9 12.5\"></path></svg></p></div></article>",
+      "css": ".ds-feature { position: relative; display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 0.75rem 2rem; padding: 2rem 0; border-top: 1px solid var(--color-border, oklch(0.89 0.004 80)); border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-feature-meta { display: flex; flex-direction: column; gap: 0.25rem; margin: 0; font-size: 0.875rem; } .ds-kind-accent { font-size: 0.8125rem; font-weight: 500; color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-feature-period { color: var(--color-fg-muted, oklch(0.43 0.008 80)); font-variant-numeric: tabular-nums; } .ds-feature-h { margin: 0; font-size: 1.875rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; } .ds-feature-title { color: var(--color-fg, oklch(0.18 0.005 80)); text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-feature-title::after { content: ''; position: absolute; inset: 0; } .ds-feature-text { max-width: 60ch; margin: 0.75rem 0 0; line-height: 1.625; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-feature-more { display: inline-flex; align-items: center; gap: 0.5rem; margin: 1rem 0 0; font-size: 0.875rem; font-weight: 500; color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-arrow { display: inline-block; width: 0.85em; height: 0.85em; transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-feature:hover .ds-feature-title, .ds-feature:focus-within .ds-feature-title { background-size: 100% 1px; } .ds-feature:hover .ds-arrow, .ds-feature:focus-within .ds-arrow { transform: translateX(0.125rem); } .ds-feature-title:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-feature-title, .ds-arrow { transition: none; } }"
+    },
+    {
+      "name": "Disclosure",
+      "kind": "custom",
+      "refersTo": "disclosure",
+      "description": "Aufklapper auf nativem details: Titel, Zählung in Tabellenziffern, Plus/Minus aus zwei 1-px-Linien. Höhe animiert nur mit interpolate-size.",
+      "html": "<details class=\"ds-disclosure\"><summary><span class=\"ds-disclosure-title\">Websites</span><span class=\"ds-disclosure-meta\">4 Punkte</span><span class=\"ds-disclosure-mark\" aria-hidden=\"true\"></span></summary><div class=\"ds-disclosure-body\">Statische Websites ohne Tracking und Cookies, Inhalte pflegbar über Markdown-Dateien.</div></details>",
+      "css": ".ds-disclosure { border-top: 1px solid var(--color-border, oklch(0.89 0.004 80)); border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-disclosure > summary { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; cursor: pointer; list-style: none; transition: color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-disclosure > summary::-webkit-details-marker { display: none; } .ds-disclosure > summary:hover { color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-disclosure > summary:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } .ds-disclosure-title { flex: 1; font-weight: 500; } .ds-disclosure-meta { font-size: 0.875rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); font-variant-numeric: tabular-nums; } .ds-disclosure-mark { position: relative; width: 0.75rem; height: 0.75rem; flex-shrink: 0; align-self: center; } .ds-disclosure-mark::before, .ds-disclosure-mark::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: currentColor; transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-disclosure-mark::after { transform: rotate(90deg); } .ds-disclosure[open] .ds-disclosure-mark::after { transform: rotate(0deg); } .ds-disclosure-body { max-width: 65ch; padding: 0.25rem 0 1.5rem; font-size: 0.875rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } @media (prefers-reduced-motion: reduce) { .ds-disclosure > summary, .ds-disclosure-mark::before, .ds-disclosure-mark::after { transition: none; } }"
+    },
+    {
+      "name": "Meta-Liste",
+      "kind": "custom",
+      "refersTo": "meta-list",
+      "description": "Eckdaten einer Referenz als linierte dl. Nur hier, auf Projektseiten, stehen Technik-Namen, in Mono mit „ · “ verbunden.",
+      "html": "<dl class=\"ds-meta\"><div><dt>Art</dt><dd><span class=\"ds-kind\">Eigenes Produkt</span></dd></div><div><dt>Zeitraum</dt><dd class=\"ds-meta-num\">Juli – September 2026</dd></div><div><dt>Stand</dt><dd>Spielbar. Nächster Schritt ist Balancing und Beta.</dd></div><div><dt>Technik</dt><dd class=\"ds-meta-tech\">TypeScript · Canvas 2D · PWA</dd></div></dl>",
+      "css": ".ds-meta { max-width: 65ch; margin: 0; border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; font-size: 0.875rem; line-height: 1.25rem; color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-meta > div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); column-gap: 1rem; padding: 0.625rem 0; border-top: 1px solid var(--color-border, oklch(0.89 0.004 80)); } .ds-meta dt { color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-meta dd { margin: 0; } .ds-kind { font-size: 0.8125rem; font-weight: 500; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-meta-num { font-variant-numeric: tabular-nums; } .ds-meta-tech { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.75rem; line-height: 1.5rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); }"
+    },
+    {
+      "name": "CopyEmail",
+      "kind": "custom",
+      "refersTo": "copy-email",
+      "description": "Adresse als markierbarer großer Link plus „Adresse kopieren“. Der Knopf erscheint nur mit Clipboard-API; Rückmeldung über role=status.",
+      "html": "<p class=\"ds-copy\"><a class=\"ds-copy-address\" href=\"#\">info@web-klartext.de</a><button class=\"ds-copy-button\" type=\"button\">Adresse kopieren</button><span class=\"ds-copy-status\" role=\"status\">Kopiert.</span></p>",
+      "css": ".ds-copy { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin: 0; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-copy-address { font-size: 1.875rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; color: var(--color-fg, oklch(0.18 0.005 80)); text-decoration: underline; text-decoration-color: var(--color-border, oklch(0.89 0.004 80)); text-underline-offset: 8px; transition: text-decoration-color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-copy-address:hover { text-decoration-color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-copy-button { cursor: pointer; font: inherit; font-size: 0.875rem; font-weight: 500; padding: 0.375rem 0.75rem; border-radius: 0.25rem; border: 1px solid color-mix(in oklab, var(--color-fg, oklch(0.18 0.005 80)) 25%, transparent); background: transparent; color: var(--color-fg, oklch(0.18 0.005 80)); transition: color 200ms cubic-bezier(0.2, 0, 0, 1), border-color 200ms cubic-bezier(0.2, 0, 0, 1); } .ds-copy-button:hover { border-color: var(--color-accent, oklch(0.52 0.16 50)); color: var(--color-accent, oklch(0.52 0.16 50)); } .ds-copy-status { font-size: 0.875rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-copy a:focus-visible, .ds-copy-button:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; } @media (prefers-reduced-motion: reduce) { .ds-copy-address, .ds-copy-button { transition: none; } }"
+    },
+    {
+      "name": "Belegzeile",
+      "kind": "custom",
+      "description": "Leistungspunkt im Aufklapper mit „Beleg:“ und orangen Projektlinks – kein Punkt ohne Nachweis.",
+      "html": "<div class=\"ds-evidence\"><span class=\"ds-evidence-title\">Statische Websites mit Astro</span><span class=\"ds-evidence-text\">Kein Tracking, keine Cookies. Inhalte pflegbar über Markdown-Dateien.</span><span class=\"ds-evidence-proof\">Beleg: <a href=\"#\">TIEFGANG</a>, <a href=\"#\">MemoryTree</a></span></div>",
+      "css": ".ds-evidence { display: flex; flex-direction: column; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; font-size: 0.875rem; line-height: 1.25rem; } .ds-evidence-title { font-weight: 500; color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-evidence-text { color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-evidence-proof { margin-top: 0.25rem; font-size: 0.75rem; line-height: 1rem; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-evidence-proof a { color: var(--color-accent, oklch(0.52 0.16 50)); text-decoration: none; text-underline-offset: 4px; } .ds-evidence-proof a:focus-visible { outline: 2px solid var(--color-accent, oklch(0.52 0.16 50)); outline-offset: 2px; border-radius: 0.25rem; }"
+    },
+    {
+      "name": "Randnotiz",
+      "kind": "custom",
+      "description": "Label in der Randspalte (11rem), Haarlinie oben, Text rechts. „Erkenntnisse“ läuft in voller Tinte. Kein Seitenstreifen.",
+      "html": "<section class=\"ds-note\"><h2 class=\"ds-note-label\">Erkenntnisse</h2><ul class=\"ds-note-list\"><li>Ein fester Seed pro Lauf macht Fehler reproduzierbar.</li><li>Offline zuerst zu bauen spart später den Umbau.</li></ul></section>",
+      "css": ".ds-note { display: grid; grid-template-columns: 11rem minmax(0, 1fr); column-gap: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border, oklch(0.89 0.004 80)); font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-note-label { margin: 0; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; letter-spacing: -0.025em; color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-note-list { max-width: 65ch; margin: 0; padding: 0; list-style: none; color: var(--color-fg, oklch(0.18 0.005 80)); } .ds-note-list li { padding-bottom: 0.75rem; border-bottom: 1px solid var(--color-border, oklch(0.89 0.004 80)); } .ds-note-list li + li { margin-top: 0.75rem; }"
+    },
+    {
+      "name": "Codeblock",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Einer der zwei echten Behälter: 12 px, bg-elevated, 1 px Liniengrau. Nur auf Projektseiten.",
+      "html": "<pre class=\"ds-code\"><code>const seed = hash(runId)\nconst rng = mulberry32(seed)</code></pre>",
+      "css": ".ds-code { margin: 0; overflow-x: auto; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--color-border, oklch(0.89 0.004 80)); background: var(--color-bg-elevated, oklch(1 0 0)); color: var(--color-fg, oklch(0.18 0.005 80)); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.875rem; line-height: 1.625; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Das Werkstattbuch",
+    "overview": "Die Seite liest sich wie ein sauber geführtes Arbeitsbuch: Jede Aussage steht an ihrem Platz, jeder Punkt hat seinen Beleg, und nichts wird geschönt. Das Design tritt hinter den Inhalt zurück. Es ordnet, statt zu inszenieren: warmes Papierweiß, tintenschwarze Überschriften, bleistiftgraue Erläuterungen und ein einziges Werkstatt-Orange, das dort auftaucht, wo gehandelt, belegt oder fokussiert wird.\n Die Ordnung kommt aus dem Buch selbst: eine Randspalte mit Nummer und Überschrift, rechts der Inhalt, dazwischen Haarlinien. Arbeiten stehen als linierte Zeilen wie in einem Hauptbuch, nicht als Karten. Ein Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.\n Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen, begrenzte Zeilenbreite, flache Flächen ohne Schatten. Sachlich heißt: eine einzige, selbst gehostete Schrift, klare Größenstufen, Tabellenziffern für Zeiträume und Nummern, Monospace nur für technische Namen auf Projektseiten. Warm heißt: Alle Grautöne tragen einen leichten Gelbstich (Farbton 80), und der Akzent ist ein erdiges Orange statt eines kühlen Blaus.\n Hell und dunkel sind gleichwertige Ausprägungen desselben Buchs. Beide folgen ausschließlich der Systemeinstellung des Besuchers.",
+    "keyCharacteristics": [
+      "Eine Akzentfarbe (Werkstatt-Orange), sonst nur warme Neutraltöne",
+      "Eine selbst gehostete Schrift (Instrument Sans), Hierarchie über Größe und Gewicht 600 mit enger Laufweite",
+      "Randspalte 11rem mit Nummer und H2, Inhalt rechts; Haarlinien statt Karten",
+      "Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte",
+      "Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch",
+      "Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus",
+      "Bewegung aus einer geschlossenen Liste, nur bei `prefers-reduced-motion: no-preference`"
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "Werkstatt-Orange ist die einzige bunte Farbe im System. Es markiert Handlung, Beleg, Einordnung und Fokus, nie Sektionsflächen, Illustrationen oder Dekoration. Auf einem Bildschirm bleibt es eine Minderheit.",
+        "section": "colors"
+      },
+      {
+        "name": "The Twin Token Rule",
+        "body": "Jede Farbe existiert als Paar mit derselben Rolle in hell und dunkel. Komponenten verwenden nur Tokens, nie Rohwerte; so stimmt der Dunkelmodus ohne Zusatzarbeit.",
+        "section": "colors"
+      },
+      {
+        "name": "The System Decides Rule",
+        "body": "Der Farbmodus kommt ausschließlich aus `prefers-color-scheme`. Die `[data-theme]`-Selektoren in `global.css` bleiben ein technischer Haken, keine Besucher-Funktion.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Eine selbst gehostete Familie für alles, ausgeliefert vom eigenen Server, ohne Drittanbieter. Monospace nur für technische Namen und Code auf Projektseiten. Hierarchie entsteht über Größe und Gewicht, nie über eine zweite Schriftfamilie.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ink For Names Rule",
+        "body": "Tintenschwarz gehört Überschriften und Namen, Bleistiftgrau allem, was erklärt. Wer einen Absatz in `fg` setzt, macht ihn zur Überschrift. Einzige Ausnahme ist die Randnotiz „Erkenntnisse“, deren Text bewusst in voller Tinte läuft.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measure Rule",
+        "body": "Fließtext läuft nie breiter als 65ch, die H1 nie breiter als 20ch.",
+        "section": "typography"
+      },
+      {
+        "name": "The Single Offset Rule",
+        "body": "Nur `scroll-padding-top` gleicht den Sticky-Header aus. Ein zusätzliches `scroll-margin` addiert sich und verschiebt die Ankersprünge.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Page Rule",
+        "body": "Keine Schatten, kein Glow, kein Anheben, keine Transluzenz. Ordnung wird durch Linie sichtbar, ein Zustand durch Farbe.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Size-Matched Corner Rule",
+        "body": "Bedienbares und Bilder 4 px, echte Behälter 12 px. Keine Rundung über 12 px, keine Pillen.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do Farben nur über die Tokens `bg`, `bg-elevated`, `fg`, `fg-muted`, `accent`, `accent-fg` und `border` setzen und jeder neuen Farbe einen Dunkel-Zwilling geben.",
+      "Do Werkstatt-Orange für Handlung, Beleg, Einordnung und Fokus reservieren (The One Signal Rule).",
+      "Do Listen als linierte Zeilen bauen: Haarlinie in Liniengrau, Tintenlinie für die stärkere Regel.",
+      "Do neue Blöcke in das Randspalten-Raster setzen: `11rem | 1fr`, 3rem Abstand, Haarlinie oben.",
+      "Do Überschriften in Tintenschwarz mit Gewicht 600 setzen, große mit `.display` (−0,03em, 1,02), Erklärungen in Bleistiftgrau.",
+      "Do Zeiträume, Nummern und Zählungen mit `tabular-nums` setzen und Pfeile über `Arrow.astro`.",
+      "Do Hover und Tastaturfokus gleich aussehen lassen (`group-hover` immer mit `group-focus-within`).",
+      "Do Bewegung an `prefers-reduced-motion: no-preference` koppeln und Inhalt ohne Animation sofort sichtbar lassen.",
+      "Do den sichtbaren Fokus erhalten: 2 px Outline in Orange, 2 px Abstand."
+    ],
+    "donts": [
+      "Don't eine Theme-Auswahl, Test-Themes oder einen Farbmodus-Umschalter für Besucher einbauen. Hell und dunkel folgen der Systemeinstellung.",
+      "Don't Schatten, Glow, Anheben, Unschärfe oder Transluzenz für Tiefe oder Hover verwenden.",
+      "Don't eine zweite Akzentfarbe oder farbige Flächen einführen.",
+      "Don't Rohfarbwerte in Komponenten schreiben; sie brechen den Dunkelmodus.",
+      "Don't Fließtext breiter als 65ch laufen lassen.",
+      "Don't Listen als Kartenraster bauen. Ein Kasten nur, wo etwas wirklich ein Behälter ist.",
+      "Don't Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.",
+      "Don't farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.",
+      "Don't Inhalte beim Scrollen einblenden oder den Hero animieren.",
+      "Don't Technik-Namen auf der Startseite nennen; sie stehen in der Meta-Liste der Projektseite.",
+      "Don't Schriften von Drittanbietern laden oder eine zweite Familie einführen.",
+      "Don't Pfeile als Schriftzeichen setzen; das Subset enthält sie nicht."
+    ]
+  }
+}

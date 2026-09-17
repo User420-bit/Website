@@ -1,0 +1,102 @@
+---
+/**
+ * Referenz als breite Zeile statt als Karte: gross auf der Startseite fuer
+ * Kundenprojekte, `compact` fuer die vollstaendige Liste unter /projekte/.
+ * Bewusst ohne Technik-Namen — die stehen auf der Projektseite. Stattdessen
+ * der Stand: Kunden fragen, ob es laeuft, nicht womit.
+ */
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import Arrow from '@/components/Arrow.astro'
+import KindLabel from '@/components/KindLabel.astro'
+import { firstSentence, href } from '@/lib/site'
+
+interface Props {
+  projekt: CollectionEntry<'projekte'>
+  compact?: boolean
+}
+
+const { projekt, compact = false } = Astro.props
+const { title, summary, kind, period, status, live, screenshots } = projekt.data
+// Bildplatz nur mit echtem Screenshot; ohne bleibt die Zeile reiner Text.
+const screenshot = screenshots[0]
+---
+
+<article
+  class:list={[
+    'group relative grid gap-x-8 gap-y-3 border-b border-border sm:grid-cols-[9rem_minmax(0,1fr)]',
+    compact ? 'py-6' : 'py-8',
+  ]}
+>
+  <p class="m-0 flex gap-3 text-sm sm:flex-col sm:gap-1">
+    <KindLabel kind={kind} />
+    <span class="text-fg-muted tabular-nums">{period}</span>
+  </p>
+  <div>
+    <h3
+      class:list={[
+        'display m-0 font-semibold',
+        compact ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl',
+      ]}
+    >
+      {/* Stretched Link: die ganze Zeile ist klickbar, der Fokus bleibt am Text. */}
+      <a
+        class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"
+        href={href(`/projekte/${projekt.id}`)}
+      >
+        {title}
+      </a>
+    </h3>
+    <p class="prose-flow mt-3 mb-0 max-w-[60ch] leading-relaxed text-fg-muted">{summary}</p>
+    {
+      status && (
+        <p class="prose-flow mt-3 mb-0 max-w-[60ch] text-sm text-fg-muted">
+          <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
+        </p>
+      )
+    }
+    {
+      screenshot && (
+        <Image
+          class="mt-6 aspect-video w-full max-w-xl rounded-sm border border-border object-cover object-top"
+          src={screenshot.image}
+          alt={screenshot.caption}
+          widths={[480, 960]}
+          sizes="(min-width: 1024px) 36rem, 92vw"
+          loading="lazy"
+        />
+      )
+    }
+    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <p class="m-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
+        Zur Referenz
+        <Arrow
+          class="transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
+        />
+      </p>
+      {
+        /* Liegt über dem gestreckten Titel-Link, sonst wäre er weder klick- noch fokussierbar. */
+        live && (
+          <a
+            class="relative z-10 -my-2 inline-flex items-center gap-1 py-2 text-sm font-medium text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent motion-reduce:transition-none"
+            href={live}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Live ansehen<span class="sr-only"> (öffnet in neuem Tab)</span>
+            <svg
+              aria-hidden="true"
+              class="size-3.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M5.5 10.5l5-5M6.5 5.5h4v4" />
+            </svg>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

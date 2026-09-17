@@ -1,8 +1,12 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import Button from '@/components/Button.astro'
+import CopyEmail from '@/components/CopyEmail.astro'
+import Disclosure from '@/components/Disclosure.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
-import ProjectCard from '@/components/ProjectCard.astro'
+import ProjectFeature from '@/components/ProjectFeature.astro'
+import ProjectRow from '@/components/ProjectRow.astro'
 import Section from '@/components/Section.astro'
 import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
@@ -15,221 +19,152 @@ const { Content: AboutBody } = await render(aboutEntry)
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
 const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
-/** Die Startseite zeigt die ersten Karten nach `order`, alle stehen unter /projekte/. */
+/** Die Startseite zeigt die ersten Arbeiten nach `order`, alle stehen unter /projekte/. */
 const STARTSEITE_PROJEKTE = 6
+const auswahl = projekte.slice(0, STARTSEITE_PROJEKTE)
+// Kundenprojekte stehen gross oben, der Rest der Auswahl als Index darunter.
+const referenzen = auswahl.filter((p) => p.data.kind === 'kundenprojekt')
+const weitere = auswahl.filter((p) => p.data.kind !== 'kundenprojekt')
 const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
-const leistungspunkte = leistungen.reduce((sum, group) => sum + group.data.items.length, 0)
-const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
 
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
 const anfrage = mailto(company.email, contact.subject)
-
-const primaryButton =
-  'inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none'
-const secondaryButton =
-  'inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
+const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 ---
 
 <BaseLayout title={`${company.name} – ${company.claim}`} description={description} isHome>
   {
     /*
-    1. Hero — das Unternehmen, nicht die Person. So hoch wie sein Inhalt,
-    kein erzwungenes Full-Height.
+    Hero — das Unternehmen, nicht die Person. So hoch wie sein Inhalt, ohne
+    Einblenden: Die H1 ist das Erste, was gemalt wird, und soll sofort stehen.
   */
   }
-  <section class="py-14 sm:py-20">
-    <p class="text-sm font-medium tracking-wide text-accent uppercase">
-      {company.name} · {company.location}
-    </p>
-    <h1 class="mt-3 max-w-[20ch] text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+  <section class="pt-16 pb-14 sm:pt-24 sm:pb-20">
+    <h1
+      class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
+    >
       {company.claim}
     </h1>
-    <p class="mt-5 max-w-[60ch] text-lg leading-relaxed text-fg-muted">{company.intro}</p>
+    <p class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted">
+      {company.intro}
+    </p>
 
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a class={primaryButton} href={anfrage}>E-Mail schreiben</a>
-      <a class={secondaryButton} href={href('/#arbeiten')}>Arbeiten ansehen</a>
+    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <Button href={anfrage}>E-Mail schreiben</Button>
+      <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
     </div>
+
     {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
-    <p class="mt-4 text-sm text-fg-muted">
-      <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>{' '}
-      <span aria-hidden="true">·</span>{' '}
-      {contact.responseTime}
+    <p class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
+      <span>{company.location}</span>
+      <span aria-hidden="true">·</span>
+      <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>
+      <span aria-hidden="true">·</span>
+      <span>{contact.responseTime}</span>
     </p>
   </section>
 
-  {
-    /*
-    2. Leistungen — erst die drei Arten Software, die Klartext baut, dann die
-    Einzelpunkte. Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne
-    Beleg kein Eintrag, sonst wäre es eine Wunschliste.
-  */
-  }
-  <Section
-    id="leistungen"
-    title="Leistungen"
-    intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
-    class="reveal"
-  >
-    <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-3">
-      {
-        company.services.map((service) => (
-          <li class="rounded-lg border border-border bg-bg-elevated p-5">
-            <h3 class="m-0 text-lg font-semibold tracking-tight">{service.title}</h3>
-            <p class="mt-3 mb-0 text-sm leading-relaxed text-fg-muted">{service.description}</p>
-          </li>
-        ))
-      }
-    </ul>
-
-    <h3 class="mt-12 text-base font-semibold tracking-tight">Im Einzelnen</h3>
-    <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
-      Abgeleitet aus dem, was tatsächlich gebaut wurde. Hinter jedem Punkt steht das Projekt, das
-      ihn belegt.
-    </p>
-    {/* Eingeklappt: Die Einzelpunkte samt Beleg-Links sind Nachschlagestoff, kein Lesepfad. */}
-    <details class="group/einzeln mt-4">
-      <summary
-        class="inline-flex cursor-pointer list-none items-center gap-2 rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg transition-colors select-none hover:border-accent hover:text-accent motion-reduce:transition-none [&::-webkit-details-marker]:hidden"
-      >
-        <span class="group-open/einzeln:hidden">Alle {leistungspunkte} Punkte zeigen</span>
-        <span class="hidden group-open/einzeln:inline">Punkte ausblenden</span>
-        <svg
-          aria-hidden="true"
-          class="size-4 transition-transform group-open/einzeln:rotate-180 motion-reduce:transition-none"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.75"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M4 6l4 4 4-4"></path>
-        </svg>
-      </summary>
-      <div class="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2">
-        {
-          leistungen.map((group) => (
-            <div class="rounded-lg border border-border bg-bg-elevated p-5">
-              <h4 class="text-base font-semibold tracking-tight">{group.data.title}</h4>
-              <p class="mt-1 text-sm text-fg-muted">{group.data.description}</p>
-              <ul class="mt-4 list-none space-y-4 p-0">
-                {group.data.items.map((item) => (
-                  <li>
-                    <span class="block text-sm font-medium">{item.title}</span>
-                    <span class="block text-sm text-fg-muted">{item.description}</span>
-                    {item.evidence.length > 0 && (
-                      <span class="mt-1 block text-xs text-fg-muted">
-                        Beleg:{' '}
-                        {item.evidence.map((slug, i) => (
-                          <>
-                            {i > 0 && ', '}
-                            <a
-                              class="text-accent underline-offset-4"
-                              href={href(`/projekte/${slug}`)}
-                            >
-                              {projektTitel.get(slug) ?? slug}
-                            </a>
-                          </>
-                        ))}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-    </details>
-  </Section>
-
-  {/* 3. Arbeiten — der Beweis. Das Badge sagt, um welche Art Projekt es geht. */}
+  {/* 01 Arbeiten — der Beweis zuerst: Kundenprojekte gross, der Rest als Index. */}
   <Section
     id="arbeiten"
+    index="01"
     title="Arbeiten"
-    intro="Kundenprojekte, eigene Produkte, Prototypen und Studienprojekte. Jede Karte sagt, um welche Art Projekt es sich handelt."
-    class="reveal"
+    intro="Kundenprojekte, eigene Produkte, Prototypen und Studienprojekte. Jeder Eintrag sagt, um welche Art Projekt es sich handelt."
   >
-    <ul class="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="border-t border-border">
+      {referenzen.map((projekt) => <ProjectFeature projekt={projekt} />)}
+    </div>
+
+    <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Weitere Arbeiten</h3>
+    <ul class="mt-3 list-none border-t border-border p-0">
       {
-        projekte.slice(0, STARTSEITE_PROJEKTE).map((projekt) => (
-          <li class="flex">
-            <ProjectCard projekt={projekt} />
-          </li>
+        weitere.map((projekt) => (
+          <ProjectRow
+            slug={projekt.id}
+            title={projekt.data.title}
+            kind={projekt.data.kind}
+            period={projekt.data.period}
+          />
         ))
       }
     </ul>
     {
       projekte.length > STARTSEITE_PROJEKTE && (
-        <p class="mt-8 mb-0">
-          <a class={secondaryButton} href={href('/projekte/')}>
-            Alle {projekte.length} Arbeiten&nbsp;<span aria-hidden="true">&rarr;</span>
-          </a>
+        <p class="mt-6 mb-0">
+          <Button href={href('/projekte/')} variant="text">
+            Alle {projekte.length} Arbeiten
+          </Button>
         </p>
       )
     }
-  </Section>
 
-  {/* Anfrage-Zeile direkt unter den Belegen; der negative Rand rückt sie an das Raster. */}
-  <InquiryPrompt class="reveal -mt-6 sm:-mt-10" />
+    {/* Anfrage-Zeile direkt unter den Belegen. */}
+    <InquiryPrompt class="mt-12 border-t border-border pt-8" />
+  </Section>
 
   {
     /*
-    4. Arbeitsweise — die vier Werte aus about.md, dahinter das, was in den
-    Commit-Historien nachlesbar ist. Ersetzt das frühere Badge pro Projekt.
+    02 Leistungen — erst die drei Arten Software, dann die Einzelpunkte zum
+    Aufklappen. Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne Beleg
+    kein Eintrag, sonst waere es eine Wunschliste.
   */
   }
-  <Section id="arbeitsweise" title="Arbeitsweise" class="reveal">
-    <ul class="grid list-none grid-cols-1 gap-x-8 gap-y-6 p-0 sm:grid-cols-2">
-      {
-        aboutEntry.data.values.map((value) => (
-          <li class="border-l-2 border-accent/40 pl-4">
-            <span class="block font-medium">{value.title}</span>
-            <span class="mt-1 block text-sm text-fg-muted">{value.description}</span>
-          </li>
-        ))
-      }
-    </ul>
-
-    <h3 class="mt-12 text-base font-semibold tracking-tight">Wie gearbeitet wird</h3>
-    <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
-      Aus den Commit-Historien ablesbar, nicht aus einem Leitbild.
-    </p>
-    <ul class="mt-4 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
-      {
-        aboutEntry.data.workflow.map((item) => (
-          <li>
-            <span class="block text-sm font-medium">{item.title}</span>
-            <span class="mt-1 block text-sm text-fg-muted">{item.description}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </Section>
-
-  {/* 5. Werkzeuge — ohne Prozentbalken, mit Einordnung pro Eintrag. */}
   <Section
-    id="werkzeuge"
-    title="Werkzeuge"
-    intro="Was in den letzten sechs Monaten tatsächlich im Einsatz war. Ohne Prozentbalken und Sterne, stattdessen eine kurze Einordnung pro Eintrag."
-    class="reveal"
+    id="leistungen"
+    index="02"
+    title="Leistungen"
+    intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
   >
-    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3">
       {
-        skills.map((group) => (
-          <div>
-            <h3 class="text-base font-semibold tracking-tight">{group.data.title}</h3>
-            <p class="mt-1 text-sm text-fg-muted">{group.data.description}</p>
-            <ul class="mt-4 list-none space-y-3 p-0">
+        company.services.map((service) => (
+          <div class="border-t border-fg pt-4 pb-8">
+            <dt class="text-lg font-semibold tracking-tight">{service.title}</dt>
+            <dd class="prose-flow mt-2 ml-0 text-sm leading-relaxed text-fg-muted">
+              {service.description}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <h3 class="mt-6 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
+    <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
+      Abgeleitet aus dem, was tatsächlich gebaut wurde. Hinter jedem Punkt steht das Projekt, das
+      ihn belegt.
+    </p>
+    <div class="mt-4 border-t border-border">
+      {
+        leistungen.map((group) => (
+          <Disclosure title={group.data.title} meta={punkte(group.data.items.length)}>
+            <p class="prose-flow mt-0 max-w-[65ch] text-sm text-fg-muted">
+              {group.data.description}
+            </p>
+            <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
               {group.data.items.map((item) => (
                 <li>
-                  <span class="block text-sm font-medium">{item.name}</span>
-                  <span class="block text-sm text-fg-muted">{item.note}</span>
+                  <span class="block text-sm font-medium">{item.title}</span>
+                  <span class="prose-flow block text-sm text-fg-muted">{item.description}</span>
+                  {item.evidence.length > 0 && (
+                    <span class="mt-1 block text-xs text-fg-muted">
+                      Beleg:{' '}
+                      {item.evidence.map((slug, i) => (
+                        <>
+                          {i > 0 && ', '}
+                          <a
+                            class="text-accent underline-offset-4"
+                            href={href(`/projekte/${slug}`)}
+                          >
+                            {projektTitel.get(slug) ?? slug}
+                          </a>
+                        </>
+                      ))}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
-          </div>
+          </Disclosure>
         ))
       }
     </div>
@@ -237,16 +172,58 @@ const secondaryButton =
 
   {
     /*
-    6. Über Klartext — die einzige Stelle auf der Startseite, an der die Person
+    03 Arbeitsweise — die vier Werte aus about.md, dahinter das, was in den
+    Commit-Historien nachlesbar ist.
+  */
+  }
+  <Section id="arbeitsweise" index="03" title="Arbeitsweise">
+    <ol class="m-0 list-none border-t border-border p-0">
+      {
+        aboutEntry.data.values.map((value, i) => (
+          <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4 sm:grid-cols-[2rem_10rem_minmax(0,1fr)]">
+            <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+              {i + 1}
+            </span>
+            <span class="font-medium">{value.title}</span>
+            <span class="prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted sm:col-start-3 sm:mt-0">
+              {value.description}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-8 border-t border-border">
+      <Disclosure title="Wie gearbeitet wird" meta={punkte(aboutEntry.data.workflow.length)}>
+        <p class="mt-0 max-w-[65ch] text-sm text-fg-muted">
+          Aus den Commit-Historien ablesbar, nicht aus einem Leitbild.
+        </p>
+        <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
+          {
+            aboutEntry.data.workflow.map((item) => (
+              <li>
+                <span class="block text-sm font-medium">{item.title}</span>
+                <span class="prose-flow mt-1 block text-sm text-fg-muted">{item.description}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </Disclosure>
+    </div>
+  </Section>
+
+  {
+    /*
+    04 Über Klartext — die einzige Stelle auf der Startseite, an der die Person
     genannt wird. Zweispaltig erst, wenn ein Portrait hinterlegt ist.
   */
   }
-  <Section id="ueber" title="Über Klartext" class="reveal">
+  <Section id="ueber" index="04" title="Über Klartext">
     <div
       class:list={[profile.portrait && 'lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-12']}
     >
       <div>
-        <div class="max-w-[65ch] space-y-4 leading-relaxed text-fg-muted">
+        <div class="prose-flow max-w-[65ch] space-y-4 leading-relaxed text-fg-muted">
           <AboutBody />
         </div>
 
@@ -265,12 +242,16 @@ const secondaryButton =
             )
           }
         </p>
+
+        <p class="mt-6 mb-0">
+          <Button href={href('/werkzeuge')} variant="text">Womit gearbeitet wird</Button>
+        </p>
       </div>
 
       {
         profile.portrait && (
           <Image
-            class="mt-8 w-40 rounded-lg border border-border object-cover lg:mt-0 lg:w-56"
+            class="mt-8 w-40 rounded-sm border border-border object-cover lg:mt-0 lg:w-56"
             src={profile.portrait}
             alt={profile.portraitAlt ?? profile.name}
             widths={[160, 224, 448]}
@@ -284,26 +265,25 @@ const secondaryButton =
 
   {
     /*
-    7. Kontakt — links die Handlung mit Ausweg, rechts der Ablauf. Die Adresse
-    steht als markierbarer Text neben dem Button: Wer am PC nur Webmail nutzt,
-    klickt sonst ins Leere.
+    05 Kontakt — links die Handlung mit Ausweg, rechts der Ablauf. Die Adresse
+    steht gross und markierbar da: Wer am PC nur Webmail nutzt, klickt mit
+    einem mailto:-Knopf allein ins Leere.
   */
   }
   <Section
     id="kontakt"
+    index="05"
     title={contact.heading}
     intro={`${contact.description} ${contact.responseTime}`}
-    class="reveal"
   >
-    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8">
+    <CopyEmail email={company.email} />
+    <p class="mt-4 mb-0 max-w-[65ch] text-sm text-fg-muted">
+      Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-12">
       <div>
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <a class={primaryButton} href={anfrage}>E-Mail schreiben</a>
-          <span class="font-medium wrap-anywhere select-all">{company.email}</span>
-        </div>
-        <p class="mt-3 max-w-[65ch] text-sm text-fg-muted">
-          Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
-        </p>
+        <Button href={anfrage}>E-Mail schreiben</Button>
 
         <ul class="mt-6 list-none space-y-2 p-0 text-sm text-fg-muted">
           {
@@ -341,15 +321,20 @@ const secondaryButton =
       </div>
 
       <div>
-        <h3 class="text-base font-semibold tracking-tight">So läuft eine Anfrage ab</h3>
-        <ol class="mt-4 list-decimal space-y-4 pl-5 marker:text-sm marker:text-fg-muted">
+        <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
+        <ol class="mt-3 mb-0 list-none border-t border-border p-0">
           {
-            contact.steps.map((step) => (
-              <li>
-                <span class="block text-sm font-medium">{step.title}</span>
-                <span class="mt-1 block max-w-[65ch] text-sm text-fg-muted">
-                  {step.description}
+            contact.steps.map((step, i) => (
+              <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4">
+                <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+                  {i + 1}
                 </span>
+                <div>
+                  <span class="block font-medium">{step.title}</span>
+                  <span class="prose-flow mt-1 block max-w-[55ch] text-sm text-fg-muted">
+                    {step.description}
+                  </span>
+                </div>
               </li>
             ))
           }
