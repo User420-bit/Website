@@ -5,6 +5,7 @@
     "intro": "Klartext baut kleine Programme, Websites und Web-Apps für kleine Unternehmen und Teams. Verständlich erklärt, ohne Fachchinesisch, mit ehrlichen Aussagen zu Aufwand, Nutzen und Grenzen – bevor eine Zeile Code entsteht.",
     "location": "Rosenheim, Bayern",
     "email": "info@web-klartext.de",
+    "fallbackEmail": "studsandph@gmail.com",
     "services": [
       {
         "title": "Kleine Programme",

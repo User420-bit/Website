@@ -1,6 +1,6 @@
 ---
 import { getEntry } from 'astro:content'
-import { href, mailto } from '@/lib/site'
+import { emailAddresses, href, mailto } from '@/lib/site'
 
 /**
  * Ruhige Anfrage-Zeile: nach "Arbeiten" auf der Startseite und am Ende jeder
@@ -30,7 +30,7 @@ const contact = (await getEntry('contact', 'main'))!.data
   <div class="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2">
     <a
       class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
-      href={mailto(company.email, contact.subject)}
+      href={mailto(emailAddresses(company.email, company.fallbackEmail), contact.subject)}
     >
       E-Mail schreiben
     </a>

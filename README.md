@@ -145,6 +145,11 @@ DNS beim Registrar:
 Danach in den Repository-Settings unter **Pages** die Domain eintragen und
 **Enforce HTTPS** aktivieren, sobald das Zertifikat ausgestellt ist.
 
+Solange das Postfach `info@web-klartext.de` noch nicht zustellt, steht in
+`company.json` und `legal.json` zusätzlich `fallbackEmail`. Die Seite zeigt dann
+beide Adressen, und jede Anfrage geht an beide. Kommt eine Testmail von außen an,
+`fallbackEmail` in beiden Dateien auf `null` setzen.
+
 Interne Links immer über den Helfer `href()` aus `src/lib/site.ts` bauen, damit der
 Base-Pfad und der abschließende Slash stimmen.
 

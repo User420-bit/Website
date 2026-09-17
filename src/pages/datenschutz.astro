@@ -46,6 +46,14 @@ const stand = `${monthNames[Number(month) - 1]} ${year}`
         ) : null
       }
       E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
+      {
+        legal.fallbackEmail && (
+          <>
+            {' '}
+            oder <a href={`mailto:${legal.fallbackEmail}`}>{legal.fallbackEmail}</a>
+          </>
+        )
+      }
     </p>
   </section>
 
