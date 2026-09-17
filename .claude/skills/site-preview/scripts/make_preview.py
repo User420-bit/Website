@@ -47,6 +47,12 @@ DROP_TAGS = re.compile(
 # untouched while still catching every entry in a srcset list.
 DELIMITERS = "\"'( ,\t\n"
 
+# macOS keeps extended attributes on exFAT, FAT and network volumes in
+# AppleDouble files ("._index.html" beside "index.html"). They are binary, not
+# site content, and pathlib's glob matches dotfiles: unfiltered, they crash the
+# rewrite, turn into routes and get published with the site.
+APPLEDOUBLE = "._"
+
 UI = {
     "en": {
         "open": "open in its own tab",
@@ -86,6 +92,19 @@ UI = {
 # --------------------------------------------------------------------------
 # Portability
 # --------------------------------------------------------------------------
+
+
+def site_files(root: Path, pattern: str = "*") -> list[Path]:
+    """Files under `root` matching `pattern`, sorted, without AppleDouble files.
+
+    Leaving them out of the copy is not enough: macOS creates fresh ones there
+    for the files and directories this script writes.
+    """
+    return sorted(
+        p
+        for p in root.rglob(pattern)
+        if p.is_file() and not p.name.startswith(APPLEDOUBLE)
+    )
 
 
 def rewrite(text: str, base: str, prefix: str) -> tuple[str, int]:
@@ -129,7 +148,7 @@ def rewrite(text: str, base: str, prefix: str) -> tuple[str, int]:
 def make_portable(dist: Path, site: Path, base: str) -> tuple[int, list[str]]:
     if site.exists():
         shutil.rmtree(site)
-    shutil.copytree(dist, site)
+    shutil.copytree(dist, site, ignore=shutil.ignore_patterns(APPLEDOUBLE + "*"))
 
     # Globbed, not listed: generators name these sitemap-0.xml, sitemap.xml,
     # sitemap-index.xml and more. A stray one is dead weight in the preview.
@@ -139,9 +158,7 @@ def make_portable(dist: Path, site: Path, base: str) -> tuple[int, list[str]]:
     total = 0
     warnings: list[str] = []
 
-    for path in sorted(site.rglob("*")):
-        if not path.is_file():
-            continue
+    for path in site_files(site):
         rel = path.relative_to(site)
 
         if path.suffix.lower() in WARN_SUFFIXES:
@@ -199,7 +216,7 @@ def label_for(text: str, rel: Path) -> tuple[str, bool]:
 def derive_routes(site: Path, base: str, root_label: str) -> list[dict]:
     groups: dict[str, list[dict]] = {}
 
-    for path in sorted(site.rglob("*.html")):
+    for path in site_files(site, "*.html"):
         rel = path.relative_to(site)
         parts = rel.parts
         text = path.read_text(encoding="utf-8", errors="ignore")
@@ -340,9 +357,7 @@ def main() -> int:
         print(f"  WARNUNG: {w}")
 
     files = {
-        f"site/{p.relative_to(site).as_posix()}": str(p)
-        for p in sorted(site.rglob("*"))
-        if p.is_file()
+        f"site/{p.relative_to(site).as_posix()}": str(p) for p in site_files(site)
     }
     (out / "files.json").write_text(
         json.dumps(files, ensure_ascii=False, indent=2), encoding="utf-8"
