@@ -36,6 +36,7 @@ const ROUTES = {
   '': 'Kleine Software, klar gebaut.',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
+  projekte: 'Alle Arbeiten',
   ...projektRouten,
 }
 

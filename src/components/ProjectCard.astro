@@ -1,23 +1,36 @@
 ---
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
 import Badge from '@/components/Badge.astro'
-import { KIND_LABELS, href } from '@/lib/site'
+import { KIND_LABELS, firstSentence, href } from '@/lib/site'
 
 interface Props {
-  slug: string
-  title: string
-  summary: string
-  techStack: string[]
-  kind: string
-  period: string
+  projekt: CollectionEntry<'projekte'>
 }
 
-const { slug, title, summary, techStack, kind, period } = Astro.props
-const url = href(`/projekte/${slug}`)
+const { projekt } = Astro.props
+const { title, summary, kind, period, status, live, screenshots } = projekt.data
+const url = href(`/projekte/${projekt.id}`)
+// Bildplatz nur mit echtem Screenshot; ohne bleibt die Karte reiner Text.
+const screenshot = screenshots[0]
 ---
 
 <article
   class="group relative flex h-full flex-col rounded-lg border border-border bg-bg-elevated p-5 transition-colors hover:border-accent/50 motion-reduce:transition-none"
 >
+  {
+    screenshot && (
+      <Image
+        class="mb-4 aspect-video w-full rounded-md border border-border object-cover object-top"
+        src={screenshot.image}
+        alt={screenshot.caption}
+        widths={[400, 800]}
+        sizes="(min-width: 1024px) 19rem, (min-width: 640px) 45vw, 92vw"
+        loading="lazy"
+      />
+    )
+  }
+
   <div class="flex items-start justify-between gap-3">
     <h3 class="m-0 text-lg font-semibold tracking-tight">
       {/* Stretched Link: die ganze Karte ist klickbar, der Fokus bleibt am Text. */}
@@ -32,21 +45,47 @@ const url = href(`/projekte/${slug}`)
 
   <p class="mt-3 flex-1 text-sm leading-relaxed text-fg-muted">{summary}</p>
 
-  <ul class="mt-4 flex list-none flex-wrap gap-1.5 p-0">
-    {
-      techStack.map((tech) => (
-        <li class="rounded-sm border border-border px-1.5 py-0.5 font-mono text-xs text-fg-muted">
-          {tech}
-        </li>
-      ))
-    }
-  </ul>
+  {
+    /* Stand statt Tech-Chips: Kunden fragen, ob es läuft, nicht womit. */
+    status && (
+      <p class="mt-4 mb-0 border-l-2 border-accent/40 pl-3 text-sm text-fg-muted">
+        <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
+      </p>
+    )
+  }
 
-  <p class="mt-4 mb-0 text-sm font-medium text-accent">
-    Details <span
-      aria-hidden="true"
-      class="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
-      >&rarr;</span
-    >
-  </p>
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <p class="m-0 text-sm font-medium text-accent">
+      Details <span
+        aria-hidden="true"
+        class="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
+        >&rarr;</span
+      >
+    </p>
+    {
+      /* Liegt über dem gestreckten Titel-Link, sonst wäre er weder klick- noch fokussierbar. */
+      live && (
+        <a
+          class="relative z-10 -my-2 inline-flex items-center gap-1 py-2 text-sm font-medium text-accent underline underline-offset-4"
+          href={live}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Live ansehen
+          <svg
+            aria-hidden="true"
+            class="size-3.5"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5.5 10.5l5-5M6.5 5.5h4v4" />
+          </svg>
+        </a>
+      )
+    }
+  </div>
 </article>

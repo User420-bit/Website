@@ -7,7 +7,7 @@ period: Mai – Juli 2026
 status: Im Einsatz für eine kleine Gruppe.
 github: null
 live: null
-order: 8
+order: 6
 features:
   - Hierarchische Notizen als SVG-Fäden auf einer Canvas
   - Pan und Zoom mit Touch, Inline-Bearbeitung
