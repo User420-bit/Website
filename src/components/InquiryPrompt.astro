@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content'
+import Button from '@/components/Button.astro'
 import { emailAddresses, href, mailto } from '@/lib/site'
 
 /**
@@ -19,23 +20,23 @@ const contact = (await getEntry('contact', 'main'))!.data
 
 <div
   class:list={[
-    'flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8',
+    'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8',
     className,
   ]}
 >
-  <p class="m-0 max-w-[65ch] text-fg-muted">
+  <p class="prose-flow m-0 max-w-[55ch] text-fg-muted">
     <span class="font-medium text-fg">{contact.prompt.title}</span>{' '}
     {contact.prompt.text}
   </p>
   <div class="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2">
-    <a
-      class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+    <Button
       href={mailto(emailAddresses(company.email, company.fallbackEmail), contact.subject)}
+      variant="secondary"
     >
       E-Mail schreiben
-    </a>
+    </Button>
     <a
-      class="py-2.5 text-sm text-fg-muted underline underline-offset-4 hover:text-fg"
+      class="py-2.5 text-sm text-fg-muted underline decoration-border underline-offset-4 transition-colors hover:text-fg hover:decoration-accent motion-reduce:transition-none"
       href={href('/#kontakt')}
     >
       So läuft eine Anfrage ab

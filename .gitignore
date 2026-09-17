@@ -15,3 +15,6 @@ dist-ssr
 
 # Vorschau-Build des site-preview-Skills
 .preview/
+
+# AppleDouble-Dateien von macOS auf exFAT-Laufwerken
+._*

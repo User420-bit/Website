@@ -1,0 +1,52 @@
+---
+/**
+ * E-Mail-Adresse als markierbarer Text plus "Kopieren". Wer Webmail nutzt,
+ * hat von einem mailto:-Link nichts — die Adresse muss sich mitnehmen lassen.
+ * Der Knopf erscheint erst, wenn der Browser die Zwischenablage anbietet; ohne
+ * JavaScript bleibt die Adresse einfach lesbar. Gespeichert wird nichts.
+ * Mehrfach auf einer Seite nutzbar: Jeder Knopf meldet in seiner eigenen Zeile.
+ */
+interface Props {
+  email: string
+}
+
+const { email } = Astro.props
+---
+
+<p class="m-0 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+  <a
+    class="display text-2xl font-semibold text-fg underline decoration-border underline-offset-8 transition-colors hover:decoration-accent motion-reduce:transition-none sm:text-3xl"
+    href={`mailto:${email}`}
+  >
+    {email}
+  </a>
+  <button
+    type="button"
+    hidden
+    data-copy={email}
+    class="cursor-pointer rounded-sm border border-fg/25 px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+  >
+    Adresse kopieren
+  </button>
+  <span role="status" aria-live="polite" data-copy-status class="text-sm text-fg-muted"></span>
+</p>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    const status = button.parentElement?.querySelector<HTMLElement>('[data-copy-status]')
+    if (!status || !navigator.clipboard) continue
+
+    button.hidden = false
+    let timer: number | undefined
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '')
+        status.textContent = 'Kopiert.'
+      } catch {
+        status.textContent = 'Bitte die Adresse markieren und kopieren.'
+      }
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => (status.textContent = ''), 2000)
+    })
+  }
+</script>

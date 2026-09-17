@@ -1,0 +1,27 @@
+---
+/**
+ * Aufklapper auf nativem <details>: funktioniert ohne JavaScript, per Tastatur
+ * und mit der Seitensuche des Browsers. Die Hoehe animiert nur dort, wo der
+ * Browser es von sich aus kann (siehe global.css).
+ */
+interface Props {
+  title: string
+  /** Kurze Angabe rechts vom Titel, z. B. "4 Punkte". */
+  meta?: string
+}
+
+const { title, meta } = Astro.props
+---
+
+<details class="disclosure group/disclosure border-b border-border">
+  <summary
+    class="flex cursor-pointer list-none items-baseline gap-4 py-4 transition-colors hover:text-accent motion-reduce:transition-none"
+  >
+    <span class="flex-1 font-medium">{title}</span>
+    {meta && <span class="text-sm text-fg-muted tabular-nums">{meta}</span>}
+    <span aria-hidden="true" class="disclosure-mark relative h-3 w-3 shrink-0 self-center"></span>
+  </summary>
+  <div class="pt-1 pb-6">
+    <slot />
+  </div>
+</details>
