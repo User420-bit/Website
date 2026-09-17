@@ -1,64 +1,59 @@
 {
   "websites": {
     "order": 1,
-    "title": "Websites & Landing Pages",
+    "title": "Websites",
     "description": "Für Selbstständige und kleine Firmen, die aus dem Baukasten raus wollen.",
     "items": [
       {
-        "title": "One-Page- und Portfolio-Websites",
-        "description": "Scroll-gesteuertes Design in echtem, schnellem Code statt Template. Plan und Asset-Briefing vor der ersten Zeile.",
+        "title": "Einseitige Websites und Portfolios",
+        "description": "Eine Seite, die beim Scrollen in Bewegung kommt, schnell lädt und nicht nach Vorlage aussieht. Vor der ersten Zeile Code stehen ein Plan und eine schriftliche Vorgabe für alle Bilder.",
         "evidence": ["pointcare"]
       },
       {
-        "title": "Statische Websites mit Astro",
-        "description": "Kein Tracking, keine Cookies, DSGVO-freundlich. Inhalte pflegbar über Markdown-Dateien statt Admin-Panel.",
-        "evidence": []
-      },
-      {
-        "title": "Shop- und Firmenseiten als Prototyp",
-        "description": "Ist-Analyse, Konkurrenzanalyse, Roadmap und ein klickbarer Prototyp mit echten Produktdaten.",
+        "title": "Shop- und Firmenseiten als klickbarer Entwurf",
+        "description": "Was die jetzige Seite kann und was ihr fehlt, was die Konkurrenz macht, ein Fahrplan und ein Entwurf zum Durchklicken mit den echten Produkten.",
         "evidence": ["justbeauty"]
       },
       {
-        "title": "KI-generierte Bild- und Videoassets",
-        "description": "Briefing, Prompts und Encoding-Pipeline mit Higgsfield, Kling und Nano Banana – integriert und auf Ladezeit geprüft.",
+        "title": "Bilder und Videos mit KI",
+        "description": "Nach schriftlicher Vorgabe erstellt, in die Seite eingebaut und darauf geprüft, dass sie auch auf dem Handy schnell lädt.",
         "evidence": ["pointcare"]
       },
       {
-        "title": "Deployment mit automatischem Deploy",
-        "description": "GitHub Pages, Cloudflare Pages oder Vercel. Jeder Push geht geprüft live.",
+        "title": "Veröffentlichen ohne Handarbeit",
+        "description": "Jede Änderung wird automatisch geprüft und geht danach von selbst online.",
         "evidence": ["tiefgang", "memorytree"]
       }
     ]
   },
   "webapps": {
     "order": 2,
-    "title": "Web-Apps & interne Tools",
+    "title": "Web-Apps & kleine Programme",
     "description": "Wenn Excel nicht mehr reicht, aber eine große Suite zu viel ist.",
     "items": [
       {
-        "title": "Dashboards und Verwaltungstools",
-        "description": "Rechnungen, Fristen, Dokumente, Berichte, PDF- und CSV-Export – mit Next.js oder FastAPI.",
+        "title": "Übersichten und Verwaltung",
+        "description": "Rechnungen, Fristen, Dokumente und Berichte an einem Ort. Dazu PDFs zum Verschicken und ein Export für Excel.",
         "evidence": ["kleinkram"]
       },
       {
-        "title": "Self-hosted Apps für kleine Teams",
-        "description": "Auch auf Kleinstgeräten wie einem Raspberry Pi. Die Daten bleiben bei dir.",
+        "title": "Apps für kleine Teams, ohne Cloud",
+        "description": "Läuft auch auf einem Kleinstrechner vor Ort. Die Daten bleiben bei Ihnen.",
         "evidence": ["notelist"]
       },
       {
-        "title": "Mandantenfähige Web-Apps",
-        "description": "Auth, Einladungscodes, Rate-Limiting und Security-Härtung – mit Regressionstest für die Datentrennung.",
+        "title": "Web-Apps mit getrennten Konten",
+        "description": "Mehrere Nutzergruppen in einer App, jede sieht nur ihre eigenen Daten. Zugang nur per Einladung, eine Bremse gegen massenhafte Zugriffe und ein automatischer Test, der die Trennung bei jeder Änderung prüft.",
         "evidence": ["memorytree"]
       },
       {
-        "title": "Datenbankmodellierung und Migrationen",
-        "description": "SQLite, Postgres, Drizzle, Prisma, SQLAlchemy und Alembic.",
+        "title": "Daten sauber ordnen und umziehen",
+        "description": "Die Daten sind von Anfang an sinnvoll aufgebaut und lassen sich in eine größere Datenbank umziehen, wenn die App wächst.",
         "evidence": ["memorytree", "kleinkram"]
       },
       {
-        "title": "Docker-Setups",
-        "description": "Damit Kunden oder Kollegen ein Projekt ohne Installationsaufwand starten können.",
+        "title": "Einfach zu starten",
+        "description": "Kunden oder Kollegen starten ein Projekt auf dem eigenen Rechner, ohne erst Entwicklungssoftware einzurichten.",
         "evidence": ["justbeauty", "kleinkram"]
       }
     ]
@@ -66,43 +61,43 @@
   "spiele": {
     "order": 3,
     "title": "Browser-Spiele & Interaktives",
-    "description": "Ohne Game-Engine, ohne App-Store, direkt im Browser.",
+    "description": "Ohne App-Store und ohne Installation, direkt im Browser.",
     "items": [
       {
         "title": "Vollständige Browser-Spiele",
-        "description": "TypeScript und Canvas 2D, mobile-first, als PWA offline spielbar.",
+        "description": "Zuerst fürs Handy gebaut und nach dem ersten Laden auch ohne Internet spielbar.",
         "evidence": ["tiefgang", "dealersim"]
       },
       {
-        "title": "Spielmechanik, Balancing und Simulation",
-        "description": "Deterministische Weltgenerierung, headless Balance-Simulatoren, Playtest-Auswertung mit Messdaten.",
+        "title": "Spielregeln, Balance und Simulation",
+        "description": "Spielwelten, die sich genau wiederholen lassen, automatische Testläufe für die Balance und Auswertungen mit Messdaten statt Bauchgefühl.",
         "evidence": ["tiefgang"]
       },
       {
-        "title": "Prozedurale Grafik und generativer Sound",
-        "description": "Sprites und Klänge aus Code statt aus Asset-Dateien.",
+        "title": "Grafik und Klang aus Code",
+        "description": "Figuren und Geräusche entstehen im Programm selbst, ohne fertige Bild- oder Tondateien.",
         "evidence": ["tiefgang"]
       }
     ]
   },
   "ki": {
     "order": 4,
-    "title": "KI-Integration & Konzept",
-    "description": "Lokale Modelle, wo Daten nicht raus dürfen. Analyse, bevor gebaut wird.",
+    "title": "KI & Konzept",
+    "description": "KI, die auf dem eigenen Rechner läuft, wenn Daten nicht nach außen dürfen. Und eine Analyse, bevor gebaut wird.",
     "items": [
       {
-        "title": "Lokale LLM-Anwendungen",
-        "description": "Ollama und Flask, mit Prompt-Engineering, Grounding-Prüfungen und Testsuite.",
+        "title": "KI-Anwendungen ohne Cloud",
+        "description": "Das Sprachmodell läuft auf dem eigenen Rechner, keine Daten gehen nach außen. Zusätzliche Prüfungen senken das Risiko, dass die KI etwas erfindet, automatische Tests sichern das ab.",
         "evidence": ["feynman"]
       },
       {
-        "title": "Ist-Analyse und Rework-Plan",
-        "description": "Bestehende Website oder App prüfen, Plan mit Begründungen schreiben, Umsetzungsstand nachhalten.",
+        "title": "Bestandsaufnahme und Umbauplan",
+        "description": "Die bestehende Website oder App prüfen, einen begründeten Plan schreiben und festhalten, was davon schon umgesetzt ist.",
         "evidence": ["justbeauty"]
       },
       {
-        "title": "Technische Dokumentation",
-        "description": "Hält auch verworfene Alternativen und Messdaten fest, damit Entscheidungen später nachvollziehbar bleiben.",
+        "title": "Dokumentation, die Entscheidungen erklärt",
+        "description": "Hält auch verworfene Wege und Messwerte fest, damit später klar ist, warum etwas so gebaut wurde.",
         "evidence": ["feynman", "dealersim"]
       }
     ]
