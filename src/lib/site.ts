@@ -52,5 +52,4 @@ export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',
   prototyp: 'Prototyp',
-  studienprojekt: 'Studienprojekt',
 }

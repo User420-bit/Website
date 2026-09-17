@@ -102,7 +102,7 @@ const projekte = defineCollection({
       summary: z.string(),
       techStack: z.array(z.string()).min(1),
       /** Art des Projekts — für Kunden und Arbeitgeber lesbarer als "eigenständig / AI-unterstützt". */
-      kind: z.enum(['kundenprojekt', 'eigenes-produkt', 'prototyp', 'studienprojekt']),
+      kind: z.enum(['kundenprojekt', 'eigenes-produkt', 'prototyp']),
       /** Zeitraum als Text, z. B. "Juli – September 2026". */
       period: z.string(),
       /**

@@ -60,7 +60,7 @@ Technisch und visuell solide, ehrlich im Detail, aber gebaut für jemanden, der 
 ## Priority Issues
 
 **[P1] Fachchinesisch bricht das eigene Versprechen**
-- **What:** `leistungen.json` („Deployment mit automatischem Deploy“, „Mandantenfähige Web-Apps … Rate-Limiting und Security-Härtung“, „Drizzle, Prisma, SQLAlchemy und Alembic“, „Ollama und Flask … Grounding-Prüfungen“); Karten-Zusammenfassungen („Push-your-luck-Mining-Roguelite“, „CLI-Anwendung mit Domain-Driven Design“); Monospace-Chips auf jeder Karte; „Aus den Commit-Historien ablesbar“. „Inhalte pflegbar über Markdown-Dateien statt Admin-Panel“ liest eine Laiin als „Ich kann nichts selbst ändern“.
+- **What:** `leistungen.json` („Deployment mit automatischem Deploy“, „Mandantenfähige Web-Apps … Rate-Limiting und Security-Härtung“, „Drizzle, Prisma, SQLAlchemy und Alembic“, „Ollama und Flask … Grounding-Prüfungen“); Karten-Zusammenfassungen („Push-your-luck-Mining-Roguelite“); Monospace-Chips auf jeder Karte; „Aus den Commit-Historien ablesbar“. „Inhalte pflegbar über Markdown-Dateien statt Admin-Panel“ liest eine Laiin als „Ich kann nichts selbst ändern“.
 - **Why it matters:** Der Name ist das Versprechen. Wer „ohne Fachchinesisch“ liest und dann „Alembic“ sieht, glaubt dem Rest weniger.
 - **Fix:** Jeden Punkt als Ergebnis für den Betrieb formulieren, Technologienamen auf die Projektseiten verschieben; Chips auf den Startseiten-Karten durch „Für wen, mit welchem Ergebnis“ ersetzen; „Insellösungen“ umbenennen; festlegen, wer bei Kunden Inhalte pflegt, und das aus Kundensicht sagen.
 - **Suggested command:** `/impeccable clarify`
@@ -85,7 +85,7 @@ Technisch und visuell solide, ehrlich im Detail, aber gebaut für jemanden, der 
 - **Suggested command:** `/impeccable layout`
 
 **[P2] Kleine Widersprüche untergraben „Belege statt Behauptungen“**
-- **What:** „Seit März 2026 … neueste zuerst“ (`index.astro:119`) über drei Karten von Dezember 2025 und nicht passender Reihenfolge; „Hinter jedem Punkt steht das Projekt, das ihn belegt“, aber „Statische Websites mit Astro“ hat keinen Beleg; `about.md` sagt „nicht als Badge auf jeder Karte“, die Sonor- und Availably-Zusammenfassungen tragen trotzdem „AI-unterstützt“; „in der Arbeitsweise unten“, obwohl die Sektion weiter oben steht; KI und AI gemischt, ein einzelnes „bei dir“; Sätze an einen unsichtbaren Prüfer („nichts liegt hinter einem Tab“, „Ohne Prozentbalken und Sterne“).
+- **What:** „Seit März 2026 … neueste zuerst“ (`index.astro:119`) über drei Karten von Dezember 2025 und nicht passender Reihenfolge; „Hinter jedem Punkt steht das Projekt, das ihn belegt“, aber „Statische Websites mit Astro“ hat keinen Beleg; `about.md` sagt „nicht als Badge auf jeder Karte“, zwei Karten-Zusammenfassungen tragen trotzdem „AI-unterstützt“; „in der Arbeitsweise unten“, obwohl die Sektion weiter oben steht; KI und AI gemischt, ein einzelnes „bei dir“; Sätze an einen unsichtbaren Prüfer („nichts liegt hinter einem Tab“, „Ohne Prozentbalken und Sterne“).
 - **Why it matters:** Wer Genauigkeit verkauft, darf keine nachprüfbar falschen Sätze haben.
 - **Fix:** Intro oder Sortierung korrigieren; unbelegten Punkt streichen oder belegen; AI-Vermerke aus den Zusammenfassungen; „unten“ in „oben“; eine Schreibweise und eine Anrede; Prüfer-Sätze streichen.
 - **Suggested command:** `/impeccable polish`
@@ -103,7 +103,7 @@ Technisch und visuell solide, ehrlich im Detail, aber gebaut für jemanden, der 
 ## Minor Observations
 
 - Die Versalzeile „KLARTEXT · ROSENHEIM, BAYERN“ wiederholt die Wortmarke direkt darüber; der Platz könnte die Zielgruppe nennen.
-- Das Arbeiten-Raster endet mit den schwächsten Karten (Sonor, Availably, wawi-mvp).
+- Das Arbeiten-Raster endet mit den schwächsten Karten.
 - „Wie gearbeitet wird“: 5 Punkte in 2 Spalten; „Datenschutz standardmäßig“ steht am Desktop allein.
 - Der LinkedIn-Link bricht am Desktop um („Profil auf / LinkedIn“) und fehlt im Kontaktblock.
 - Heller Modus: Rand des Sekundärbuttons 1,36:1, Kartenrand 1,39:1. Kein WCAG-Verstoß, der Sekundärbutton wirkt aber fast wie Text.
