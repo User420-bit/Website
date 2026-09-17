@@ -1,13 +1,13 @@
 ---
 title: JustBeauty Rework
-summary: Ist-Analyse, Design-Rework und lauffähiger Multi-Page-Prototyp mit 11 Routen für einen Kosmetik-Shop.
+summary: Bestandsaufnahme, neues Design und ein klickbarer Entwurf mit 11 Seiten für einen Kosmetik-Shop.
 techStack: [Astro, GSAP, Lenis, TypeScript, Docker]
 kind: kundenprojekt
 period: September 2026
 status: Prototyp und Konzept liegen dem Kunden vor.
 github: null
 live: null
-order: 5
+order: 2
 features:
   - Ist-Analyse, Design-Rework, Tracking-Konzept und Roadmap
   - Konkurrenzanalyse als Battlecard

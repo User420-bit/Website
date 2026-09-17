@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
+import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { href } from '@/lib/site'
@@ -37,7 +38,7 @@ const lists = [
   <article class="py-12 sm:py-16">
     <a
       class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/#arbeiten')}
+      href={href('/projekte/')}
     >
       <Arrow direction="left" /> Alle Arbeiten
     </a>
@@ -192,9 +193,6 @@ const lists = [
       </ul>
     </nav>
 
-    <p class="mt-10 mb-0 flex flex-wrap items-center gap-x-5 gap-y-3">
-      <span class="text-fg-muted">Ähnliches Vorhaben?</span>
-      <Button href={href('/#kontakt')}>Anfrage schreiben</Button>
-    </p>
+    <InquiryPrompt class="mt-10" />
   </article>
 </BaseLayout>

@@ -1,13 +1,13 @@
 ---
 title: PointCare
-summary: One-Page-Website für eine Logistikberatung. Dunkel, kinematisch, scroll-gesteuert – ersetzt ein Baukasten-Template.
+summary: Einseitige Website für eine Logistikberatung. Dunkel und filmisch, bewegt sich beim Scrollen mit und ersetzt eine Baukasten-Vorlage.
 techStack: [Vite, JavaScript, CSS, Scroll-Animationen, KI-Assets]
 kind: kundenprojekt
 period: September 2026
 status: In Abnahme. Offen sind Portrait-Foto, Impressum, Kontaktformular und lokale Schriften.
 github: null
 live: null
-order: 2
+order: 1
 features:
   - Drei Leistungsbereiche (Lager & Intralogistik, Supply Chain, Transport) als Scroll-Choreografie
   - Hero mit Parallax und Standbildern mit Scroll-Zoom

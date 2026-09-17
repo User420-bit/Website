@@ -1,13 +1,13 @@
 ---
 title: TIEFGANG
-summary: Push-your-luck-Mining-Roguelite für den Browser. Handy-Hochformat, einhändig, offline spielbar als PWA.
+summary: Browser-Spiel über eine Mine. Wer tiefer gräbt, holt mehr heraus und geht mehr Risiko ein. Fürs Handy im Hochformat, mit einer Hand und auch ohne Internet spielbar.
 techStack: [TypeScript, Canvas 2D, Vite, PWA, Cloudflare Pages, GitHub Actions]
 kind: eigenes-produkt
 period: Juli – September 2026
 status: Spielbar. Nächster Schritt ist M6 – Balancing und Beta mit 5 bis 10 Testspielern.
 github: null
 live: https://tiefgang.pages.dev
-order: 1
+order: 4
 features:
   - Core Loop mit drei Schichten, jede mit eigenen Gefahren
   - Vier Upgrade-Pfade und Verbrauchsgegenstände

@@ -1,6 +1,6 @@
 ---
 title: Kleinkram
-summary: Lokales Buchhaltungs-Dashboard für Kleinunternehmer nach §19 UStG. Rechnungen, Fristen, Dokumente, EÜR-Grundlage.
+summary: Buchhaltungs-Übersicht für Kleinunternehmer nach §19 UStG, die auf dem eigenen Rechner läuft. Rechnungen, Fristen und Dokumente an einem Ort, dazu die Grundlage für die EÜR.
 techStack: [Next.js 16, Drizzle ORM, SQLite, shadcn/ui, Tailwind, Recharts, Docker]
 kind: eigenes-produkt
 period: August 2026

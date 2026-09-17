@@ -3,8 +3,9 @@ node_modules
 .astro
 package-lock.json
 .preview
-
-# AppleDouble-Dateien von macOS auf exFAT-Laufwerken
+# AppleDouble-Dateien, die macOS auf exFAT-Datenträgern neben jeder Datei anlegt
 ._*
-.claude
+
+# Parallele Git-Worktrees und Werkzeug-Zustand sind kein Quelltext der Seite
+.claude/worktrees
 .impeccable

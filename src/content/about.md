@@ -25,11 +25,11 @@ Klartext ist ein kleines Softwareunternehmen aus Rosenheim. Der Name ist das Pro
 werden in verständlicher Sprache beantwortet, Aufwände ehrlich geschätzt, und wo ein Werkzeug von
 der Stange reicht, wird das gesagt, statt etwas Neues zu bauen.
 
-Seit März 2026 sind daraus 13 Repositories geworden: zwei Kundenprojekte, ein spielbares
-Browser-Spiel mit 184 Commits, ein Buchhaltungs-Dashboard, eine mandantenfähige Web-App und mehrere
-Prototypen. Was davon trägt, steht oben als Leistung – mit dem Projekt, das es belegt. Was nicht
-trägt, steht auf den Referenzseiten unter „Erkenntnisse".
+Bisher stehen hier elf Referenzen: zwei Kundenprojekte, ein spielbares Browser-Spiel, eine
+Buchhaltungs-Übersicht, eine Web-App mit getrennten Konten und weitere eigene Produkte, Prototypen
+und ein Studienprojekt. Was sich bewährt hat, steht unter „Leistungen“, jeweils mit dem Projekt, das
+es belegt. Was nicht funktioniert hat, steht auf den Referenzseiten unter „Erkenntnisse“.
 
 Hinter Klartext steht Pharrel Sandjo Djomou, Wirtschaftsinformatik-Student an der TH Rosenheim.
-AI-Werkzeuge kommen bewusst zum Einsatz und werden offen deklariert – in der Arbeitsweise oben,
-nicht als Badge auf jeder Karte, wo es längst keine Information mehr wäre.
+KI-Werkzeuge kommen bewusst zum Einsatz und werden einmal offen genannt, unter „Arbeitsweise“, statt
+auf jeder einzelnen Karte.

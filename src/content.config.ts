@@ -99,7 +99,10 @@ const projekte = defineCollection({
       kind: z.enum(['kundenprojekt', 'eigenes-produkt', 'prototyp', 'studienprojekt']),
       /** Zeitraum als Text, z. B. "Juli – September 2026". */
       period: z.string(),
-      /** Stand oder nächster Schritt, z. B. "Live, M6 Balancing folgt". null blendet aus. */
+      /**
+       * Stand oder nächster Schritt, z. B. "Live. M6 Balancing folgt". Die Karte zeigt nur den
+       * ersten Satz, die Projektseite den ganzen Text. null blendet aus.
+       */
       status: z.string().nullable().default(null),
       github: z.url().nullable(),
       /** Live-Demo oder Kundenseite. null = noch nicht gelauncht oder nicht öffentlich. */
@@ -116,8 +119,6 @@ const projekte = defineCollection({
           }),
         )
         .default([]),
-      /** Optionales Titelbild fuer hervorgehobene Referenzen. Fehlt es, fehlt nichts im Layout. */
-      cover: image().optional(),
       codeExample: z
         .object({
           language: z.string(),
@@ -125,7 +126,7 @@ const projekte = defineCollection({
         })
         .nullable()
         .default(null),
-      /** Sortierung auf der Startseite, kleiner zuerst. */
+      /** Sortierung, kleiner zuerst. Die Startseite zeigt die ersten sechs, /projekte/ alle. */
       order: z.number().int(),
     }),
 })
@@ -197,13 +198,33 @@ const legal = defineCollection({
   }),
 })
 
+/**
+ * Der Kontaktmoment. Hier stehen nur Zusagen, die der Inhaber bestätigt hat —
+ * keine Preise, keine Fristen außer der Antwortzeit.
+ */
 const contact = defineCollection({
   loader: file('src/content/contact.json'),
   schema: z.object({
     heading: z.string(),
     description: z.string(),
-    /** Zusage zur Antwortzeit, ohne Punkt. Steht im Hero und im Kontaktbereich. */
-    responseNote: z.string(),
+    /** Einzige Stelle mit der Antwortzeit; Hero und Kontakt lesen sie von hier. */
+    responseTime: z.string(),
+    /** Betreff aller Anfrage-Links. Wird URL-kodiert, Umlaute sind erlaubt. */
+    subject: z.string(),
+    /** Ablauf nach der Anfrage, in dieser Reihenfolge. */
+    steps: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .min(1),
+    /** Ruhige Anfrage-Zeile nach "Arbeiten" und am Ende jeder Projektseite. */
+    prompt: z.object({
+      title: z.string(),
+      text: z.string(),
+    }),
   }),
 })
 

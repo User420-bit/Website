@@ -1,0 +1,42 @@
+---
+import { getEntry } from 'astro:content'
+import Button from '@/components/Button.astro'
+import { href, mailto } from '@/lib/site'
+
+/**
+ * Ruhige Anfrage-Zeile: nach "Arbeiten" auf der Startseite und am Ende jeder
+ * Projektseite. Wer gerade einen Beleg gelesen hat, soll nicht erst bis zum
+ * Kontakt scrollen müssen. Der zweite Link führt zu Ablauf und Adresse, falls
+ * sich kein Mailprogramm öffnet.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className = '' } = Astro.props
+const company = (await getEntry('company', 'main'))!.data
+const contact = (await getEntry('contact', 'main'))!.data
+---
+
+<div
+  class:list={[
+    'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8',
+    className,
+  ]}
+>
+  <p class="prose-flow m-0 max-w-[55ch] text-fg-muted">
+    <span class="font-medium text-fg">{contact.prompt.title}</span>{' '}
+    {contact.prompt.text}
+  </p>
+  <div class="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2">
+    <Button href={mailto(company.email, contact.subject)} variant="secondary">
+      E-Mail schreiben
+    </Button>
+    <a
+      class="py-2.5 text-sm text-fg-muted underline decoration-border underline-offset-4 transition-colors hover:text-fg hover:decoration-accent motion-reduce:transition-none"
+      href={href('/#kontakt')}
+    >
+      So läuft eine Anfrage ab
+    </a>
+  </div>
+</div>

@@ -1,13 +1,13 @@
 ---
 title: MemoryTree
-summary: Erinnerungsbuch-Web-App für Paare. Fotos und Meilensteine als wachsender Baum, mit Timeline, Karte und Galerie.
+summary: Web-App als gemeinsames Erinnerungsbuch für Paare. Fotos und Meilensteine wachsen als Baum, dazu Zeitleiste, Karte und Galerie.
 techStack: [Python, FastAPI, SQLAlchemy, Alembic, Postgres, Vercel, Tailwind, Docker]
 kind: eigenes-produkt
 period: Juli – August 2026
 status: Läuft auf Vercel. Öffentlich unter MIT-Lizenz.
 github: null
 live: null
-order: 4
+order: 5
 features:
   - Erinnerungen, Fotos und Meilensteine als organischer SVG-Baum
   - Timeline, Karte und Galerie als alternative Sichten

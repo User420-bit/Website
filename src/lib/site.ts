@@ -13,6 +13,15 @@ export function href(path: string): string {
 }
 
 /**
+ * Erster Satz eines Textes, z. B. aus `status` für die Projektkarte. Trennt am
+ * ersten Satzzeichen vor einem Leerzeichen; Abkürzungen wie "z. B." gehören
+ * deshalb nicht in den ersten Satz.
+ */
+export function firstSentence(text: string): string {
+  return text.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? text
+}
+
+/**
  * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
  * "Arbeiten" steht vorn: erst der Beleg, dann das Angebot. "Kontakt" fehlt
  * hier, weil der Header dafuer die Schaltflaeche "Anfrage" traegt.
@@ -23,6 +32,15 @@ export const NAV_ITEMS = [
   { id: 'arbeitsweise', label: 'Arbeitsweise' },
   { id: 'ueber', label: 'Über' },
 ] as const
+
+/**
+ * `mailto:`-Link mit vorausgefülltem Betreff. Bewusst `encodeURIComponent`
+ * statt `URLSearchParams`: Letzteres kodiert Leerzeichen als `+`, und in
+ * `mailto:` ist `+` nach RFC 6068 ein echtes Pluszeichen im Betreff.
+ */
+export function mailto(email: string, subject: string): string {
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}`
+}
 
 export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',

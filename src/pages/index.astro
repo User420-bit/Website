@@ -4,10 +4,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import Button from '@/components/Button.astro'
 import CopyEmail from '@/components/CopyEmail.astro'
 import Disclosure from '@/components/Disclosure.astro'
+import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import ProjectRow from '@/components/ProjectRow.astro'
 import Section from '@/components/Section.astro'
-import { href } from '@/lib/site'
+import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -18,13 +19,16 @@ const { Content: AboutBody } = await render(aboutEntry)
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
 const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
-// Kundenprojekte stehen gross oben, alles andere im Index darunter.
-const referenzen = projekte.filter((p) => p.data.kind === 'kundenprojekt')
-const weitere = projekte.filter((p) => p.data.kind !== 'kundenprojekt')
+/** Die Startseite zeigt die ersten Arbeiten nach `order`, alle stehen unter /projekte/. */
+const STARTSEITE_PROJEKTE = 6
+const auswahl = projekte.slice(0, STARTSEITE_PROJEKTE)
+// Kundenprojekte stehen gross oben, der Rest der Auswahl als Index darunter.
+const referenzen = auswahl.filter((p) => p.data.kind === 'kundenprojekt')
+const weitere = auswahl.filter((p) => p.data.kind !== 'kundenprojekt')
 const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
 
-const description = `${company.name} – Insellösungen, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
-const mailto = `mailto:${company.email}?subject=${encodeURIComponent('Anfrage über web-klartext.de')}`
+const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
+const anfrage = mailto(company.email, contact.subject)
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 ---
 
@@ -46,12 +50,17 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     </p>
 
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-      <Button href={mailto}>Anfrage schreiben</Button>
+      <Button href={anfrage}>E-Mail schreiben</Button>
       <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
     </div>
 
-    <p class="mt-10 mb-0 text-sm text-fg-muted">
-      {company.location} · {contact.responseNote}
+    {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
+    <p class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
+      <span>{company.location}</span>
+      <span aria-hidden="true">·</span>
+      <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>
+      <span aria-hidden="true">·</span>
+      <span>{contact.responseTime}</span>
     </p>
   </section>
 
@@ -60,22 +69,10 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     id="arbeiten"
     index="01"
     title="Arbeiten"
-    intro="Kundenprojekte zuerst, darunter eigene Produkte, Prototypen und Studienarbeiten. Bei jedem Eintrag steht, was er ist — nichts liegt hinter einem Tab."
+    intro="Kundenprojekte, eigene Produkte, Prototypen und Studienprojekte. Jeder Eintrag sagt, um welche Art Projekt es sich handelt."
   >
     <div class="border-t border-border">
-      {
-        referenzen.map((projekt) => (
-          <ProjectFeature
-            slug={projekt.id}
-            title={projekt.data.title}
-            summary={projekt.data.summary}
-            kind={projekt.data.kind}
-            period={projekt.data.period}
-            status={projekt.data.status}
-            cover={projekt.data.cover}
-          />
-        ))
-      }
+      {referenzen.map((projekt) => <ProjectFeature projekt={projekt} />)}
     </div>
 
     <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Weitere Arbeiten</h3>
@@ -91,6 +88,18 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
         ))
       }
     </ul>
+    {
+      projekte.length > STARTSEITE_PROJEKTE && (
+        <p class="mt-6 mb-0">
+          <Button href={href('/projekte/')} variant="text">
+            Alle {projekte.length} Arbeiten
+          </Button>
+        </p>
+      )
+    }
+
+    {/* Anfrage-Zeile direkt unter den Belegen. */}
+    <InquiryPrompt class="mt-12 border-t border-border pt-8" />
   </Section>
 
   {
@@ -104,7 +113,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     id="leistungen"
     index="02"
     title="Leistungen"
-    intro="Drei Arten von Software, ein Anspruch: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
+    intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
   >
     <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3">
       {
@@ -254,25 +263,83 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     </div>
   </Section>
 
-  {/* 05 Kontakt — Adresse zum Mitnehmen, nicht nur ein mailto:-Knopf. */}
-  <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
+  {
+    /*
+    05 Kontakt — links die Handlung mit Ausweg, rechts der Ablauf. Die Adresse
+    steht gross und markierbar da: Wer am PC nur Webmail nutzt, klickt mit
+    einem mailto:-Knopf allein ins Leere.
+  */
+  }
+  <Section
+    id="kontakt"
+    index="05"
+    title={contact.heading}
+    intro={`${contact.description} ${contact.responseTime}`}
+  >
     <CopyEmail email={company.email} />
-    <p class="mt-5 mb-0 text-sm text-fg-muted">
-      {contact.responseNote}. {company.location}
+    <p class="mt-4 mb-0 max-w-[65ch] text-sm text-fg-muted">
+      Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
     </p>
-    <ul class="mt-8 flex list-none flex-wrap gap-3 p-0">
-      <li>
-        <Button href={mailto}>Anfrage schreiben</Button>
-      </li>
-      {
-        profile.social.github && (
-          <li>
-            <Button href={profile.social.github} variant="secondary" external>
-              GitHub
-            </Button>
-          </li>
-        )
-      }
-    </ul>
+
+    <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-12">
+      <div>
+        <Button href={anfrage}>E-Mail schreiben</Button>
+
+        <ul class="mt-6 list-none space-y-2 p-0 text-sm text-fg-muted">
+          {
+            profile.social.linkedin && (
+              <li>
+                Auch erreichbar über{' '}
+                <a
+                  class="text-accent underline underline-offset-4"
+                  href={profile.social.linkedin}
+                  rel="me noopener noreferrer"
+                  target="_blank"
+                >
+                  LinkedIn<span class="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              </li>
+            )
+          }
+          {
+            profile.social.github && (
+              <li>
+                Code auf{' '}
+                <a
+                  class="text-accent underline underline-offset-4"
+                  href={profile.social.github}
+                  rel="me noopener noreferrer"
+                  target="_blank"
+                >
+                  GitHub<span class="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              </li>
+            )
+          }
+          <li>{company.location}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
+        <ol class="mt-3 mb-0 list-none border-t border-border p-0">
+          {
+            contact.steps.map((step, i) => (
+              <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4">
+                <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+                  {i + 1}
+                </span>
+                <div>
+                  <span class="block font-medium">{step.title}</span>
+                  <span class="prose-flow mt-1 block max-w-[55ch] text-sm text-fg-muted">
+                    {step.description}
+                  </span>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
   </Section>
 </BaseLayout>

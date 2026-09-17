@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Arrow from '@/components/Arrow.astro'
+import InquiryPrompt from '@/components/InquiryPrompt.astro'
+import ProjectFeature from '@/components/ProjectFeature.astro'
+import { href } from '@/lib/site'
+
+// Alle Referenzen; die Startseite zeigt nur die ersten nach `order`.
+const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+---
+
+<BaseLayout
+  title="Alle Arbeiten – Klartext"
+  description="Alle Referenzen von Klartext: Kundenprojekte, eigene Produkte, Prototypen und Studienprojekte."
+>
+  <section class="py-12 sm:py-16">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/#arbeiten')}
+    >
+      <Arrow direction="left" /> Startseite
+    </a>
+
+    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">Alle Arbeiten</h1>
+    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      {projekte.length} Referenzen, Kundenprojekte zuerst. Bei jeder steht, um welche Art Projekt es geht:
+      Kundenprojekt, eigenes Produkt, Prototyp oder Studienprojekt.
+    </p>
+
+    <div class="mt-10 border-t border-border">
+      {projekte.map((projekt) => <ProjectFeature projekt={projekt} compact />)}
+    </div>
+
+    <InquiryPrompt class="mt-10" />
+  </section>
+</BaseLayout>

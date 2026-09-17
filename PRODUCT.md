@@ -53,7 +53,7 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
   Accessibility-Regeln, Prettier und den Build (`scripts/verify-build.mjs`: Routen, H1 der Startseite
   gegen den Claim in `company.json`, Meta-Tags, tote Links, externes JS).
 - Seiten: Startseite (Arbeiten, Leistungen, Arbeitsweise, Über Klartext, Kontakt), eine Seite pro
-  Projekt unter `/projekte/<slug>/`, Werkzeuge unter `/werkzeuge/`, Impressum, Datenschutz, 404.
+  Projekt unter `/projekte/<slug>/`, alle Arbeiten unter `/projekte/`, Werkzeuge unter `/werkzeuge/`, Impressum, Datenschutz, 404.
 - Recht: Impressumspflicht nach § 5 DDG. `scripts/guard-legal.mjs` blockiert den Deploy, bis `street`
   und `zipCity` in `src/content/legal.json` gesetzt sind. Beide sind noch `null`, die Seite ist also
   nicht live.

@@ -422,7 +422,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Shape:** 4 px, Innenabstand 0,625rem × 1rem (`sm`: 0,375rem × 0,75rem), Label-Schrift (500,
   0,875rem).
 - **Primary:** Fläche Werkstatt-Orange, Schrift auf Orange. Genau eine Hauptaktion pro Bereich
-  („Anfrage schreiben“, „Live ansehen“). Hover auf 90 % Deckkraft.
+  („E-Mail schreiben“, „Live ansehen“). Hover auf 90 % Deckkraft.
 - **Secondary:** transparent mit 1 px Rand in `fg/25` und Tintenschwarz; bei Hover werden Rand und
   Schrift orange („GitHub“, „Code auf GitHub“).
 - **Text:** unterstrichener Link in Tinte mit Pfeil für den leiseren zweiten Weg („Arbeiten ansehen“,
@@ -438,9 +438,11 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 ### Rows
 
 - **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte. Links (ab 640 px,
-  9rem) Art und Zeitraum, rechts Titel in Title Large, Summary (max. 60ch), optional „Stand: …“ und
-  Coverbild (4 px, 1 px Liniengrau), dann „Zur Referenz“ mit Pfeil in Orange. 2rem Innenabstand
-  oben und unten. Keine Technik-Namen.
+  9rem) Art und Zeitraum, rechts Titel in Title Large, Summary (max. 60ch), optional „Stand: …“
+  (nur der erste Satz) und der erste Screenshot (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
+  mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als eigener Link über dem gestreckten
+  Titel-Link. 2rem Innenabstand oben und unten. Keine Technik-Namen. Die Variante `compact`
+  (kleinerer Titel, 1,5rem Innenabstand) trägt die vollständige Liste unter `/projekte/`.
 - **Ledger-Zeile** (`ProjectRow`): Titel · Art · Zeitraum · Pfeil, 1rem Innenabstand, Haarlinie
   unten. Unter 640 px zweizeilig.
 - **Beide:** Der Titel-Link ist auf die ganze Zeile gestreckt, der Fokus bleibt am Titel. Bei Hover
@@ -450,6 +452,13 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Stand, Technik. „Technik“ steht in Mono, Bleistiftgrau, verbunden mit „ · “. Nur auf Projektseiten.
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
+
+### Anfrage-Zeile
+
+`InquiryPrompt`: ruhige Zeile nach „Arbeiten“, am Ende jeder Projektseite und unter `/projekte/`.
+Links ein Satz aus `contact.json` (Titel in Tinte, Rest in Bleistiftgrau), rechts „E-Mail schreiben“
+als Sekundärbutton und ein Textlink zum Ablauf im Kontaktbereich. Sekundär, weil die Hauptaktion des
+Bereichs schon vergeben ist.
 
 ### Disclosure
 
