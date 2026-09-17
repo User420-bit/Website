@@ -1,135 +1,119 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
-import Badge from '@/components/Badge.astro'
+import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
+import MetaList from '@/components/MetaList.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import { KIND_LABELS, href } from '@/lib/site'
+import { href } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 export const getStaticPaths = (async () => {
-  const projekte = await getCollection('projekte')
-  return projekte.map((projekt) => ({
+  const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+  return projekte.map((projekt, i) => ({
     params: { slug: projekt.id },
-    props: { projekt },
+    // Nachbarn in Startseiten-Reihenfolge, an den Enden ohne Umlauf.
+    props: { projekt, prev: projekte[i - 1] ?? null, next: projekte[i + 1] ?? null },
   }))
 }) satisfies GetStaticPaths
 
-const { projekt } = Astro.props
+const { projekt, prev, next } = Astro.props
 const { Content } = await render(projekt)
 const data = projekt.data
+
+// Wie auf der Startseite: Label in der Randspalte, Inhalt rechts, Haarlinie oben.
+const block =
+  'mt-12 border-t border-border pt-6 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12'
+const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
+const list = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted'
+const lists = [
+  { title: 'Funktionen', items: data.features },
+  { title: 'Technische Entscheidungen', items: data.engineering },
+]
 ---
 
 <BaseLayout title={`${data.title} – Klartext`} description={data.summary}>
   <article class="py-12 sm:py-16">
-    <a class="text-sm text-fg-muted no-underline hover:text-accent" href={href('/#arbeiten')}>
-      &larr; Alle Arbeiten
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/#arbeiten')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
     </a>
 
-    <div class="mt-6 flex flex-wrap items-center gap-3">
-      <h1 class="m-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-        {data.title}
-      </h1>
-      <Badge tone={data.kind === 'kundenprojekt' ? 'accent' : 'muted'}>
-        {KIND_LABELS[data.kind] ?? data.kind}
-      </Badge>
+    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+      {data.title}
+    </h1>
+    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      {data.summary}
+    </p>
+
+    <div class="mt-8">
+      <MetaList
+        kind={data.kind}
+        period={data.period}
+        status={data.status}
+        techStack={data.techStack}
+      />
     </div>
-
-    <p class="mt-2 text-sm text-fg-muted">{data.period}</p>
-
-    <p class="mt-4 max-w-[65ch] text-lg leading-relaxed text-fg-muted">{data.summary}</p>
-
-    {
-      data.status && (
-        <p class="mt-3 max-w-[65ch] border-l-2 border-accent/40 pl-3 text-sm text-fg-muted">
-          <span class="font-medium text-fg">Stand:</span> {data.status}
-        </p>
-      )
-    }
-
-    <ul class="mt-5 flex list-none flex-wrap gap-1.5 p-0">
-      {
-        data.techStack.map((tech) => (
-          <li class="rounded-sm border border-border px-2 py-0.5 font-mono text-xs text-fg-muted">
-            {tech}
-          </li>
-        ))
-      }
-    </ul>
 
     {
       (data.live || data.github) && (
-        <ul class="mt-5 flex list-none flex-wrap gap-3 p-0">
+        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
           {data.live && (
             <li>
-              <a
-                class="inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none"
-                href={data.live}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              <Button href={data.live} external>
                 Live ansehen
-              </a>
+              </Button>
             </li>
           )}
           {data.github && (
             <li>
-              <a
-                class="inline-flex items-center rounded-md border border-border px-4 py-2.5 text-sm font-medium text-fg no-underline transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
-                href={data.github}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              <Button href={data.github} variant="secondary" external>
                 Code auf GitHub
-              </a>
+              </Button>
             </li>
           )}
         </ul>
       )
     }
 
-    <div
-      class="mt-10 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
-    >
-      <Content />
-    </div>
+    <section class={block}>
+      <h2 class={blockTitle}>Worum es ging</h2>
+      <div
+        class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted lg:mt-0 [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+      >
+        <Content />
+      </div>
+    </section>
 
     {
-      data.features.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Funktionen</h2>
-          <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
-            {data.features.map((feature) => (
-              <li>{feature}</li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      data.engineering.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Technische Entscheidungen</h2>
-          <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
-            {data.engineering.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </section>
+      lists.map(
+        ({ title, items }) =>
+          items.length > 0 && (
+            <section class={block}>
+              <h2 class={blockTitle}>{title}</h2>
+              <ul class:list={[list, 'mt-4 lg:mt-0']}>
+                {items.map((item) => (
+                  <li class="border-b border-border pb-3">{item}</li>
+                ))}
+              </ul>
+            </section>
+          ),
       )
     }
 
     {
       data.screenshots.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Screenshots</h2>
-          <ul class="mt-4 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2">
+        <section class={block}>
+          <h2 class={blockTitle}>Screenshots</h2>
+          <ul class="mt-4 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2 lg:mt-0">
             {data.screenshots.map((shot) => (
               <li>
                 <figure class="m-0">
                   <Image
-                    class="w-full rounded-lg border border-border"
+                    class="w-full rounded-sm border border-border"
                     src={shot.image}
                     alt={shot.caption}
                     widths={[400, 800]}
@@ -146,24 +130,71 @@ const data = projekt.data
 
     {
       data.codeExample && (
-        <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Code</h2>
-          <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
+        <section class={block}>
+          <h2 class={blockTitle}>Code</h2>
+          <div class="mt-4 min-w-0 lg:mt-0">
+            <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
+          </div>
         </section>
       )
     }
 
     {
+      /*
+      Erkenntnisse sind die Randnotiz des Werkstattbuchs: Das Label steht in der
+      Randspalte, der Text laeuft in voller Tinte statt in Bleistiftgrau.
+    */
+    }
+    {
       data.learnings.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-xl font-semibold tracking-tight">Erkenntnisse</h2>
-          <ul class="mt-4 max-w-[65ch] list-disc space-y-1 pl-5 text-fg-muted">
+        <section class={block}>
+          <h2 class={blockTitle}>Erkenntnisse</h2>
+          <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg lg:mt-0">
             {data.learnings.map((learning) => (
-              <li>{learning}</li>
+              <li class="border-b border-border pb-3">{learning}</li>
             ))}
           </ul>
         </section>
       )
     }
+
+    <nav aria-label="Weitere Arbeiten" class="mt-16 border-t border-fg">
+      <ul class="m-0 grid list-none grid-cols-1 p-0 sm:grid-cols-2 sm:gap-x-8">
+        <li class="border-b border-border">
+          {
+            prev && (
+              <a class="group block py-4 text-fg no-underline" href={href(`/projekte/${prev.id}`)}>
+                <span class="flex items-center gap-2 text-sm text-fg-muted">
+                  <Arrow
+                    direction="left"
+                    class="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none"
+                  />
+                  Vorherige Arbeit
+                </span>
+                <span class="row-title mt-1 inline-block font-medium">{prev.data.title}</span>
+              </a>
+            )
+          }
+        </li>
+        <li class="border-b border-border sm:text-right">
+          {
+            next && (
+              <a class="group block py-4 text-fg no-underline" href={href(`/projekte/${next.id}`)}>
+                <span class="flex items-center gap-2 text-sm text-fg-muted sm:justify-end">
+                  Nächste Arbeit
+                  <Arrow class="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+                </span>
+                <span class="row-title mt-1 inline-block font-medium">{next.data.title}</span>
+              </a>
+            )
+          }
+        </li>
+      </ul>
+    </nav>
+
+    <p class="mt-10 mb-0 flex flex-wrap items-center gap-x-5 gap-y-3">
+      <span class="text-fg-muted">Ähnliches Vorhaben?</span>
+      <Button href={href('/#kontakt')}>Anfrage schreiben</Button>
+    </p>
   </article>
 </BaseLayout>

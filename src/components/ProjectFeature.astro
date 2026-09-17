@@ -1,0 +1,67 @@
+---
+/**
+ * Hervorgehobene Referenz auf der Startseite: eine breite Zeile statt einer
+ * Karte. Bewusst ohne Technik-Namen — die stehen auf der Projektseite.
+ */
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+import Arrow from '@/components/Arrow.astro'
+import KindLabel from '@/components/KindLabel.astro'
+import { href } from '@/lib/site'
+
+interface Props {
+  slug: string
+  title: string
+  summary: string
+  kind: string
+  period: string
+  status?: string | null
+  cover?: ImageMetadata
+}
+
+const { slug, title, summary, kind, period, status, cover } = Astro.props
+---
+
+<article
+  class="group relative grid gap-x-8 gap-y-3 border-b border-border py-8 sm:grid-cols-[9rem_minmax(0,1fr)]"
+>
+  <p class="m-0 flex gap-3 text-sm sm:flex-col sm:gap-1">
+    <KindLabel kind={kind} />
+    <span class="text-fg-muted tabular-nums">{period}</span>
+  </p>
+  <div>
+    <h3 class="display m-0 text-2xl font-semibold sm:text-3xl">
+      {/* Stretched Link: die ganze Zeile ist klickbar, der Fokus bleibt am Text. */}
+      <a
+        class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"
+        href={href(`/projekte/${slug}`)}
+      >
+        {title}
+      </a>
+    </h3>
+    <p class="prose-flow mt-3 mb-0 max-w-[60ch] leading-relaxed text-fg-muted">{summary}</p>
+    {
+      status && (
+        <p class="prose-flow mt-3 mb-0 max-w-[60ch] text-sm text-fg-muted">Stand: {status}</p>
+      )
+    }
+    {
+      cover && (
+        <Image
+          class="mt-6 w-full rounded-sm border border-border"
+          src={cover}
+          alt=""
+          widths={[480, 960]}
+          sizes="(min-width: 1024px) 40rem, 92vw"
+          loading="lazy"
+        />
+      )
+    }
+    <p class="mt-4 mb-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
+      Zur Referenz
+      <Arrow
+        class="transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
+      />
+    </p>
+  </div>
+</article>

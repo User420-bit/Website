@@ -1,0 +1,40 @@
+---
+/**
+ * Eckdaten einer Referenz als linierte Liste. Hier — und nur auf den
+ * Projektseiten — stehen Technik-Namen, in Mono.
+ */
+import KindLabel from '@/components/KindLabel.astro'
+
+interface Props {
+  kind: string
+  period: string
+  status?: string | null
+  techStack: string[]
+}
+
+const { kind, period, status, techStack } = Astro.props
+const row = 'grid grid-cols-[6rem_minmax(0,1fr)] gap-x-4 border-t border-border py-2.5 text-sm'
+---
+
+<dl class="m-0 max-w-[65ch] border-b border-border">
+  <div class={row}>
+    <dt class="text-fg-muted">Art</dt>
+    <dd class="m-0"><KindLabel kind={kind} /></dd>
+  </div>
+  <div class={row}>
+    <dt class="text-fg-muted">Zeitraum</dt>
+    <dd class="m-0 tabular-nums">{period}</dd>
+  </div>
+  {
+    status && (
+      <div class={row}>
+        <dt class="text-fg-muted">Stand</dt>
+        <dd class="prose-flow m-0">{status}</dd>
+      </div>
+    )
+  }
+  <div class={row}>
+    <dt class="text-fg-muted">Technik</dt>
+    <dd class="m-0 font-mono text-xs leading-6 text-fg-muted">{techStack.join(' · ')}</dd>
+  </div>
+</dl>

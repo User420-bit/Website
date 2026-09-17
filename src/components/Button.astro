@@ -1,0 +1,35 @@
+---
+/**
+ * Genau eine Hauptaktion pro Bereich (`primary`). `secondary` ist der
+ * umrandete Begleiter, `text` ein Link mit Pfeil fuer den leiseren zweiten Weg.
+ */
+import Arrow from '@/components/Arrow.astro'
+
+interface Props {
+  href: string
+  variant?: 'primary' | 'secondary' | 'text'
+  size?: 'md' | 'sm'
+  external?: boolean
+}
+
+const { href, variant = 'primary', size = 'md', external = false } = Astro.props
+
+const base =
+  'inline-flex items-center gap-2 text-sm font-medium no-underline motion-reduce:transition-none'
+const box = size === 'sm' ? 'rounded-sm px-3 py-1.5' : 'rounded-sm px-4 py-2.5'
+const variants = {
+  primary: `${box} bg-accent text-accent-fg transition-opacity hover:opacity-90`,
+  secondary: `${box} border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent`,
+  text: 'group py-2.5 text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent',
+}
+const externalAttrs = external ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+---
+
+<a class:list={[base, variants[variant]]} href={href} {...externalAttrs}>
+  <slot />
+  {
+    variant === 'text' && (
+      <Arrow class="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+    )
+  }
+</a>

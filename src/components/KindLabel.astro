@@ -1,0 +1,24 @@
+---
+/**
+ * Art des Projekts als Text, nicht als Pille. Nur "Kundenprojekt" traegt den
+ * Akzent: Das ist das eine Signal, auf das ein Kunde achten soll.
+ */
+import { KIND_LABELS } from '@/lib/site'
+
+interface Props {
+  kind: string
+  class?: string
+}
+
+const { kind, class: className = '' } = Astro.props
+---
+
+<span
+  class:list={[
+    'text-[0.8125rem] font-medium',
+    kind === 'kundenprojekt' ? 'text-accent' : 'text-fg-muted',
+    className,
+  ]}
+>
+  {KIND_LABELS[kind] ?? kind}
+</span>

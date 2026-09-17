@@ -35,6 +35,7 @@ const ROUTES = {
   '': 'Kleine Software, klar gebaut.',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
+  werkzeuge: 'Werkzeuge',
   ...projektRouten,
 }
 
@@ -84,7 +85,8 @@ for (const [route, html] of pages) {
     const [path, hash] = link.slice(BASE.length).split('#')
     if (path === '' && hash) {
       // Anker auf die Startseite.
-      if (!pages.get('')?.includes(`id="${hash}"`)) fail(`/${route}: Anker #${hash} existiert nicht`)
+      if (!pages.get('')?.includes(`id="${hash}"`))
+        fail(`/${route}: Anker #${hash} existiert nicht`)
       continue
     }
     const clean = path.replace(/\/$/, '')
@@ -101,6 +103,17 @@ for (const [route, html] of pages) {
   const external = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])
   if (external.length > 0) {
     fail(`/${route}: laedt externes JavaScript (${external.join(', ')})`)
+  }
+}
+
+// Schriften und Styles kommen vom eigenen Server: Das sagt die
+// Datenschutzerklaerung zu, also prueft es der Build.
+for (const [route, html] of pages) {
+  for (const [tag] of html.matchAll(/<link\b[^>]*>/g)) {
+    if (!/rel="(?:stylesheet|preload)"/.test(tag)) continue
+    const target = tag.match(/href="([^"]+)"/)?.[1] ?? ''
+    if (/^(?:https?:)?\/\//.test(target))
+      fail(`/${route}: laedt ${target} von einem fremden Server`)
   }
 }
 

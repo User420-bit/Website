@@ -116,6 +116,8 @@ const projekte = defineCollection({
           }),
         )
         .default([]),
+      /** Optionales Titelbild fuer hervorgehobene Referenzen. Fehlt es, fehlt nichts im Layout. */
+      cover: image().optional(),
       codeExample: z
         .object({
           language: z.string(),
@@ -200,6 +202,8 @@ const contact = defineCollection({
   schema: z.object({
     heading: z.string(),
     description: z.string(),
+    /** Zusage zur Antwortzeit, ohne Punkt. Steht im Hero und im Kontaktbereich. */
+    responseNote: z.string(),
   }),
 })
 

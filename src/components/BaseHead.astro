@@ -1,4 +1,6 @@
 ---
+import { Font } from 'astro:assets'
+
 interface Props {
   title: string
   description: string
@@ -13,6 +15,7 @@ const canonical = new URL(Astro.url.pathname.replace(/\/*$/, '/'), Astro.site)
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<Font cssVariable="--font-klartext" preload />
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />

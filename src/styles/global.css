@@ -1,8 +1,9 @@
 @import 'tailwindcss';
 
 /*
- * Design-Tokens nach Rework-Plan Abschnitt 5.2: eine Akzentfarbe, neutrale
- * Grautöne, sonst nichts. Der Akzent ist das Orange aus dem Klartext-Logo
+ * Design-Tokens: eine Akzentfarbe, neutrale Grautöne, eine selbst gehostete
+ * Schrift, sonst nichts. Ordnung entsteht aus Linien und Raster, nicht aus
+ * Kästen (siehe DESIGN.md). Der Akzent ist das Orange aus dem Klartext-Logo
  * (weisser Grund, schwarze Schrift, oranges Symbol). Als Textfarbe muss er
  * 4,5:1 auf Weiss halten, deshalb im Light-Mode bewusst dunkel gehalten. Die acht
  * Test-Themes, das Nebel-Raster und der schwebende "Theme Lab"-Button sind
@@ -16,8 +17,8 @@
  */
 
 @theme {
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* `--font-klartext` setzt Astro aus `fonts` in astro.config.mjs. */
+  --font-sans: var(--font-klartext), ui-sans-serif, system-ui, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --color-bg: oklch(0.99 0.002 80);
@@ -31,6 +32,14 @@
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
+
+  /* Bewegung: drei Dauern, eine Kurve. Mehr gibt es nicht. */
+  --ease-quiet: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: var(--ease-quiet);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
 }
 
 @layer theme {
@@ -61,8 +70,8 @@
   :root {
     color-scheme: light dark;
     /*
-     * Einziger Scroll-Offset im Projekt. Der Sticky-Header misst 81 px bei
-     * 390 px Breite und 61 px darueber; 6rem deckt beide Faelle mit etwas
+     * Einziger Scroll-Offset im Projekt. Der Sticky-Header misst 89 px bei
+     * 375 px Breite und 65 px darueber; 6rem deckt beide Faelle mit etwas
      * Luft ab. Sektionen tragen bewusst KEIN zusaetzliches `scroll-margin`,
      * sonst addieren sich die Werte.
      */
@@ -77,6 +86,7 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
+    font-feature-settings: 'kern', 'liga';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -101,29 +111,21 @@
 }
 
 @layer components {
-  /*
-   * Dezentes Einblenden beim ersten Scroll (Plan 5.1). Ohne JavaScript und
-   * ohne `prefers-reduced-motion` bleibt alles sofort sichtbar — die
-   * Animation darf Inhalt niemals verstecken.
-   */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      .reveal {
-        animation: reveal-in linear both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 40%;
-      }
-    }
+  /* Grosse Ueberschriften: eng gesetzt, damit sie als Block stehen. */
+  .display {
+    letter-spacing: -0.03em;
+    line-height: 1.02;
   }
 
-  @keyframes reveal-in {
-    from {
-      opacity: 0;
-      transform: translateY(0.75rem);
-    }
-    to {
-      opacity: 1;
-      transform: none;
+  /*
+   * Lange deutsche Woerter duerfen auf dem Handy trennen statt ueberzulaufen.
+   * Nur dort und nur bei langen Woertern: Auf breiten Spalten zerhackt
+   * Silbentrennung den Satz, ohne Platz zu sparen.
+   */
+  @media (width < 40rem) {
+    .prose-flow {
+      hyphens: auto;
+      hyphenate-limit-chars: 12 5 5;
     }
   }
 
@@ -133,5 +135,99 @@
   }
   .nav-link[aria-current='true']::after {
     transform: scaleX(1);
+  }
+
+  /*
+   * Zeilen-Link: Der Unterstrich zieht von links auf. Ausgeloest vom Hover der
+   * ganzen Zeile und vom Tastaturfokus, damit beide dasselbe sehen.
+   */
+  .row-title {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    transition: background-size var(--duration-base) var(--ease-quiet);
+  }
+  .group:hover .row-title,
+  .group:focus-within .row-title {
+    background-size: 100% 1px;
+  }
+
+  /* Aufklapper: Plus wird Minus. */
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure-mark::before,
+  .disclosure-mark::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: transform var(--duration-base) var(--ease-quiet);
+  }
+  .disclosure-mark::after {
+    transform: rotate(90deg);
+  }
+  .disclosure[open] .disclosure-mark::after {
+    transform: rotate(0deg);
+  }
+
+  /* Header: ohne Unterstuetzung steht die Linie immer, sonst erst nach dem Scrollen. */
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    view-transition-name: site-header;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .site-header {
+        border-bottom-color: transparent;
+        animation: header-rule linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 4rem;
+      }
+    }
+
+    @supports (interpolate-size: allow-keywords) {
+      :root {
+        interpolate-size: allow-keywords;
+      }
+      .disclosure::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size var(--duration-slow) var(--ease-quiet),
+          content-visibility var(--duration-slow) allow-discrete;
+      }
+      .disclosure[open]::details-content {
+        block-size: auto;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row-title,
+    .disclosure-mark::before,
+    .disclosure-mark::after {
+      transition: none;
+    }
+  }
+
+  @keyframes header-rule {
+    to {
+      border-bottom-color: var(--color-border);
+    }
+  }
+}
+
+/* Seitenwechsel: ein kurzes Ueberblenden, der Header bleibt stehen. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-group(root) {
+    animation-duration: var(--duration-base);
   }
 }

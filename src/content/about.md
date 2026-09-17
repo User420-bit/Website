@@ -31,5 +31,5 @@ Prototypen. Was davon trägt, steht oben als Leistung – mit dem Projekt, das e
 trägt, steht auf den Referenzseiten unter „Erkenntnisse".
 
 Hinter Klartext steht Pharrel Sandjo Djomou, Wirtschaftsinformatik-Student an der TH Rosenheim.
-AI-Werkzeuge kommen bewusst zum Einsatz und werden offen deklariert – in der Arbeitsweise unten,
+AI-Werkzeuge kommen bewusst zum Einsatz und werden offen deklariert – in der Arbeitsweise oben,
 nicht als Badge auf jeder Karte, wo es längst keine Information mehr wäre.
