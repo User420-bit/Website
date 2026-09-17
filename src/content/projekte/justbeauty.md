@@ -1,5 +1,5 @@
 ---
-title: JustBeauty Rework
+title: JustBeauty
 summary: Bestandsaufnahme, neues Design und ein klickbarer Entwurf mit 11 Seiten für einen Kosmetik-Shop.
 techStack: [Astro, GSAP, Lenis, TypeScript, Docker]
 kind: kundenprojekt

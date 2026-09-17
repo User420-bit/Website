@@ -59,7 +59,7 @@ Neue Datei `src/content/projekte/mein-projekt.md`:
 title: Mein Projekt
 summary: Ein Satz, der erklärt, was es tut.
 techStack: [Java, PostgreSQL]
-kind: eigenes-produkt # oder: kundenprojekt, prototyp, studienprojekt
+kind: eigenes-produkt # oder: kundenprojekt, prototyp
 period: März 2026
 status: Läuft, nächster Schritt ist X # oder: null
 github: https://github.com/<nutzer>/<repo> # oder: null

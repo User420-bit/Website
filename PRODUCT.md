@@ -86,10 +86,10 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 
 ## Evidence on Hand
 
-- 11 Referenzen in `src/content/projekte/`: TIEFGANG (eigenes Produkt, spielbar unter
+- 9 Referenzen in `src/content/projekte/`: TIEFGANG (eigenes Produkt, spielbar unter
   https://tiefgang.pages.dev, 184 Commits, 61 Pull Requests), PointCare (Kundenprojekt für point-care.de,
   Live-Link folgt), JustBeauty (Analyse und Prototyp), kleinkram, MemoryTree, NoteList, Feynman,
-  DealerSim, Availably, Sonor, wawi-mvp.
+  DealerSim, Availably.
 - Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: Websites, Web-Apps und kleine
   Programme, Browser-Spiele und Interaktives, KI und Konzept.
 - Kontakt: E-Mail `info@web-klartext.de`, LinkedIn. Antwort in der Regel innerhalb eines Werktags.

@@ -102,7 +102,7 @@ Sekundär: Professoren, Kommilitonen, spätere Praktikums- und Einstiegsarbeitge
 
 **Begründung:**
 
-- Jede Route wird zu echtem HTML. Deep-Links (`/impressum`, `/projekte/wawi-mvp`) funktionieren auf GitHub Pages ohne den 404-Redirect-Hack. Der aktuelle Routing-Bug und seine ganze Fehlerklasse verschwinden.
+- Jede Route wird zu echtem HTML. Deep-Links (`/impressum`, `/projekte/<slug>`) funktionieren auf GitHub Pages ohne den 404-Redirect-Hack. Der aktuelle Routing-Bug und seine ganze Fehlerklasse verschwinden.
 - Content Collections verwenden Zod-Schemata. Die bestehenden Schemata aus `content-validation.ts` lassen sich fast unverändert übernehmen; der Inhalt wandert aus `content-model.ts` in Markdown-/JSON-Dateien.
 - Null JavaScript im Standardfall. Das Ziel „≤ 50 KB“ ist damit trivial, mit React-SPA ohne Prerendering unerreichbar.
 - Offizielle GitHub-Pages-Action (`withastro/action`), `base`-Pfad ist ein Konfigurationswert.
@@ -252,7 +252,7 @@ Ziel: Der aktuelle Stand ist erreichbar und blamiert niemanden. Alles hier ist k
 | 1.2 | Content Collections nach Abschnitt 6 anlegen, Inhalte aus `DEFAULT_CONTENT` migrieren                                   | `astro check` grün, alle Inhalte in Dateien                                                        |
 | 1.3 | Layout, `SeoHead`, Header, Footer, 404-Seite                                                                            | Jede Seite hat eigenen Title, Description, Canonical, OG-Tags                                      |
 | 1.4 | Startseite mit allen Sektionen in neuer Reihenfolge, noch mit Basis-Styling                                             | Alle Inhalte sichtbar ohne Klick                                                                   |
-| 1.5 | Projekt-Detailseiten aus der Collection generieren                                                                      | `/projekte/wawi-mvp` rendert alle Felder                                                           |
+| 1.5 | Projekt-Detailseiten aus der Collection generieren                                                                      | `/projekte/<slug>` rendert alle Felder                                                             |
 | 1.6 | Alten React-Code, Admin, Themes, Radix, framer-motion entfernen                                                         | Keine ungenutzten Dateien oder Pakete, Bundle-Ziel aus 2.2 erreicht                                |
 | 1.7 | Deploy-Workflow auf `withastro/action` umstellen                                                                        | Deploy grün, Deep-Link `/Website/impressum` liefert direkt HTTP 200 ohne Redirect                  |
 

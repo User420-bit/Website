@@ -1,6 +1,6 @@
 ---
 title: DealerSim
-summary: Aufbau- und Managementspiel im Pixel-Look, das auch weiterläuft, wenn niemand spielt. Eine einzige Datei mit über 10.000 Zeilen Code, die ohne Installation im Browser startet.
+summary: Aufbau- und Managementspiel im Pixel-Look, das auch weiterläuft, wenn niemand spielt. Startet ohne Installation direkt im Browser.
 techStack: [HTML, JavaScript, Canvas, Python-Tooling, Docker]
 kind: eigenes-produkt
 period: Juli – August 2026
@@ -19,7 +19,7 @@ engineering:
   - Economy-Harness auf Reproduzierbarkeit repariert – Math.random geseedet
   - Security-Fix beim Save-Parsing – Keys wie __proto__ werden verworfen
 learnings:
-  - Ein Spiel ohne Build-Schritt ist bequem zu teilen und unbequem zu warten – ab 10.000 Zeilen kippt es
+  - Ein Spiel ohne Build-Schritt ist bequem zu teilen und unbequem zu warten, sobald es wächst
   - Playtest-Reports mit Messdaten schlagen Bauchgefühl beim Balancing
 ---
 
