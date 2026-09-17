@@ -22,7 +22,9 @@ const BASE = '/'
 const PROJEKTE_DIR = 'src/content/projekte'
 const projektRouten = Object.fromEntries(
   readdirSync(PROJEKTE_DIR)
-    .filter((name) => name.endsWith('.md'))
+    // `._<name>.md` sind AppleDouble-Dateien, die macOS auf exFAT neben jeder Datei anlegt,
+    // kein Content: Der Glob-Loader ueberspringt Punktdateien und baut dafuer keine Seite.
+    .filter((name) => name.endsWith('.md') && !name.startsWith('._'))
     .map((name) => {
       const title = readFileSync(join(PROJEKTE_DIR, name), 'utf8').match(/^title:\s*(.+)$/m)?.[1]
       return [`projekte/${name.replace(/\.md$/, '')}`, title?.trim()]
@@ -34,6 +36,7 @@ const ROUTES = {
   '': 'Kleine Software, klar gebaut.',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
+  projekte: 'Alle Arbeiten',
   ...projektRouten,
 }
 

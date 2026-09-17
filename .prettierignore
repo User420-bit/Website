@@ -3,3 +3,5 @@ node_modules
 .astro
 package-lock.json
 .preview
+# AppleDouble-Dateien, die macOS auf exFAT-Datenträgern neben jeder Datei anlegt
+._*

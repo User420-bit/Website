@@ -13,6 +13,15 @@ export function href(path: string): string {
 }
 
 /**
+ * Erster Satz eines Textes, z. B. aus `status` für die Projektkarte. Trennt am
+ * ersten Satzzeichen vor einem Leerzeichen; Abkürzungen wie "z. B." gehören
+ * deshalb nicht in den ersten Satz.
+ */
+export function firstSentence(text: string): string {
+  return text.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? text
+}
+
+/**
  * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
  * "Leistungen" steht vorn: Wer als Kunde kommt, sucht zuerst, was er bekommen
  * kann. "Arbeiten" sind die Belege dazu, "Werkzeuge" bleiben per Scroll und

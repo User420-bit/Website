@@ -1,13 +1,13 @@
 ---
 title: DealerSim
-summary: Isometrisches Idle-/Management-Spiel in Pixel-Art. Eine einzige HTML-Datei, über 10.000 Zeilen JavaScript, kein Build-Schritt.
+summary: Aufbau- und Managementspiel im Pixel-Look, das auch weiterläuft, wenn niemand spielt. Eine einzige Datei mit über 10.000 Zeilen Code, die ohne Installation im Browser startet.
 techStack: [HTML, JavaScript, Canvas, Python-Tooling, Docker]
 kind: eigenes-produkt
 period: Juli – August 2026
 status: Spielbar. Weiterentwicklung pausiert zugunsten von TIEFGANG.
 github: null
 live: null
-order: 7
+order: 8
 features:
   - Produktions- und Qualitätsmodell mit Nachfrage-Segmenten und B2B-Verträgen
   - Offline-Produktion, Prestige-System, Achievements

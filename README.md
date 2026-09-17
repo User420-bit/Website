@@ -1,7 +1,7 @@
 # Klartext — Website
 
 Statisch generierte Website des Einzelunternehmens Klartext (Astro 7 + Tailwind CSS 4):
-Insellösungen, Websites und Web-Apps aus Rosenheim. Die Person hinter Klartext wird auf der
+kleine Programme, Websites und Web-Apps aus Rosenheim. Die Person hinter Klartext wird auf der
 Startseite nur in der Sektion "Über Klartext" genannt und im Impressum, wo § 5 DDG den Namen
 verlangt.
 
@@ -63,7 +63,7 @@ period: März 2026
 status: Läuft, nächster Schritt ist X # oder: null
 github: https://github.com/<nutzer>/<repo> # oder: null
 live: https://example.com # oder: null
-order: 4 # Reihenfolge auf der Startseite, kleiner zuerst
+order: 4 # Reihenfolge, kleiner zuerst; die Startseite zeigt die ersten sechs
 features:
   - Was es kann
 engineering:
@@ -75,9 +75,9 @@ learnings:
 Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
-Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf der Startseite
-und die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
-ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
+Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Karte auf `/projekte/` (unter den
+ersten sechs nach `order` auch auf der Startseite) und die Detailseite entstehen automatisch,
+und `npm run test:build` prüft die neue Route ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
 ### Ein Bild hinzufügen

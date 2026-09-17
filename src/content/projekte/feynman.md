@@ -1,13 +1,13 @@
 ---
 title: Feynman-Prototyp
-summary: Lerntool mit lokalem Sprachmodell. Der Nutzer erklärt ein Thema, das Modell findet Verständnislücken und tutort nach.
+summary: Lernprogramm mit einer KI, die auf dem eigenen Rechner läuft. Man erklärt ein Thema, die KI findet Verständnislücken und erklärt gezielt nach.
 techStack: [Python, Flask, Ollama, pytest]
 kind: prototyp
 period: Juli – August 2026
 status: Prototyp mit Testsuite. Latenz-Experimente dokumentiert.
 github: null
 live: null
-order: 6
+order: 7
 features:
   - Prüfer-Tutor-Architektur nach der Feynman-Methode
   - Läuft komplett lokal über Ollama – keine Daten verlassen den Rechner

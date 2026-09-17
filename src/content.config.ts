@@ -99,7 +99,10 @@ const projekte = defineCollection({
       kind: z.enum(['kundenprojekt', 'eigenes-produkt', 'prototyp', 'studienprojekt']),
       /** Zeitraum als Text, z. B. "Juli – September 2026". */
       period: z.string(),
-      /** Stand oder nächster Schritt, z. B. "Live, M6 Balancing folgt". null blendet aus. */
+      /**
+       * Stand oder nächster Schritt, z. B. "Live. M6 Balancing folgt". Die Karte zeigt nur den
+       * ersten Satz, die Projektseite den ganzen Text. null blendet aus.
+       */
       status: z.string().nullable().default(null),
       github: z.url().nullable(),
       /** Live-Demo oder Kundenseite. null = noch nicht gelauncht oder nicht öffentlich. */
@@ -123,7 +126,7 @@ const projekte = defineCollection({
         })
         .nullable()
         .default(null),
-      /** Sortierung auf der Startseite, kleiner zuerst. */
+      /** Sortierung, kleiner zuerst. Die Startseite zeigt die ersten sechs, /projekte/ alle. */
       order: z.number().int(),
     }),
 })
