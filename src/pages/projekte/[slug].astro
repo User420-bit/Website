@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
 import Badge from '@/components/Badge.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
+import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { KIND_LABELS, href } from '@/lib/site'
 import { Image } from 'astro:assets'
@@ -165,5 +166,7 @@ const data = projekt.data
         </section>
       )
     }
+
+    <InquiryPrompt class="mt-16" />
   </article>
 </BaseLayout>

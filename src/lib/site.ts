@@ -34,6 +34,15 @@ export const NAV_ITEMS = [
   { id: 'kontakt', label: 'Kontakt' },
 ] as const
 
+/**
+ * `mailto:`-Link mit vorausgefülltem Betreff. Bewusst `encodeURIComponent`
+ * statt `URLSearchParams`: Letzteres kodiert Leerzeichen als `+`, und in
+ * `mailto:` ist `+` nach RFC 6068 ein echtes Pluszeichen im Betreff.
+ */
+export function mailto(email: string, subject: string): string {
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}`
+}
+
 export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',

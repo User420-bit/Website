@@ -198,11 +198,33 @@ const legal = defineCollection({
   }),
 })
 
+/**
+ * Der Kontaktmoment. Hier stehen nur Zusagen, die der Inhaber bestätigt hat —
+ * keine Preise, keine Fristen außer der Antwortzeit.
+ */
 const contact = defineCollection({
   loader: file('src/content/contact.json'),
   schema: z.object({
     heading: z.string(),
     description: z.string(),
+    /** Einzige Stelle mit der Antwortzeit; Hero und Kontakt lesen sie von hier. */
+    responseTime: z.string(),
+    /** Betreff aller Anfrage-Links. Wird URL-kodiert, Umlaute sind erlaubt. */
+    subject: z.string(),
+    /** Ablauf nach der Anfrage, in dieser Reihenfolge. */
+    steps: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .min(1),
+    /** Ruhige Anfrage-Zeile nach "Arbeiten" und am Ende jeder Projektseite. */
+    prompt: z.object({
+      title: z.string(),
+      text: z.string(),
+    }),
   }),
 })
 

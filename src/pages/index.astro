@@ -1,9 +1,10 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import ProjectCard from '@/components/ProjectCard.astro'
 import Section from '@/components/Section.astro'
-import { href } from '@/lib/site'
+import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -21,6 +22,7 @@ const leistungspunkte = leistungen.reduce((sum, group) => sum + group.data.items
 const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
 
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
+const anfrage = mailto(company.email, contact.subject)
 
 const primaryButton =
   'inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg no-underline transition-opacity hover:opacity-90 motion-reduce:transition-none'
@@ -45,9 +47,15 @@ const secondaryButton =
     <p class="mt-5 max-w-[60ch] text-lg leading-relaxed text-fg-muted">{company.intro}</p>
 
     <div class="mt-8 flex flex-wrap gap-3">
-      <a class={primaryButton} href={`mailto:${company.email}`}>Anfrage schreiben</a>
+      <a class={primaryButton} href={anfrage}>E-Mail schreiben</a>
       <a class={secondaryButton} href={href('/#arbeiten')}>Arbeiten ansehen</a>
     </div>
+    {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
+    <p class="mt-4 text-sm text-fg-muted">
+      <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>{' '}
+      <span aria-hidden="true">·</span>{' '}
+      {contact.responseTime}
+    </p>
   </section>
 
   {
@@ -163,6 +171,9 @@ const secondaryButton =
     }
   </Section>
 
+  {/* Anfrage-Zeile direkt unter den Belegen; der negative Rand rückt sie an das Raster. */}
+  <InquiryPrompt class="reveal -mt-6 sm:-mt-10" />
+
   {
     /*
     4. Arbeitsweise — die vier Werte aus about.md, dahinter das, was in den
@@ -271,27 +282,79 @@ const secondaryButton =
     </div>
   </Section>
 
-  {/* 7. Kontakt. */}
-  <Section id="kontakt" title={contact.heading} intro={contact.description} class="reveal">
-    <ul class="flex list-none flex-wrap gap-3 p-0">
-      <li>
-        <a class={primaryButton} href={`mailto:${company.email}`}>{company.email}</a>
-      </li>
-      {
-        profile.social.github && (
-          <li>
-            <a
-              class={secondaryButton}
-              href={profile.social.github}
-              rel="me noopener noreferrer"
-              target="_blank"
-            >
-              GitHub
-            </a>
-          </li>
-        )
-      }
-    </ul>
-    <p class="mt-4 text-sm text-fg-muted">{company.location}</p>
+  {
+    /*
+    7. Kontakt — links die Handlung mit Ausweg, rechts der Ablauf. Die Adresse
+    steht als markierbarer Text neben dem Button: Wer am PC nur Webmail nutzt,
+    klickt sonst ins Leere.
+  */
+  }
+  <Section
+    id="kontakt"
+    title={contact.heading}
+    intro={`${contact.description} ${contact.responseTime}`}
+    class="reveal"
+  >
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8">
+      <div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <a class={primaryButton} href={anfrage}>E-Mail schreiben</a>
+          <span class="font-medium wrap-anywhere select-all">{company.email}</span>
+        </div>
+        <p class="mt-3 max-w-[65ch] text-sm text-fg-muted">
+          Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
+        </p>
+
+        <ul class="mt-6 list-none space-y-2 p-0 text-sm text-fg-muted">
+          {
+            profile.social.linkedin && (
+              <li>
+                Auch erreichbar über{' '}
+                <a
+                  class="text-accent underline underline-offset-4"
+                  href={profile.social.linkedin}
+                  rel="me noopener noreferrer"
+                  target="_blank"
+                >
+                  LinkedIn<span class="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              </li>
+            )
+          }
+          {
+            profile.social.github && (
+              <li>
+                Code auf{' '}
+                <a
+                  class="text-accent underline underline-offset-4"
+                  href={profile.social.github}
+                  rel="me noopener noreferrer"
+                  target="_blank"
+                >
+                  GitHub<span class="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              </li>
+            )
+          }
+          <li>{company.location}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base font-semibold tracking-tight">So läuft eine Anfrage ab</h3>
+        <ol class="mt-4 list-decimal space-y-4 pl-5 marker:text-sm marker:text-fg-muted">
+          {
+            contact.steps.map((step) => (
+              <li>
+                <span class="block text-sm font-medium">{step.title}</span>
+                <span class="mt-1 block max-w-[65ch] text-sm text-fg-muted">
+                  {step.description}
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
   </Section>
 </BaseLayout>
