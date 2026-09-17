@@ -38,6 +38,14 @@ const addressComplete = legal.street !== null && legal.zipCity !== null
     <h2>Kontakt</h2>
     <p>
       E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
+      {
+        legal.fallbackEmail && (
+          <>
+            {' '}
+            oder <a href={`mailto:${legal.fallbackEmail}`}>{legal.fallbackEmail}</a>
+          </>
+        )
+      }
     </p>
   </section>
 

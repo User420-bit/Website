@@ -33,13 +33,19 @@ export const NAV_ITEMS = [
   { id: 'ueber', label: 'Über' },
 ] as const
 
+/** Hauptadresse und, falls gesetzt, Übergangsadresse — in dieser Reihenfolge. */
+export function emailAddresses(email: string, fallbackEmail: string | null): string[] {
+  return fallbackEmail ? [email, fallbackEmail] : [email]
+}
+
 /**
- * `mailto:`-Link mit vorausgefülltem Betreff. Bewusst `encodeURIComponent`
- * statt `URLSearchParams`: Letzteres kodiert Leerzeichen als `+`, und in
- * `mailto:` ist `+` nach RFC 6068 ein echtes Pluszeichen im Betreff.
+ * `mailto:`-Link mit vorausgefülltem Betreff. Mehrere Empfänger stehen nach
+ * RFC 6068 kommagetrennt vor dem `?`. Bewusst `encodeURIComponent` statt
+ * `URLSearchParams`: Letzteres kodiert Leerzeichen als `+`, und in `mailto:`
+ * ist `+` ein echtes Pluszeichen im Betreff.
  */
-export function mailto(email: string, subject: string): string {
-  return `mailto:${email}?subject=${encodeURIComponent(subject)}`
+export function mailto(emails: readonly string[], subject: string): string {
+  return `mailto:${emails.join(',')}?subject=${encodeURIComponent(subject)}`
 }
 
 export const KIND_LABELS: Record<string, string> = {

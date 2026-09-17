@@ -4,6 +4,7 @@
  * hat von einem mailto:-Link nichts — die Adresse muss sich mitnehmen lassen.
  * Der Knopf erscheint erst, wenn der Browser die Zwischenablage anbietet; ohne
  * JavaScript bleibt die Adresse einfach lesbar. Gespeichert wird nichts.
+ * Mehrfach auf einer Seite nutzbar: Jeder Knopf meldet in seiner eigenen Zeile.
  */
 interface Props {
   email: string
@@ -31,10 +32,10 @@ const { email } = Astro.props
 </p>
 
 <script>
-  const button = document.querySelector<HTMLButtonElement>('[data-copy]')
-  const status = document.querySelector<HTMLElement>('[data-copy-status]')
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    const status = button.parentElement?.querySelector<HTMLElement>('[data-copy-status]')
+    if (!status || !navigator.clipboard) continue
 
-  if (button && status && navigator.clipboard) {
     button.hidden = false
     let timer: number | undefined
     button.addEventListener('click', async () => {
