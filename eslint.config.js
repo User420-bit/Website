@@ -5,7 +5,8 @@ import tseslint from 'typescript-eslint'
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', '.astro/**'],
+    // `._*`: AppleDouble-Dateien, die macOS auf exFAT-Laufwerken neben jede Datei legt.
+    ignores: ['dist/**', 'node_modules/**', '.astro/**', '.claude/**', '.preview/**', '**/._*'],
   },
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,

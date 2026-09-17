@@ -3,3 +3,8 @@ node_modules
 .astro
 package-lock.json
 .preview
+
+# AppleDouble-Dateien von macOS auf exFAT-Laufwerken
+._*
+.claude
+.impeccable

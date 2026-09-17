@@ -22,7 +22,8 @@ const BASE = '/'
 const PROJEKTE_DIR = 'src/content/projekte'
 const projektRouten = Object.fromEntries(
   readdirSync(PROJEKTE_DIR)
-    .filter((name) => name.endsWith('.md'))
+    // `._*`: AppleDouble-Dateien von macOS auf exFAT-Laufwerken sind kein Content.
+    .filter((name) => name.endsWith('.md') && !name.startsWith('._'))
     .map((name) => {
       const title = readFileSync(join(PROJEKTE_DIR, name), 'utf8').match(/^title:\s*(.+)$/m)?.[1]
       return [`projekte/${name.replace(/\.md$/, '')}`, title?.trim()]
