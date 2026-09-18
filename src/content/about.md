@@ -21,7 +21,7 @@ workflow:
     description: Keine Tracker, Daten lokal, keine offene Registrierung ohne Grund. Diese Seite lädt nichts von Dritten.
 ---
 
-Klartext ist ein kleines Softwareunternehmen aus Rosenheim. Der Name ist das Programm: Anfragen
+Klartext ist ein kleines Softwareunternehmen aus Bruckmühl. Der Name ist das Programm: Anfragen
 werden in verständlicher Sprache beantwortet, Aufwände ehrlich geschätzt, und wo ein Werkzeug von
 der Stange reicht, wird das gesagt, statt etwas Neues zu bauen.
 
