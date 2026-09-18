@@ -6,7 +6,7 @@ kind: eigenes-produkt
 period: Juli – August 2026
 status: Läuft auf Vercel. Öffentlich unter MIT-Lizenz.
 github: null
-live: null
+live: https://memorytree-app.vercel.app
 order: 5
 features:
   - Erinnerungen, Fotos und Meilensteine als organischer SVG-Baum
