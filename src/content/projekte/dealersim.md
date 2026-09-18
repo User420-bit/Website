@@ -6,7 +6,7 @@ kind: eigenes-produkt
 period: Juli – August 2026
 status: Spielbar. Weiterentwicklung pausiert zugunsten von TIEFGANG.
 github: null
-live: null
+live: https://dealersim.vercel.app
 order: 8
 features:
   - Produktions- und Qualitätsmodell mit Nachfrage-Segmenten und B2B-Verträgen
