@@ -21,7 +21,7 @@ vom Inhaber geändert: Kunden zuerst.)
 
 ## Product Purpose
 
-Die Seite stellt Klartext vor, ein Einzelunternehmen aus Rosenheim von Pharrel Sandjo Djomou
+Die Seite stellt Klartext vor, ein Einzelunternehmen aus Bruckmühl von Pharrel Sandjo Djomou
 (Wirtschaftsinformatik-Student an der TH Rosenheim). Klartext baut kleine Programme, Websites und
 Web-Apps für kleine Unternehmen. Zweck der Seite: aus einem interessierten Besucher ein Gespräch machen.
 
