@@ -1,6 +1,16 @@
 # Plan: Kapitel statt Steckbrief – klare Übergänge und ein aufgeräumter Kontakt
 
-Stand: 2026-09-20 · Basis: Commit `d00ee8f` auf `main` · Status: geplant, noch nicht umgesetzt · Autor: erstellt per Claude Code Session, Review durch Pharrel ausstehend
+Stand: 2026-09-20 · Basis: Commit `d00ee8f` auf `main` · Status: umgesetzt am 2026-09-20 · Autor: erstellt per Claude Code Session, Review durch Pharrel ausstehend
+
+> **Umgesetzt am 2026-09-20** in vier Commits auf `claude/keen-shannon-2a1sed`: Kapitelkopf (`5645b67`), `NumberedRows` (`af70d55`), Kontakt (`5717e7f`), Designsystem (der Commit, der diesen Vermerk trägt). Abweichungen vom Plan, alle bewusst:
+>
+> - **Erreichbarkeit steht links unter dem Knopf, nicht rechts** (1.3). Rechts hätte die alte Schieflage wiederholt: kurze linke Spalte neben langer rechter. Jetzt enden beide Spalten fast auf gleicher Höhe. Die Antwortzeit bleibt im Sektions-Intro; `responseTime` ist ein ganzer Satz, für eine Zeile „Antwort – …“ bräuchte es ein neues Inhaltsfeld.
+> - **„Oder an“ statt „Bis das Postfach zustellt“** (1.3). Eine Startseite, die ankündigt, dass das eigene Postfach nicht zustellt, schadet dem Absender. Die Zeile verschwindet mit `fallbackEmail: null` von selbst.
+> - **Commit 2 hat beide Nummernlisten ersetzt**, nicht nur Arbeitsweise (1.6): so ist er ein reiner Refactor ohne sichtbare Änderung, und Commit 3 trägt nur den Kontakt.
+> - **Die H2 nutzt den Token Headline** (`tracking-tight`, 1,111) statt `.display`; so braucht das Designsystem keinen neuen Token. Der Feature-Titel bekommt dafür **Title Medium** (1,5rem), weil er sonst nur eine Fünftel-Stufe unter der H2 stünde.
+> - Der LinkedIn-Link in der Kontakt-Meta-Liste trägt kein `rel="me"` mehr; die generische `MetaList` setzt `noopener noreferrer`. Der Link in „Über Klartext“ behält `me`.
+>
+> Geprüft: `npm run verify` grün; Screenshots 1440 px und 390 px, hell und dunkel; beide Kopier-Knöpfe schreiben die richtige Adresse und melden „Kopiert.“ in der eigenen Zeile; die Tintenlinie wirkt im Dunkelmodus nicht härter als im Hellmodus (Risiko aus Abschnitt 4 entfällt); der aktive Navigationsanker springt mit der größeren Kapitelluft nicht um.
 
 Konfidenz-Tags wie in [`REWORK_PLAN.md`](REWORK_PLAN.md): **[Sicher]** = im Code oder im Screenshot des Builds belegt (Chromium, 1440 px und 390 px, hell und dunkel) · **[Wahrscheinlich]** = starke Schlussfolgerung · **[Vermutung]** = Annahme, die Pharrel bestätigen muss.
 

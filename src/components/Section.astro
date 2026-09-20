@@ -30,7 +30,7 @@ const { id, title, index, intro, class: className = '' } = Astro.props
       )
     }
     <div class:list={[index && 'mt-1 lg:mt-0', !index && 'lg:col-start-2']}>
-      <h2 class="display m-0 text-3xl font-semibold text-balance sm:text-4xl">{title}</h2>
+      <h2 class="m-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
       {intro && <p class="prose-flow mt-4 mb-0 max-w-[65ch] text-fg-muted">{intro}</p>}
     </div>
   </div>
