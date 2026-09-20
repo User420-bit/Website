@@ -35,6 +35,14 @@ Bewusst nicht gemacht.
   `--radius-md`, obwohl `src/styles/global.css` und `DESIGN.md` es definieren.
   Die Liste vorhandener Utility-Klassen in `conventions.md` ist daraus
   abgeleitet, nicht aus dem Quelltext.
+- **Dokumentation darf nicht mitgescannt werden.** Tailwind durchsucht das
+  Projektverzeichnis nach Klassennamen. `conventions.md` nennt Klassen auch als
+  Gegenbeispiele ("gibt es nicht") — dadurch erzeugte Tailwind genau diese
+  Klassen (`bg-fg`, `rounded-md`, `text-border`, `--radius-md`), sie landeten im
+  ausgelieferten Stylesheet der Seite, und die Aussage der Datei wurde durch ihr
+  eigenes Dasein falsch. `src/styles/global.css` schliesst `.design-sync/`
+  deshalb per `@source not` aus. Wer den Ausschluss entfernt, blaeht das
+  Stylesheet der Seite auf und macht `conventions.md` unwahr.
 - **`tokens/` bleibt leer.** `copyTokens()` liest nur aus einem npm-Paket
   (`cfg.tokensPkg`). Die Klartext-Tokens liegen im Repo und erreichen die
   Entwuerfe ueber `_ds_bundle.css`, das `styles.css` importiert — also
@@ -74,6 +82,10 @@ Skill-Anleitung, Abschnitt 7).
   Website benutzt. Nach groesseren Aenderungen an den Seiten neu gegen
   `ds-bundle/_ds_bundle.css` pruefen; `conventions.md` gehoert den Autoren und
   wird nicht automatisch neu geschrieben, nur nachgeprueft.
+- `conventions.md` ist auf Englisch, `DESIGN.md` bleibt Deutsch — die
+  Vorschrift ist die Quelle der Wahrheit und wird nicht uebersetzt, damit sie
+  nicht von ihr abzweigt. Die Entwurfs-Oberflaeche bekommt also einen englischen
+  Kopf und eine deutsche Vorschrift; der Kopf sagt das ausdruecklich.
 - Die Playwright-Version ist an die jeweilige Umgebung gebunden, nicht an das
   Repo. Auf einer anderen Maschine kann eine andere Version noetig sein.
 - `.design-sync/.cache/` ist gitignored. `prep.mjs` muss vor jedem

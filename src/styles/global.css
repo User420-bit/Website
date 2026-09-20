@@ -1,6 +1,15 @@
 @import 'tailwindcss';
 
 /*
+ * Tailwind v4 durchsucht das Projektverzeichnis nach Klassennamen. `.design-sync/`
+ * ist beschriebene Dokumentation, kein Quelltext der Seite: dort stehen
+ * Klassennamen auch als Gegenbeispiele ("gibt es nicht"). Ohne diesen
+ * Ausschluss erzeugt Tailwind genau diese Klassen und sie landen im
+ * ausgelieferten Stylesheet.
+ */
+@source not "../../.design-sync";
+
+/*
  * Design-Tokens: eine Akzentfarbe, neutrale Grautöne, eine selbst gehostete
  * Schrift, sonst nichts. Ordnung entsteht aus Linien und Raster, nicht aus
  * Kästen (siehe DESIGN.md). Der Akzent ist das Orange aus dem Klartext-Logo

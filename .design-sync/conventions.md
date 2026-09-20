@@ -1,67 +1,69 @@
-## Klartext — nur Gestaltungsebene, keine Komponenten
+## Klartext — design layer only, no components
 
-Klartext ist eine Astro-Seite. Ihre Bausteine sind `.astro`-Dateien, die beim
-Bauen zu HTML werden; es gibt keine React-Komponenten zum Einbinden.
-**`window.Klartext` ist leer — such dort nicht nach Bausteinen.** Was dieses
-System liefert, ist die Gestaltungsebene: Farben, Schrift, Radien, Bewegung
-und ein paar benannte Klassen. Bau die Oberflaeche aus eigenen Elementen und
-kleide sie in diese Tokens.
+Klartext is an Astro site. Its building blocks are `.astro` files that compile
+to HTML at build time; there are no React components to import.
+**`window.Klartext` is empty — don't look there for building blocks.** What
+this system ships is the design layer: colors, type, radii, motion, and a
+handful of named classes. Build the surface from your own elements and dress
+it in these tokens.
 
-**Wo die Wahrheit steht:** `styles.css` (laedt `fonts/fonts.css` und
-`_ds_bundle.css` — dort stehen alle Tokens und Klassen) und
-`guidelines/DESIGN.md`, die vollstaendige Gestaltungsvorschrift.
+The site is in German. Write German copy unless asked otherwise.
 
-### Einrichtung
+**Where the truth lives:** `styles.css` (it loads `fonts/fonts.css` and
+`_ds_bundle.css`, which hold every token and class) and `guidelines/DESIGN.md`,
+the full design specification — that one is written in German.
 
-Kein Provider, kein Theme-Objekt. `styles.css` einbinden, fertig: `body` bekommt
-Grund- und Schriftfarbe, `font-family` und geglaettete Kanten von selbst.
-Der Farbmodus folgt der Systemeinstellung (`prefers-color-scheme`); zum
-Erzwingen `data-theme="dark"` oder `data-theme="light"` auf `<html>` setzen.
-**Schreib nie eine Farbe fest** — alle Tokens kippen im dunklen Modus mit.
+### Setup
 
-### Idiom: CSS-Variablen, nicht Utility-Klassen
+No provider, no theme object. Include `styles.css` and you're done: `body`
+picks up its background, text color, `font-family` and smoothing on its own.
+Color mode follows the system setting (`prefers-color-scheme`); to force it,
+set `data-theme="dark"` or `data-theme="light"` on `<html>`.
+**Never hardcode a color** — every token flips with the mode.
 
-Style ueber `var(--*)`. Das ist der verlaessliche Weg, weil das mitgelieferte
-Stylesheet auf den Bestand der Website zurechtgeschnitten ist.
+### The idiom: CSS variables, not utility classes
 
-| Zweck    | Token                                                                                              |
+Style through `var(--*)`. That is the reliable path, because the bundled
+stylesheet is cut down to what the website itself uses.
+
+| Purpose  | Token                                                                                              |
 | -------- | -------------------------------------------------------------------------------------------------- |
-| Flaechen | `--color-bg` (Papier), `--color-bg-elevated` (nur Codeblock)                                       |
-| Text     | `--color-fg` (Tinte), `--color-fg-muted` (Bleistift)                                               |
-| Signal   | `--color-accent` (Orange), `--color-accent-fg` (Schrift darauf)                                    |
-| Linien   | `--color-border`                                                                                   |
-| Schrift  | `--font-sans`, `--font-mono`                                                                       |
-| Radien   | `--radius-sm` (4 px), `--radius-lg` (12 px)                                                        |
-| Bewegung | `--ease-quiet`, `--duration-fast` (120 ms), `--duration-base` (200 ms), `--duration-slow` (320 ms) |
+| Surfaces | `--color-bg` (paper), `--color-bg-elevated` (code block only)                                      |
+| Text     | `--color-fg` (ink), `--color-fg-muted` (pencil)                                                    |
+| Signal   | `--color-accent` (orange), `--color-accent-fg` (text on it)                                        |
+| Rules    | `--color-border`                                                                                   |
+| Type     | `--font-sans`, `--font-mono`                                                                       |
+| Radii    | `--radius-sm` (4 px), `--radius-lg` (12 px)                                                        |
+| Motion   | `--ease-quiet`, `--duration-fast` (120 ms), `--duration-base` (200 ms), `--duration-slow` (320 ms) |
 
-Ein `--radius-md` gibt es **nicht**, obwohl DESIGN.md es nennt: die Seite
-benutzt es nirgends, also steht es nicht im gebauten Stylesheet.
+There is **no** `--radius-md`, even though DESIGN.md names one: the site never
+uses it, so it isn't in the built stylesheet.
 
-**Tailwind-Klassen nur aus dieser Liste.** Das Stylesheet ist gebaut, nicht
-generiert — es enthaelt ausschliesslich, was die Website selbst verwendet.
-Alles andere (`bg-fg`, `rounded-md`, `text-border`, beliebige Abstaende) faellt
-still ins Leere. Vorhanden sind: `bg-bg`, `bg-bg-elevated`, `bg-accent`,
-`bg-accent/10`, `text-fg`, `text-fg-muted`, `text-accent`, `text-accent-fg`,
-`border-border`, `border-fg`, `border-fg/25`, `border-accent/50`,
-`decoration-border`, `rounded-sm`, `rounded-lg`, `ease-quiet`.
+**Tailwind classes only from this list.** The stylesheet is built, not
+generated — it contains exactly what the website uses and nothing else.
+Anything else (`bg-fg`, `rounded-md`, `text-border`, arbitrary spacing) fails
+silently. Available: `bg-bg`, `bg-bg-elevated`, `bg-accent`, `bg-accent/10`,
+`text-fg`, `text-fg-muted`, `text-accent`, `text-accent-fg`, `border-border`,
+`border-fg`, `border-fg/25`, `border-accent/50`, `decoration-border`,
+`rounded-sm`, `rounded-lg`, `ease-quiet`.
 
-**Benannte Klassen** aus dem System: `.display` (grosse Ueberschrift, eng
-gesetzt), `.prose-flow` (Silbentrennung auf schmalen Spalten), `.row-title`
-(Unterstrich zieht beim Hover der ganzen Zeile auf, zusammen mit `.group`),
-`.disclosure` und `.disclosure-mark` (Aufklapper, Plus wird Minus),
-`.site-header`, `.nav-link` (aktiv ueber `aria-current="true"`).
+**Named classes** the system ships: `.display` (large heading, tightly set),
+`.prose-flow` (hyphenation on narrow columns), `.row-title` (underline wipes in
+when the whole row is hovered, pair it with `.group`), `.disclosure` and
+`.disclosure-mark` (expander, plus turns into minus), `.site-header`,
+`.nav-link` (active via `aria-current="true"`).
 
-### Gestaltungsregeln, die das Ergebnis tragen
+### The rules that carry the result
 
-Flach, ohne Ausnahme: kein Schatten, kein Glow, keine Transluzenz. Ordnung
-entsteht aus Haarlinien — `--color-border` fuer Zeilen und Bloecke,
-`--color-fg` als Kapitellinie ueber einer Sektion. Genau ein Akzent auf der
-Seite; Orange ist ein Signal, keine Dekoration. Eine zentrierte Spalte von
-64rem mit 1rem Rand, Fliesstext bei 65ch. Listen sind linierte Zeilen, keine
-Kaesten. Umbruchpunkte 640 px und 1024 px. Der Fokusring ist bereits gesetzt
-(2 px `--color-accent`, 2 px Abstand) — nimm ihn nicht weg.
+Flat, without exception: no shadow, no glow, no translucency. Order comes from
+hairlines — `--color-border` for rows and blocks, `--color-fg` as the chapter
+rule above a section. Exactly one accent on the page; orange is a signal, not
+decoration. A single centered column of 64rem with 1rem of side padding, body
+text at 65ch. Lists are ruled rows, not boxes. Breakpoints at 640 px and
+1024 px. The focus ring is already set (2 px `--color-accent`, 2 px offset) —
+don't remove it.
 
-### Beispiel
+### Example
 
 ```html
 <section style="border-top:1px solid var(--color-fg); padding:4rem 1rem">
