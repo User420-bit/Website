@@ -27,12 +27,12 @@ const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.d
 
     {
       skills.map((group) => (
-        <section class="mt-12 border-t border-border pt-6 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12">
+        <section class="mt-12 border-t border-border pt-6">
           <div>
             <h2 class="m-0 text-xl font-semibold tracking-tight">{group.data.title}</h2>
             <p class="prose-flow mt-1 mb-0 text-sm text-fg-muted">{group.data.description}</p>
           </div>
-          <dl class="mt-6 mb-0 lg:mt-0">
+          <dl class="mt-6 mb-0">
             {group.data.items.map((item) => (
               <div class="grid gap-x-6 border-b border-border py-3 sm:grid-cols-[11rem_minmax(0,1fr)]">
                 <dt class="text-sm font-medium">{item.name}</dt>
