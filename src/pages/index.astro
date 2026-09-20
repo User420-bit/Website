@@ -40,7 +40,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     Einblenden: Die H1 ist das Erste, was gemalt wird, und soll sofort stehen.
   */
   }
-  <section class="pt-16 pb-14 sm:pt-24 sm:pb-20">
+  <section class="pt-16 pb-16 sm:pt-24 sm:pb-24">
     <h1
       class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
     >
@@ -107,7 +107,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     }
 
     {/* Anfrage-Zeile direkt unter den Belegen. */}
-    <InquiryPrompt class="mt-12 border-t border-border pt-8" />
+    <InquiryPrompt class="mt-10 border-t border-border pt-6" />
   </Section>
 
   {
@@ -126,7 +126,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3">
       {
         company.services.map((service) => (
-          <div class="border-t border-fg pt-4 pb-8">
+          <div class="border-t border-border pt-4 pb-8">
             <dt class="text-lg font-semibold tracking-tight">{service.title}</dt>
             <dd class="prose-flow mt-2 ml-0 text-sm leading-relaxed text-fg-muted">
               {service.description}
@@ -136,12 +136,12 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
       }
     </dl>
 
-    <h3 class="mt-6 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
+    <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
     <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
       Abgeleitet aus dem, was tatsächlich gebaut wurde. Hinter jedem Punkt steht das Projekt, das
       ihn belegt.
     </p>
-    <div class="mt-4 border-t border-border">
+    <div class="mt-3 border-t border-border">
       {
         leistungen.map((group) => (
           <Disclosure title={group.data.title} meta={punkte(group.data.items.length)}>
