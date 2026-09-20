@@ -192,9 +192,9 @@ Punkt hat seinen Beleg, und nichts wird geschönt. Das Design tritt hinter den I
 statt zu inszenieren: warmes Papierweiß, tintenschwarze Überschriften, bleistiftgraue Erläuterungen und
 ein einziges Werkstatt-Orange, das dort auftaucht, wo gehandelt, belegt oder fokussiert wird.
 
-Die Ordnung kommt aus dem Buch selbst: eine Randspalte mit Nummer und Überschrift, rechts der Inhalt,
-dazwischen Haarlinien. Arbeiten stehen als linierte Zeilen wie in einem Hauptbuch, nicht als Karten.
-Ein Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
+Die Ordnung kommt aus dem Buch selbst: über jedem Abschnitt eine Kopfzeile mit Nummer, Überschrift und
+einleitendem Satz, darunter der Inhalt, dazwischen Haarlinien. Arbeiten stehen als linierte Zeilen wie
+in einem Hauptbuch, nicht als Karten. Ein Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
 
 Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen,
 begrenzte Zeilenbreite, flache Flächen ohne Schatten. Sachlich heißt: eine einzige, selbst gehostete
@@ -210,7 +210,7 @@ Systemeinstellung des Besuchers.
 - Eine Akzentfarbe (Werkstatt-Orange), sonst nur warme Neutraltöne
 - Eine selbst gehostete Schrift (Instrument Sans), Hierarchie über Größe und Gewicht 600 mit enger
   Laufweite
-- Randspalte 11rem mit Nummer und H2, Inhalt rechts; Haarlinien statt Karten
+- Abschnittskopf `11rem | 1fr`: Nummer und H2 links, Intro rechts, Inhalt darunter; Haarlinien statt Karten
 - Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
@@ -329,11 +329,12 @@ gestapelter Sektionen: Hero, 01 Arbeiten, 02 Leistungen, 03 Arbeitsweise, 04 Üb
 (Arbeiten) steht vor dem Angebot (Leistungen).
 
 **Sektions-Anatomie** (`Section.astro`): Haarlinie oben, vertikaler Innenabstand 3rem (ab 640 px
-4rem). Ab 1024 px ein Raster `11rem | 1fr` mit 3rem Abstand: links die Randspalte mit optionaler
-Nummer („01“–„05“, `aria-hidden`, Tabellenziffern, Bleistiftgrau) und der H2 (1,25rem), rechts der
-Inhalt, beginnend mit einem optionalen Intro in Bleistiftgrau (max. 65ch, 2rem Abstand zum Inhalt).
-Darunter stapelt sich beides mit 1,5rem Abstand. Der Hero steht außerhalb dieses Rasters und nutzt
-die volle Spalte.
+4rem). Zuoberst der Kopf, ab 1024 px als Raster `11rem | 1fr` mit 3rem Abstand: links die optionale
+Nummer („01“–„05“, `aria-hidden`, Tabellenziffern, Bleistiftgrau) und die H2 (1,25rem), rechts das
+optionale Intro in Bleistiftgrau (max. 65ch). Darunter stapelt sich beides mit 1rem Abstand. Der
+Inhalt steht unter dem Kopf über die volle Spaltenbreite, 2rem darunter (ab 640 px 2,5rem): So ist
+die Randspalte nur so hoch wie der Kopf und bleibt neben langen Inhalten nicht als leere Fläche
+stehen. Der Hero steht außerhalb dieses Rasters und nutzt ebenfalls die volle Spalte.
 
 **Zeilen statt Raster:** Listen sind linierte Zeilen. Arbeiten: Kundenprojekte als Feature-Zeilen,
 darunter „Weitere Arbeiten“ als Ledger (Titel · Art · Zeitraum · Pfeil; ab 640 px Spalten
@@ -341,8 +342,9 @@ darunter „Weitere Arbeiten“ als Ledger (Titel · Art · Zeitraum · Pfeil; a
 Aufklapper. Arbeitsweise: nummerierte Zeilen (`2rem | 10rem | 1fr`). Inhalte in Aufklappern laufen
 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 
-**Unterseiten:** Projektseiten und `/werkzeuge/` wiederholen das Randspalten-Raster pro Block: Label
-(H2) links, Inhalt rechts, Haarlinie oben, 3rem Abstand zwischen Blöcken. Text bleibt bei 65ch.
+**Unterseiten:** Projektseiten und `/werkzeuge/` behalten das Randspalten-Raster pro Block: Label
+(H2) links, Inhalt rechts, Haarlinie oben, 3rem Abstand zwischen Blöcken. Ihre Blöcke sind kurz genug,
+dass daneben keine leere Fläche entsteht. Text bleibt bei 65ch.
 Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 
 **Header und Scrollen:** Der Header klebt oben. Er trägt Wortmarke, Navigation (Arbeiten, Leistungen,
@@ -534,7 +536,8 @@ und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohn
   `border` setzen und jeder neuen Farbe einen Dunkel-Zwilling geben.
 - **Do** Werkstatt-Orange für Handlung, Beleg, Einordnung und Fokus reservieren (The One Signal Rule).
 - **Do** Listen als linierte Zeilen bauen: Haarlinie in Liniengrau, Tintenlinie für die stärkere Regel.
-- **Do** neue Blöcke in das Randspalten-Raster setzen: `11rem | 1fr`, 3rem Abstand, Haarlinie oben.
+- **Do** neue Blöcke mit dem Kopf-Raster `11rem | 1fr` beginnen (3rem Abstand, Haarlinie oben) und
+  langen Inhalt unter den Kopf stellen statt neben ihn.
 - **Do** Überschriften in Tintenschwarz mit Gewicht 600 setzen, große mit `.display` (−0,03em, 1,02),
   Erklärungen in Bleistiftgrau.
 - **Do** Zeiträume, Nummern und Zählungen mit `tabular-nums` setzen und Pfeile über `Arrow.astro`.
