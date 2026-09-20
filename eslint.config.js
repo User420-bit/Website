@@ -12,6 +12,10 @@ export default [
       '.astro/**',
       '.claude/worktrees/**',
       '.preview/**',
+      // design-sync: gestaffelte Skripte und Build-Ausgabe, beide erzeugt
+      '.ds-sync/**',
+      'ds-bundle/**',
+      '.design-sync/.cache/**',
       '**/._*',
     ],
   },
@@ -19,7 +23,7 @@ export default [
   ...eslintPluginAstro.configs.recommended,
   ...eslintPluginAstro.configs['jsx-a11y-recommended'],
   {
-    files: ['scripts/**/*.mjs'],
+    files: ['scripts/**/*.mjs', '.design-sync/**/*.mjs'],
     languageOptions: {
       globals: globals.node,
     },

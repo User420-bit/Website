@@ -1,0 +1,10 @@
+{
+  "pkg": "klartext-website",
+  "globalName": "Klartext",
+  "shape": "package",
+  "entry": ".design-sync/tokens-entry.js",
+  "cssEntry": ".design-sync/.cache/klartext.css",
+  "guidelinesGlob": ["DESIGN.md"],
+  "buildCmd": "npm run build && node .design-sync/prep.mjs",
+  "readmeHeader": ".design-sync/conventions.md"
+}

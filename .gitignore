@@ -18,3 +18,10 @@ dist-ssr
 
 # AppleDouble-Dateien von macOS auf exFAT-Laufwerken
 ._*
+
+# design-sync: gestaffelte Skripte, Build-Ausgabe, Maschinenzustand
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
