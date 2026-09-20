@@ -11,7 +11,9 @@ verlangt.
 
 Der Rework-Plan mit Ist-Analyse und Begründungen liegt in
 [`docs/REWORK_PLAN.md`](docs/REWORK_PLAN.md), der Umsetzungsstand in
-[`docs/REWORK_STATUS.md`](docs/REWORK_STATUS.md).
+[`docs/REWORK_STATUS.md`](docs/REWORK_STATUS.md). Der nächste Schritt – klare
+Sektionsübergänge und ein aufgeräumter Kontakt auf der Startseite – ist in
+[`docs/STARTSEITE_PLAN.md`](docs/STARTSEITE_PLAN.md) geplant.
 
 ## Schnellstart
 
