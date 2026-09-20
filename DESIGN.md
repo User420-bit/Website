@@ -224,8 +224,8 @@ Systemeinstellung des Besuchers.
 - Eine Akzentfarbe (Werkstatt-Orange), sonst nur warme Neutraltöne
 - Eine selbst gehostete Schrift (Instrument Sans), Hierarchie über Größe und Gewicht 600 mit enger
   Laufweite
-- Kapitelkopf `11rem | 1fr`: Tintenlinie oben, Nummer links, H2 und Intro rechts, Inhalt darunter;
-  Haarlinien statt Karten
+- Kapitelkopf gestapelt: Tintenlinie oben, darunter Nummer, H2, Intro und Inhalt an derselben
+  linken Kante; Haarlinien statt Karten
 - Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
@@ -344,12 +344,12 @@ gestapelter Sektionen: Hero, 01 Arbeiten, 02 Leistungen, 03 Arbeitsweise, 04 Üb
 (Arbeiten) steht vor dem Angebot (Leistungen).
 
 **Sektions-Anatomie** (`Section.astro`): Tintenlinie oben, vertikaler Innenabstand 4rem (ab 640 px
-6rem). Zuoberst der Kopf, ab 1024 px als Raster `11rem | 1fr` mit 3rem Abstand: links nur die
-Nummer („01“–„05“, `aria-hidden`, Tabellenziffern, Bleistiftgrau), rechts die H2 in Headline
-(2,25rem, unter 640 px 1,875rem) und darunter mit 1rem Abstand das optionale Intro in Bleistiftgrau
-(max. 65ch). Unter 1024 px stapelt sich alles. Der Inhalt steht unter dem Kopf über die volle
-Spaltenbreite, 2,5rem darunter (ab 640 px 3rem): So ist die Randspalte nur so hoch wie der Kopf und
-bleibt neben langen Inhalten nicht als leere Fläche stehen. Innerhalb eines Kapitels ist kein
+6rem). Zuoberst der Kopf, in einer Spalte gestapelt: die Nummer („01“–„05“, `aria-hidden`,
+Tabellenziffern, Bleistiftgrau), 0,25rem darunter die H2 in Headline (2,25rem, unter 640 px
+1,875rem) und 1rem darunter das optionale Intro in Bleistiftgrau (max. 65ch). Der Inhalt folgt
+2,5rem darunter (ab 640 px 3rem) über die volle Spaltenbreite. Alle vier stehen an derselben linken
+Kante, in jeder Breite gleich: Der Kopf liest sich von oben nach unten, und neben langen Inhalten
+bleibt keine leere Randspalte stehen. Innerhalb eines Kapitels ist kein
 Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Seite und der Kapitelanfang
 ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
 ebenfalls die volle Spalte.
@@ -362,9 +362,9 @@ ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, die auf derselben Haarlinie
 Adresse, Knopf und Erreichbarkeit (Meta-Liste), rechts die Schritte als Nummernzeilen (`2rem | 1fr`).
 Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 
-**Unterseiten:** Projektseiten und `/werkzeuge/` behalten das Randspalten-Raster pro Block: Label
-(H2) links, Inhalt rechts, Haarlinie oben, 3rem Abstand zwischen Blöcken. Ihre Blöcke sind kurz genug,
-dass daneben keine leere Fläche entsteht. Text bleibt bei 65ch.
+**Unterseiten:** Projektseiten und `/werkzeuge/` stapeln ihre Blöcke wie die Startseite: Haarlinie
+oben, Label (H2) darüber dem Inhalt, 1rem Abstand zum Inhalt, 3rem zwischen Blöcken. Text bleibt
+bei 65ch.
 Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 
 **Header und Scrollen:** Der Header klebt oben. Er trägt Wortmarke, Navigation (Arbeiten, Leistungen,
@@ -417,8 +417,8 @@ Wiederkehrende Linien-Motive:
   Zeile, unter dem Header (nach dem Scrollen) und über dem Footer.
 - **Tintenlinie:** 1 px Tintenschwarz über jeder Sektion der Startseite (Kapitel-Linie) und über der
   Vor-/Zurück-Navigation der Projektseiten.
-- **Randnotiz:** Label in der Randspalte, Haarlinie oben, Text rechts. Für „Erkenntnisse“ läuft der
-  Text in voller Tinte statt in Bleistiftgrau. Kein farbiger Seitenstreifen.
+- **Randnotiz:** Label über dem Text, Haarlinie oben. Für „Erkenntnisse“ läuft der Text in voller
+  Tinte statt in Bleistiftgrau. Kein farbiger Seitenstreifen.
 - **Unterstrich:** Links im Fließtext und im Footer mit 4 px Abstand zur Grundlinie. Text-Button und
   E-Mail-Adresse tragen einen Unterstrich in Liniengrau, der bei Hover orange wird. In der Navigation
   und bei Zeilentiteln wird ein 1-px-Strich von links aufgezogen.
@@ -580,9 +580,9 @@ und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohn
 - **Do** Werkstatt-Orange für Handlung, Beleg, Einordnung und Fokus reservieren (The One Signal Rule).
 - **Do** Listen als linierte Zeilen bauen: Haarlinie in Liniengrau. Die Tintenlinie öffnet ein Kapitel
   und markiert sonst nichts (The Chapter Rule).
-- **Do** neue Blöcke mit dem Kopf-Raster `11rem | 1fr` beginnen (3rem Spaltenabstand; Tintenlinie
-  oben auf der Startseite, Haarlinie auf Unterseiten) und langen Inhalt unter den Kopf stellen statt
-  neben ihn.
+- **Do** neue Blöcke mit einem gestapelten Kopf beginnen (Tintenlinie oben auf der Startseite,
+  Haarlinie auf Unterseiten) und Nummer, Überschrift, Intro und Inhalt an derselben linken Kante
+  untereinander stellen statt nebeneinander.
 - **Do** Überschriften in Tintenschwarz mit Gewicht 600 setzen, große mit `.display` (−0,03em, 1,02),
   Erklärungen in Bleistiftgrau.
 - **Do** Zeiträume, Nummern und Zählungen mit `tabular-nums` setzen und Pfeile über `Arrow.astro`.

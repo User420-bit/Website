@@ -23,9 +23,8 @@ const { projekt, prev, next } = Astro.props
 const { Content } = await render(projekt)
 const data = projekt.data
 
-// Wie auf der Startseite: Label in der Randspalte, Inhalt rechts, Haarlinie oben.
-const block =
-  'mt-12 border-t border-border pt-6 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12'
+// Wie auf der Startseite: Überschrift über dem Inhalt, Haarlinie oben.
+const block = 'mt-12 border-t border-border pt-6'
 const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 const list = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted'
 const lists = [
@@ -85,7 +84,7 @@ const lists = [
     <section class={block}>
       <h2 class={blockTitle}>Worum es ging</h2>
       <div
-        class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted lg:mt-0 [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+        class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
       >
         <Content />
       </div>
@@ -97,7 +96,7 @@ const lists = [
           items.length > 0 && (
             <section class={block}>
               <h2 class={blockTitle}>{title}</h2>
-              <ul class:list={[list, 'mt-4 lg:mt-0']}>
+              <ul class:list={[list, 'mt-4']}>
                 {items.map((item) => (
                   <li class="border-b border-border pb-3">{item}</li>
                 ))}
@@ -111,7 +110,7 @@ const lists = [
       data.screenshots.length > 0 && (
         <section class={block}>
           <h2 class={blockTitle}>Screenshots</h2>
-          <ul class="mt-4 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2 lg:mt-0">
+          <ul class="mt-4 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2">
             {data.screenshots.map((shot) => (
               <li>
                 <figure class="m-0">
@@ -135,7 +134,7 @@ const lists = [
       data.codeExample && (
         <section class={block}>
           <h2 class={blockTitle}>Code</h2>
-          <div class="mt-4 min-w-0 lg:mt-0">
+          <div class="mt-4 min-w-0">
             <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
           </div>
         </section>
@@ -144,15 +143,15 @@ const lists = [
 
     {
       /*
-      Erkenntnisse sind die Randnotiz des Werkstattbuchs: Das Label steht in der
-      Randspalte, der Text laeuft in voller Tinte statt in Bleistiftgrau.
+      Erkenntnisse sind die Randnotiz des Werkstattbuchs: Das Label steht ueber
+      dem Text, der in voller Tinte statt in Bleistiftgrau laeuft.
     */
     }
     {
       data.learnings.length > 0 && (
         <section class={block}>
           <h2 class={blockTitle}>Erkenntnisse</h2>
-          <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg lg:mt-0">
+          <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
             {data.learnings.map((learning) => (
               <li class="border-b border-border pb-3">{learning}</li>
             ))}
