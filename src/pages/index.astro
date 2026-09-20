@@ -5,6 +5,7 @@ import Button from '@/components/Button.astro'
 import CopyEmail from '@/components/CopyEmail.astro'
 import Disclosure from '@/components/Disclosure.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
+import NumberedRows from '@/components/NumberedRows.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import ProjectRow from '@/components/ProjectRow.astro'
 import Section from '@/components/Section.astro'
@@ -185,21 +186,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
   */
   }
   <Section id="arbeitsweise" index="03" title="Arbeitsweise">
-    <ol class="m-0 list-none border-t border-border p-0">
-      {
-        aboutEntry.data.values.map((value, i) => (
-          <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4 sm:grid-cols-[2rem_10rem_minmax(0,1fr)]">
-            <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
-              {i + 1}
-            </span>
-            <span class="font-medium">{value.title}</span>
-            <span class="prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted sm:col-start-3 sm:mt-0">
-              {value.description}
-            </span>
-          </li>
-        ))
-      }
-    </ol>
+    <NumberedRows items={aboutEntry.data.values} titleColumn />
 
     <div class="mt-8 border-t border-border">
       <Disclosure title="Wie gearbeitet wird" meta={punkte(aboutEntry.data.workflow.length)}>
@@ -337,23 +324,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
       <div>
         <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
-        <ol class="mt-3 mb-0 list-none border-t border-border p-0">
-          {
-            contact.steps.map((step, i) => (
-              <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4">
-                <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
-                  {i + 1}
-                </span>
-                <div>
-                  <span class="block font-medium">{step.title}</span>
-                  <span class="prose-flow mt-1 block max-w-[55ch] text-sm text-fg-muted">
-                    {step.description}
-                  </span>
-                </div>
-              </li>
-            ))
-          }
-        </ol>
+        <NumberedRows items={contact.steps} class="mt-3" />
       </div>
     </div>
   </Section>

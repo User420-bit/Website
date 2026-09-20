@@ -1,0 +1,45 @@
+---
+/**
+ * Nummerierte Zeilen: Ziffer, Titel, Erklärung, Haarlinie darunter. Dasselbe
+ * Muster trägt die Werte in „Arbeitsweise“ und die Schritte im Kontakt. Die
+ * Ziffer ist Ordnung fürs Auge, keine Information — die Reihenfolge steht
+ * ohnehin im `<ol>`, deshalb `aria-hidden`.
+ *
+ * `titleColumn`: ab `sm` bekommt der Titel eine eigene Spalte, die Erklärung
+ * steht daneben (Arbeitsweise: kurze Namen). Ohne steht die Erklärung unter
+ * dem Titel (Kontakt: längere Schritte in einer schmalen Spalte).
+ */
+interface Props {
+  items: readonly { title: string; description: string }[]
+  titleColumn?: boolean
+  class?: string
+}
+
+const { items, titleColumn = false, class: className = '' } = Astro.props
+---
+
+<ol class:list={['m-0 list-none border-t border-border p-0', className]}>
+  {
+    items.map((item, i) => (
+      <li
+        class:list={[
+          'grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4',
+          titleColumn && 'sm:grid-cols-[2rem_10rem_minmax(0,1fr)]',
+        ]}
+      >
+        <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+          {i + 1}
+        </span>
+        <span class="font-medium">{item.title}</span>
+        <span
+          class:list={[
+            'prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted',
+            titleColumn && 'sm:col-start-3 sm:mt-0',
+          ]}
+        >
+          {item.description}
+        </span>
+      </li>
+    ))
+  }
+</ol>
