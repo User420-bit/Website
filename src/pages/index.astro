@@ -5,6 +5,7 @@ import Button from '@/components/Button.astro'
 import CopyEmail from '@/components/CopyEmail.astro'
 import Disclosure from '@/components/Disclosure.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
+import MetaList from '@/components/MetaList.astro'
 import NumberedRows from '@/components/NumberedRows.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import ProjectRow from '@/components/ProjectRow.astro'
@@ -30,7 +31,28 @@ const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.ord
 
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
 const adressen = emailAddresses(company.email, company.fallbackEmail)
+const [hauptadresse, ausweichadresse] = adressen
 const anfrage = mailto(adressen, contact.subject)
+/** Erreichbarkeit im Kontakt: der Ort, dann die Profile, die in profile.json gesetzt sind. */
+const erreichbarkeit: { label: string; value: string; href?: string; external?: boolean }[] = [
+  { label: 'Ort', value: company.location },
+]
+if (profile.social.linkedin) {
+  erreichbarkeit.push({
+    label: 'Profil',
+    value: 'LinkedIn',
+    href: profile.social.linkedin,
+    external: true,
+  })
+}
+if (profile.social.github) {
+  erreichbarkeit.push({
+    label: 'Code',
+    value: 'GitHub',
+    href: profile.social.github,
+    external: true,
+  })
+}
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 ---
 
@@ -260,9 +282,11 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
   {
     /*
-    05 Kontakt — links die Handlung mit Ausweg, rechts der Ablauf. Die Adresse
-    steht gross und markierbar da: Wer am PC nur Webmail nutzt, klickt mit
-    einem mailto:-Knopf allein ins Leere.
+    05 Kontakt — ein Raster, keine Freischweber. Links die Handlung: die
+    Adresse gross und markierbar (wer am PC nur Webmail nutzt, klickt mit einem
+    mailto:-Knopf allein ins Leere), darunter Knopf und Erreichbarkeit. Rechts
+    der Ablauf. Beide Spalten oeffnen mit derselben Haarlinie und beginnen so
+    auf einer Hoehe.
   */
   }
   <Section
@@ -271,58 +295,24 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     title={contact.heading}
     intro={`${contact.description} ${contact.responseTime}`}
   >
-    {
-      adressen.map((adresse, i) => (
-        <>
-          {i > 0 && <p class="mt-3 mb-2 text-sm text-fg-muted">oder</p>}
-          <CopyEmail email={adresse} />
-        </>
-      ))
-    }
-    <p class="mt-4 mb-0 max-w-[65ch] text-sm text-fg-muted">
-      Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
-    </p>
-
-    <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-12">
-      <div>
-        <Button href={anfrage}>E-Mail schreiben</Button>
-
-        <ul class="mt-6 list-none space-y-2 p-0 text-sm text-fg-muted">
-          {
-            profile.social.linkedin && (
-              <li>
-                Auch erreichbar über{' '}
-                <a
-                  class="text-accent underline underline-offset-4"
-                  href={profile.social.linkedin}
-                  rel="me noopener noreferrer"
-                  target="_blank"
-                >
-                  LinkedIn<span class="sr-only"> (öffnet in neuem Tab)</span>
-                </a>
-              </li>
-            )
-          }
-          {
-            profile.social.github && (
-              <li>
-                Code auf{' '}
-                <a
-                  class="text-accent underline underline-offset-4"
-                  href={profile.social.github}
-                  rel="me noopener noreferrer"
-                  target="_blank"
-                >
-                  GitHub<span class="sr-only"> (öffnet in neuem Tab)</span>
-                </a>
-              </li>
-            )
-          }
-          <li>{company.location}</li>
-        </ul>
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12">
+      <div class="border-t border-border pt-6">
+        <CopyEmail email={hauptadresse} />
+        {
+          ausweichadresse && (
+            <CopyEmail email={ausweichadresse} size="inline" label="Oder an" class="mt-4" />
+          )
+        }
+        <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
+          Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
+        </p>
+        <p class="mt-8 mb-0">
+          <Button href={anfrage}>E-Mail schreiben</Button>
+        </p>
+        <MetaList rows={erreichbarkeit} class="mt-10" />
       </div>
 
-      <div>
+      <div class="border-t border-border pt-6">
         <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
         <NumberedRows items={contact.steps} class="mt-3" />
       </div>

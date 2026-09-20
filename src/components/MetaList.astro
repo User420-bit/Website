@@ -1,40 +1,57 @@
 ---
 /**
- * Eckdaten einer Referenz als linierte Liste. Hier — und nur auf den
- * Projektseiten — stehen Technik-Namen, in Mono.
+ * Eckdaten als linierte Definitionsliste: Label links (6rem), Wert rechts,
+ * Haarlinie über jeder Zeile. Auf den Projektseiten Art, Zeitraum, Stand und
+ * Technik — nur dort stehen Technik-Namen, in Mono. Im Kontakt Ort und
+ * Profile. Ein `href` macht den Wert zum Link; externe Links öffnen im neuen
+ * Tab und sagen das für Screenreader dazu.
  */
 import KindLabel from '@/components/KindLabel.astro'
 
-interface Props {
-  kind: string
-  period: string
-  status?: string | null
-  techStack: string[]
+interface Row {
+  label: string
+  value: string
+  /** `kind`: Art des Projekts über KindLabel · `numeric`: Tabellenziffern · `mono`: Technik-Namen */
+  variant?: 'kind' | 'numeric' | 'mono'
+  href?: string
+  external?: boolean
 }
 
-const { kind, period, status, techStack } = Astro.props
-const row = 'grid grid-cols-[6rem_minmax(0,1fr)] gap-x-4 border-t border-border py-2.5 text-sm'
+interface Props {
+  rows: readonly Row[]
+  class?: string
+}
+
+const { rows, class: className = '' } = Astro.props
+const valueClass = {
+  kind: '',
+  numeric: 'tabular-nums',
+  mono: 'font-mono text-xs leading-6 text-fg-muted',
+}
 ---
 
-<dl class="m-0 max-w-[65ch] border-b border-border">
-  <div class={row}>
-    <dt class="text-fg-muted">Art</dt>
-    <dd class="m-0"><KindLabel kind={kind} /></dd>
-  </div>
-  <div class={row}>
-    <dt class="text-fg-muted">Zeitraum</dt>
-    <dd class="m-0 tabular-nums">{period}</dd>
-  </div>
+<dl class:list={['m-0 max-w-[65ch] border-b border-border', className]}>
   {
-    status && (
-      <div class={row}>
-        <dt class="text-fg-muted">Stand</dt>
-        <dd class="prose-flow m-0">{status}</dd>
+    rows.map((row) => (
+      <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-x-4 border-t border-border py-2.5 text-sm">
+        <dt class="text-fg-muted">{row.label}</dt>
+        <dd class:list={['m-0', row.variant ? valueClass[row.variant] : 'prose-flow']}>
+          {row.variant === 'kind' ? (
+            <KindLabel kind={row.value} />
+          ) : row.href ? (
+            <a
+              class="text-accent underline underline-offset-4"
+              href={row.href}
+              {...(row.external ? { rel: 'noopener noreferrer', target: '_blank' } : {})}
+            >
+              {row.value}
+              {row.external && <span class="sr-only"> (öffnet in neuem Tab)</span>}
+            </a>
+          ) : (
+            row.value
+          )}
+        </dd>
       </div>
-    )
+    ))
   }
-  <div class={row}>
-    <dt class="text-fg-muted">Technik</dt>
-    <dd class="m-0 font-mono text-xs leading-6 text-fg-muted">{techStack.join(' · ')}</dd>
-  </div>
 </dl>
