@@ -11,7 +11,9 @@ verlangt.
 
 Der Rework-Plan mit Ist-Analyse und Begründungen liegt in
 [`docs/REWORK_PLAN.md`](docs/REWORK_PLAN.md), der Umsetzungsstand in
-[`docs/REWORK_STATUS.md`](docs/REWORK_STATUS.md).
+[`docs/REWORK_STATUS.md`](docs/REWORK_STATUS.md). Der Umbau der Startseite zu klaren
+Kapiteln und einem aufgeräumten Kontakt (September 2026) ist in
+[`docs/STARTSEITE_PLAN.md`](docs/STARTSEITE_PLAN.md) begründet und dokumentiert.
 
 ## Schnellstart
 

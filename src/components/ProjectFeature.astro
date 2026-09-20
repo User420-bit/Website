@@ -33,12 +33,7 @@ const screenshot = screenshots[0]
     <span class="text-fg-muted tabular-nums">{period}</span>
   </p>
   <div>
-    <h3
-      class:list={[
-        'display m-0 font-semibold',
-        compact ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl',
-      ]}
-    >
+    <h3 class:list={['display m-0 font-semibold', compact ? 'text-xl' : 'text-xl sm:text-2xl']}>
       {/* Stretched Link: die ganze Zeile ist klickbar, der Fokus bleibt am Text. */}
       <a
         class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"

@@ -41,6 +41,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.02
     letterSpacing: '-0.03em'
+  title-md:
+    fontFamily: "'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif"
+    fontSize: '1.5rem'
+    fontWeight: 600
+    lineHeight: 1.02
+    letterSpacing: '-0.03em'
   title:
     fontFamily: "'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif"
     fontSize: '1.25rem'
@@ -113,9 +119,10 @@ spacing:
   column-gap: '3rem'
   group-gap: '2rem'
   block-gap: '3rem'
-  section-y: '3rem'
-  section-y-lg: '4rem'
-  footer-offset: '6rem'
+  section-y: '4rem'
+  section-y-lg: '6rem'
+  footer-offset: '4rem'
+  footer-offset-lg: '6rem'
 components:
   button-primary:
     backgroundColor: '{colors.accent}'
@@ -154,8 +161,12 @@ components:
     padding: '1rem 0'
   feature-row:
     textColor: '{colors.fg}'
-    typography: '{typography.title-lg}'
+    typography: '{typography.title-md}'
     padding: '2rem 0'
+  numbered-row:
+    textColor: '{colors.fg}'
+    typography: '{typography.subhead}'
+    padding: '1rem 0'
   disclosure:
     textColor: '{colors.fg}'
     typography: '{typography.subhead}'
@@ -167,6 +178,9 @@ components:
   copy-email:
     textColor: '{colors.fg}'
     typography: '{typography.title-lg}'
+  copy-email-inline:
+    textColor: '{colors.fg}'
+    typography: '{typography.body-sm}'
   code-block:
     backgroundColor: '{colors.bg-elevated}'
     textColor: '{colors.fg}'
@@ -192,8 +206,8 @@ Punkt hat seinen Beleg, und nichts wird geschönt. Das Design tritt hinter den I
 statt zu inszenieren: warmes Papierweiß, tintenschwarze Überschriften, bleistiftgraue Erläuterungen und
 ein einziges Werkstatt-Orange, das dort auftaucht, wo gehandelt, belegt oder fokussiert wird.
 
-Die Ordnung kommt aus dem Buch selbst: über jedem Abschnitt eine Kopfzeile mit Nummer, Überschrift und
-einleitendem Satz, darunter der Inhalt, dazwischen Haarlinien. Arbeiten stehen als linierte Zeilen wie
+Die Ordnung kommt aus dem Buch selbst: Jedes Kapitel öffnet mit einer Tintenlinie, darunter Nummer,
+Überschrift und einleitender Satz, dann der Inhalt, gegliedert durch Haarlinien. Arbeiten stehen als linierte Zeilen wie
 in einem Hauptbuch, nicht als Karten. Ein Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
 
 Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen,
@@ -210,7 +224,8 @@ Systemeinstellung des Besuchers.
 - Eine Akzentfarbe (Werkstatt-Orange), sonst nur warme Neutraltöne
 - Eine selbst gehostete Schrift (Instrument Sans), Hierarchie über Größe und Gewicht 600 mit enger
   Laufweite
-- Abschnittskopf `11rem | 1fr`: Nummer und H2 links, Intro rechts, Inhalt darunter; Haarlinien statt Karten
+- Kapitelkopf `11rem | 1fr`: Tintenlinie oben, Nummer links, H2 und Intro rechts, Inhalt darunter;
+  Haarlinien statt Karten
 - Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
@@ -284,23 +299,23 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   Startseite, der Claim. Max. 20ch, `text-balance`.
 - **Headline Large** (600, 3rem, 1,02, −0,03em; unter 640 px 2,25rem): H1 der Projektseiten und von
   `/werkzeuge/`.
-- **Headline** (600, 2,25rem, 1,111, −0,025em; unter 640 px 1,875rem): H1 von Impressum, Datenschutz
-  und 404.
-- **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): Titel einer Feature-Zeile und
-  die E-Mail-Adresse im Kontakt.
-- **Title** (600, 1,25rem, 1,4, −0,025em): jede H2, auf der Startseite in der Randspalte ebenso wie
-  auf Projekt-, Werkzeug- und Rechtsseiten.
+- **Headline** (600, 2,25rem, 1,111, −0,025em; unter 640 px 1,875rem): die H2 der fünf
+  Startseiten-Kapitel sowie die H1 von Impressum, Datenschutz und 404.
+- **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): die Hauptadresse im Kontakt.
+- **Title Medium** (600, 1,5rem, 1,02, −0,03em; unter 640 px 1,25rem): Titel einer Feature-Zeile.
+  Bewusst eine Stufe unter der H2, damit ein Projekt nie größer steht als sein Kapitel.
+- **Title** (600, 1,25rem, 1,4, −0,025em): jede H2 auf Projekt-, Werkzeug- und Rechtsseiten.
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die Wortmarke.
 - **Subhead** (500, 1rem, 1,5): Titel einer Ledger-Zeile, eines Aufklappers, Name eines Werts.
 - **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten.
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
-  Meta-Liste, Footer, Navigation.
+  Meta-Liste, Ausweichadresse im Kontakt, Footer, Navigation.
 - **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen und die leisen
   Zwischenüberschriften in Bleistiftgrau („Weitere Arbeiten“, „Im Einzelnen“).
 - **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel).
-- **Caption** (400, 0,75rem): Belegzeile.
+- **Caption** (400, 0,75rem): Belegzeile und der Webmail-Hinweis im Kontakt.
 - **Mono** (400, 0,75rem, Zeilenhöhe 1,5rem) und **Code** (400, 0,875rem, 1,625): Zeile „Technik“ der
   Meta-Liste und Codeblöcke. Beides nur auf Projektseiten.
 
@@ -328,19 +343,24 @@ gestapelter Sektionen: Hero, 01 Arbeiten, 02 Leistungen, 03 Arbeitsweise, 04 Üb
 05 Kontakt. Jede ist so hoch wie ihr Inhalt; es gibt keine erzwungene Vollbildhöhe. Der Beweis
 (Arbeiten) steht vor dem Angebot (Leistungen).
 
-**Sektions-Anatomie** (`Section.astro`): Haarlinie oben, vertikaler Innenabstand 3rem (ab 640 px
-4rem). Zuoberst der Kopf, ab 1024 px als Raster `11rem | 1fr` mit 3rem Abstand: links die optionale
-Nummer („01“–„05“, `aria-hidden`, Tabellenziffern, Bleistiftgrau) und die H2 (1,25rem), rechts das
-optionale Intro in Bleistiftgrau (max. 65ch). Darunter stapelt sich beides mit 1rem Abstand. Der
-Inhalt steht unter dem Kopf über die volle Spaltenbreite, 2rem darunter (ab 640 px 2,5rem): So ist
-die Randspalte nur so hoch wie der Kopf und bleibt neben langen Inhalten nicht als leere Fläche
-stehen. Der Hero steht außerhalb dieses Rasters und nutzt ebenfalls die volle Spalte.
+**Sektions-Anatomie** (`Section.astro`): Tintenlinie oben, vertikaler Innenabstand 4rem (ab 640 px
+6rem). Zuoberst der Kopf, ab 1024 px als Raster `11rem | 1fr` mit 3rem Abstand: links nur die
+Nummer („01“–„05“, `aria-hidden`, Tabellenziffern, Bleistiftgrau), rechts die H2 in Headline
+(2,25rem, unter 640 px 1,875rem) und darunter mit 1rem Abstand das optionale Intro in Bleistiftgrau
+(max. 65ch). Unter 1024 px stapelt sich alles. Der Inhalt steht unter dem Kopf über die volle
+Spaltenbreite, 2,5rem darunter (ab 640 px 3rem): So ist die Randspalte nur so hoch wie der Kopf und
+bleibt neben langen Inhalten nicht als leere Fläche stehen. Innerhalb eines Kapitels ist kein
+Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Seite und der Kapitelanfang
+ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
+ebenfalls die volle Spalte.
 
 **Zeilen statt Raster:** Listen sind linierte Zeilen. Arbeiten: Kundenprojekte als Feature-Zeilen,
 darunter „Weitere Arbeiten“ als Ledger (Titel · Art · Zeitraum · Pfeil; ab 640 px Spalten
-`1fr | 9rem | 11rem | 1rem`). Leistungen: drei Spalten ab 640 px unter je einer Tintenlinie, darunter
-Aufklapper. Arbeitsweise: nummerierte Zeilen (`2rem | 10rem | 1fr`). Inhalte in Aufklappern laufen
-1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
+`1fr | 9rem | 11rem | 1rem`). Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
+Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Kontakt:
+ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, die auf derselben Haarlinie beginnen — links
+Adresse, Knopf und Erreichbarkeit (Meta-Liste), rechts die Schritte als Nummernzeilen (`2rem | 1fr`).
+Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 
 **Unterseiten:** Projektseiten und `/werkzeuge/` behalten das Randspalten-Raster pro Block: Label
 (H2) links, Inhalt rechts, Haarlinie oben, 3rem Abstand zwischen Blöcken. Ihre Blöcke sind kurz genug,
@@ -351,7 +371,7 @@ Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 Arbeitsweise, Über) und die kleine Anfrage-Schaltfläche. Ab 640 px eine Zeile (65 px hoch), darunter
 zwei: Wortmarke und Anfrage oben, Linkzeile unten (89 px bei 375 px Breite).
 `scroll-padding-top: 6rem` auf `:root` ist der einzige Scroll-Versatz; Sektionen tragen kein eigenes
-`scroll-margin`. Der Footer beginnt 6rem unter dem Inhalt und führt zu Werkzeuge, Impressum und
+`scroll-margin`. Der Footer beginnt 4rem (ab 640 px 6rem) unter dem Inhalt und führt zu Werkzeuge, Impressum und
 Datenschutz.
 
 **Breakpoints:** 640 px (`sm`) und 1024 px (`lg`), Tailwind-Standard. Die Silbentrennung schaltet bei
@@ -362,6 +382,10 @@ Datenschutz.
 **The Single Offset Rule.** Nur `scroll-padding-top` gleicht den Sticky-Header aus. Ein zusätzliches
 `scroll-margin` addiert sich und verschiebt die Ankersprünge.
 
+**The Chapter Rule.** Die Tintenlinie öffnet ein Kapitel der Startseite und markiert sonst nichts.
+Innerhalb eines Kapitels ist kein Abstand größer als 3rem, und kein Titel steht größer als die H2
+seines Kapitels.
+
 ## Elevation & Depth
 
 Das System ist flach, ohne Ausnahme. Es gibt keinen Schatten, keine Unschärfe und keine Transluzenz:
@@ -369,9 +393,10 @@ Der Sticky-Header ist deckend in Papierweiß (`bg-bg`). Seine untere Haarlinie e
 Scrollen (scrollgesteuerte CSS-Animation, `animation-timeline: scroll(root)`, Bereich 0–4rem). Ohne
 Browser-Unterstützung oder bei reduzierter Bewegung steht die Linie immer.
 
-Struktur entsteht aus zwei Linienstärken derselben Breite: Liniengrau (`border-border`) für Sektionen
-und Zeilen, Tinte (`border-fg`) als stärkere Regel über den drei Leistungsspalten und über der
-Vor-/Zurück-Navigation der Projektseiten. Eine zweite Flächenebene (`bg-elevated`) gibt es nur beim
+Struktur entsteht aus zwei Linien derselben Stärke: Liniengrau (`border-border`) für Zeilen,
+Zwischenblöcke und den Footer, Tinte (`border-fg`) als Kapitel-Linie über jeder Sektion der
+Startseite und über der Vor-/Zurück-Navigation der Projektseiten. Weil die Tintenlinie nur dort
+steht, trennt sie Kapitel von Zeile ohne Fläche und ohne Schatten. Eine zweite Flächenebene (`bg-elevated`) gibt es nur beim
 Codeblock.
 
 ### Named Rules
@@ -388,9 +413,10 @@ keinem Baustein des Systems. Pillen gibt es nicht.
 
 Wiederkehrende Linien-Motive:
 
-- **Haarlinie:** 1 px Liniengrau über jeder Sektion, unter jeder Zeile, unter dem Header (nach dem
-  Scrollen) und über dem Footer.
-- **Tintenlinie:** 1 px Tintenschwarz über den Leistungsspalten und der Vor-/Zurück-Navigation.
+- **Haarlinie:** 1 px Liniengrau über Zwischenblöcken und den beiden Kontaktspalten, unter jeder
+  Zeile, unter dem Header (nach dem Scrollen) und über dem Footer.
+- **Tintenlinie:** 1 px Tintenschwarz über jeder Sektion der Startseite (Kapitel-Linie) und über der
+  Vor-/Zurück-Navigation der Projektseiten.
 - **Randnotiz:** Label in der Randspalte, Haarlinie oben, Text rechts. Für „Erkenntnisse“ läuft der
   Text in voller Tinte statt in Bleistiftgrau. Kein farbiger Seitenstreifen.
 - **Unterstrich:** Links im Fließtext und im Footer mit 4 px Abstand zur Grundlinie. Text-Button und
@@ -440,18 +466,23 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 ### Rows
 
 - **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte. Links (ab 640 px,
-  9rem) Art und Zeitraum, rechts Titel in Title Large, Summary (max. 60ch), optional „Stand: …“
+  9rem) Art und Zeitraum, rechts Titel in Title Medium, Summary (max. 60ch), optional „Stand: …“
   (nur der erste Satz) und der erste Screenshot (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
   mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als eigener Link über dem gestreckten
   Titel-Link. 2rem Innenabstand oben und unten. Keine Technik-Namen. Die Variante `compact`
-  (kleinerer Titel, 1,5rem Innenabstand) trägt die vollständige Liste unter `/projekte/`.
+  (Titel 1,25rem, 1,5rem Innenabstand) trägt die vollständige Liste unter `/projekte/`.
 - **Ledger-Zeile** (`ProjectRow`): Titel · Art · Zeitraum · Pfeil, 1rem Innenabstand, Haarlinie
   unten. Unter 640 px zweizeilig.
 - **Beide:** Der Titel-Link ist auf die ganze Zeile gestreckt, der Fokus bleibt am Titel. Bei Hover
   oder Fokus zieht der Unterstrich des Titels von links auf und der Pfeil rückt 2 px; in der
   Ledger-Zeile rückt zusätzlich der Titel 4 px.
-- **Meta-Liste** (`MetaList`): `dl` mit Haarlinien, Spalten `6rem | 1fr`, Body Small. Art, Zeitraum,
-  Stand, Technik. „Technik“ steht in Mono, Bleistiftgrau, verbunden mit „ · “. Nur auf Projektseiten.
+- **Meta-Liste** (`MetaList`): `dl` mit Haarlinien, Spalten `6rem | 1fr`, Body Small; die Seite gibt
+  die Zeilen als `rows` vor. Projektseiten: Art, Zeitraum, Stand, Technik — „Technik“ steht in Mono,
+  Bleistiftgrau, verbunden mit „ · “, und nur dort. Kontakt: Ort, Profil, Code; Werte mit `href` sind
+  orange Links, externe öffnen im neuen Tab und sagen das für Screenreader dazu.
+- **Nummernzeile** (`NumberedRows`): Ziffer (Body Small, Tabellenziffern, `aria-hidden`), Titel
+  (Subhead), Erklärung (Body Small, max. 55ch), 1rem Innenabstand, Haarlinie unten. Arbeitsweise mit
+  eigener Titelspalte ab 640 px (`2rem | 10rem | 1fr`), die Kontakt-Schritte ohne (`2rem | 1fr`).
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
 
@@ -471,10 +502,22 @@ unten, Hover färbt die Zeile orange. Die Höhe animiert nur, wo der Browser `in
 
 ### CopyEmail
 
-Die Adresse als markierbarer, groß gesetzter Link (Title Large, Unterstrich mit 8 px Abstand) plus
-„Adresse kopieren“ im Stil des Sekundärbuttons. Der Knopf erscheint erst, wenn der Browser die
-Zwischenablage anbietet; die Rückmeldung („Kopiert.“) steht in einem `role="status"`-Element und
-verschwindet nach zwei Sekunden. Gespeichert wird nichts.
+Zwei Größen. `large`: die Hauptadresse als markierbarer Link in Title Large (Unterstrich mit 8 px
+Abstand), darunter — nicht daneben — „Adresse kopieren“ im Stil des Sekundärbuttons. `inline`: eine
+Zeile in Body Small für die Ausweichadresse („Oder an …“), der Kopier-Knopf als unterstrichener
+Text. In beiden Fällen erscheint der Knopf erst, wenn der Browser die Zwischenablage anbietet; die
+Rückmeldung („Kopiert.“) steht in einem `role="status"`-Element neben dem Knopf und verschwindet
+nach zwei Sekunden. Gespeichert wird nichts.
+
+### Kontaktblock
+
+Ein Raster, keine Freischweber: ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit
+derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: Hauptadresse (`CopyEmail`
+`large`), Ausweichadresse (`inline`, nur solange `fallbackEmail` gesetzt ist), der Webmail-Hinweis
+als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
+Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
+Nummernzeilen. Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
+Adresse) und genau ein oranger Knopf.
 
 ### Containers
 
@@ -535,9 +578,11 @@ und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohn
 - **Do** Farben nur über die Tokens `bg`, `bg-elevated`, `fg`, `fg-muted`, `accent`, `accent-fg` und
   `border` setzen und jeder neuen Farbe einen Dunkel-Zwilling geben.
 - **Do** Werkstatt-Orange für Handlung, Beleg, Einordnung und Fokus reservieren (The One Signal Rule).
-- **Do** Listen als linierte Zeilen bauen: Haarlinie in Liniengrau, Tintenlinie für die stärkere Regel.
-- **Do** neue Blöcke mit dem Kopf-Raster `11rem | 1fr` beginnen (3rem Abstand, Haarlinie oben) und
-  langen Inhalt unter den Kopf stellen statt neben ihn.
+- **Do** Listen als linierte Zeilen bauen: Haarlinie in Liniengrau. Die Tintenlinie öffnet ein Kapitel
+  und markiert sonst nichts (The Chapter Rule).
+- **Do** neue Blöcke mit dem Kopf-Raster `11rem | 1fr` beginnen (3rem Spaltenabstand; Tintenlinie
+  oben auf der Startseite, Haarlinie auf Unterseiten) und langen Inhalt unter den Kopf stellen statt
+  neben ihn.
 - **Do** Überschriften in Tintenschwarz mit Gewicht 600 setzen, große mit `.display` (−0,03em, 1,02),
   Erklärungen in Bleistiftgrau.
 - **Do** Zeiträume, Nummern und Zählungen mit `tabular-nums` setzen und Pfeile über `Arrow.astro`.
@@ -558,6 +603,8 @@ und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohn
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
 - **Don't** Inhalte beim Scrollen einblenden oder den Hero animieren.
+- **Don't** innerhalb eines Kapitels mehr Abstand lassen als zwischen zwei Kapiteln, und keinen Titel
+  größer setzen als die H2 des Kapitels.
 - **Don't** Technik-Namen auf der Startseite nennen; sie stehen in der Meta-Liste der Projektseite.
 - **Don't** Schriften von Drittanbietern laden oder eine zweite Familie einführen.
 - **Don't** Pfeile als Schriftzeichen setzen; das Subset enthält sie nicht.

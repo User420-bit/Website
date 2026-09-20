@@ -52,10 +52,12 @@ const lists = [
 
     <div class="mt-8">
       <MetaList
-        kind={data.kind}
-        period={data.period}
-        status={data.status}
-        techStack={data.techStack}
+        rows={[
+          { label: 'Art', value: data.kind, variant: 'kind' },
+          { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+          ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+          { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+        ]}
       />
     </div>
 

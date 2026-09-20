@@ -1,11 +1,13 @@
 ---
 /**
- * Abschnitt der Startseite. Eine Haarlinie oben, darunter der Kopf: ab `lg`
- * links Nummer und Ueberschrift, rechts der einleitende Satz. Der Inhalt steht
- * unter diesem Kopf ueber die volle Spaltenbreite — so bleibt die Randspalte
- * die Marke des Abschnitts, ohne neben langen Inhalten als leere Flaeche
- * stehenzubleiben. Die Nummer ist Ordnung fuers Auge, keine Information —
- * deshalb `aria-hidden`.
+ * Abschnitt der Startseite, gebaut als Kapitelöffnung: eine Tintenlinie oben
+ * (die einzige auf der Seite, alles Innere bleibt Haarlinie), viel Luft,
+ * dann der Kopf. Ab `lg` steht links in der Randspalte nur die Nummer, rechts
+ * die H2 in Headline-Größe und darunter der einleitende Satz. Der Inhalt
+ * steht unter diesem Kopf über die volle Spaltenbreite — so bleibt die
+ * Randspalte die Marke des Abschnitts, ohne neben langen Inhalten als leere
+ * Fläche stehenzubleiben. Die Nummer ist Ordnung fürs Auge, keine
+ * Information — deshalb `aria-hidden`.
  */
 interface Props {
   id: string
@@ -18,21 +20,21 @@ interface Props {
 const { id, title, index, intro, class: className = '' } = Astro.props
 ---
 
-<section id={id} class:list={['border-t border-border py-12 sm:py-16', className]}>
+<section id={id} class:list={['border-t border-fg py-16 sm:py-24', className]}>
   <div class="lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-12">
-    <div>
-      {
-        index && (
-          <span aria-hidden="true" class="block text-sm text-fg-muted tabular-nums">
-            {index}
-          </span>
-        )
-      }
-      <h2 class="mt-1 text-xl font-semibold tracking-tight text-balance">{title}</h2>
+    {
+      index && (
+        <span aria-hidden="true" class="block text-sm text-fg-muted tabular-nums">
+          {index}
+        </span>
+      )
+    }
+    <div class:list={[index && 'mt-1 lg:mt-0', !index && 'lg:col-start-2']}>
+      <h2 class="m-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
+      {intro && <p class="prose-flow mt-4 mb-0 max-w-[65ch] text-fg-muted">{intro}</p>}
     </div>
-    {intro && <p class="prose-flow mt-4 mb-0 max-w-[65ch] text-fg-muted lg:mt-0">{intro}</p>}
   </div>
-  <div class="mt-8 sm:mt-10">
+  <div class="mt-10 sm:mt-12">
     <slot />
   </div>
 </section>
