@@ -91,7 +91,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     id="arbeiten"
     index="01"
     title="Arbeiten"
-    intro="Kundenprojekte, eigene Produkte und Prototypen. Jeder Eintrag sagt, um welche Art Projekt es sich handelt."
+    intro="Kundenprojekte, eigene Produkte und Prototypen. Bei jedem Eintrag steht, was davon es ist."
   >
     <div class="border-t border-border">
       {referenzen.map((projekt) => <ProjectFeature projekt={projekt} />)}
@@ -152,8 +152,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
     <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
     <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
-      Abgeleitet aus dem, was tatsächlich gebaut wurde. Hinter jedem Punkt steht das Projekt, das
-      ihn belegt.
+      Nur, was schon einmal gebaut wurde. Hinter jedem Punkt steht das Projekt, das ihn belegt.
     </p>
     <div class="mt-3 border-t border-border">
       {
@@ -204,7 +203,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     <div class="mt-8 border-t border-border">
       <Disclosure title="Wie gearbeitet wird" meta={punkte(aboutEntry.data.workflow.length)}>
         <p class="mt-0 max-w-[65ch] text-sm text-fg-muted">
-          Aus den Commit-Historien ablesbar, nicht aus einem Leitbild.
+          Nachlesbar in der Änderungsgeschichte jedes Projekts, nicht in einem Leitbild.
         </p>
         <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
           {
@@ -290,7 +289,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
       <div class="border-t border-border pt-6">
         <CopyEmail email={company.email} />
         <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
-          Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
+          Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
         </p>
         <p class="mt-8 mb-0">
           <Button href={anfrage}>E-Mail schreiben</Button>

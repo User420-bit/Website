@@ -3,21 +3,23 @@ title: Kleinkram
 summary: Buchhaltungs-Übersicht für Kleinunternehmer nach §19 UStG, die auf dem eigenen Rechner läuft. Rechnungen, Fristen und Dokumente an einem Ort, dazu die Grundlage für die EÜR.
 techStack: [Next.js 16, Drizzle ORM, SQLite, shadcn/ui, Tailwind, Recharts, Docker]
 kind: eigenes-produkt
-period: August 2026
-status: Lokal nutzbar. Repo ist privat, ein öffentlicher Link ist in Prüfung.
+period: August – September 2026
+status: Täglich im Einsatz bei Klartext selbst. Der Code ist privat.
 github: null
 live: null
 order: 3
 features:
-  - Ein- und Ausgangsrechnungen mit Status und Fälligkeit, Rechnungs-PDFs
-  - Kontakte, Fristen mit Wiederkehr-Vorlagen, Dokumentenablage mit Tags
-  - Verknüpfungen zwischen allen Objekten
-  - Jahres- und Quartalsberichte als EÜR-Grundlage, CSV-Export für Excel
-  - Backups und §19-Umsatzampel
+  - Rechnungen, Angebote und Mahnungen mit PDF; Rechnungen werden festgeschrieben und storniert statt gelöscht
+  - Zeiterfassung mit Stoppuhr, Wochenansicht und Abrechnung per Klick, dazu ein Tätigkeitsnachweis je Rechnung
+  - Kontakte, Fristen mit Wiederkehr-Vorlagen, Belege mit Aufbewahrungsfrist, Anlagenverzeichnis, Bankumsätze aus CSV
+  - Verknüpfungen zwischen allen Einträgen
+  - Quartals- und Jahresauswertung als Grundlage für die EÜR, Jahresabschluss mit Checkliste und Abgabepaket, CSV-Export für Excel
+  - Backups, §19-Umsatzampel und Steuerrücklage auf einen Blick
 engineering:
   - Alle Daten bleiben lokal in SQLite – kein Konto, kein Cloud-Sync
   - Eigenes Design-System mit Farb-Tokens, Empty-States und Status-Badges
   - Läuft über Docker, damit die Installation ein Befehl ist
+  - Auf dem Mac als eigene App startbar, ohne Browser und Terminal
   - Randfälle in Backups behandelt – exFAT-Laufwerke und AppleDouble-Dateien
 learnings:
   - Fachlichkeit zuerst – die §19-Grenze und die EÜR bestimmen das Datenmodell, nicht das UI

@@ -5,18 +5,18 @@
     "description": "Für Selbstständige und kleine Firmen, die aus dem Baukasten raus wollen.",
     "items": [
       {
-        "title": "Einseitige Websites und Portfolios",
+        "title": "Einseitige Websites",
         "description": "Eine Seite, die beim Scrollen in Bewegung kommt, schnell lädt und nicht nach Vorlage aussieht. Vor der ersten Zeile Code stehen ein Plan und eine schriftliche Vorgabe für alle Bilder.",
         "evidence": ["pointcare"]
       },
       {
         "title": "Shop- und Firmenseiten als klickbarer Entwurf",
-        "description": "Was die jetzige Seite kann und was ihr fehlt, was die Konkurrenz macht, ein Fahrplan und ein Entwurf zum Durchklicken mit den echten Produkten.",
+        "description": "Erst die Bestandsaufnahme: Was kann die jetzige Seite, was fehlt ihr, was macht die Konkurrenz. Dann ein Fahrplan und ein Entwurf zum Durchklicken, mit den echten Produkten aus dem Shop.",
         "evidence": ["justbeauty"]
       },
       {
-        "title": "Bilder und Videos mit KI",
-        "description": "Nach schriftlicher Vorgabe erstellt, in die Seite eingebaut und darauf geprüft, dass sie auch auf dem Handy schnell lädt.",
+        "title": "Bilder mit KI",
+        "description": "Nach schriftlicher Vorgabe erstellt, vor dem Einbau bei voller Größe geprüft und so eingebaut, dass die Seite auch auf dem Handy schnell lädt. Videos nur, wenn sie das nicht bremsen; bei PointCare wurden sie deshalb durch Standbilder ersetzt.",
         "evidence": ["pointcare"]
       },
       {
@@ -33,7 +33,7 @@
     "items": [
       {
         "title": "Übersichten und Verwaltung",
-        "description": "Rechnungen, Fristen, Dokumente und Berichte an einem Ort. Dazu PDFs zum Verschicken und ein Export für Excel.",
+        "description": "Rechnungen, Angebote, Zeiten, Fristen und Belege an einem Ort. Dazu PDFs zum Verschicken, ein Export für Excel und die Zahlen für die Steuererklärung.",
         "evidence": ["kleinkram"]
       },
       {
@@ -43,7 +43,7 @@
       },
       {
         "title": "Web-Apps mit getrennten Konten",
-        "description": "Mehrere Nutzergruppen in einer App, jede sieht nur ihre eigenen Daten. Zugang nur per Einladung, eine Bremse gegen massenhafte Zugriffe und ein automatischer Test, der die Trennung bei jeder Änderung prüft.",
+        "description": "Mehrere Gruppen in einer App, und jede sieht nur ihre eigenen Daten. Zugang nur mit Einladung. Ein automatischer Test prüft bei jeder Änderung, dass die Trennung hält.",
         "evidence": ["memorytree"]
       },
       {
@@ -53,7 +53,7 @@
       },
       {
         "title": "Einfach zu starten",
-        "description": "Kunden oder Kollegen starten ein Projekt auf dem eigenen Rechner, ohne erst Entwicklungssoftware einzurichten.",
+        "description": "Kunden oder Kollegen starten den Entwurf auf dem eigenen Rechner mit einem Klick, ohne vorher etwas einzurichten.",
         "evidence": ["justbeauty", "kleinkram"]
       }
     ]
@@ -70,7 +70,7 @@
       },
       {
         "title": "Spielregeln, Balance und Simulation",
-        "description": "Spielwelten, die sich genau wiederholen lassen, automatische Testläufe für die Balance und Auswertungen mit Messdaten statt Bauchgefühl.",
+        "description": "Spielwelten, die aus einer Startzahl immer gleich entstehen. Hunderte automatische Testläufe zeigen, ob das Spiel zu leicht oder zu schwer ist, bevor ein Mensch spielt.",
         "evidence": ["tiefgang"]
       },
       {
@@ -83,7 +83,7 @@
   "ki": {
     "order": 4,
     "title": "KI & Konzept",
-    "description": "KI, die auf dem eigenen Rechner läuft, wenn Daten nicht nach außen dürfen. Und eine Analyse, bevor gebaut wird.",
+    "description": "KI, die auf dem eigenen Rechner läuft, wenn Daten das Haus nicht verlassen dürfen. Und eine Bestandsaufnahme, bevor gebaut wird.",
     "items": [
       {
         "title": "KI-Anwendungen ohne Cloud",
@@ -97,7 +97,7 @@
       },
       {
         "title": "Dokumentation, die Entscheidungen erklärt",
-        "description": "Hält auch verworfene Wege und Messwerte fest, damit später klar ist, warum etwas so gebaut wurde.",
+        "description": "Hält auch fest, was probiert und verworfen wurde, damit in einem Jahr noch klar ist, warum etwas so gebaut ist und nicht anders.",
         "evidence": ["feynman", "dealersim"]
       }
     ]

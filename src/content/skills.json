@@ -22,7 +22,7 @@
       },
       {
         "name": "C#, Swift, Shell",
-        "note": "Punktuell – Unity, iOS, Dev-Skripte"
+        "note": "Punktuell – iOS (Availably), Skripte fürs Projekt"
       }
     ]
   },
@@ -67,11 +67,11 @@
         "note": "Server-Logik im selben Repo wie das UI"
       },
       {
-        "name": "SQLite, Postgres, Redis",
-        "note": "Lokal bis Serverless, FTS5 für Suche"
+        "name": "SQLite, Postgres",
+        "note": "Lokal bis Serverless, Volltextsuche mit FTS5"
       },
       {
-        "name": "Drizzle, Prisma, SQLAlchemy, Alembic",
+        "name": "Drizzle, SQLAlchemy, Alembic",
         "note": "Migrationen als einzige Schema-Quelle"
       }
     ]
@@ -101,8 +101,8 @@
   },
   "ai": {
     "order": 5,
-    "title": "AI-Werkzeuge",
-    "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen – offengelegt in der Arbeitsweise statt als Badge auf jeder Karte.",
+    "title": "KI-Werkzeuge",
+    "description": "Eingesetzt als Verstärker, nicht als Ersatz fürs Verstehen. Einmal offen genannt unter „Arbeitsweise“, nicht bei jedem Projekt.",
     "items": [
       {
         "name": "Claude Code",
@@ -140,7 +140,7 @@
         "note": "CVE-Fixes, Rate-Limiting, Prototype-Pollution-Schutz, Mandanten-Isolation"
       },
       {
-        "name": "Datenschutz by default",
+        "name": "Datenschutz ab Werk",
         "note": "Keine Tracker, Daten lokal, keine offene Registrierung ohne Grund"
       }
     ]

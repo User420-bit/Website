@@ -21,7 +21,7 @@ engineering:
   - Bugfixes an Textüberlappung, Hero und Parallax dokumentiert statt still gefixt
 learnings:
   - Video im Hero sieht im Briefing gut aus und kostet auf dem Handy die ersten Sekunden – messen, dann entscheiden
-  - 30 Commits in zwei Tagen gehen nur mit einem Plan, der vorher steht
+  - Über 30 Änderungen in drei Tagen gehen nur mit einem Plan, der vorher steht
 ---
 
 Kundenprojekt für point-care.de. Die bestehende Seite kam aus einem Baukasten und sah aus wie jede

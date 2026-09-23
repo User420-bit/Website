@@ -35,11 +35,12 @@ engineering:
 learnings:
   - Ein Spiel ohne Engine zwingt zu einer sauberen Trennung von Zustand, Simulation und Darstellung
   - Balancing ist messbar, wenn die Simulation ohne Browser läuft
-  - 61 Pull Requests im Solo-Projekt – die Disziplin lohnt sich beim Rückbau von Fehlentscheidungen
+  - Mehr als 50 einzeln geprüfte Schritte im Solo-Projekt – die Disziplin lohnt sich beim Rückbau von Fehlentscheidungen
 ---
 
-Mein größtes Projekt bisher: 184 Commits, 61 Pull Requests, sechs abgeschlossene Meilensteine (M0 bis
-M5). Das Spiel ist auf Deutsch, läuft im Browser auf Handy und Desktop und funktioniert nach dem ersten
+Mein größtes Projekt bisher: über 160 Änderungen in mehr als 50 einzeln geprüften Schritten, sechs
+abgeschlossene Meilensteine (M0 bis M5), dazu ein Weltensystem mit drei Schächten und ein optionales
+Konto für den Spielstand. Das Spiel ist auf Deutsch, läuft im Browser auf Handy und Desktop und funktioniert nach dem ersten
 Laden auch offline.
 
 Der Kern ist ein Push-your-luck-Loop: tiefer graben bringt mehr, aber jede Schicht hat eigene Gefahren.
