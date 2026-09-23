@@ -8,6 +8,9 @@ status: Spielbar. Nächster Schritt ist M6 – Balancing und Beta mit 5 bis 10 T
 github: null
 live: https://tiefgang.pages.dev
 order: 4
+screenshots:
+  - image: ../../assets/projekte/tiefgang.png
+    caption: 'Startbildschirm von TIEFGANG: Abtauchen, Tagesmine, Werkstatt und Kodex über dem ersten Schacht'
 features:
   - Core Loop mit drei Schichten, jede mit eigenen Gefahren
   - Vier Upgrade-Pfade und Verbrauchsgegenstände
