@@ -8,6 +8,9 @@ status: Spielbar. Weiterentwicklung pausiert zugunsten von TIEFGANG.
 github: null
 live: https://dealersim.vercel.app
 order: 8
+screenshots:
+  - image: ../../assets/projekte/dealersim.png
+    caption: 'Der erste Raum in DealerSim: isometrisches Raster mit den drei Stationen der Produktionskette'
 features:
   - Produktions- und Qualitätsmodell mit Nachfrage-Segmenten und B2B-Verträgen
   - Offline-Produktion, Prestige-System, Achievements

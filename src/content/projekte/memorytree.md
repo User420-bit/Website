@@ -8,6 +8,9 @@ status: Läuft auf Vercel. Öffentlich unter MIT-Lizenz.
 github: null
 live: https://memorytree-app.vercel.app
 order: 5
+screenshots:
+  - image: ../../assets/projekte/memorytree.png
+    caption: 'Gastansicht von MemoryTree mit Beispieldaten: Dashboard mit Erinnerungen, Fotos und dem Weg zum Baum'
 features:
   - Erinnerungen, Fotos und Meilensteine als organischer SVG-Baum
   - Timeline, Karte und Galerie als alternative Sichten

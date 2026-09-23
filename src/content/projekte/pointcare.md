@@ -8,6 +8,9 @@ status: In Abnahme. Offen sind Portrait-Foto, Impressum, Kontaktformular und lok
 github: null
 live: null
 order: 1
+screenshots:
+  - image: ../../assets/projekte/pointcare.png
+    caption: 'Startansicht der neuen PointCare-Seite: Hero mit Containerhafen, Glasfläche und Claim'
 features:
   - Drei Leistungsbereiche (Lager & Intralogistik, Supply Chain, Transport) als Scroll-Choreografie
   - Hero mit Parallax und Standbildern mit Scroll-Zoom

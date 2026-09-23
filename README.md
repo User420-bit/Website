@@ -91,6 +91,30 @@ aus `src/content/profile.json` heraus als `"../assets/portrait.jpg"`. Astro erze
 daraus automatisch WebP in mehreren Größen. Bilder in `public/` werden **nicht**
 optimiert.
 
+### Screenshots der Referenzen
+
+`npm run screenshots` nimmt jede Referenz mit `live`-URL im Browser auf und legt das Bild
+unter `src/assets/projekte/<slug>.png` ab (1600 × 900, Edge oder Chrome aus dem System, sonst
+das Chromium von Playwright). Projekte ohne öffentliche Adresse stehen in `QUELLEN` in
+`scripts/screenshots.mjs` mit dem gebauten Verzeichnis des Nachbar-Repos, zum Beispiel
+`../PointCare/dist`; dort lässt sich auch ein Klick nach dem Laden hinterlegen, etwa der
+Gastzugang von MemoryTree, damit das Bild die Anwendung zeigt und nicht ihr Login. Ein
+laufender Dev-Server geht per `--url kleinkram=http://localhost:3000`. Was keine Quelle hat,
+meldet das Skript und lässt es aus.
+
+Das Skript schreibt nur Bilder. Der Eintrag in der Projektdatei ist Handarbeit, weil die
+Bildunterschrift Inhalt ist; die Vorlage steht am Ende der Ausgabe:
+
+```yaml
+screenshots:
+  - image: ../../assets/projekte/tiefgang.png
+    caption: Was das Bild zeigt
+```
+
+Das erste Bild erscheint in der Zeile auf `/projekte/` und, bei Kundenprojekten, auf der
+Startseite; die Projektseite zeigt alle. Nach einer sichtbaren Änderung am Projekt das Skript
+erneut laufen lassen und das Bild mit committen.
+
 ### Felder, die `null` sein dürfen
 
 `github`, `live`, `status`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity`
@@ -111,6 +135,7 @@ wird vom Schema abgelehnt und bricht den Build.
 | `npm run format`      | Prettier                                                       |
 | `npm run test:build`  | Prüft `dist/`: Routen, H1, Meta-Tags, tote Links, externes JS  |
 | `npm run guard:legal` | Prüft, ob das Impressum vollständig ist (blockiert den Deploy) |
+| `npm run screenshots` | Nimmt die Referenzen im Browser auf, siehe oben                |
 | `npm run verify`      | Alles davon in einem Durchlauf — vor jedem Push empfohlen      |
 
 ## Deployment
