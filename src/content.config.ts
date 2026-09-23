@@ -29,12 +29,6 @@ const company = defineCollection({
     intro: z.string(),
     location: z.string(),
     email: z.email(),
-    /**
-     * Übergangsadresse, solange das Postfach unter `email` noch nicht zustellt.
-     * Wird neben `email` angezeigt und bekommt jede Anfrage mit. Auf `null`
-     * setzen, sobald eine Testmail von außen an `email` angekommen ist.
-     */
-    fallbackEmail: z.email().nullable(),
     services: z
       .array(
         z.object({
@@ -200,12 +194,6 @@ const legal = defineCollection({
     zipCity: z.string().nullable().refine(noPlaceholder, placeholderMessage),
     country: z.string().refine(noPlaceholder, placeholderMessage),
     email: z.email(),
-    /**
-     * Übergangsadresse, solange das Postfach unter `email` noch nicht zustellt.
-     * Wird neben `email` angezeigt und bekommt jede Anfrage mit. Auf `null`
-     * setzen, sobald eine Testmail von außen an `email` angekommen ist.
-     */
-    fallbackEmail: z.email().nullable(),
     privacyLastUpdated: z.string().regex(/^\d{4}-\d{2}$/, 'Format: YYYY-MM'),
   }),
 })

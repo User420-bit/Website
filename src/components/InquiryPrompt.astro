@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
-import { emailAddresses, href, mailto } from '@/lib/site'
+import { href, mailto } from '@/lib/site'
 
 /**
  * Ruhige Anfrage-Zeile: nach "Arbeiten" auf der Startseite und am Ende jeder
@@ -29,10 +29,7 @@ const contact = (await getEntry('contact', 'main'))!.data
     {contact.prompt.text}
   </p>
   <div class="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2">
-    <Button
-      href={mailto(emailAddresses(company.email, company.fallbackEmail), contact.subject)}
-      variant="secondary"
-    >
+    <Button href={mailto(company.email, contact.subject)} variant="secondary">
       E-Mail schreiben
     </Button>
     <a

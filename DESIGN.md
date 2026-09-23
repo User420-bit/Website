@@ -311,7 +311,7 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
-  Meta-Liste, Ausweichadresse im Kontakt, Footer, Navigation.
+  Meta-Liste, Footer, Navigation.
 - **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen und die leisen
   Zwischenüberschriften in Bleistiftgrau („Weitere Arbeiten“, „Im Einzelnen“).
 - **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel).
@@ -502,18 +502,16 @@ unten, Hover färbt die Zeile orange. Die Höhe animiert nur, wo der Browser `in
 
 ### CopyEmail
 
-Zwei Größen. `large`: die Hauptadresse als markierbarer Link in Title Large (Unterstrich mit 8 px
-Abstand), darunter — nicht daneben — „Adresse kopieren“ im Stil des Sekundärbuttons. `inline`: eine
-Zeile in Body Small für die Ausweichadresse („Oder an …“), der Kopier-Knopf als unterstrichener
-Text. In beiden Fällen erscheint der Knopf erst, wenn der Browser die Zwischenablage anbietet; die
+Die Adresse als markierbarer Link in Title Large (Unterstrich mit 8 px Abstand), darunter — nicht
+daneben — „Adresse kopieren“ im Stil des Sekundärbuttons. Der Knopf erscheint erst, wenn der Browser die Zwischenablage anbietet; die
 Rückmeldung („Kopiert.“) steht in einem `role="status"`-Element neben dem Knopf und verschwindet
 nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
 Ein Raster, keine Freischweber: ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit
-derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: Hauptadresse (`CopyEmail`
-`large`), Ausweichadresse (`inline`, nur solange `fallbackEmail` gesetzt ist), der Webmail-Hinweis
+derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: die Adresse (`CopyEmail`),
+der Webmail-Hinweis
 als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
 Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
 Nummernzeilen. Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die

@@ -10,7 +10,7 @@ import NumberedRows from '@/components/NumberedRows.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import ProjectRow from '@/components/ProjectRow.astro'
 import Section from '@/components/Section.astro'
-import { emailAddresses, href, mailto } from '@/lib/site'
+import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -30,9 +30,7 @@ const weitere = auswahl.filter((p) => p.data.kind !== 'kundenprojekt')
 const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
 
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
-const adressen = emailAddresses(company.email, company.fallbackEmail)
-const [hauptadresse, ausweichadresse] = adressen
-const anfrage = mailto(adressen, contact.subject)
+const anfrage = mailto(company.email, contact.subject)
 /** Erreichbarkeit im Kontakt: der Ort, dann die Profile, die in profile.json gesetzt sind. */
 const erreichbarkeit: { label: string; value: string; href?: string; external?: boolean }[] = [
   { label: 'Ort', value: company.location },
@@ -82,14 +80,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     <p class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
       <span>{company.location}</span>
       <span aria-hidden="true">·</span>
-      {
-        adressen.map((adresse, i) => (
-          <>
-            {i > 0 && <span>oder</span>}
-            <span class="font-medium wrap-anywhere text-fg select-all">{adresse}</span>
-          </>
-        ))
-      }
+      <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>
       <span aria-hidden="true">·</span>
       <span>{contact.responseTime}</span>
     </p>
@@ -297,12 +288,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
   >
     <div class="grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12">
       <div class="border-t border-border pt-6">
-        <CopyEmail email={hauptadresse} />
-        {
-          ausweichadresse && (
-            <CopyEmail email={ausweichadresse} size="inline" label="Oder an" class="mt-4" />
-          )
-        }
+        <CopyEmail email={company.email} />
         <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
           Öffnet sich kein Mailprogramm, lässt sich die Adresse markieren und kopieren.
         </p>
