@@ -9,8 +9,16 @@ github: null
 live: https://tiefgang.pages.dev
 order: 4
 screenshots:
-  - image: ../../assets/projekte/tiefgang.png
-    caption: 'Startbildschirm von TIEFGANG: Abtauchen, Tagesmine, Werkstatt und Kodex über dem ersten Schacht'
+  - image: ../../assets/projekte/tiefgang-mine.webp
+    caption: 'Eine Fahrt auf 525 m: links Tiefe, Energie für den Rückweg und Ladung, rechts Werkzeuge, Energie und Fracht'
+  - image: ../../assets/projekte/tiefgang-eisschicht.png
+    caption: 'Die Eisschicht auf 330 m: Jede Schicht hat eigenes Gestein und eigene Erze, hier Frostquarz'
+  - image: ../../assets/projekte/tiefgang-montagehalle.png
+    caption: 'Die Montagehalle: Mit dem Erz aus der Mine werden Bohrkopf, Rumpf, Düse und die übrigen Teile ausgebaut'
+  - image: ../../assets/projekte/tiefgang-handy.webp
+    caption: 'Auf dem Handy im Hochformat: Anzeigen oben, Werkzeuge, Energie und Fracht unten'
+  - image: ../../assets/projekte/tiefgang-handy-story.png
+    caption: 'Die Story in kurzen Einblendungen: Dr. Nadia Ferreira kommentiert die Lava in der Tiefe'
 features:
   - Core Loop mit drei Schichten, jede mit eigenen Gefahren
   - Vier Upgrade-Pfade und Verbrauchsgegenstände

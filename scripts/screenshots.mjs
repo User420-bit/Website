@@ -252,9 +252,10 @@ async function main() {
   drucke('Uebersprungen', ergebnis.uebersprungen)
   drucke('Fehlgeschlagen', ergebnis.fehlgeschlagen)
 
-  // Der Eintrag in der Projektdatei bleibt Handarbeit: die Unterschrift ist Inhalt.
+  // Der Eintrag in der Projektdatei bleibt Handarbeit: die Unterschrift ist Inhalt. Wer schon
+  // eigene Bilder (`<slug>-<ansicht>.png`) eingetragen hat, bekommt keine Vorlage mehr.
   const ohneEintrag = ergebnis.aufgenommen.filter(
-    (p) => !p.text.includes(`assets/projekte/${p.slug}.png`),
+    (p) => !p.text.includes(`assets/projekte/${p.slug}`),
   )
   if (ohneEintrag.length > 0) {
     console.log('\nNoch nicht in der Projektdatei eingetragen. Vorlage fuer das Frontmatter:')

@@ -365,6 +365,10 @@ Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 **Unterseiten:** Projektseiten und `/werkzeuge/` stapeln ihre Blöcke wie die Startseite: Haarlinie
 oben, Label (H2) darüber dem Inhalt, 1rem Abstand zum Inhalt, 3rem zwischen Blöcken. Text bleibt
 bei 65ch.
+Screenshots auf Projektseiten stehen in einem Raster mit vier Spalten ab 640 px (darunter zwei) und
+1,5rem Abstand. Das erste Querformat ist das Leitbild über die volle Breite, weitere Querformate
+nehmen je die halbe Breite, Hochformate (Handy, Dialoge) eine Spalte und stehen immer nach den
+Querformaten. Rahmen 4 px mit 1 px Liniengrau, Unterschrift Body Small in Bleistiftgrau.
 Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 
 **Header und Scrollen:** Der Header klebt oben. Er trägt Wortmarke, Navigation (Arbeiten, Leistungen,
@@ -467,7 +471,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 
 - **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte. Links (ab 640 px,
   9rem) Art und Zeitraum, rechts Titel in Title Medium, Summary (max. 60ch), optional „Stand: …“
-  (nur der erste Satz) und der erste Screenshot (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
+  (nur der erste Satz) und der erste Screenshot im Querformat (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
   mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als eigener Link über dem gestreckten
   Titel-Link. 2rem Innenabstand oben und unten. Keine Technik-Namen. Die Variante `compact`
   (Titel 1,25rem, 1,5rem Innenabstand) trägt die vollständige Liste unter `/projekte/`.

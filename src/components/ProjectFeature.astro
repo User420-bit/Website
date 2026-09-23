@@ -18,8 +18,9 @@ interface Props {
 
 const { projekt, compact = false } = Astro.props
 const { title, summary, kind, period, status, live, screenshots } = projekt.data
-// Bildplatz nur mit echtem Screenshot; ohne bleibt die Zeile reiner Text.
-const screenshot = screenshots[0]
+// Bildplatz nur mit echtem Screenshot; ohne bleibt die Zeile reiner Text. Nur Querformat,
+// ein Handybild würde im 16:9-Rahmen auf seinen oberen Rand zusammengeschnitten.
+const screenshot = screenshots.find((shot) => shot.image.width >= shot.image.height)
 ---
 
 <article

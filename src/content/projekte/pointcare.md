@@ -8,9 +8,8 @@ status: In Abnahme. Offen sind Portrait-Foto, Impressum, Kontaktformular und lok
 github: null
 live: null
 order: 1
-screenshots:
-  - image: ../../assets/projekte/pointcare.png
-    caption: 'Startansicht der neuen PointCare-Seite: Hero mit Containerhafen, Glasfläche und Claim'
+# Kein Screenshot, solange die Seite in Abnahme ist: Der Entwurf zeigt noch Platzhalter wie
+# „[15] Jahre“. Erst nach Abnahme neu aufnehmen (`npm run screenshots -- pointcare`).
 features:
   - Drei Leistungsbereiche (Lager & Intralogistik, Supply Chain, Transport) als Scroll-Choreografie
   - Hero mit Parallax und Standbildern mit Scroll-Zoom

@@ -9,6 +9,14 @@ github: null
 live: https://dealersim.vercel.app
 order: 8
 screenshots:
+  - image: ../../assets/projekte/dealersim-raum-ausgebaut.png
+    caption: 'Ein ausgebauter Raum auf Level 41: Maschinen bis Stufe 10, eigenes Personal und Einrichtung'
+  - image: ../../assets/projekte/dealersim-skills.png
+    caption: 'Der Skill-Baum mit vier Zweigen: Produktion, Geschäft, Ruf und Betrieb'
+  - image: ../../assets/projekte/dealersim-raum-menue.png
+    caption: 'Das Raum-Menü: Produktionskette, Raumgröße und Maschinen zum Kaufen'
+  - image: ../../assets/projekte/dealersim-maschine.png
+    caption: 'Eine Maschine im Detail: Stufe, Qualität, Zustand, Wartung und Ausbau'
   - image: ../../assets/projekte/dealersim.png
     caption: 'Der erste Raum in DealerSim: isometrisches Raster mit den drei Stationen der Produktionskette'
 features:
