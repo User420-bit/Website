@@ -111,9 +111,15 @@ screenshots:
     caption: Was das Bild zeigt
 ```
 
-Das erste Bild erscheint in der Zeile auf `/projekte/` und, bei Kundenprojekten, auf der
-Startseite; die Projektseite zeigt alle. Nach einer sichtbaren Änderung am Projekt das Skript
-erneut laufen lassen und das Bild mit committen.
+Handaufnahmen, etwa aus dem Spiel heraus oder im Handyformat, liegen daneben als
+`<slug>-<ansicht>.png` oder `.webp`, zum Beispiel `tiefgang-montagehalle.png`. Das Skript fasst
+sie nicht an und fragt bei Projekten, die schon eigene Bilder eingetragen haben, nicht mehr nach
+dem Eintrag.
+
+Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/` und, bei Kundenprojekten,
+auf der Startseite. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
+zweispaltig und Hochformate (Handy, Dialoge) schmal darunter. Nach einer sichtbaren Änderung am
+Projekt das Skript erneut laufen lassen und das Bild mit committen.
 
 ### Felder, die `null` sein dürfen
 

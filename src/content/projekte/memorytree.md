@@ -9,8 +9,18 @@ github: null
 live: https://memorytree-app.vercel.app
 order: 5
 screenshots:
+  - image: ../../assets/projekte/memorytree-baum.png
+    caption: 'Der Baum: Erinnerungen hängen als Fotos in der Krone, darunter das Datum, seit dem das Paar zusammen ist'
+  - image: ../../assets/projekte/memorytree-zeitstrahl.png
+    caption: 'Der Zeitstrahl: Erinnerungen nach Jahr, jede mit Foto, Kategorie, Ort und einem kurzen Text'
+  - image: ../../assets/projekte/memorytree-karte.webp
+    caption: 'Die Karte: alle Orte der Erinnerungen, nach Kategorie markiert'
+  - image: ../../assets/projekte/memorytree-galerie.webp
+    caption: 'Die Galerie: alle Fotos, nach Jahr und Kategorie filterbar'
   - image: ../../assets/projekte/memorytree.png
     caption: 'Gastansicht von MemoryTree mit Beispieldaten: Dashboard mit Erinnerungen, Fotos und dem Weg zum Baum'
+  - image: ../../assets/projekte/memorytree-handy-galerie.webp
+    caption: 'Die Galerie auf dem Handy'
 features:
   - Erinnerungen, Fotos und Meilensteine als organischer SVG-Baum
   - Timeline, Karte und Galerie als alternative Sichten
