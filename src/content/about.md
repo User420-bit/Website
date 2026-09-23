@@ -3,20 +3,20 @@ values:
   - title: Klartext
     description: Was geht, was nicht geht und was es kostet – vor dem Projekt, nicht danach.
   - title: Struktur
-    description: Saubere Architektur, lesbarer Code, dokumentierte Entscheidungen.
+    description: Ein klarer Aufbau, lesbarer Code und aufgeschriebene Entscheidungen, damit später jemand weiterarbeiten kann.
   - title: Pragmatismus
-    description: Die einfachste Lösung, die das Problem wirklich löst. Kein Framework um des Frameworks willen.
+    description: Die einfachste Lösung, die das Problem wirklich löst. Kein neues Werkzeug, wenn ein vorhandenes reicht.
   - title: Lernen
-    description: Jedes Projekt bringt einen klaren Erkenntnisgewinn, und der steht offen auf jeder Referenzseite.
+    description: Aus jedem Projekt bleibt etwas hängen, auch was nicht funktioniert hat. Das steht offen auf jeder Referenzseite.
 workflow:
   - title: Plan vor Code
-    description: Rework-Plan, Roadmap mit Exit-Kriterien oder Asset-Briefing – geschrieben, bevor die erste Zeile entsteht.
-  - title: Branches und Pull Requests
-    description: Auch im Solo-Projekt. TIEFGANG hat 61 Pull Requests, jede Entscheidung ist nachlesbar.
-  - title: Verifikation dokumentieren
-    description: Messdaten, verworfene Alternativen und Playtest-Befunde stehen im Repo, nicht nur im Kopf.
+    description: 'Umbauplan, Fahrplan mit klaren Fertig-Kriterien oder schriftliche Vorgabe für alle Bilder: aufgeschrieben, bevor die erste Zeile Code entsteht.'
+  - title: Jede Änderung einzeln geprüft
+    description: 'Auch wenn nur eine Person baut: Jede Änderung ist ein eigener, nachlesbarer Schritt. Bei TIEFGANG sind es über 50.'
+  - title: Prüfungen festhalten
+    description: Was gemessen, getestet und verworfen wurde, steht beim Projekt, nicht nur im Kopf.
   - title: KI-gestützt, nachvollziehbar
-    description: Fast alle Projekte seit 2026 sind mit Claude Code entstanden. Generierter Code wird gelesen, getestet und verantwortet – der Commit trägt einen Namen.
+    description: Fast alle Projekte seit 2026 sind mit Claude Code entstanden. Was die KI schreibt, wird gelesen, getestet und verantwortet; unter jeder Änderung steht ein Name.
   - title: Datenschutz standardmäßig
     description: Keine Tracker, Daten lokal, keine offene Registrierung ohne Grund. Diese Seite lädt nichts von Dritten.
 ---
@@ -25,11 +25,11 @@ Klartext ist ein kleines Softwareunternehmen aus Bruckmühl. Der Name ist das Pr
 werden in verständlicher Sprache beantwortet, Aufwände ehrlich geschätzt, und wo ein Werkzeug von
 der Stange reicht, wird das gesagt, statt etwas Neues zu bauen.
 
-Bisher stehen hier neun Referenzen: zwei Kundenprojekte, ein spielbares Browser-Spiel, eine
-Buchhaltungs-Übersicht, eine Web-App mit getrennten Konten und weitere eigene Produkte und
+Bisher stehen hier neun Referenzen: zwei Kundenprojekte, zwei spielbare Browser-Spiele, eine
+Buchhaltungs-Übersicht, ein gemeinsames Erinnerungsbuch für Paare und weitere eigene Produkte und
 Prototypen. Was sich bewährt hat, steht unter „Leistungen“, jeweils mit dem Projekt, das es belegt.
 Was nicht funktioniert hat, steht auf den Referenzseiten unter „Erkenntnisse“.
 
 Hinter Klartext steht Pharrel Sandjo Djomou, Wirtschaftsinformatik-Student an der TH Rosenheim.
 KI-Werkzeuge kommen bewusst zum Einsatz und werden einmal offen genannt, unter „Arbeitsweise“, statt
-auf jeder einzelnen Karte.
+bei jedem einzelnen Projekt.

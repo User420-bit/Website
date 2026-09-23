@@ -32,6 +32,11 @@ const addressComplete = legal.street !== null && legal.zipCity !== null
       }
       {legal.country}
     </p>
+    {
+      /* § 5 Abs. 1 Nr. 6 DDG verlangt die USt-IdNr. nur "soweit vorhanden". Der Satz erklärt,
+        warum keine dasteht. Entfällt, sobald die Kleinunternehmerregelung nicht mehr gilt. */
+    }
+    <p>Kleinunternehmer nach § 19 UStG, keine Umsatzsteuer-Identifikationsnummer.</p>
   </section>
 
   <section>
@@ -68,10 +73,7 @@ const addressComplete = legal.street !== null && legal.zipCity !== null
 
   <section>
     <h2>Urheberrecht</h2>
-    <p>
-      Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
-      deutschen Urheberrecht. Der Quellcode dieser Website steht unter der MIT-Lizenz.
-    </p>
+    <p>Die Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
   </section>
 
   <section>

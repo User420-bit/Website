@@ -1,17 +1,17 @@
 ---
 title: JustBeauty
-summary: Bestandsaufnahme, neues Design und ein klickbarer Entwurf mit 11 Seiten für einen Kosmetik-Shop.
+summary: Bestandsaufnahme, neues Design und ein klickbarer Entwurf mit zwölf Seiten für einen Kosmetik-Shop.
 techStack: [Astro, GSAP, Lenis, TypeScript, Docker]
 kind: kundenprojekt
 period: September 2026
-status: Prototyp und Konzept liegen dem Kunden vor.
+status: Prototyp und Konzept sind fertig für die Präsentation.
 github: null
 live: null
 order: 2
 features:
   - Ist-Analyse, Design-Rework, Tracking-Konzept und Roadmap
   - Konkurrenzanalyse als Battlecard
-  - Prototyp mit 11 Routen – Shop, Kategorien, Produktseiten, Bestseller, Routinen, Beratung, Händler/B2B, Über uns, Prämien, Kontakt
+  - Entwurf mit zwölf Seiten – Shop, Kategorien, Produktseiten, Bestseller, Routinen, Beratung, Händler, Über uns, Prämien, Kontakt, Suche und Warenkorb mit Kassen-Schritt
   - 315 Produkte automatisch aus dem Live-Shop importiert
 engineering:
   - Zentrales Master-Timing für alle Animationen – kein Modul definiert eigene Kurven
@@ -20,6 +20,7 @@ engineering:
 learnings:
   - Echte Produktdaten im Prototyp verhindern Diskussionen über Platzhalter
   - Ein Animationssystem mit einer Zeitbasis fühlt sich ruhiger an als zehn gute Einzelanimationen
+  - 'Eine Demo muss ohne Internet laufen: Messe- und Büro-WLAN sind der häufigste Grund, warum eine Vorführung scheitert'
 ---
 
 Konzept- und Prototyp-Arbeit für justbeauty-shop.com. Der Kunde bekam nicht nur Mockups, sondern

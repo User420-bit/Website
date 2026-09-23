@@ -4,7 +4,7 @@ summary: Notizen auf einer freien Fläche, verbunden wie ein Stammbaum. Läuft a
 techStack: [Python, FastAPI, SQLite, Vanilla JS, Tailwind]
 kind: eigenes-produkt
 period: Mai – Juli 2026
-status: Im Einsatz für eine kleine Gruppe.
+status: Fertig gebaut für den Betrieb auf einem Raspberry Pi.
 github: null
 live: null
 order: 6
@@ -14,6 +14,7 @@ features:
   - Volltextsuche über SQLite FTS5, per Cmd+K
   - Rollen (Owner, Editor, Viewer) und Session-Auth mit bcrypt
   - Konsistente SQLite-Backups
+  - Anhänge mit Vorschau, Verlauf je Notiz mit Wiederherstellen, Export als Text oder Markdown
 engineering:
   - Ausgelegt auf ein Gerät mit 512 MB RAM – kein Framework im Frontend, kein Build
   - FTS5 statt externer Suche, weil der Pi keine zweite Datenbank verträgt

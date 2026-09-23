@@ -3,8 +3,8 @@ title: DealerSim
 summary: Aufbau- und Managementspiel im Pixel-Look, das auch weiterläuft, wenn niemand spielt. Startet ohne Installation direkt im Browser.
 techStack: [HTML, JavaScript, Canvas, Python-Tooling, Docker]
 kind: eigenes-produkt
-period: Juli – August 2026
-status: Spielbar. Weiterentwicklung pausiert zugunsten von TIEFGANG.
+period: August – September 2026
+status: Spielbar. Grundausbau abgeschlossen, offen ist ein Spieltest mit echten Personen.
 github: null
 live: https://dealersim.vercel.app
 order: 8
@@ -34,6 +34,7 @@ learnings:
   - Playtest-Reports mit Messdaten schlagen Bauchgefühl beim Balancing
 ---
 
-Mein erstes größeres Spielprojekt und der Vorläufer von TIEFGANG. Vieles, was dort sauber ist –
+Ein Spiel um eine fiktive, legale Manufaktur mit Anbau, Verarbeitung und Verkauf: Mein erstes
+größeres Spielprojekt und der Vorläufer von TIEFGANG. Vieles, was dort sauber ist –
 headless Simulation, geseedete Tests, dokumentierte Playtests – wurde hier zum ersten Mal gebraucht und
 in der nächsten Iteration besser gemacht.

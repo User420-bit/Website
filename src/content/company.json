@@ -2,21 +2,21 @@
   "main": {
     "name": "Klartext",
     "claim": "Kleine Software, klar gebaut.",
-    "intro": "Klartext baut kleine Programme, KI-Automationen, Websites und Web-Apps für kleine Unternehmen und Teams. Verständlich erklärt, mit ehrlichen Aussagen zu Aufwand, Nutzen und Grenzen – bevor eine Zeile Code entsteht.",
+    "intro": "Klartext baut kleine Programme, Websites und Web-Apps für Selbstständige und kleine Betriebe. Was es bringt, was es kostet und wo die Grenzen liegen, steht vorher fest, nicht hinterher.",
     "location": "Bruckmühl, Bayern",
     "email": "info@web-klartext.de",
     "services": [
       {
         "title": "Kleine Programme",
-        "description": "Für einen festen Ablauf im Betrieb: eine Bestandsliste, ein Kalender, ein Export, der bisher von Hand lief. Klein genug, um in Wochen fertig zu sein, nicht in Quartalen."
+        "description": "Für einen Ablauf, der bisher von Hand lief: eine Bestandsliste, eine Terminübersicht, ein Export für die Steuerberatung. Klein genug, um in Wochen fertig zu sein, nicht in Monaten."
       },
       {
         "title": "Websites",
-        "description": "Seiten, die schnell laden und ohne Cookies auskommen. Änderungen schicken Sie per E-Mail, Klartext setzt sie um."
+        "description": "Seiten, die schnell laden, auf dem Handy gut aussehen und ohne Cookie-Banner auskommen. Änderungen schicken Sie per E-Mail, Klartext setzt sie um."
       },
       {
         "title": "Web-Apps",
-        "description": "Anwendungen im Browser, wenn eine Tabelle nicht mehr reicht: Daten sauber geordnet, Abläufe nachvollziehbar und so dokumentiert, dass sich auch später noch jemand zurechtfindet."
+        "description": "Anwendungen im Browser, wenn die Tabelle nicht mehr reicht. Die Daten sind sauber geordnet, die Abläufe nachvollziehbar, und alles ist so beschrieben, dass sich auch in zwei Jahren noch jemand zurechtfindet."
       }
     ]
   }

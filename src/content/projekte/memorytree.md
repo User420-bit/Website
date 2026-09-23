@@ -3,7 +3,7 @@ title: MemoryTree
 summary: Web-App als gemeinsames Erinnerungsbuch für Paare. Fotos und Meilensteine wachsen als Baum, dazu Zeitleiste, Karte und Galerie.
 techStack: [Python, FastAPI, SQLAlchemy, Alembic, Postgres, Vercel, Tailwind, Docker]
 kind: eigenes-produkt
-period: Juli – August 2026
+period: März – September 2026
 status: Läuft auf Vercel. Öffentlich unter MIT-Lizenz.
 github: null
 live: https://memorytree-app.vercel.app
@@ -27,6 +27,7 @@ features:
   - Mandantenfähig – jedes Paar sieht nur seine Daten
   - Registrierung nur per Einladungscode
   - Mehrsprachig über eigenes i18n-System
+  - Gastzugang mit Beispieldaten zum Ausprobieren, ohne Registrierung
 engineering:
   - Migration von SQLite lokal auf Postgres, Vercel Serverless und Vercel Blob – Alembic als einzige Schema-Quelle
   - Rate-Limiting pro IP und Account, TrustedHost, X-Forwarded-For korrekt behandelt, ein CVE-Fix

@@ -30,7 +30,7 @@ export const NAV_ITEMS = [
   { id: 'arbeiten', label: 'Arbeiten' },
   { id: 'leistungen', label: 'Leistungen' },
   { id: 'arbeitsweise', label: 'Arbeitsweise' },
-  { id: 'ueber', label: 'Über' },
+  { id: 'ueber', label: 'Über Klartext' },
 ] as const
 
 /**
