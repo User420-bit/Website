@@ -4,7 +4,7 @@ summary: Notizen auf einer freien Fläche, verbunden wie ein Stammbaum. Läuft a
 techStack: [Python, FastAPI, SQLite, Vanilla JS, Tailwind]
 kind: eigenes-produkt
 period: Mai – Juli 2026
-status: Fertig gebaut für den Betrieb auf einem Raspberry Pi.
+status: Läuft seit Sommer 2026 für eine kleine Gruppe.
 github: null
 live: null
 order: 6
