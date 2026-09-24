@@ -1,0 +1,631 @@
+---
+/**
+ * Vaulter: der Eingang. Statt einer Fläche über die volle Breite steht hier,
+ * in der Spalte, was das Werkzeug tut: Eine Quelle wird eingereiht, links
+ * laufen die Meldungen, rechts schreibt sich die Notiz. Vier Reiter wie die
+ * Quellen des Werkzeugs (YouTube, Instagram, TikTok, Gespräch); die Daten
+ * stehen in `vaulter/quellen.ts`.
+ *
+ * Was die Szene zeigt, ist nachgestellt: Die Seite lädt nichts, fragt keine KI
+ * und nimmt nichts auf. Die Bildunterschrift sagt das (Ehrlichkeitsregel aus
+ * DESIGN.md), und weil man die Szene bedienen kann, ist sie nicht
+ * `aria-hidden`; nur die Tonspuren sind Dekoration.
+ *
+ * Zustände an `data-lauf`, alle ohne Script lesbar:
+ * - `neu`: der erste Lauf. Mit Bewegung spielt er beim Laden und bei jedem
+ *   Reiterwechsel ab, ohne Bewegung steht sofort das Ergebnis.
+ * - `wieder`: noch einmal einreihen. Vaulter erkennt die Notiz an der Quelle
+ *   und bricht ab, mit der Anweisung, die das Werkzeug dazu ausgibt.
+ * - `ersetzen`: dasselbe mit „vorhandene Notiz ersetzen“. Jede Stufe kommt aus
+ *   `data/`, nur die Notiz wird neu geschrieben.
+ * - `bereit`: das Gespräch vor dem Einverständnis. „Aufnahme starten“ bleibt
+ *   gesperrt, bis das Häkchen gesetzt ist.
+ *
+ * Ohne JavaScript schalten die Reiter über `:has()`, und jeder Lauf zeigt
+ * `neu`. Einreihen und Aufnehmen gibt es dann nicht; die Knöpfe bleiben
+ * verborgen, statt nichts zu tun.
+ */
+import { QUELLEN, ZEILENTAKT, type Meldung, type Quelle } from './vaulter/quellen'
+
+/** Höhen der Tonspur in px, wie in der ersten Fassung der Bühne. */
+const BALKEN = [3, 6, 9, 14, 10, 16, 12, 7, 11, 15, 8, 5, 12, 9, 14, 6, 10, 4]
+/** Eine halbe Atemzug-Dauer in ms; ungerade Anzahl, damit die Spur voll stehen bleibt. */
+const ATEM = 480
+const HINWEIS =
+  'Mit --force, in der Web-Oberfläche „vorhandene Notiz ersetzen“, wird sie überschrieben. Dateiname, id und created bleiben.'
+
+type Zustand = 'neu' | 'wieder' | 'ersetzen' | 'bereit'
+interface Zeile extends Meldung {
+  zustand: Zustand
+  /** Wie lange die Zeile die aktuelle ist, in ms. */
+  d: number
+  sagt?: boolean
+}
+
+/** Rechnet Zeiten aus: Notizzeilen ohne eigene Zeit folgen im Takt aufeinander. */
+function lauf(quelle: Quelle) {
+  let takt = quelle.notizAb
+  const notiz = quelle.notiz.map((zeile) => {
+    const t = zeile.t ?? takt
+    if (zeile.t === undefined) takt += ZEILENTAKT
+    return { ...zeile, t }
+  })
+  const ende = Math.max(...notiz.map((z) => z.t)) + 250
+
+  // Zweiter Lauf mit „ersetzen“: alles aus data/, dann schreibt sich die Notiz neu.
+  const neuAb = 850
+  const neuTakt = 40
+  const zweit = notiz.map((_, i) => neuAb + i * neuTakt)
+  const zweitEnde = neuAb + notiz.length * neuTakt + 200
+
+  const dauer = (liste: Meldung[], schluss: number) =>
+    liste.map((m) => ({
+      ...m,
+      d: (liste.find((n) => n.t > m.t)?.t ?? schluss) - m.t,
+    }))
+
+  const geschrieben = `Notiz geschrieben: ${quelle.datei}`
+  const zeilen: Zeile[] = [
+    ...dauer(quelle.meldungen, ende).map((m, i) => ({
+      ...m,
+      zustand: 'neu' as const,
+      sagt: !quelle.link && i === 0,
+    })),
+    { text: geschrieben, t: ende, d: 0, art: 'ergebnis', zustand: 'neu', sagt: !!quelle.link },
+  ]
+
+  if (quelle.link) {
+    const aus = `Metadaten aus ${quelle.plattform}-…/ wiederverwendet.`
+    zeilen.push(
+      { text: aus, t: 0, d: 350, zustand: 'wieder' },
+      {
+        text: `Zu dieser Quelle gibt es schon eine Notiz: 0-Inbox/${quelle.datei}`,
+        t: 350,
+        d: 0,
+        art: 'fehler',
+        zustand: 'wieder',
+        sagt: true,
+      },
+      { text: HINWEIS, t: 350, d: 0, art: 'hinweis', zustand: 'wieder' },
+      ...dauer(
+        [
+          { text: aus, t: 0 },
+          {
+            text: quelle.bilder
+              ? 'Bilder aus data/ wiederverwendet.'
+              : 'Transkript aus data/ wiederverwendet.',
+            t: 300,
+          },
+          { text: 'Zusammenfassung aus data/ wiederverwendet.', t: 600 },
+        ],
+        zweitEnde,
+      ).map((m) => ({ ...m, zustand: 'ersetzen' as const })),
+      { text: geschrieben, t: zweitEnde, d: 0, art: 'ergebnis', zustand: 'ersetzen', sagt: true },
+    )
+  } else {
+    zeilen.push({ text: 'Wartet auf Freigabe', t: 0, d: 0, zustand: 'bereit' })
+  }
+
+  return { ...quelle, zeilen, notiz: notiz.map((z, i) => ({ ...z, t2: zweit[i] })) }
+}
+
+const laeufe = QUELLEN.map(lauf)
+
+/** Atemzüge für eine Spur, die `d` ms läuft: immer ungerade. */
+const atemzuege = (d: number) => Math.max(1, Math.round(d / ATEM)) | 1
+/** `## Kopf` → Syntax leise, Wort in Tinte. */
+const syntax = (text: string) => text.match(/^(#+ )(.*)$/)
+---
+
+<figure class="eingang m-0 mt-10" data-eingang>
+  <fieldset class="reiter m-0 min-w-0 border-0 p-0">
+    <legend class="sr-only">Welche Quelle einreihen</legend>
+    <div class="reiter-leiste">
+      {
+        laeufe.map((q, i) => (
+          <label class="reiter-feld">
+            <input
+              class="sr-only"
+              type="radio"
+              name="vaulter-quelle"
+              value={q.id}
+              checked={i === 0}
+            />
+            {q.reiter}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  {
+    laeufe.map((q) => (
+      <div class="lauf" data-quelle={q.id} data-lauf="neu">
+        <div class="links">
+          {q.link ? (
+            <>
+              <div class="feldzeile">
+                <p class="feld">
+                  <span class="sr-only">Link: </span>
+                  {q.link}
+                </p>
+                <button type="button" class="knopf" data-einreihen data-mit-script hidden>
+                  Einreihen
+                </button>
+              </div>
+              <label class="haken" data-mit-script hidden>
+                <input type="checkbox" data-ersetzen />
+                vorhandene Notiz ersetzen
+              </label>
+            </>
+          ) : (
+            <div class="freigabe" data-mit-script hidden>
+              <p class="freigabe-text">
+                Vor dem Start alle Teilnehmenden um ihr Einverständnis bitten.
+              </p>
+              <label class="haken">
+                <input type="checkbox" data-einverstanden />
+                Alle Teilnehmenden sind einverstanden.
+              </label>
+              <button type="button" class="knopf" data-start disabled>
+                Aufnahme starten
+              </button>
+            </div>
+          )}
+
+          <ol class="log">
+            {q.zeilen.map((z) => (
+              <li
+                class:list={[z.zustand, z.art]}
+                style={`--t: ${z.t}; --d: ${z.d}`}
+                data-sagt={z.sagt ? '' : undefined}
+              >
+                <span class="log-text">{z.text}</span>
+                {z.welle && (
+                  <span
+                    class:list={['welle', z.welle]}
+                    style={`--n: ${atemzuege(z.d)}`}
+                    aria-hidden="true"
+                  >
+                    {(z.welle === 'eine' ? BALKEN : [...BALKEN, ...BALKEN.slice(0, 10)]).map(
+                      (h, i) => (
+                        <i
+                          style={`--h: ${z.welle === 'systemton' ? BALKEN[(i + 7) % BALKEN.length] : h}; --i: ${i}`}
+                        />
+                      ),
+                    )}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="notiz">
+          <p class="notiz-kopf" style={`--t: ${q.notiz[0]!.t}; --t2: ${q.notiz[0]!.t2}`}>
+            0-Inbox / {q.datei}
+          </p>
+          <p class="notiz-text">
+            {q.notiz.map((z) => {
+              const teile = syntax(z.text)
+              return (
+                <span class:list={['z', z.art]} style={`--t: ${z.t}; --t2: ${z.t2}`}>
+                  {teile ? (
+                    <>
+                      <span class="md">{teile[1]}</span>
+                      {teile[2]}
+                    </>
+                  ) : (
+                    z.text
+                  )}
+                </span>
+              )
+            })}
+          </p>
+          {!q.link && <p class="leer">Die Notiz entsteht, sobald die Aufnahme läuft.</p>}
+        </div>
+      </div>
+    ))
+  }
+
+  <p class="sr-only" aria-live="polite" data-ansage></p>
+
+  <figcaption class="mt-4 max-w-[65ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Szene</span> · Nachgestellt mit Beispieldaten: Eine Quelle wird
+    eingereiht und zur Notiz, mit den Meldungen, die Vaulter dabei ausgibt. Die Seite lädt nichts, fragt
+    keine KI und nimmt nichts auf. Kein Screenshot.
+  </figcaption>
+</figure>
+
+<script>
+  // Nur Zustände umschalten; wie ein Lauf aussieht, steht im CSS. Nichts wird
+  // geladen, gespeichert oder aufgenommen.
+  const eingang = document.querySelector<HTMLElement>('[data-eingang]')
+  if (eingang) {
+    const ansage = eingang.querySelector<HTMLElement>('[data-ansage]')!
+    const setze = (lauf: HTMLElement, zustand: string) => {
+      // Über `aus` neu starten, sonst laufen gleiche Animationen nicht noch einmal.
+      lauf.dataset.lauf = 'aus'
+      void lauf.offsetWidth
+      lauf.dataset.lauf = zustand
+      ansage.textContent = lauf.querySelector(`.${zustand}[data-sagt]`)?.textContent ?? ''
+    }
+    for (const el of eingang.querySelectorAll<HTMLElement>('[data-mit-script]')) el.hidden = false
+
+    for (const lauf of eingang.querySelectorAll<HTMLElement>('[data-lauf]')) {
+      const ersetzen = lauf.querySelector<HTMLInputElement>('[data-ersetzen]')
+      lauf
+        .querySelector('[data-einreihen]')
+        ?.addEventListener('click', () => setze(lauf, ersetzen?.checked ? 'ersetzen' : 'wieder'))
+
+      const ja = lauf.querySelector<HTMLInputElement>('[data-einverstanden]')
+      const start = lauf.querySelector<HTMLButtonElement>('[data-start]')
+      if (ja && start) {
+        lauf.dataset.lauf = 'bereit'
+        ja.addEventListener('change', () => (start.disabled = !ja.checked))
+        start.addEventListener('click', () => setze(lauf, 'neu'))
+      }
+    }
+  }
+</script>
+
+<style>
+  /* Reiter wie der Umschalter der Startseite: Text, oranger Strich unter dem gewählten. */
+  .reiter-leiste {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .reiter-feld {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    padding-block: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    transition: color var(--duration-base) var(--ease-quiet);
+  }
+  .reiter-feld::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-quiet);
+  }
+  .reiter-feld:hover,
+  .reiter-feld:has(:checked) {
+    color: var(--color-fg);
+  }
+  .reiter-feld:has(:checked)::after {
+    transform: scaleX(1);
+  }
+  .reiter-feld:has(:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Nur der gewählte Lauf steht da. Ohne `:has()` stehen alle vier untereinander. */
+  .lauf {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem 2rem;
+    margin-top: 1.5rem;
+  }
+  .eingang:has([value='youtube']:checked) .lauf:not([data-quelle='youtube']),
+  .eingang:has([value='instagram']:checked) .lauf:not([data-quelle='instagram']),
+  .eingang:has([value='tiktok']:checked) .lauf:not([data-quelle='tiktok']),
+  .eingang:has([value='gespraech']:checked) .lauf:not([data-quelle='gespraech']) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .lauf {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: start;
+    }
+  }
+
+  /* Eingabe: das Feld des Werkzeugs, nur mit den Tokens der Seite. */
+  .feldzeile {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .feld {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-elevated);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5rem;
+    color: var(--color-fg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .knopf {
+    flex: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    transition: opacity var(--duration-base) var(--ease-quiet);
+  }
+  .knopf:hover {
+    opacity: 0.9;
+  }
+  .knopf:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+  .haken {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.625rem;
+    cursor: pointer;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .haken input {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin: 0;
+    accent-color: var(--color-accent);
+  }
+  .freigabe {
+    display: grid;
+    justify-items: start;
+  }
+  .freigabe-text {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .freigabe .haken {
+    margin-block: 0.5rem 0.75rem;
+    color: var(--color-fg);
+  }
+
+  /* Die Meldungen: je Zeile ein Punkt, orange, solange sie die aktuelle ist. */
+  .log {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: var(--color-fg-muted);
+  }
+  .log li {
+    display: none;
+    align-items: baseline;
+    gap: 0.625rem;
+    padding-block: 0.125rem;
+  }
+  .log li::before {
+    content: '';
+    flex: none;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background-color: var(--color-border);
+    transform: translateY(-0.0625rem);
+  }
+  [data-lauf='neu'] .log .neu,
+  [data-lauf='wieder'] .log .wieder,
+  [data-lauf='ersetzen'] .log .ersetzen,
+  [data-lauf='bereit'] .log .bereit {
+    display: flex;
+  }
+  .log .ergebnis,
+  .log .fehler {
+    color: var(--color-fg);
+  }
+  .log .ergebnis::before {
+    background-color: var(--color-fg);
+  }
+  .log .fehler::before,
+  .log .bereit::before {
+    background-color: var(--color-accent);
+  }
+  .log .hinweis {
+    padding-left: 1rem;
+  }
+  .log .hinweis::before {
+    display: none;
+  }
+  .log-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Tonspur: steht nach dem Lauf voll, atmet nur, solange transkribiert wird. */
+  .welle {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    gap: 2px;
+    max-width: 9rem;
+    height: 1rem;
+    align-self: center;
+  }
+  .mikrofon,
+  .systemton {
+    max-width: none;
+    margin-left: auto;
+  }
+  .log li:has(.mikrofon) .log-text,
+  .log li:has(.systemton) .log-text {
+    width: 5.5rem;
+  }
+  .welle i {
+    flex: 1;
+    max-width: 3px;
+    height: calc(var(--h) * 1px);
+    border-radius: 1px;
+    background: var(--color-fg);
+  }
+  .systemton i {
+    background: var(--color-fg-muted);
+  }
+
+  /* Die Notiz: der einzige Behälter der Szene, wie ein Codeblock. */
+  .notiz {
+    position: relative;
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-elevated);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    overflow: hidden;
+  }
+  .notiz-kopf {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-fg-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .notiz-text {
+    margin: 0;
+    padding: 0.75rem 1rem 1rem;
+    line-height: 1.65;
+    color: var(--color-fg);
+  }
+  .z {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .z.fm,
+  .z.leise,
+  .md {
+    color: var(--color-fg-muted);
+  }
+  .z.titel,
+  .z.kopf {
+    font-weight: 600;
+  }
+  .z.kopf {
+    margin-top: 0.5rem;
+  }
+  .md {
+    font-weight: 400;
+  }
+  .leer {
+    display: none;
+    position: absolute;
+    inset: 2.25rem 0 0;
+    margin: 0;
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-fg-muted);
+  }
+  [data-lauf='bereit'] .leer {
+    display: flex;
+  }
+  [data-lauf='bereit'] .z,
+  [data-lauf='bereit'] .notiz-kopf {
+    visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reiter-feld,
+    .reiter-feld::after,
+    .knopf {
+      transition: none;
+    }
+  }
+
+  /*
+   * Bewegung nach der Bühnenlizenz: nur ohne reduzierte Bewegung, und ohne sie
+   * steht das Ergebnis. Die Zeiten kommen je Zeile als `--t` (Start) und `--d`
+   * (wie lange sie die aktuelle ist) aus `vaulter/quellen.ts`.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-lauf='neu'] .log .neu,
+    [data-lauf='wieder'] .log .wieder,
+    [data-lauf='ersetzen'] .log .ersetzen {
+      animation: vt-da 240ms var(--ease-quiet) both;
+      animation-delay: calc(var(--t) * 1ms);
+    }
+    [data-lauf='neu'] .log .neu::before,
+    [data-lauf='ersetzen'] .log .ersetzen::before {
+      animation: vt-aktiv linear;
+      animation-duration: calc(var(--d) * 1ms);
+      animation-delay: calc(var(--t) * 1ms);
+    }
+    [data-lauf='neu'] .welle i {
+      animation: vt-atmen 480ms ease-in-out alternate both;
+      animation-delay: calc((var(--t) + var(--i) * 29) * 1ms);
+      animation-iteration-count: var(--n);
+    }
+    [data-lauf='neu'] .systemton i {
+      animation-duration: 560ms;
+    }
+    [data-lauf='neu'] .z,
+    [data-lauf='neu'] .notiz-kopf {
+      animation: vt-schreiben 220ms var(--ease-quiet) both;
+      animation-delay: calc(var(--t) * 1ms);
+    }
+    [data-lauf='ersetzen'] .z,
+    [data-lauf='ersetzen'] .notiz-kopf {
+      animation: vt-schreiben 220ms var(--ease-quiet) both;
+      animation-delay: calc(var(--t2) * 1ms);
+    }
+    [data-lauf='aus'] * {
+      animation: none;
+    }
+  }
+
+  @keyframes vt-da {
+    from {
+      opacity: 0;
+      transform: translateY(0.25rem);
+    }
+  }
+  @keyframes vt-aktiv {
+    from,
+    to {
+      background-color: var(--color-accent);
+    }
+  }
+  @keyframes vt-atmen {
+    from {
+      transform: scaleY(0.15);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes vt-schreiben {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0);
+    }
+  }
+</style>

@@ -83,6 +83,12 @@
   }
 
   body {
+    /*
+     * Die Bühne der Projektseiten ragt mit `100vw` um die Scrollleiste über das
+     * Fenster hinaus (ProjectScene.astro). `clip` schneidet das ab, ohne einen
+     * Scroll-Container anzulegen; der Sticky-Header bleibt davon unberührt.
+     */
+    overflow-x: clip;
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);

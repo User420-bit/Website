@@ -1,0 +1,75 @@
+---
+/**
+ * Die Meta-Liste der Vaulter-Seite als Frontmatter: dieselben Zeilen wie
+ * `MetaList` (Art, Zeitraum, Stand, Technik), gesetzt wie der Kopf einer
+ * Notiz, die Vaulter schreibt, zwischen zwei `---`. Semantisch bleibt es eine
+ * Definitionsliste; Zäune, Doppelpunkte und die Klammern um die Technik sind
+ * CSS und werden nicht vorgelesen.
+ */
+import type { Projekt } from '@/components/ProjectPage.astro'
+import { KIND_LABELS } from '@/lib/site'
+
+interface Props {
+  data: Projekt['data']
+}
+
+const { data } = Astro.props
+const zeilen = [
+  { name: 'Art', wert: KIND_LABELS[data.kind] ?? data.kind },
+  { name: 'Zeitraum', wert: data.period, zahl: true },
+  ...(data.status ? [{ name: 'Stand', wert: data.status }] : []),
+  { name: 'Technik', wert: data.techStack.join(', '), liste: true },
+]
+---
+
+<dl class="frontmatter">
+  {
+    zeilen.map(({ name, wert, zahl, liste }) => (
+      <div class="eigenschaft">
+        <dt>{name}</dt>
+        <dd class:list={{ 'tabular-nums': zahl, liste }}>{wert}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .frontmatter {
+    max-width: 65ch;
+    margin: 2.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-fg);
+  }
+  .frontmatter::before,
+  .frontmatter::after {
+    content: '---' / '';
+    display: block;
+    color: var(--color-fg-muted);
+  }
+  .eigenschaft {
+    display: grid;
+    grid-template-columns: 10ch minmax(0, 1fr);
+    padding-block: 0.125rem;
+  }
+  dt {
+    color: var(--color-fg-muted);
+    text-transform: lowercase;
+  }
+  dt::after {
+    content: ':' / '';
+  }
+  dd {
+    margin: 0;
+  }
+  .liste {
+    color: var(--color-fg-muted);
+  }
+  .liste::before {
+    content: '[' / '';
+  }
+  .liste::after {
+    content: ']' / '';
+  }
+</style>

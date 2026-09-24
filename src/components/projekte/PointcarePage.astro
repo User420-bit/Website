@@ -1,0 +1,46 @@
+---
+/**
+ * Die Seite von PointCare, gebaut wie die Kundenseite: Sie beginnt dunkel und
+ * filmisch (Vorspann mit der H1 zwischen Kinobalken) und geht dann in das
+ * helle Werkstattbuch über. Nach den Fakten folgen drei Standbilder, eines je
+ * Leistungsbereich, jedes mit genau einer Bewegung beim Scrollen: die Regel der
+ * Kundenseite, an der Referenz selbst gezeigt. Der Rest ist der gemeinsame
+ * Körper, unverändert.
+ *
+ * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import PointcareScene from '@/components/scenes/PointcareScene.astro'
+import Vorspann from '@/components/scenes/pointcare/Vorspann.astro'
+
+const { projekt, prev, next } = Astro.props as Props
+---
+
+<ProjectPage projekt={projekt} prev={prev} next={next} articleClass="pc-seite pt-0 sm:pt-0">
+  <Vorspann slot="hero" title={projekt.data.title} summary={projekt.data.summary} />
+  <PointcareScene slot="after-meta" />
+</ProjectPage>
+
+<style>
+  /*
+   * Die Farben der Nacht, für Vorspann und Standbilder (Bühnenlizenz in
+   * DESIGN.md). Beide Flächen sind in hell und dunkel gleich dunkel, deshalb
+   * ohne Dunkel-Zwilling. Orange steht nur am Stapler, am Rücklicht und auf der
+   * Strecke: das eine Signal, wie auf der Kundenseite.
+   */
+  :global(.pc-seite) {
+    --pc-nacht: oklch(0.13 0.004 80);
+    --pc-balken: oklch(0.075 0.003 80);
+    --pc-boden: oklch(0.155 0.005 80);
+    --pc-wand: oklch(0.2 0.005 80);
+    --pc-koerper: oklch(0.25 0.006 80);
+    --pc-strich: oklch(0.42 0.008 80);
+    --pc-strich-leise: oklch(0.27 0.006 80);
+    --pc-kreide: oklch(0.95 0.004 80);
+    --pc-kreide-matt: oklch(0.77 0.008 80);
+    --pc-licht: oklch(0.84 0.05 78);
+    --pc-ware: oklch(0.43 0.05 62);
+    --pc-signal: oklch(0.7 0.17 52);
+  }
+</style>

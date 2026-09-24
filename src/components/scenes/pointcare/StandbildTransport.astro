@@ -1,0 +1,148 @@
+---
+/**
+ * Standbild 03, Transport: eine Landstraße bei Nacht, die Kamera 2,2 m über
+ * der Fahrbahn, vorn ein Sattelzug von hinten. Die eine Bewegung: Er fährt dem
+ * Horizont entgegen, von 14 m auf 80 m Abstand. In Zentralperspektive ist das
+ * eine Skalierung um den Fluchtpunkt mit dem Faktor 14 / Abstand. Gesteuert
+ * von `--pc-t` (0 bis 1, siehe PointcareScene.astro); ohne Bewegung steht der
+ * Zug in der Ferne.
+ */
+import { kamera } from './perspektive'
+
+const FX = 800
+const FY = 250
+const k = kamera({ brennweite: 700, fluchtpunkt: [FX, FY], augenhoehe: 2.2 })
+const WEIT = 3000
+
+const fahrbahn = k.flaeche([-3.8, 0, 3], [3.8, 0, 3], [3.8, 0, WEIT], [-3.8, 0, WEIT])
+const raender = [-1, 1].map((s) =>
+  k.flaeche([s * 3.5, 0, 3], [s * 3.65, 0, 3], [s * 3.65, 0, WEIT], [s * 3.5, 0, WEIT]),
+)
+const mittellinie = Array.from({ length: 34 }, (_, i) => 4 + i * 18).map((z) =>
+  k.flaeche([-0.075, 0, z], [0.075, 0, z], [0.075, 0, z + 6], [-0.075, 0, z + 6]),
+)
+const leitpfosten = [-5.8, 5.8].flatMap((x) =>
+  Array.from({ length: 30 }, (_, i) => 10 + i * 20).map((z) => ({
+    pfosten: k.front(x - 0.06, x + 0.06, 0, 1, z),
+    strahler: k.front(x - 0.05, x + 0.05, 0.72, 0.84, z),
+  })),
+)
+
+// Der Sattelzug von hinten, rechte Spur, 14 m vor der Kamera.
+const Z = 14
+const f = (x0: number, x1: number, y0: number, y1: number) => k.front(x0, x1, y0, y1, Z)
+const zug = {
+  seite: k.flaeche([0.45, 1.05, Z], [0.45, 1.05, Z + 13.6], [0.45, 4, Z + 13.6], [0.45, 4, Z]),
+  heck: f(0.45, 3, 1.05, 4),
+  tueren: [1.725, 1.05, 2.35, 1.1, 2.4].map((x, i) =>
+    i === 0 ? k.linie([x, 1.1, Z], [x, 3.95, Z]) : k.linie([x, 1.2, Z], [x, 3.85, Z]),
+  ),
+  unterfahrschutz: f(0.6, 2.85, 0.55, 0.7),
+  reifen: [f(0.55, 1.05, 0, 1), f(2.4, 2.9, 0, 1)],
+  lichter: [f(0.55, 0.9, 1.15, 1.35), f(2.55, 2.9, 1.15, 1.35)],
+  schein: (() => {
+    const [cx, cy] = k.projiziere([1.725, 0, Z - 1.2])
+    return { cx, cy, rx: 1.8 * k.massstab(Z), ry: 14 }
+  })(),
+}
+---
+
+<svg
+  class="pc-transport"
+  viewBox="0 0 1600 686"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <radialGradient id="pc-t-ferne" cx={FX} cy={FY} r="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="oklch(0.55 0.05 65)" stop-opacity="0.45"></stop>
+      <stop offset="1" stop-color="oklch(0.55 0.05 65)" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="686" class="pc-feld"></rect>
+  <rect width="1600" height={FY} class="pc-himmel"></rect>
+  <rect width="1600" height="686" fill="url(#pc-t-ferne)"></rect>
+  <path
+    d={`M0 ${FY - 18} C 160 ${FY - 30}, 300 ${FY - 34}, 460 ${FY - 20} S 680 ${FY - 6}, 800 ${FY - 5} S 1010 ${FY - 9}, 1140 ${FY - 17} S 1420 ${FY - 26}, 1600 ${FY - 14} V ${FY} H 0 Z`}
+    class="pc-huegel"></path>
+  <path d={fahrbahn} class="pc-fahrbahn"></path>
+  {raender.map((d) => <path d={d} class="pc-markierung" />)}
+  {mittellinie.map((d) => <path d={d} class="pc-markierung" />)}
+  {
+    leitpfosten.map((p) => (
+      <>
+        <path d={p.pfosten} class="pc-pfosten" />
+        <path d={p.strahler} class="pc-strahler" />
+      </>
+    ))
+  }
+
+  <g class="pc-zug">
+    <ellipse
+      cx={zug.schein.cx}
+      cy={zug.schein.cy}
+      rx={zug.schein.rx}
+      ry={zug.schein.ry}
+      class="pc-schein"></ellipse>
+    <path d={zug.seite} class="pc-seite"></path>
+    {zug.reifen.map((d) => <path d={d} class="pc-reifen" />)}
+    <path d={zug.heck} class="pc-heck"></path>
+    {zug.tueren.map((d) => <path d={d} class="pc-strich" />)}
+    <path d={zug.unterfahrschutz} class="pc-reifen"></path>
+    {zug.lichter.map((d) => <path d={d} class="pc-signal" />)}
+  </g>
+</svg>
+
+<style>
+  .pc-feld {
+    fill: oklch(0.12 0.004 80);
+  }
+  .pc-himmel {
+    fill: var(--pc-nacht);
+  }
+  .pc-huegel {
+    fill: oklch(0.1 0.004 80);
+  }
+  .pc-fahrbahn {
+    fill: oklch(0.175 0.005 80);
+  }
+  .pc-markierung {
+    fill: oklch(0.6 0.008 80);
+  }
+  .pc-pfosten {
+    fill: oklch(0.35 0.006 80);
+  }
+  .pc-strahler {
+    fill: oklch(0.8 0.01 80);
+  }
+  .pc-seite {
+    fill: var(--pc-wand);
+  }
+  .pc-heck {
+    fill: var(--pc-koerper);
+    stroke: var(--pc-strich);
+    stroke-width: 1.5;
+  }
+  .pc-reifen {
+    fill: var(--pc-balken);
+  }
+  .pc-strich {
+    fill: none;
+    stroke: var(--pc-strich);
+    stroke-width: 1.5;
+  }
+  .pc-signal {
+    fill: var(--pc-signal);
+  }
+  .pc-schein {
+    fill: var(--pc-signal);
+    opacity: 0.14;
+  }
+
+  /* Fahrt: Abstand 14 m + t · 66 m, gezeichnet als Skalierung um den Fluchtpunkt. */
+  .pc-zug {
+    transform-origin: 800px 250px;
+    transform: scale(calc(14 / (14 + var(--pc-t) * 66)));
+  }
+</style>

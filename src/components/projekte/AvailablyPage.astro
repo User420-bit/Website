@@ -1,0 +1,62 @@
+---
+/**
+ * Die Seite von Availably: der gemeinsame Körper (ProjectPage) mit eigenem
+ * Kopf und einer Bühne ohne Fläche. Der Kopf ist der Standardkopf mit einem
+ * Unterschied: Die H1 endet mit einem Schlusspunkt in der Farbe des Status,
+ * den Lea gerade sieht. Wer auf dem linken Telefon der Szene einen Status
+ * setzt, sieht ihn kurz darauf auch dort, ohne zu fragen. Farben und
+ * `--av-jetzt` setzt AvailablyScene auf `.av-seite`.
+ *
+ * Alles andere bleibt beim Körper: Meta-Liste, Text, Funktionen, Technische
+ * Entscheidungen, Erkenntnisse, Vor/Zurück und Anfrage.
+ */
+import Arrow from '@/components/Arrow.astro'
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import AvailablyScene from '@/components/scenes/AvailablyScene.astro'
+import { href } from '@/lib/site'
+
+const { projekt, prev, next } = Astro.props as Props
+const data = projekt.data
+---
+
+<ProjectPage projekt={projekt} prev={prev} next={next} articleClass="av-seite">
+  <Fragment slot="hero">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/projekte/')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
+    </a>
+
+    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+      {data.title}<span class="schlusspunkt" aria-hidden="true"></span>
+    </h1>
+    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      {data.summary}
+    </p>
+  </Fragment>
+
+  <AvailablyScene slot="stage" />
+</ProjectPage>
+
+<style>
+  /*
+   * Ein Punkt statt eines Punkts: so groß wie ein Satzzeichen der H1, in der
+   * Farbe des Status, und wie bei Lea 0,6 s hinter dem Telefon von Jonas.
+   */
+  .schlusspunkt {
+    display: inline-block;
+    width: 0.19em;
+    height: 0.19em;
+    margin-left: 0.06em;
+    border-radius: 50%;
+    background-color: var(--av-jetzt, currentColor);
+    transition: background-color var(--duration-slow) var(--ease-quiet) var(--av-verzug, 0s);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .schlusspunkt {
+      transition-duration: 0s;
+    }
+  }
+</style>

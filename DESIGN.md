@@ -187,6 +187,10 @@ components:
     textColor: '{colors.fg-muted}'
     typography: '{typography.body-sm}'
     padding: '1.5rem'
+  project-scene:
+    textColor: '{colors.fg-muted}'
+    typography: '{typography.body-sm}'
+    padding: '1.25rem 0'
   numbered-row:
     textColor: '{colors.fg}'
     typography: '{typography.subhead}'
@@ -256,6 +260,8 @@ Systemeinstellung des Besuchers.
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
 - Bewegung aus einer geschlossenen Liste, nur bei `prefers-reduced-motion: no-preference`
+- Eine Ausnahme mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung
+  und Illustration tragen darf (Bühnenlizenz), sonst nirgends
 
 ## Colors
 
@@ -297,7 +303,9 @@ dunkel; als nicht bedienbares Element von WCAG 1.4.3 ausgenommen).
 
 **The One Signal Rule.** Werkstatt-Orange ist die einzige bunte Farbe im System. Es markiert Handlung,
 Beleg, Einordnung und Fokus, nie Sektionsflächen, Illustrationen oder Dekoration. Auf einem
-Bildschirm bleibt es eine Minderheit.
+Bildschirm bleibt es eine Minderheit. Einzige Ausnahme ist die Bühne der Projektseite (Bühnenlizenz
+unter Components): Dort darf ein Projekt eigene Farben tragen, aber nur innerhalb seiner Fläche und
+nur als `--szene-*`-Variablen der Szene, nie als Token des Systems.
 
 **The Twin Token Rule.** Jede Farbe existiert als Paar mit derselben Rolle in hell und dunkel.
 Komponenten verwenden nur Tokens, nie Rohwerte; so stimmt der Dunkelmodus ohne Zusatzarbeit.
@@ -403,6 +411,11 @@ Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 **Unterseiten:** Projektseiten und `/werkzeuge/` stapeln ihre Blöcke wie die Startseite: Haarlinie
 oben, Label (H2) darüber dem Inhalt, 1rem Abstand zum Inhalt, 3rem zwischen Blöcken. Text bleibt
 bei 65ch.
+Projektseiten öffnen nach H1 und Summary mit der Bühne (`ProjectScene`, entschieden am 2026-09-24):
+das einzige Element der Seite, das über die volle Fensterbreite läuft. Ihre Fläche bricht aus der
+Spalte aus, ihr Inhalt bleibt an der Spalte ausgerichtet, die Bildunterschrift steht wieder in der
+Spalte. Erst sagt die Seite, worum es geht, dann zeigt sie es, dann folgen Meta-Liste, Links und
+die Screenshots als Beleg.
 Screenshots stehen auf Projektseiten oben, direkt unter Meta-Liste und Links, vor dem ersten Textblock:
 erst der Beleg, dann die Beschreibung (`ScreenshotGallery`, entschieden am 2026-09-23). Das erste
 Querformat ist das Leitbild über die volle Breite, darunter seine Unterschrift in Body Small,
@@ -447,7 +460,8 @@ Codeblock.
 ### Named Rules
 
 **The Flat Page Rule.** Keine Schatten, kein Glow, kein Anheben, keine Transluzenz. Ordnung wird durch
-Linie sichtbar, ein Zustand durch Farbe.
+Linie sichtbar, ein Zustand durch Farbe. Das gilt auch in der Bühne: Ihre Szenen sind flach gezeichnet,
+Tiefe entsteht dort aus Perspektive und Farbe, nie aus Schatten.
 
 ## Shapes
 
@@ -571,6 +585,49 @@ der Fokus wieder auf dem Vorschaubild. Solange sie offen ist, scrollt die Seite 
 Blättern in der Lightbox gibt es bewusst nicht, das bräuchte ein Script; geblättert wird im
 Kontaktabzug.
 
+### Bühne der Projektseite (`ProjectScene`)
+
+Ein `<figure>` direkt unter H1 und Summary, das über die volle Fensterbreite läuft (`margin-inline:
+calc(50% - 50vw)`, den Überstand um die Scrollleiste schneidet `overflow-x: clip` auf `<body>` ab).
+Die Fläche hat je Szene eine eigene Farbe in hell und dunkel (`surface`, `surfaceDark`); innen liegt
+die Szene, an der 64-rem-Spalte ausgerichtet. Darunter, wieder in der Spalte, die Bildunterschrift in
+Body Small, Bleistiftgrau: Sie beginnt immer mit dem Wort „Szene“ in Tinte, sagt, was zu sehen ist,
+und endet mit „Kein Screenshot.“ Das ist die Ehrlichkeitsregel: Ein gezeichnetes Bild darf nie als
+Beleg durchgehen; die Screenshots folgen als Beleg weiter unten. Die Szene selbst trägt `aria-hidden`
+und ist Dekoration für Sehende; Screenreader lesen die Bildunterschrift. Einzige Ausnahme ist eine
+bedienbare Szene (NoteList: verschiebbare Fläche als nativer Scrollbereich mit `tabindex` und
+`aria-label`), denn Fokussierbares in `aria-hidden` ist ein Fehler.
+
+Jede Projektseite hat eine Seitenkomponente unter `src/components/projekte/` (registriert in
+`projekte/index.ts`), die den gemeinsamen Körper `ProjectPage` rendert und an benannten Slots
+erweitert; die Bühne selbst ist eine Datei unter `src/components/scenes/`. Ein Projekt ohne
+Seitenkomponente bekommt den Körper unverändert und sieht aus wie zuvor. Eine Szene nimmt genau ein Merkmal aus
+der Projektdatei, das nur dieses Projekt hat, und setzt es ins Bild: TIEFGANG gräbt beim Scrollen
+tiefer, JustBeauty öffnet zwölf Seiten als Fächer, Kleinkram rechnet einen Kassenzettel zusammen,
+MemoryTree zeichnet seinen Baum, NoteList lässt seine Fläche schieben, Feynman unterstreicht Lücken
+auf der Tafel, DealerSim produziert weiter, Vaulter macht aus dem Link eine Notiz, Availably wechselt
+den Status auf zwei Telefonen, PointCare zoomt in ein dunkles Standbild. Die Prüffrage: Würde ein
+Besucher die Szene einem anderen Projekt zuordnen? Dann ist sie falsch.
+
+**Die Bühnenlizenz.** Nur innerhalb ihrer Fläche darf eine Szene, was die Seite sonst nicht darf:
+
+- **Eigene Farben**, deklariert als `--szene-*`- bzw. projektkurze Variablen (`--tg-*`, `--jb-*`, …)
+  im Kopf der Komponente, mit Dunkel-Zwilling, sofern die Fläche nicht selbst in beiden Modi dunkel ist
+  (PointCare, TIEFGANG, Feynman). Kein Token des Systems wird dafür verändert.
+- **Bewegung beim Laden oder beim Scrollen**, auch länger als 320 ms und außerhalb der geschlossenen
+  Liste unten. Bedingungen: hinter `prefers-reduced-motion: no-preference`, und ohne Bewegung steht der
+  **Endzustand**, nie der Anfang (525 m, Fächer offen, Baum fertig). Scrollgetriebene Bewegung
+  (`animation-timeline: scroll(root)`, Bereich 0 bis 45–90vh) zusätzlich hinter `@supports`; sie wird
+  in Langschreibweise notiert, weil der Minifier `animation-timeline` sonst in die Kurzform zieht und
+  der Browser die ganze Deklaration verwirft. Endlosschleifen nur, wo sie die Aussage sind (DealerSim
+  produziert weiter, Availably wechselt den Status, Vaulter schreibt mit), und dann langsam.
+- **Illustration** in CSS und Inline-SVG aus dem Repository, kein Bild von außen.
+
+Was auch die Lizenz nicht erlaubt: Schrift von Drittanbietern oder eine zweite Familie (Monospace
+bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatten, JavaScript (alle
+zehn Szenen kommen ohne aus; Zähler laufen über `@property` und `counter-reset`), und Zahlen, die wie
+echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bildunterschrift Beispieldaten.
+
 ### Anfrage-Zeile
 
 `InquiryPrompt`: ruhige Zeile nach „Arbeiten“, am Ende jeder Projektseite und unter `/projekte/`.
@@ -650,6 +707,8 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
 - **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
   wechseln ohne Übergang.
 - **Ankersprünge:** `scroll-behavior: smooth`.
+- **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
+  der Bühnenlizenz (siehe Components). Außerhalb der Bühne gilt die Liste oben unverändert.
 
 Keine Hero-Animation, kein Einblenden beim Scrollen: Die H1 ist das Erste, was gemalt wird, und steht
 sofort. Alles liegt hinter `prefers-reduced-motion`; ohne Bewegung ist jeder Inhalt sofort sichtbar.
@@ -679,6 +738,9 @@ JavaScript; ohne Skript zeigt die Bühne das erste Projekt der Auswahl, und Blä
 - **Do** Bewegung an `prefers-reduced-motion: no-preference` koppeln und Inhalt ohne Animation sofort
   sichtbar lassen.
 - **Do** den sichtbaren Fokus erhalten: 2 px Outline in Orange, 2 px Abstand.
+- **Do** einer neuen Referenz eine Szene geben, die genau ein Merkmal aus ihrer Projektdatei ins Bild
+  setzt, mit eigenen Variablen, Dunkel-Zwilling, Endzustand ohne Bewegung und der Bildunterschrift
+  „Szene · … Kein Screenshot.“
 
 ### Don't:
 
@@ -694,7 +756,12 @@ JavaScript; ohne Skript zeigt die Bühne das erste Projekt der Auswahl, und Blä
 - **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
-- **Don't** Inhalte beim Scrollen einblenden oder den Hero animieren.
+- **Don't** Inhalte beim Scrollen einblenden oder den Hero animieren. Die Bühne der Projektseite ist
+  die eine Ausnahme, und auch dort steht ohne Bewegung der Endzustand.
+- **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Kachel der
+  Startseite oder die Zeile unter `/projekte/`. Dort ist Gleichheit die Aussage.
+- **Don't** eine Szene als Screenshot ausgeben oder eine Bildunterschrift ohne „Kein Screenshot“
+  schreiben.
 - **Don't** innerhalb eines Kapitels mehr Abstand lassen als zwischen zwei Kapiteln, und keinen Titel
   größer setzen als die H2 des Kapitels.
 - **Don't** Technik-Namen auf der Startseite nennen; sie stehen in der Meta-Liste der Projektseite.

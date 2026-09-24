@@ -1,0 +1,377 @@
+---
+/**
+ * Cmd K auf der Fläche von NoteList: Die App sucht mit SQLite FTS5 über alle
+ * Notizen, diese Seite über ihre eigenen. Ein Treffer bekommt eine orange
+ * Kante, und der Faden von der Wurzel bis zu ihm leuchtet auf. Gesucht wird
+ * im Browser, ohne Netz, und gespeichert wird nichts.
+ *
+ * Das Skript bringt außerdem das Ziehen mit: Mit der Maus lässt sich das
+ * Papier zwischen den Notizen greifen und die Fläche schieben.
+ *
+ * Ohne Skript bleiben Knopf und Dialog verborgen; an ihrer Stelle steht ein
+ * stiller Hinweis auf die Suche in der App.
+ */
+const lupe = 'M7 12.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11ZM11 11l3.5 3.5'
+---
+
+<p class="nl-still" data-nl-still>
+  <kbd class="nl-taste">Cmd K</kbd> sucht in der App über alle Notizen.
+</p>
+<button
+  type="button"
+  class="nl-suchknopf"
+  data-nl-knopf
+  hidden
+  aria-haspopup="dialog"
+  aria-keyshortcuts="Meta+K Control+K"
+>
+  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d={lupe}></path></svg>
+  <span data-nl-knopf-text>Notizen durchsuchen</span>
+  <kbd class="nl-taste" data-nl-taste>Cmd K</kbd>
+</button>
+
+<dialog class="nl-dialog" data-nl-dialog aria-label="Notizen dieser Seite durchsuchen">
+  <div class="nl-feldzeile">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d={lupe}></path></svg>
+    <input
+      class="nl-feld"
+      type="search"
+      aria-label="Suchbegriff"
+      aria-describedby="nl-stand"
+      aria-controls="nl-liste"
+      placeholder="Suchen, etwa SQLite oder Pi"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <kbd class="nl-taste">Esc</kbd>
+  </div>
+  <p class="nl-stand" id="nl-stand" role="status" data-nl-stand>
+    Sucht in allen Notizen dieser Seite.
+  </p>
+  <ol class="nl-liste" id="nl-liste" aria-label="Treffer"></ol>
+</dialog>
+
+<script>
+  const flaeche = document.querySelector<HTMLElement>('[data-nl-flaeche]')
+  const dialog = document.querySelector<HTMLDialogElement>('[data-nl-dialog]')
+  const knopf = document.querySelector<HTMLButtonElement>('[data-nl-knopf]')
+
+  if (flaeche && dialog && knopf) {
+    const feld = dialog.querySelector('input')!
+    const liste = dialog.querySelector('ol')!
+    const stand = dialog.querySelector<HTMLElement>('[data-nl-stand]')!
+    const knopfText = knopf.querySelector<HTMLElement>('[data-nl-knopf-text]')!
+    const notizen = [...flaeche.querySelectorAll<HTMLElement>('[data-notiz]')]
+    const text = (el: HTMLElement) => el.innerText.replace(/\s+/g, ' ').trim()
+    // Wie die Präfixsuche von FTS5: ein Begriff trifft nur am Wortanfang.
+    const fund = (s: string, w: string) => {
+      const stellen: number[] = []
+      for (let i = s.indexOf(w); i > -1; i = s.indexOf(w, i + 1)) {
+        if (!/[\p{L}\p{N}]/u.test(s[i - 1] ?? '')) stellen.push(i)
+      }
+      return stellen
+    }
+
+    flaeche.querySelector<HTMLElement>('[data-nl-still]')!.hidden = true
+    knopf.hidden = false
+    if (!/Mac|iPhone|iPad/.test(navigator.userAgent)) {
+      knopf.querySelector('[data-nl-taste]')!.textContent = 'Strg K'
+    }
+
+    // Treffer markieren, dazu jede Notiz auf dem Weg von der Wurzel und alle
+    // Geschwister davor, an denen der Stamm vorbeiläuft.
+    const suche = () => {
+      const woerter = feld.value.toLowerCase().split(/\s+/).filter(Boolean)
+      const treffer =
+        woerter.join('').length < 2
+          ? []
+          : notizen.filter((n) => woerter.every((w) => fund(text(n).toLowerCase(), w).length))
+      for (const name of ['treffer', 'pfad', 'durch']) {
+        for (const el of flaeche.querySelectorAll(`[data-${name}]`))
+          el.removeAttribute(`data-${name}`)
+      }
+      const stellen: Range[] = []
+      for (const n of treffer) {
+        n.dataset.treffer = ''
+        for (let k = n.closest<HTMLElement>('[data-knoten]'); k;) {
+          k.dataset.pfad = ''
+          for (
+            let s = k.previousElementSibling;
+            s instanceof HTMLElement;
+            s = s.previousElementSibling
+          ) {
+            s.dataset.durch = ''
+          }
+          k = k.parentElement!.closest<HTMLElement>('[data-knoten]')
+        }
+        const gang = document.createTreeWalker(n, NodeFilter.SHOW_TEXT)
+        for (let t = gang.nextNode(); t; t = gang.nextNode()) {
+          const s = t.nodeValue!.toLowerCase()
+          for (const w of woerter) {
+            for (const i of fund(s, w)) {
+              const r = new Range()
+              r.setStart(t, i)
+              r.setEnd(t, i + w.length)
+              stellen.push(r)
+            }
+          }
+        }
+      }
+      if ('highlights' in CSS) CSS.highlights.set('nl-treffer', new Highlight(...stellen))
+
+      liste.replaceChildren(
+        ...treffer.map((n) => {
+          const li = document.createElement('li')
+          const a = document.createElement('a')
+          const ort = document.createElement('span')
+          const inhalt = document.createElement('span')
+          a.href = `#${n.id}`
+          ort.textContent = n.dataset.ort ?? ''
+          inhalt.textContent = text(n)
+          a.append(ort, inhalt)
+          li.append(a)
+          return li
+        }),
+      )
+      const begriff = feld.value.trim()
+      stand.textContent = !woerter.length
+        ? 'Sucht in allen Notizen dieser Seite.'
+        : treffer.length
+          ? `${treffer.length} ${treffer.length === 1 ? 'Notiz' : 'Notizen'}, der Faden zeigt den Weg.`
+          : `Keine Notiz enthält „${begriff}“.`
+      knopfText.textContent = treffer.length
+        ? `„${begriff}“ · ${treffer.length}`
+        : 'Notizen durchsuchen'
+    }
+
+    const oeffnen = () => {
+      const kopf = document.querySelector('.site-header')?.clientHeight ?? 64
+      dialog.style.setProperty('--nl-kopf', `${kopf}px`)
+      dialog.showModal()
+      feld.select()
+    }
+
+    knopf.addEventListener('click', oeffnen)
+    feld.addEventListener('input', suche)
+    addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        if (dialog.open) dialog.close()
+        else oeffnen()
+      }
+    })
+    // Ein Klick neben den Dialog trifft den Dialog selbst (er hat keinen Innenabstand).
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close()
+    })
+    dialog.addEventListener('keydown', (e) => {
+      const links = [...liste.querySelectorAll('a')]
+      const i = links.indexOf(document.activeElement as HTMLAnchorElement)
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault()
+        const j = i + (e.key === 'ArrowDown' ? 1 : -1)
+        ;(j < 0 ? feld : links[Math.min(j, links.length - 1)])?.focus()
+      } else if (e.key === 'Enter' && e.target === feld) {
+        e.preventDefault()
+        links[0]?.click()
+      } else if (e.key === 'Escape') {
+        // Sonst leert Chrome zuerst das Suchfeld; die Treffer sollen stehen bleiben.
+        e.preventDefault()
+        dialog.close()
+      }
+    })
+    // Zum Treffer: Dialog zu, Notiz in die Mitte, Fokus auf die Notiz.
+    liste.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest('a')
+      const ziel = a && document.getElementById(a.hash.slice(1))
+      if (!ziel) return
+      e.preventDefault()
+      dialog.close()
+      ziel.tabIndex = -1
+      ziel.scrollIntoView({
+        block: 'center',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      })
+      ziel.focus({ preventScroll: true })
+    })
+
+    // Ziehen: nur Maus, nur auf dem Papier zwischen den Notizen.
+    let y: number | null = null
+    flaeche.dataset.ziehbar = ''
+    flaeche.addEventListener('pointerdown', (e) => {
+      const frei = !(e.target as Element).closest('.nl-karte, .nl-rand, .nl-leiste, .nl-frei')
+      if (e.pointerType !== 'mouse' || e.button !== 0 || !frei) return
+      e.preventDefault()
+      y = e.clientY
+      flaeche.setPointerCapture(e.pointerId)
+      flaeche.dataset.zieht = ''
+    })
+    flaeche.addEventListener('pointermove', (e) => {
+      if (y === null) return
+      scrollBy({ top: y - e.clientY, behavior: 'instant' })
+      y = e.clientY
+    })
+    const loslassen = () => {
+      y = null
+      delete flaeche.dataset.zieht
+    }
+    flaeche.addEventListener('pointerup', loslassen)
+    flaeche.addEventListener('pointercancel', loslassen)
+  }
+</script>
+
+<style is:global>
+  .nl-taste {
+    display: inline-block;
+    padding: 0 0.3125rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.125rem;
+    color: var(--color-fg-muted);
+  }
+  @media (hover: none) {
+    .nl-suchknopf .nl-taste,
+    .nl-feldzeile .nl-taste {
+      display: none;
+    }
+  }
+
+  .nl-still {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+
+  .nl-suchknopf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.375rem 0.5rem 0.375rem 0.75rem;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid color-mix(in oklch, var(--color-fg) 25%, transparent);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+    transition:
+      color var(--duration-base) var(--ease-quiet),
+      border-color var(--duration-base) var(--ease-quiet);
+  }
+  .nl-suchknopf:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .nl-suchknopf svg,
+  .nl-feldzeile svg {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  .nl-suchknopf [data-nl-knopf-text] {
+    max-width: 14rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /*
+   * Der Dialog steht unter dem Header, deckend und flach. Die Seite dahinter
+   * bleibt sichtbar, damit man die Fäden aufleuchten sieht, während man tippt.
+   */
+  .nl-dialog {
+    position: fixed;
+    inset: calc(var(--nl-kopf, 4rem) + 0.75rem) 0 auto;
+    width: min(34rem, calc(100% - 2rem));
+    max-width: none;
+    max-height: calc(100dvh - var(--nl-kopf, 4rem) - 1.5rem);
+    margin: 0 auto;
+    padding: 0;
+    overflow: auto;
+    background-color: var(--color-bg-elevated);
+    color: var(--color-fg);
+    border: 1px solid var(--color-fg);
+    border-radius: var(--radius-sm);
+  }
+  .nl-dialog::backdrop {
+    background: transparent;
+  }
+  .nl-feldzeile {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-fg-muted);
+  }
+  .nl-feld {
+    flex: 1;
+    min-width: 0;
+    padding: 0.25rem 0;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+  .nl-feld::-webkit-search-cancel-button {
+    appearance: none;
+  }
+  .nl-feld::placeholder {
+    color: var(--color-fg-muted);
+  }
+  .nl-feld:focus-visible {
+    outline-offset: 4px;
+  }
+  .nl-stand {
+    margin: 0;
+    padding: 0.625rem 0.875rem 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .nl-liste {
+    margin: 0;
+    padding: 0 0.375rem 0.5rem;
+    list-style: none;
+  }
+  .nl-liste a {
+    display: grid;
+    gap: 0.125rem;
+    padding: 0.5rem 0.5rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-fg);
+    text-decoration: none;
+  }
+  .nl-liste a:hover,
+  .nl-liste a:focus-visible {
+    background-color: color-mix(in oklch, var(--color-accent) 10%, transparent);
+  }
+  .nl-liste a > span:first-child {
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  .nl-liste a > span:last-child {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.875rem;
+  }
+
+  ::highlight(nl-treffer) {
+    background-color: color-mix(in oklch, var(--color-accent) 22%, transparent);
+    color: var(--color-fg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nl-suchknopf {
+      transition: none;
+    }
+  }
+</style>

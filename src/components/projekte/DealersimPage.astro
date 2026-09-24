@@ -1,0 +1,139 @@
+---
+/**
+ * Die Seite von DealerSim liest sich wie ein Spielstand. Der erste Raum steht
+ * nicht als Band unter dem Titel, sondern als Pixel-Insel daneben, im selben
+ * Blick wie Titel, Summary und Eckdaten, und lässt sich ausbauen. Unter den
+ * Screenshots folgt der Text; die Funktionen stehen dort als Zweig im
+ * Skill-Baum des Spiels.
+ *
+ * Ausgeblendet und hier selbst gezeigt, mit denselben Daten: Meta-Liste und
+ * Links (im Kopf neben dem Raum), „Worum es geht“ und „Funktionen“ (vor den
+ * übrigen Textblöcken, in derselben Reihenfolge wie im gemeinsamen Körper).
+ */
+import { render } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
+import MetaList from '@/components/MetaList.astro'
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import DealersimScene from '@/components/scenes/DealersimScene.astro'
+import Skillzweig from '@/components/scenes/dealersim/Skillzweig.astro'
+import { href } from '@/lib/site'
+
+const { projekt, prev, next } = Astro.props as Props
+const { Content } = await render(projekt)
+const data = projekt.data
+
+// Wie im gemeinsamen Körper: Überschrift über dem Inhalt, Haarlinie oben.
+const block = 'mt-12 border-t border-border pt-6'
+const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
+---
+
+<ProjectPage projekt={projekt} prev={prev} next={next} hide={['meta', 'links', 'text', 'features']}>
+  <Fragment slot="hero">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/projekte/')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
+    </a>
+
+    <div class="ds-kopf">
+      <h1 class="ds-titel display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+        {data.title}
+      </h1>
+      <p class="ds-summary prose-flow mt-5 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+        {data.summary}
+      </p>
+      <div class="ds-szene">
+        <DealersimScene />
+      </div>
+      <div class="ds-fakten">
+        <MetaList
+          rows={[
+            { label: 'Art', value: data.kind, variant: 'kind' },
+            { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+            ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+            { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+          ]}
+        />
+        {
+          (data.live || data.github) && (
+            <ul class="mt-6 mb-0 flex list-none flex-wrap gap-3 p-0">
+              {data.live && (
+                <li>
+                  <Button href={data.live} external>
+                    Live ansehen
+                  </Button>
+                </li>
+              )}
+              {data.github && (
+                <li>
+                  <Button href={data.github} variant="secondary" external>
+                    Code auf GitHub
+                  </Button>
+                </li>
+              )}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="before-text">
+    <section class={block}>
+      <h2 class={blockTitle}>Worum es geht</h2>
+      <div
+        class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+      >
+        <Content />
+      </div>
+    </section>
+
+    {
+      data.features.length > 0 && (
+        <section class={block}>
+          <h2 class={blockTitle}>Funktionen</h2>
+          <Skillzweig items={data.features} class="mt-4" />
+        </section>
+      )
+    }
+  </Fragment>
+</ProjectPage>
+
+<style>
+  /*
+   * Handy und Tablet: Titel, Summary, Raum, Eckdaten untereinander. Ab 1024 px
+   * steht der Raum rechts neben allem anderen, oben bündig mit dem Titel.
+   */
+  .ds-kopf {
+    display: grid;
+    grid-template-areas: 'titel' 'summary' 'szene' 'fakten';
+  }
+  .ds-titel {
+    grid-area: titel;
+  }
+  .ds-summary {
+    grid-area: summary;
+  }
+  .ds-szene {
+    grid-area: szene;
+    margin-top: 2.5rem;
+  }
+  .ds-fakten {
+    grid-area: fakten;
+    margin-top: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .ds-kopf {
+      grid-template-columns: minmax(0, 1fr) 28rem;
+      grid-template-rows: auto auto 1fr;
+      grid-template-areas: 'titel szene' 'summary szene' 'fakten szene';
+      column-gap: 3rem;
+    }
+    .ds-szene {
+      margin-top: 1.5rem;
+    }
+  }
+</style>

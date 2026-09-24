@@ -1,0 +1,23 @@
+---
+/**
+ * Die Seite von NoteList ist selbst eine Fläche wie in der App: Die H1 ist die
+ * Wurzelnotiz, jeder Block hängt als Notiz an einem Faden, und Cmd K sucht
+ * über die Notizen der Seite (NotelistScene). Deshalb ersetzt die Fläche den
+ * Kopf der Seite und zeigt Meta-Liste, Links, Bilder, Text und Listen selbst;
+ * Vor/Zurück und die Anfrage-Zeile bleiben die des gemeinsamen Körpers.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import NotelistScene from '@/components/scenes/NotelistScene.astro'
+
+const { projekt, prev, next } = Astro.props as Props
+---
+
+<ProjectPage
+  projekt={projekt}
+  prev={prev}
+  next={next}
+  hide={['meta', 'links', 'gallery', 'text', 'features', 'engineering', 'code', 'learnings']}
+>
+  <NotelistScene slot="hero" projekt={projekt} />
+</ProjectPage>

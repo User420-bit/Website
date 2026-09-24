@@ -1,0 +1,240 @@
+---
+/**
+ * Die Seite von Feynman: Die Tafel hängt rechts neben dem Titel, statt als
+ * Band unter ihm zu liegen. Links stehen Titel, Summary und Eckdaten wie auf
+ * einem Heftrand, rechts prüft der Prüfer eine Erklärung, die der Besucher
+ * wählt (FeynmanScene). Weiter unten schreibt er an den Rand: Neben den
+ * Punkten, die die Tafel vorführt, steht eine Notiz, die dorthin zurückführt
+ * und die passende Erklärung wählt.
+ *
+ * Ausgeblendet und hier mit denselben Daten neu gesetzt: Meta-Liste und
+ * „Worum es geht“ (im Kopf, links neben der Tafel), Funktionen, Technische
+ * Entscheidungen und Erkenntnisse (mit Randnotizen, in derselben Reihenfolge).
+ * Alles andere kommt unverändert aus ProjectPage.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import Arrow from '@/components/Arrow.astro'
+import MetaList from '@/components/MetaList.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import FeynmanScene from '@/components/scenes/FeynmanScene.astro'
+import { href } from '@/lib/site'
+import { render } from 'astro:content'
+
+const { projekt, prev, next } = Astro.props as Props
+const data = projekt.data
+const { Content } = await render(projekt)
+
+type Randnotiz =
+  | { tafel: 'knapp' | 'verdreht' | 'gruendlich'; label: string }
+  | { mono: string; ohneNetz?: boolean }
+
+/**
+ * Randnotiz je Punkt, erkannt am Wortlaut. Ändert sich der Text in der
+ * Projektdatei, fällt die Notiz weg; der Punkt selbst bleibt.
+ */
+const randnotiz = (punkt: string): Randnotiz | undefined => {
+  if (punkt.includes('Prüfer-Tutor')) return { tafel: 'knapp', label: 'Knapp' }
+  if (punkt.includes('Polarität')) return { tafel: 'verdreht', label: 'Verdreht' }
+  if (punkt.includes('Grounding')) return { tafel: 'gruendlich', label: 'Gründlich' }
+  if (punkt.includes('lokal')) return { mono: 'localhost:11434', ohneNetz: true }
+  if (punkt.includes('schnelle und langsame')) return { mono: "pytest -m 'not slow'" }
+  return undefined
+}
+
+// Wie im gemeinsamen Körper: Überschrift über dem Inhalt, Haarlinie oben.
+const block = 'mt-12 border-t border-border pt-6'
+const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
+const listen = [
+  { title: 'Funktionen', items: data.features },
+  { title: 'Technische Entscheidungen', items: data.engineering },
+]
+---
+
+<ProjectPage
+  projekt={projekt}
+  prev={prev}
+  next={next}
+  hide={['meta', 'text', 'features', 'engineering', 'learnings']}
+>
+  <div
+    slot="hero"
+    class="@container grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12"
+  >
+    <div>
+      <a
+        class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+        href={href('/projekte/')}
+      >
+        <Arrow direction="left" /> Alle Arbeiten
+      </a>
+      <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+        {data.title}
+      </h1>
+      <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+        {data.summary}
+      </p>
+    </div>
+
+    <FeynmanScene class="mt-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0" />
+
+    <div class="lg:col-start-1 lg:row-start-2">
+      <div class="mt-8">
+        <MetaList
+          rows={[
+            { label: 'Art', value: data.kind, variant: 'kind' },
+            { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+            ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+            { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+          ]}
+        />
+      </div>
+
+      <section class={block}>
+        <h2 class={blockTitle}>Worum es geht</h2>
+        <div
+          class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+        >
+          <Content />
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <Fragment slot="after-text">
+    {
+      listen.map(
+        ({ title, items }) =>
+          items.length > 0 && (
+            <section class={block}>
+              <h2 class={blockTitle}>{title}</h2>
+              <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted">
+                {items.map((item) => {
+                  const notiz = randnotiz(item)
+                  return (
+                    <li class="relative border-b border-border pb-3">
+                      {item}
+                      {notiz && (
+                        <span class="randnotiz">
+                          {'tafel' in notiz ? (
+                            <a class="randlink" href="#tafel" data-tafel-zeigt={notiz.tafel} hidden>
+                              An der Tafel: {notiz.label}
+                              <Arrow class="-rotate-90" />
+                            </a>
+                          ) : (
+                            <span class="randmono">
+                              {notiz.ohneNetz && (
+                                <svg class="ohne-netz" viewBox="0 0 24 24" aria-hidden="true">
+                                  <path d="M7 18h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.5 4.5 0 0 0 7 18Z" />
+                                  <path d="M3 3l18 18" />
+                                </svg>
+                              )}
+                              {notiz.mono}
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
+          ),
+      )
+    }
+
+    {/* Erkenntnisse bleiben die Randnotiz des Werkstattbuchs: volle Tinte, keine Zusätze. */}
+    {
+      data.learnings.length > 0 && (
+        <section class={block}>
+          <h2 class={blockTitle}>Erkenntnisse</h2>
+          <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
+            {data.learnings.map((learning) => (
+              <li class="border-b border-border pb-3">{learning}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </Fragment>
+</ProjectPage>
+
+<style>
+  /*
+   * Randnotiz: auf dem Handy unter dem Punkt, ab 1024 px im freien Rand
+   * rechts neben der 65ch-Spalte, auf Höhe des Punkts. Die Wellenlinie ist
+   * das Zeichen des Prüfers von der Tafel, auf Papier in Ocker.
+   */
+  .randnotiz {
+    --fy-ocker: oklch(0.62 0.12 80);
+    display: block;
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .randnotiz {
+      --fy-ocker: oklch(0.82 0.12 90);
+    }
+  }
+  :root[data-theme='dark'] .randnotiz {
+    --fy-ocker: oklch(0.82 0.12 90);
+  }
+  @media (min-width: 1024px) {
+    .randnotiz {
+      position: absolute;
+      top: 0.125rem;
+      left: calc(100% + 3rem);
+      width: 15rem;
+      margin-top: 0;
+    }
+  }
+
+  .randlink {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    color: var(--color-fg-muted);
+    text-decoration: underline wavy var(--fy-ocker);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition: color var(--duration-base) var(--ease-quiet);
+  }
+  .randlink[hidden] {
+    display: none;
+  }
+  .randlink:hover,
+  .randlink:focus-visible {
+    color: var(--color-fg);
+  }
+  .randlink :global(svg) {
+    transition: translate var(--duration-base) var(--ease-quiet);
+  }
+  .randlink:hover :global(svg) {
+    translate: 0 -2px;
+  }
+
+  .randmono {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  .ohne-netz {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .randlink,
+    .randlink :global(svg) {
+      transition: none;
+    }
+  }
+</style>

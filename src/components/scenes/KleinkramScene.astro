@@ -1,0 +1,369 @@
+---
+/**
+ * Kleinkram: der Kassenzettel zu dieser Seite. Kein Bild von der App, sondern
+ * ein echtes Inhaltsverzeichnis in Form eines Belegs: Jeder Abschnitt der Seite
+ * ist ein Posten mit seiner Menge (8 Funktionen, 4 Bilder …), jeder Posten ein
+ * Sprunglink. Beim Lesen wird gebucht: Erreicht ein Abschnitt die Mitte des
+ * Fensters, setzt der Zettel den Haken, schwärzt die Zeile und zählt die
+ * Summe hoch. Oben füllt sich der Balken wie der Stand zur § 19-Grenze in der
+ * Übersicht der App, hier mit dem Lesefortschritt.
+ *
+ * Ab 64rem steht der Zettel sticky am Rand neben dem Text (KleinkramPage legt
+ * das Raster an). Darunter wird `.kk-rand` zu `display: contents`: Der Kopf
+ * klebt dann unten am Fenster und schaut heraus wie ein Bon aus dem Drucker,
+ * der Rumpf steht am Ende des Inhalts, und dort landet der Kopf auf ihm.
+ *
+ * Alles ohne Speicher: Summe und Stand werden aus der Scrollposition
+ * abgeleitet (`animation-timeline`, `@property`, CSS-Zähler), das Datum setzt
+ * ein kleines Script in Ortszeit. Ohne Unterstützung, ohne Script oder bei
+ * reduzierter Bewegung steht der Endzustand: alles gebucht, kein Balken, kein
+ * Datum.
+ */
+export interface Posten {
+  /** id des Abschnitts auf der Seite, zugleich Name seiner View-Timeline (`--kk-<anker>`). */
+  anker: string
+  label: string
+  menge: number
+}
+
+interface Props {
+  posten: readonly Posten[]
+}
+
+const { posten } = Astro.props
+const summe = posten.reduce((s, p) => s + p.menge, 0)
+
+// Zackenkante wie beim Abreißen: 28 Zacken, je 0,4rem hoch, über die volle Breite.
+const ZACKEN = 28
+const kante = (y: (i: number) => string, vonRechts = false) =>
+  Array.from({ length: ZACKEN + 1 }, (_, i) => {
+    const x = (i / ZACKEN) * 100
+    return `${(vonRechts ? 100 - x : x).toFixed(2)}% ${y(i)}`
+  }).join(', ')
+const oben = `polygon(${kante((i) => (i % 2 ? '0' : '0.4rem'))}, 100% 100%, 0 100%)`
+const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)' : '100%'), true)})`
+---
+
+<div class="kk-rand">
+  <div class="kk-kopf" style={`clip-path: ${oben}`} aria-hidden="true">
+    <p class="kk-titel">Beleg zu dieser Seite</p>
+    <p class="kk-lesen">
+      <span class="kk-balken"><span class="kk-balken-stand"></span></span>
+      <span class="kk-prozent"></span>
+    </p>
+  </div>
+  <nav class="kk-rumpf" style={`clip-path: ${unten}`} aria-label="Beleg zu dieser Seite">
+    <p class="kk-datum" data-kk-heute hidden aria-hidden="true"></p>
+    <ol class="kk-liste">
+      {
+        posten.map(({ anker, label, menge }) => (
+          <li class="kk-posten" style={`--kk-menge: ${menge}; --kk-zeitleiste: --kk-${anker}`}>
+            <svg class="kk-haken" aria-hidden="true" viewBox="0 0 12 12">
+              <path d="M2 6.5l2.75 2.75L10 3.5" pathLength="1" />
+            </svg>
+            <a href={`#${anker}`}>{label}</a>
+            <span class="kk-menge">{menge}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="kk-summe" aria-hidden="true">
+      <span>Gebucht</span>
+      <span class="kk-summe-wert">von {summe}</span>
+    </p>
+    <p class="kk-fuss">Im Browser gerechnet,<br />nirgends gespeichert.</p>
+  </nav>
+</div>
+
+<script>
+  // „Heute“ nur in Ortszeit: Datum und Uhrzeit des Besuchers, wie ein Bon sie druckt.
+  const jetzt = new Date()
+  const datum = jetzt.toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+  const zeit = jetzt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+  for (const el of document.querySelectorAll<HTMLElement>('[data-kk-heute]')) {
+    el.textContent = `${datum} · ${zeit} Uhr, Ortszeit`
+    el.hidden = false
+  }
+</script>
+
+<style>
+  /* Endzustand als Anfangswert: Ohne Animation ist alles gebucht und gelesen. */
+  @property --kk-g {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+  @property --kk-zaehlt {
+    syntax: '<integer>';
+    inherits: false;
+    initial-value: 0;
+  }
+  @property --kk-gelesen {
+    syntax: '<integer>';
+    inherits: true;
+    initial-value: 100;
+  }
+
+  .kk-rand {
+    --kk-papier: oklch(0.955 0.009 85);
+    --kk-kante: oklch(0.8 0.01 85);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .kk-rand {
+      --kk-papier: oklch(0.25 0.006 80);
+      --kk-kante: oklch(0.42 0.006 80);
+    }
+  }
+  :root[data-theme='dark'] .kk-rand {
+    --kk-papier: oklch(0.25 0.006 80);
+    --kk-kante: oklch(0.42 0.006 80);
+  }
+
+  .kk-kopf,
+  .kk-rumpf {
+    background: var(--kk-papier);
+    color: var(--color-fg-muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+  .kk-kopf {
+    padding: 1.1rem 1.25rem 0.75rem;
+  }
+  .kk-rumpf {
+    /* 1 px Überlappung: Sonst zeigt die Kante zwischen den gedrehten Flächen eine Naht. */
+    margin-top: -1px;
+    padding: 1px 1.25rem 1.6rem;
+    counter-reset: kk-summe;
+  }
+  .kk-kopf p,
+  .kk-rumpf p {
+    margin: 0;
+  }
+
+  .kk-titel {
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Lesefortschritt: nur, wo er sich wirklich bewegt (siehe unten). */
+  .kk-kopf .kk-lesen {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .kk-balken {
+    flex: 1;
+    height: 0.5rem;
+    border: 1px solid var(--kk-kante);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .kk-balken-stand {
+    display: block;
+    height: 100%;
+    width: calc(var(--kk-gelesen) * 1%);
+    background: var(--color-accent);
+  }
+  .kk-prozent {
+    min-width: 3.25em;
+    text-align: right;
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+  .kk-prozent::before {
+    counter-reset: kk-gelesen var(--kk-gelesen);
+    content: counter(kk-gelesen) ' %';
+  }
+
+  .kk-datum,
+  .kk-liste,
+  .kk-summe,
+  .kk-fuss {
+    border-top: 1px dashed var(--kk-kante);
+    padding-top: 0.75rem;
+  }
+  .kk-datum {
+    padding-bottom: 0.75rem;
+  }
+  .kk-liste {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  /*
+   * Ein Posten: Haken, Name, Menge. `--kk-g` geht beim Buchen von 0 auf 1 und
+   * zieht Farbe und Haken mit; `--kk-zaehlt` zählt die Menge in die Summe.
+   */
+  .kk-posten {
+    --kk-zaehlt: var(--kk-menge);
+    counter-increment: kk-summe var(--kk-zaehlt);
+    display: grid;
+    grid-template-columns: 0.75rem minmax(0, 1fr) auto;
+    column-gap: 0.5rem;
+    align-items: baseline;
+    color: color-mix(in oklch, var(--color-fg) calc(var(--kk-g) * 100%), var(--color-fg-muted));
+  }
+  .kk-haken {
+    width: 0.75rem;
+    height: 0.75rem;
+    align-self: center;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--kk-g));
+  }
+  .kk-posten a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .kk-posten a:hover {
+    color: var(--color-accent);
+  }
+  .kk-menge {
+    text-align: right;
+  }
+
+  .kk-summe {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+  .kk-summe-wert::before {
+    content: counter(kk-summe) ' ';
+  }
+
+  .kk-fuss {
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  /* Rand neben dem Text: sticky, leicht schräg abgelegt. */
+  @media (width >= 64rem) {
+    .kk-rand {
+      position: sticky;
+      top: 6rem;
+      margin-top: 0.5rem;
+      rotate: -0.6deg;
+    }
+  }
+
+  /*
+   * Schmal: Der Rand löst sich auf. Der Kopf klebt unten am Fenster, bis er
+   * am Ende des Inhalts auf seinem Rumpf landet.
+   */
+  @media (width < 64rem) {
+    .kk-rand {
+      display: contents;
+    }
+    .kk-kopf,
+    .kk-rumpf {
+      width: min(100%, 22rem);
+      margin-inline: auto;
+    }
+    /* Unten am Fenster nur eine Zeile, damit der Bon wenig Text verdeckt. */
+    .kk-kopf {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      margin-top: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1.25rem 0.6rem;
+    }
+    .kk-kopf .kk-lesen {
+      flex: 1;
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .kk-posten a {
+      transition: color var(--duration-base) var(--ease-quiet);
+    }
+
+    /* Beim Laden: auf dem Desktop rollt der Zettel ab, auf dem Handy kommt er unten heraus. */
+    @media (width >= 64rem) {
+      .kk-rand {
+        animation: kk-abrollen 900ms var(--ease-quiet) 150ms backwards;
+      }
+    }
+    @media (width < 64rem) {
+      .kk-kopf {
+        animation: kk-ausgeben 600ms var(--ease-quiet) 300ms backwards;
+      }
+    }
+
+    /*
+     * Langschreibweise mit Absicht: Der CSS-Minifier zieht `animation-timeline`
+     * sonst in die Kurzform `animation`, und die verwirft der Browser als Ganzes.
+     */
+    @supports (animation-timeline: scroll()) {
+      .kk-kopf .kk-lesen {
+        display: flex;
+        animation-name: kk-lesen;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+      }
+    }
+
+    /* Gebucht wird, wenn der Abschnitt knapp über der Fenstermitte steht. */
+    @supports (animation-timeline: view()) and (timeline-scope: none) {
+      .kk-posten {
+        animation-name: kk-buchen;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: var(--kk-zeitleiste);
+        animation-range: cover 40vh cover 46vh;
+      }
+    }
+  }
+
+  @keyframes kk-abrollen {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes kk-ausgeben {
+    from {
+      translate: 0 100%;
+    }
+  }
+  @keyframes kk-lesen {
+    from {
+      --kk-gelesen: 0;
+    }
+    to {
+      --kk-gelesen: 100;
+    }
+  }
+  @keyframes kk-buchen {
+    from {
+      --kk-g: 0;
+      --kk-zaehlt: 0;
+    }
+    to {
+      --kk-g: 1;
+      --kk-zaehlt: var(--kk-menge);
+    }
+  }
+</style>

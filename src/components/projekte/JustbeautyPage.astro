@@ -1,0 +1,244 @@
+---
+/**
+ * Die Seite von JustBeauty: ein Deckblatt statt einer Bühne unter dem Titel.
+ * Links Titel, Summary und Eckdaten, rechts der Fächer mit den zwölf Seiten
+ * des Entwurfs (JustbeautyScene), ohne eigene Fläche.
+ *
+ * Das Projekt hatte ein Master-Timing für alle Animationen, und so läuft auch
+ * diese Seite: Takt, Kurve und Farben stehen genau einmal, auf `.jb-seite`,
+ * und alles, was sich hier bewegt, leitet sich davon ab. Der Fächer, der Punkt
+ * neben „ein Takt“, der Puls bei der Erkenntnis, die ihn begründet, und der
+ * Strich in Rosé, der auf jeder Haarlinie aufzieht. Der Umschalter im Fächer
+ * gilt für die ganze Seite.
+ *
+ * Ausgeblendet und hier selbst gezeigt, mit denselben Daten: die Meta-Liste
+ * (im Deckblatt) und die Erkenntnisse (mit dem Verweis auf den Fächer).
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import Arrow from '@/components/Arrow.astro'
+import MetaList from '@/components/MetaList.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import JustbeautyScene from '@/components/scenes/JustbeautyScene.astro'
+import { href } from '@/lib/site'
+
+const { projekt, prev, next } = Astro.props as Props
+const data = projekt.data
+
+/** Die Erkenntnis, die der Fächer vorführt; findet sie sich nicht, fehlt nur der Verweis. */
+const zeigtTakt = (learning: string) => learning.includes('Zeitbasis')
+---
+
+<ProjectPage
+  projekt={projekt}
+  prev={prev}
+  next={next}
+  hide={['meta', 'learnings']}
+  articleClass="jb-seite"
+>
+  <Fragment slot="hero">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/projekte/')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
+    </a>
+
+    <div class="jb-deckblatt mt-6">
+      <div class="jb-titel">
+        <h1 class="display m-0 text-4xl font-semibold text-balance sm:text-5xl">
+          {data.title}
+        </h1>
+        <p class="prose-flow mt-5 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+          {data.summary}
+        </p>
+      </div>
+
+      <div class="jb-szene">
+        <JustbeautyScene />
+      </div>
+
+      <div class="jb-meta">
+        <MetaList
+          rows={[
+            { label: 'Art', value: data.kind, variant: 'kind' },
+            { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+            ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+            { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+          ]}
+        />
+      </div>
+    </div>
+  </Fragment>
+
+  {
+    data.learnings.length > 0 && (
+      <section slot="after-text" class="mt-12 border-t border-border pt-6">
+        <h2 class="m-0 text-xl font-semibold tracking-tight">Erkenntnisse</h2>
+        <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
+          {data.learnings.map((learning) => (
+            <li class="border-b border-border pb-3">
+              {learning}
+              {zeigtTakt(learning) && (
+                <a
+                  class="jb-verweis mt-2 flex w-fit items-center gap-2 text-sm text-fg-muted underline decoration-border underline-offset-4 transition-colors hover:text-fg hover:decoration-accent motion-reduce:transition-none"
+                  href="#takt"
+                >
+                  <span class="jb-puls" aria-hidden="true" />
+                  Im Fächer oben ausprobieren
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</ProjectPage>
+
+<style>
+  /* Links Titel und Eckdaten, rechts der Fächer; auf dem Handy der Fächer dazwischen. */
+  .jb-deckblatt {
+    display: grid;
+    grid-template-areas: 'titel' 'szene' 'meta';
+    row-gap: 2.5rem;
+  }
+  .jb-titel {
+    grid-area: titel;
+  }
+  .jb-szene {
+    grid-area: szene;
+    min-width: 0;
+  }
+  .jb-meta {
+    grid-area: meta;
+  }
+  @media (min-width: 1024px) {
+    .jb-deckblatt {
+      grid-template-columns: minmax(0, 1fr) 28rem;
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 'titel szene' 'meta szene';
+      column-gap: 4rem;
+      row-gap: 2rem;
+    }
+  }
+</style>
+
+<style is:global>
+  /*
+   * Das Master-Timing der Seite: ein Takt, eine Kurve, sonst nichts. Jede
+   * Bewegung auf dieser Seite rechnet damit, keine bringt eigene Werte mit.
+   * Dazu Rosé, die Farbe des Shops, nur als Kante und Linie.
+   */
+  .jb-seite {
+    --jb-takt: 0.8s;
+    --jb-kurve: cubic-bezier(0.45, 0, 0.55, 1);
+    --jb-rose: oklch(0.7 0.12 12);
+    --jb-rose-zart: oklch(0.87 0.05 12);
+    --jb-papier: oklch(0.995 0.004 12);
+    --jb-feld: oklch(0.93 0.012 12);
+    --jb-linie: oklch(0.87 0.015 12);
+    --jb-tinte: oklch(0.3 0.03 12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .jb-seite {
+      --jb-rose: oklch(0.72 0.14 12);
+      --jb-rose-zart: oklch(0.5 0.07 12);
+      --jb-papier: oklch(0.23 0.012 12);
+      --jb-feld: oklch(0.32 0.014 12);
+      --jb-linie: oklch(0.4 0.02 12);
+      --jb-tinte: oklch(0.93 0.012 12);
+    }
+  }
+  :root[data-theme='dark'] .jb-seite {
+    --jb-rose: oklch(0.72 0.14 12);
+    --jb-rose-zart: oklch(0.5 0.07 12);
+    --jb-papier: oklch(0.23 0.012 12);
+    --jb-feld: oklch(0.32 0.014 12);
+    --jb-linie: oklch(0.4 0.02 12);
+    --jb-tinte: oklch(0.93 0.012 12);
+  }
+
+  /* Rosé als Kante: ein kurzer Strich am Anfang jeder Haarlinie. */
+  .jb-seite > section,
+  .jb-seite .jb-meta {
+    position: relative;
+    view-timeline-name: --jb-kante;
+  }
+  .jb-seite > section::before,
+  .jb-seite .jb-meta::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--jb-rose);
+    transform-origin: left;
+  }
+
+  /* Der Punkt, der den Takt schlägt: neben „ein Takt“ im Fächer und bei der Erkenntnis. */
+  .jb-seite .jb-puls {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--jb-rose);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /*
+       * Der Strich zieht auf, während seine Linie das untere Drittel des
+       * Fensters durchquert. Langschreibweise: Der Minifier zöge
+       * `animation-timeline` sonst in die Kurzform.
+       */
+      .jb-seite > section::before,
+      .jb-seite .jb-meta::before {
+        animation-name: jb-strich;
+        animation-timing-function: var(--jb-kurve);
+        animation-fill-mode: both;
+        animation-timeline: --jb-kante;
+        animation-range: cover 0% cover 33vh;
+      }
+    }
+
+    /*
+     * Ein Schlag je Takt, zeitgleich mit dem Blatt, das gerade oben ist. Der
+     * Umschalter im Fächer gilt auch hier: Zwölf Takte haben keinen
+     * gemeinsamen Schlag, Anhalten hält alles an.
+     */
+    @supports selector(:has(*)) {
+      .jb-seite .jb-puls {
+        animation-name: jb-schlag;
+        animation-duration: var(--jb-takt);
+        animation-timing-function: var(--jb-kurve);
+        animation-delay: calc(3 * var(--jb-takt));
+        animation-iteration-count: infinite;
+        animation-fill-mode: backwards;
+      }
+      .jb-seite:has(#jb-takt-zwoelf:checked) .jb-puls,
+      .jb-seite:has(#jb-takt-aus:checked) .jb-puls {
+        animation-name: none;
+      }
+    }
+  }
+
+  @keyframes jb-strich {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes jb-schlag {
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(0.55);
+      opacity: 0.35;
+    }
+  }
+</style>

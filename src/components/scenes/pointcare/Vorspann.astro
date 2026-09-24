@@ -1,0 +1,438 @@
+---
+/**
+ * Der Vorspann von PointCare: Die Seite beginnt wie die Kundenseite, dunkel
+ * und über die volle Fensterhöhe, zwischen zwei Kinobalken. Darin steht die
+ * H1, dahinter ein gezeichnetes Standbild: ein Logistiklager bei Nacht, ein
+ * Tor offen, im Licht der Stapler in Orange. Alle Fluchtlinien laufen auf
+ * dieses Tor zu.
+ *
+ * Eine Bewegung, wie auf der Kundenseite: Beim Scrollen fährt die Kamera auf
+ * das Tor zu. Nahes wächst schneller als Fernes, die Laterne schneller als
+ * die Halle: Das ist die Parallaxe. Ohne Bewegung steht das Ende der Fahrt.
+ *
+ * Die Fläche ist in beiden Farbmodi dunkel (Farben: PointcarePage.astro). Die
+ * Bildunterschrift steht als Untertitel im unteren Balken und sagt, dass es
+ * kein Screenshot ist.
+ */
+import Arrow from '@/components/Arrow.astro'
+import { href } from '@/lib/site'
+import { kamera } from './perspektive'
+
+interface Props {
+  title: string
+  summary: string
+}
+
+const { title, summary } = Astro.props
+
+// Kamera 1,6 m über dem Hof, die Halle 42,7 m entfernt. Der Fluchtpunkt liegt
+// im offenen Tor, rechts der Mitte, damit links unten Platz für die Schrift ist.
+const FX = 900
+const FY = 470
+const k = kamera({ brennweite: 800, fluchtpunkt: [FX, FY], augenhoehe: 1.6 })
+const HALLE = 42.667
+const HOEHE = 9
+const TOR = { breite: 3.5, hoehe: 4.2 }
+
+// Zwölf Tore im Abstand von 6 m, das mittlere (x = 0) steht offen.
+const tore = Array.from({ length: 12 }, (_, i) => (i - 5) * 6)
+const zu = tore.filter((x) => x !== 0)
+const halb = TOR.breite / 2
+
+const fassade = k.front(-34, 44, 0, HOEHE, HALLE)
+const fugen = [5.2, 7.6].map((y) => k.linie([-34, y, HALLE], [44, y, HALLE]))
+const dachkante = k.linie([-34, 0, HALLE], [-34, HOEHE, HALLE], [44, HOEHE, HALLE])
+const schleusen = tore.map((x) => k.front(x - 2.05, x + 2.05, 0, TOR.hoehe + 0.35, HALLE))
+const torblaetter = zu.map((x) => k.front(x - halb, x + halb, 0, TOR.hoehe, HALLE))
+const lamellen = zu.flatMap((x) =>
+  [1.05, 2.1, 3.15].map((y) => k.linie([x - halb, y, HALLE], [x + halb, y, HALLE])),
+)
+const lampen = zu.map((x) => k.front(x - 0.25, x + 0.25, 4.85, 5, HALLE))
+
+// Das offene Tor: Licht von innen, der Hallenboden, der Stapler 8 m hinter der Kante.
+const offen = k.front(-halb, halb, 0, TOR.hoehe, HALLE)
+const [, torUnten] = k.projiziere([0, 0, HALLE])
+const [, torOben] = k.projiziere([0, TOR.hoehe, HALLE])
+const innen = HALLE + 30
+const hallenboden = k.flaeche(
+  [-halb, 0, HALLE],
+  [halb, 0, HALLE],
+  [halb, 0, innen],
+  [-halb, 0, innen],
+)
+const lampeOffen = k.front(-0.25, 0.25, 4.85, 5, HALLE)
+const S = HALLE + 8
+const stapler = {
+  koerper: k.flaeche(
+    [-1.4, 0.25, S],
+    [0.35, 0.25, S],
+    [0.35, 1.2, S],
+    [-1.1, 1.25, S],
+    [-1.4, 1.0, S],
+  ),
+  dach: k.linie([-0.95, 1.2, S], [-0.95, 2.2, S], [0.3, 2.2, S], [0.3, 1.2, S]),
+  mast: k.front(0.4, 0.55, 0, 2.3, S),
+  gabel: k.front(0.55, 1.6, 0.08, 0.16, S),
+  raeder: [
+    [-1.05, 0.3],
+    [0.05, 0.32],
+  ].map(([x, r]) => {
+    const [cx, cy] = k.projiziere([x, r, S])
+    return { cx, cy, r: r * k.massstab(S) }
+  }),
+}
+
+// Licht, das aus dem Tor auf den Hof fällt, und die Leitlinien vor jedem Tor.
+const lichtfleck = k.flaeche([-halb, 0, HALLE], [halb, 0, HALLE], [7, 0, 14.7], [-7, 0, 14.7])
+const [, fleckEnde] = k.projiziere([0, 0, 14.7])
+const leitlinien = zu.flatMap((x) =>
+  [-halb, halb].map((d) => k.linie([x + d, 0, HALLE], [x + d, 0, HALLE - 14])),
+)
+// Die beiden Linien vor dem offenen Tor laufen bis zur Kamera und verblassen
+// nach vorn, damit sie die Schrift nicht schneiden.
+const fluchtlinien = [-halb, halb].map((d) => k.linie([d, 0, HALLE], [d, 0, 2.5]))
+const haltelinie = k.linie([-34, 0, HALLE - 14], [44, 0, HALLE - 14])
+const fugenHof = [16, 26].map((z) => k.linie([-80, 0, z], [80, 0, z]))
+
+// Vordergrund: eine Laterne rechts, 14 m vor der Kamera.
+const L = 14
+const laterne = {
+  mast: k.linie([8.5, 0, L], [8.5, 9.5, L], [7.2, 9.35, L]),
+  kopf: k.front(6.6, 7.4, 9.15, 9.35, L),
+  kegel: k.flaeche([6.7, 9.15, L], [7.3, 9.15, L], [8.8, 0, L], [5.2, 0, L]),
+  pfuetze: (() => {
+    const [cx, cy] = k.projiziere([7, 0, L])
+    const [, vorn] = k.projiziere([7, 0, L - 2])
+    return { cx, cy, rx: 2.2 * k.massstab(L), ry: vorn - cy }
+  })(),
+}
+const [, laterneOben] = k.projiziere([7, 9.15, L])
+const [, laterneUnten] = k.projiziere([7, 0, L])
+
+// Ferne: eine zweite Halle links am Horizont.
+const ferne = k.front(-140, -75, 0, 8, 150)
+---
+
+<header class="pc-vorspann">
+  <div class="pc-balken">
+    <div class="pc-spalte">
+      <a
+        class="inline-flex items-center gap-2 py-2 text-sm text-fg-muted no-underline transition-colors hover:text-fg motion-reduce:transition-none"
+        href={href('/projekte/')}
+      >
+        <Arrow direction="left" /> Alle Arbeiten
+      </a>
+    </div>
+  </div>
+
+  <div class="pc-bild">
+    <svg
+      class="pc-standbild"
+      viewBox="0 0 1600 900"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id="pc-v-himmel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="oklch(0.1 0.004 80)"></stop>
+          <stop offset="1" stop-color="oklch(0.17 0.012 60)"></stop>
+        </linearGradient>
+        <linearGradient
+          id="pc-v-tor"
+          gradientUnits="userSpaceOnUse"
+          x1="0"
+          y1={torOben}
+          x2="0"
+          y2={torUnten}
+        >
+          <stop offset="0" stop-color="oklch(0.72 0.05 75)"></stop>
+          <stop offset="1" stop-color="oklch(0.56 0.05 68)"></stop>
+        </linearGradient>
+        <linearGradient
+          id="pc-v-fleck"
+          gradientUnits="userSpaceOnUse"
+          x1="0"
+          y1={torUnten}
+          x2="0"
+          y2={fleckEnde}
+        >
+          <stop offset="0" stop-color="oklch(0.62 0.05 70)" stop-opacity="0.5"></stop>
+          <stop offset="1" stop-color="oklch(0.62 0.05 70)" stop-opacity="0"></stop>
+        </linearGradient>
+        <linearGradient
+          id="pc-v-flucht"
+          gradientUnits="userSpaceOnUse"
+          x1="0"
+          y1={torUnten}
+          x2="0"
+          y2="900"
+        >
+          <stop offset="0" stop-color="oklch(0.5 0.01 80)"></stop>
+          <stop offset="1" stop-color="oklch(0.5 0.01 80)" stop-opacity="0.12"></stop>
+        </linearGradient>
+        <linearGradient
+          id="pc-v-kegel"
+          gradientUnits="userSpaceOnUse"
+          x1="0"
+          y1={laterneOben}
+          x2="0"
+          y2={laterneUnten}
+        >
+          <stop offset="0" stop-color="oklch(0.8 0.04 75)" stop-opacity="0.09"></stop>
+          <stop offset="1" stop-color="oklch(0.8 0.04 75)" stop-opacity="0.015"></stop>
+        </linearGradient>
+      </defs>
+
+      <rect width="1600" height={FY} fill="url(#pc-v-himmel)"></rect>
+      <rect y={FY} width="1600" height={900 - FY} class="pc-boden"></rect>
+
+      {/* Halle, Hof und Leitlinien: fern, wachsen bei der Fahrt am wenigsten. */}
+      <g class="pc-fern">
+        <path d={ferne} class="pc-ferne"></path>
+        <path d={fassade} class="pc-wand"></path>
+        <path d={dachkante} class="pc-strich"></path>
+        {fugen.map((d) => <path d={d} class="pc-strich-leise" />)}
+        {schleusen.map((d) => <path d={d} class="pc-schleuse" />)}
+        {torblaetter.map((d) => <path d={d} class="pc-torblatt" />)}
+        {lamellen.map((d) => <path d={d} class="pc-strich-leise" />)}
+        {lampen.map((d) => <path d={d} class="pc-lampe-aus" />)}
+        <path d={offen} fill="url(#pc-v-tor)"></path>
+        <path d={hallenboden} class="pc-hallenboden"></path>
+        <path d={lampeOffen} class="pc-lampe-an"></path>
+        <g class="pc-stapler">
+          <path d={stapler.koerper}></path>
+          <path d={stapler.mast}></path>
+          <path d={stapler.gabel}></path>
+          {stapler.raeder.map((rad) => <circle cx={rad.cx} cy={rad.cy} r={rad.r} />)}
+        </g>
+        <path d={stapler.dach} class="pc-stapler-dach"></path>
+        <path d={lichtfleck} fill="url(#pc-v-fleck)"></path>
+        {fugenHof.map((d) => <path d={d} class="pc-strich-leise" />)}
+        <path d={haltelinie} class="pc-strich"></path>
+        {leitlinien.map((d) => <path d={d} class="pc-strich" />)}
+        {fluchtlinien.map((d) => <path d={d} class="pc-flucht" />)}
+      </g>
+
+      {/* Laterne: nah, wächst bei der Fahrt am stärksten und verlässt das Bild. */}
+      <g class="pc-nah">
+        <path d={laterne.kegel} fill="url(#pc-v-kegel)"></path>
+        <ellipse
+          cx={laterne.pfuetze.cx}
+          cy={laterne.pfuetze.cy}
+          rx={laterne.pfuetze.rx}
+          ry={laterne.pfuetze.ry}
+          class="pc-pfuetze"></ellipse>
+        <path d={laterne.mast} class="pc-mast"></path>
+        <path d={laterne.kopf} class="pc-lampe-an"></path>
+      </g>
+    </svg>
+
+    <div class="pc-spalte pc-titel">
+      <h1 class="display m-0 font-semibold text-balance">{title}</h1>
+      <p class="prose-flow m-0 mt-5 text-lg leading-relaxed text-fg-muted sm:text-xl">{summary}</p>
+    </div>
+  </div>
+
+  <div class="pc-balken pc-balken-unten">
+    <p class="pc-spalte pc-untertitel">
+      <span class="font-medium text-fg">Szene</span> · Ein Lager bei Nacht, gezeichnet im Stil der Kundenseite.
+      Kein Screenshot.
+    </p>
+  </div>
+</header>
+
+<style>
+  @property --pc-fahrt {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+
+  /*
+   * Volle Fensterbreite wie die Bühne (ProjectScene), volle Höhe unter dem
+   * Header: 89 px bis 640 px Breite, darüber 65 px. Die Tokens werden hier
+   * auf ihre Nachtwerte gelegt, weil die Fläche in beiden Modi dunkel ist; so
+   * bleiben Link, Fokusring und Schrift ohne eigene Regeln lesbar.
+   */
+  .pc-vorspann {
+    --pc-kopf: 5.5625rem;
+    --color-fg: var(--pc-kreide);
+    --color-fg-muted: var(--pc-kreide-matt);
+    --color-accent: oklch(0.78 0.15 60);
+    --color-border: oklch(0.38 0.006 80);
+    margin-inline: calc(50% - 50vw);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: min(calc(100svh - var(--pc-kopf)), 62rem);
+    background-color: var(--pc-nacht);
+    color: var(--color-fg);
+  }
+  @media (min-width: 640px) {
+    .pc-vorspann {
+      --pc-kopf: 4.0625rem;
+    }
+  }
+
+  .pc-spalte {
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  /* Die Kinobalken: dunkler als das Bild, oben der Rückweg, unten der Untertitel. */
+  .pc-balken {
+    display: flex;
+    align-items: center;
+    min-height: clamp(2.75rem, 7svh, 4.5rem);
+    background-color: var(--pc-balken);
+  }
+  .pc-untertitel {
+    margin-block: 0;
+    padding-block: 0.625rem;
+    text-align: center;
+    text-wrap: balance;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    color: var(--color-fg-muted);
+  }
+
+  .pc-bild {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  /*
+   * Auf dem Handy ist das Bild hochkant und der Nachthimmel wäre die halbe
+   * Fläche: Die Zeichnung wird größer gesetzt und unten angelegt, der Himmel
+   * oben abgeschnitten.
+   */
+  .pc-standbild {
+    position: absolute;
+    inset: auto 0 0;
+    width: 100%;
+    height: 125%;
+  }
+  @media (min-width: 640px) {
+    .pc-standbild {
+      height: 100%;
+    }
+  }
+  .pc-titel {
+    position: relative;
+    padding-block: 6rem 2.5rem;
+  }
+  .pc-titel h1 {
+    font-size: clamp(3rem, 1.6rem + 5vw, 5.5rem);
+    max-width: 12ch;
+  }
+  .pc-titel p {
+    max-width: 38ch;
+  }
+  @media (min-width: 640px) {
+    .pc-titel {
+      padding-block-end: 3.5rem;
+    }
+  }
+
+  /* Zeichnung. Die Farben stehen in PointcarePage.astro. */
+  .pc-boden {
+    fill: var(--pc-boden);
+  }
+  .pc-ferne {
+    fill: oklch(0.11 0.004 80);
+  }
+  .pc-wand {
+    fill: var(--pc-wand);
+  }
+  .pc-schleuse {
+    fill: var(--pc-balken);
+  }
+  .pc-torblatt {
+    fill: var(--pc-koerper);
+  }
+  .pc-hallenboden {
+    fill: oklch(0.46 0.04 68);
+  }
+  .pc-lampe-aus {
+    fill: oklch(0.32 0.006 80);
+  }
+  .pc-lampe-an {
+    fill: var(--pc-licht);
+  }
+  .pc-stapler {
+    fill: var(--pc-signal);
+  }
+  .pc-stapler-dach {
+    fill: none;
+    stroke: var(--pc-signal);
+    stroke-width: 1.5;
+  }
+  .pc-pfuetze {
+    fill: var(--pc-licht);
+    opacity: 0.05;
+  }
+  .pc-mast {
+    fill: none;
+    stroke: var(--pc-strich);
+    stroke-width: 3;
+  }
+  .pc-strich,
+  .pc-strich-leise {
+    fill: none;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .pc-strich {
+    stroke: var(--pc-strich);
+  }
+  .pc-strich-leise {
+    stroke: var(--pc-strich-leise);
+  }
+  /* Ohne `non-scaling-stroke`: Der Verlauf soll in Leinwand-Einheiten laufen. */
+  .pc-flucht {
+    fill: none;
+    stroke: url(#pc-v-flucht);
+    stroke-width: 1.2;
+  }
+
+  /*
+   * Die Kamerafahrt: jede Ebene wächst um den Fluchtpunkt, nahe stärker als
+   * ferne. `--pc-fahrt` läuft beim Scrollen von 0 bis 1; ohne Bewegung steht 1.
+   */
+  .pc-fern,
+  .pc-nah {
+    transform-origin: 900px 470px;
+  }
+  .pc-fern {
+    transform: scale(calc(1 + var(--pc-fahrt) * 0.1));
+  }
+  .pc-nah {
+    transform: scale(calc(1 + var(--pc-fahrt) * 0.45));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      /* Langschreibweise, sonst zieht der Minifier `animation-timeline` in die Kurzform. */
+      .pc-vorspann {
+        animation-name: pc-fahrt;
+        animation-timing-function: cubic-bezier(0.3, 0, 0.4, 1);
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 85svh;
+      }
+    }
+  }
+
+  @keyframes pc-fahrt {
+    from {
+      --pc-fahrt: 0;
+    }
+    to {
+      --pc-fahrt: 1;
+    }
+  }
+</style>

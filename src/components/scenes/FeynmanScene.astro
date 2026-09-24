@@ -1,0 +1,821 @@
+---
+/**
+ * Feynman-Prototyp: die Tafel, die rechts an der Wand hängt. Oben der
+ * Lerntext, darunter drei Erklärungen zur Wahl, und der Prüfer prüft die
+ * gewählte gegen den Lerntext, so wie der Prototyp es tut: Lücken mit Beleg
+ * gehen an den Tutor, Widersprüche fängt die Polaritätsprüfung, und eine
+ * Lücke ohne Beleg streicht das Grounding, bevor der Tutor sie sieht.
+ *
+ * Die Prüfung ist vorbereitet, im Browser läuft kein Sprachmodell; das sagt
+ * die Bildunterschrift. Die Wahl sind Radio-Buttons, CSS blendet über `:has()`
+ * um und startet dabei die Anmerkungen neu. Ohne `:has()` stehen alle drei
+ * Erklärungen untereinander. Das Skript unten macht nur die Randnotizen der
+ * Seite zu Knöpfen, die eine Erklärung auf der Tafel wählen.
+ *
+ * Tafelgrün in beiden Farbmodi, Kreide weiß, der Prüfer in Kreidegelb, der
+ * Tutor in Kreideblau (Bühnenlizenz in DESIGN.md). Ohne Bewegung steht jede
+ * Erklärung fertig geprüft da.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+type Stelle =
+  string | { text: string; art: 'luecke' | 'widerspruch'; nr: number } | { fehlt: number }
+
+interface Pruefung {
+  name: string
+  wert: string
+  ok: boolean
+}
+
+interface Befund {
+  art: 'Lücke' | 'Widerspruch'
+  text: string
+  /** Nummer des Satzes im Lerntext, der den Befund belegt; `null`: kein Beleg. */
+  beleg: number | null
+  pruefungen: Pruefung[]
+  gestrichen?: boolean
+}
+
+interface Erklaerung {
+  id: 'knapp' | 'verdreht' | 'gruendlich'
+  label: string
+  stellen: Stelle[]
+  kernaussage: string
+  befunde: Befund[]
+  hinweis: string
+  tutor: string | null
+}
+
+const ja = (name: string): Pruefung => ({ name, wert: 'ja', ok: true })
+
+/** Aus einem der beiden Ausgangsfälle des Prototyps; physikalisch richtig. */
+const thema = 'Warum schwimmt Eis?'
+const lerntext = [
+  'Beim Gefrieren ordnen sich die Wassermoleküle zu einem lockeren Gitter.',
+  'Eis hat dadurch eine geringere Dichte als flüssiges Wasser.',
+  'Deshalb schwimmt es oben.',
+]
+
+/** Die ids stehen auch in den Randnotizen der Seite (`data-tafel-zeigt`). */
+const erklaerungen: Erklaerung[] = [
+  {
+    id: 'knapp',
+    label: 'Knapp',
+    stellen: [
+      'Eis ist ',
+      { text: 'leichter', art: 'luecke', nr: 1 },
+      ' als Wasser',
+      { fehlt: 2 },
+      ', deshalb schwimmt es.',
+    ],
+    kernaussage: 'stimmt',
+    befunde: [
+      {
+        art: 'Lücke',
+        text: 'Leichter als was? Ein Eisberg wiegt mehr als ein Glas Wasser. Gemeint ist die Dichte.',
+        beleg: 2,
+        pruefungen: [ja('Existenz'), ja('Passung')],
+      },
+      {
+        art: 'Lücke',
+        text: 'Warum ist Eis weniger dicht? Was beim Gefrieren passiert, fehlt.',
+        beleg: 1,
+        pruefungen: [ja('Existenz'), ja('Passung')],
+      },
+    ],
+    hinweis: 'Beide Lücken sind belegt und gehen an den Tutor.',
+    tutor: 'Was passiert mit den Wassermolekülen, wenn Wasser gefriert?',
+  },
+  {
+    id: 'verdreht',
+    label: 'Verdreht',
+    stellen: [
+      'Beim Gefrieren rücken die Wassermoleküle ',
+      { text: 'enger zusammen', art: 'widerspruch', nr: 1 },
+      '. Eis hat dadurch eine ',
+      { text: 'höhere Dichte', art: 'widerspruch', nr: 2 },
+      ' als Wasser und schwimmt oben.',
+    ],
+    kernaussage: 'stimmt nicht',
+    befunde: [
+      {
+        art: 'Widerspruch',
+        text: 'Enger? Der Lerntext sagt: lockeres Gitter.',
+        beleg: 1,
+        pruefungen: [
+          ja('Existenz'),
+          ja('Passung'),
+          { name: 'Polarität', wert: 'WIDERSPRICHT', ok: false },
+        ],
+      },
+      {
+        art: 'Widerspruch',
+        text: 'Höhere Dichte? Der Lerntext sagt: geringere.',
+        beleg: 2,
+        pruefungen: [
+          ja('Existenz'),
+          ja('Passung'),
+          { name: 'Polarität', wert: 'WIDERSPRICHT', ok: false },
+        ],
+      },
+    ],
+    hinweis:
+      'Ein reiner Wortvergleich hätte beides durchgelassen: Behauptung und Beleg teilen fast alle Wörter.',
+    tutor: 'Wenn Eis dichter wäre als Wasser: Wo läge es dann im Glas?',
+  },
+  {
+    id: 'gruendlich',
+    label: 'Gründlich',
+    stellen: [
+      'Beim Gefrieren ordnen sich die Wassermoleküle zu einem lockeren Gitter mit viel Zwischenraum. Eis ist dadurch weniger dicht als Wasser und schwimmt oben.',
+    ],
+    kernaussage: 'stimmt',
+    befunde: [
+      {
+        art: 'Lücke',
+        text: 'Die Luftbläschen im Eis fehlen.',
+        beleg: null,
+        pruefungen: [{ name: 'Existenz', wert: 'nein', ok: false }],
+        gestrichen: true,
+      },
+    ],
+    hinweis: 'Ohne Beleg gestrichen, bevor der Tutor sie sieht. Die Erklärung hat keine Lücke.',
+    tutor: null,
+  },
+]
+
+/*
+ * Takt der Anmerkungen in Sekunden: Befund k erscheint bei `befundZeit(k)`,
+ * seine Markierung im Satz kurz davor, der Beleg im Lerntext kurz danach.
+ * Ein gestrichener Befund braucht einen Schlag mehr für den Strich.
+ */
+const befundZeit = (k: number) => 0.9 + k * 1.4
+const s = (t: number) => `--t: ${t.toFixed(2)}s`
+const nachBefunden = (e: Erklaerung) =>
+  befundZeit(e.befunde.length) + (e.befunde.some((b) => b.gestrichen) ? 0.6 : -0.2)
+
+/** Welche Sätze des Lerntexts eine Erklärung als Beleg zeigt, und wann. */
+const belegZeiten = lerntext.map((_, i) =>
+  Object.fromEntries(
+    erklaerungen.flatMap((e) =>
+      e.befunde.flatMap((b, k) => (b.beleg === i + 1 ? [[e.id, befundZeit(k) + 0.3]] : [])),
+    ),
+  ),
+)
+---
+
+<figure class:list={['fy-figur m-0', className]} id="tafel">
+  <div class="tafel">
+    <div class="kopf">
+      <p class="rolle">Lerntext</p>
+      <p class="thema">{thema}</p>
+      <ol class="lerntext">
+        {
+          lerntext.map((satz, i) => (
+            <li
+              class:list={['satz', Object.keys(belegZeiten[i]!).map((id) => `beleg-${id}`)]}
+              style={Object.entries(belegZeiten[i]!)
+                .map(([id, t]) => `--beleg-${id}: ${t.toFixed(2)}s`)
+                .join('; ')}
+            >
+              <span class="satz-nr" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span class="sr-only">Satz {i + 1}: </span>
+              {satz}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <fieldset class="wahl">
+      <legend class="rolle">Erklärung wählen</legend>
+      <div class="reiter">
+        {
+          erklaerungen.map((e, i) => (
+            <label class="reiter-label">
+              <input
+                class="sr-only"
+                type="radio"
+                name="feynman-erklaerung"
+                value={e.id}
+                checked={i === 0}
+              />
+              {e.label}
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="zustaende">
+      {
+        erklaerungen.map((e) => (
+          <div class="zustand" data-z={e.id}>
+            <p class="erklaerung">
+              <span class="sr-only">Erklärung „{e.label}“: </span>
+              {e.stellen.map((stelle) =>
+                typeof stelle === 'string' ? (
+                  stelle
+                ) : 'fehlt' in stelle ? (
+                  <span class="fehlt fy-setz" style={s(befundZeit(stelle.fehlt - 1) - 0.3)}>
+                    <svg viewBox="0 0 12 14" aria-hidden="true">
+                      <path d="M1.5 12.5 6 2.5l4.5 10" />
+                    </svg>
+                    <sup class="nr">
+                      <span class="sr-only">hier fehlt etwas, Lücke </span>
+                      {stelle.fehlt}
+                    </sup>
+                  </span>
+                ) : (
+                  <>
+                    <mark
+                      class:list={['markiert fy-zieh', stelle.art]}
+                      style={s(befundZeit(stelle.nr - 1) - 0.4)}
+                    >
+                      {stelle.text}
+                    </mark>
+                    <sup class="nr">
+                      <span class="sr-only">
+                        {stelle.art === 'luecke' ? 'Lücke' : 'Widerspruch'}{' '}
+                      </span>
+                      {stelle.nr}
+                    </sup>
+                  </>
+                ),
+              )}
+            </p>
+
+            <div class="pruefer">
+              <p class="rolle rolle-pruefer fy-schreib" style={s(0.4)}>
+                Prüfer · Kernaussage {e.kernaussage}
+              </p>
+              <ol class="befunde">
+                {e.befunde.map((b, k) => (
+                  <li
+                    class:list={['befund fy-schreib', { gestrichen: b.gestrichen }]}
+                    style={s(befundZeit(k))}
+                  >
+                    <span class="befund-nr" aria-hidden="true">
+                      {b.gestrichen ? '–' : k + 1}
+                    </span>
+                    <span class="befund-text">
+                      <span class="befund-art">{b.art}:</span>{' '}
+                      <span
+                        class:list={['befund-satz', { 'fy-streich': b.gestrichen }]}
+                        style={b.gestrichen ? s(befundZeit(k) + 1.2) : undefined}
+                      >
+                        {b.text}
+                      </span>
+                      {b.gestrichen && <span class="sr-only"> (gestrichen)</span>}
+                      <span class="protokoll">
+                        <span>Beleg: {b.beleg ? `Satz ${b.beleg}` : 'keiner'}</span>
+                        {b.pruefungen.map((p, j) => (
+                          <>
+                            {' · '}
+                            <span
+                              class:list={['fy-schreib', { durchgefallen: !p.ok }]}
+                              style={s(befundZeit(k) + 0.35 + j * 0.3)}
+                            >
+                              {p.name} {p.wert}
+                            </span>
+                          </>
+                        ))}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <p class="hinweis fy-schreib" style={s(nachBefunden(e))}>
+                {e.hinweis}
+              </p>
+            </div>
+
+            <div class="tutor fy-schreib" style={s(nachBefunden(e) + 0.7)}>
+              <p class="rolle rolle-tutor">{e.tutor ? 'Tutor fragt nach' : 'Tutor'}</p>
+              <p class:list={['frage', { leer: !e.tutor }]}>
+                {e.tutor ? `„${e.tutor}“` : 'Keine Rückfrage. Es gibt nichts nachzuerklären.'}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="fuss">
+      <svg class="ohne-netz" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 18h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.5 4.5 0 0 0 7 18Z"></path>
+        <path d="M3 3l18 18"></path>
+      </svg>
+      Prüfer, Grounding und Tutor · läuft lokal · kein Netz
+    </p>
+  </div>
+  <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Szene</span> · Eine Tafel, nachgestellt: Der Prüfer prüft die gewählte
+    Erklärung gegen den Lerntext. Die Prüfung ist vorbereitet, im Browser läuft kein Sprachmodell. Das
+    Eis ist einer der beiden Ausgangsfälle des Prototyps. Kein Screenshot.
+  </figcaption>
+</figure>
+
+<style>
+  .fy-figur {
+    --fy-tafel: oklch(0.32 0.04 165);
+    --fy-kreide: oklch(0.95 0.01 90);
+    --fy-kreide-matt: oklch(0.8 0.02 140);
+    --fy-gelb: oklch(0.88 0.13 90);
+    --fy-blau: oklch(0.86 0.07 230);
+    --fy-rahmen: oklch(0.55 0.06 60);
+    /* Deckstreifen über einem Strich, der noch nicht gezogen ist: Tafel samt Kreidestaub. */
+    --fy-deckung: oklch(0.335 0.037 165);
+    /* Kreidestriche als Kachel; die Farbe ist #f9d46b, also --fy-gelb. */
+    --fy-welle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 3.5Q3 .8 6 3.5T12 3.5' fill='none' stroke='%23f9d46b' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+    --fy-zacke: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='7'%3E%3Cpath d='M0 6 4 1 8 6' fill='none' stroke='%23f9d46b' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");
+    /* Kreidestaub: feines Rauschen und zwei gewischte Stellen. */
+    --fy-staub: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /*
+   * Die Tafel hängt rechts: Ihre Fläche läuft über die Spalte hinaus bis an
+   * den rechten Fensterrand, ihr Inhalt bleibt in der Spalte. Die Seite macht
+   * ihren Kopf dafür zum Container; `100cqw` ist dann die Spaltenbreite und
+   * der Abstand zum Fensterrand die halbe Differenz zu `100vw`. Ohne
+   * Container bleibt die Fläche in der Spalte. Holzrahmen nur oben, links und
+   * unten, unten breiter als Ablage.
+   */
+  .tafel {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.75rem 0 1.75rem 1.75rem;
+    color: var(--fy-kreide);
+  }
+  .tafel::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc((100cqw - 100vw) / 2) 0 0;
+    z-index: -1;
+    border: 0.5rem solid var(--fy-rahmen);
+    border-right: 0;
+    border-bottom-width: 0.75rem;
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    background:
+      var(--fy-staub),
+      radial-gradient(ellipse 30rem 12rem at 12rem 30%, oklch(1 0 0 / 0.035), transparent 70%),
+      radial-gradient(ellipse 24rem 10rem at 34rem 78%, oklch(1 0 0 / 0.03), transparent 70%),
+      var(--fy-tafel);
+  }
+  /* Ein Stück Kreide in der Ablage. */
+  .tafel::after {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    bottom: 0.2rem;
+    width: 1.75rem;
+    height: 0.3rem;
+    border-radius: 2px;
+    background: var(--fy-kreide);
+  }
+  @media (min-width: 640px) {
+    .tafel {
+      padding: 2.25rem 0 2.25rem 2.25rem;
+      gap: 1.75rem;
+    }
+  }
+
+  .tafel :focus-visible,
+  .reiter-label:has(:focus-visible) {
+    outline: 2px solid var(--fy-kreide);
+    outline-offset: 2px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .rolle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fy-kreide-matt);
+  }
+  .rolle-pruefer {
+    color: var(--fy-gelb);
+  }
+  .rolle-tutor {
+    color: var(--fy-blau);
+  }
+
+  /* Lerntext: klein und matt, bis ein Befund ihn als Beleg aufruft. */
+  .thema {
+    margin-top: 0.375rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .lerntext {
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.25rem;
+    max-width: 52ch;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--fy-kreide-matt);
+  }
+  .satz {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+  /* Ruft ein Befund den Satz als Beleg auf, kreist der Prüfer seine Nummer ein. */
+  .satz-nr {
+    justify-self: start;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 1.5px solid transparent;
+    border-radius: 50%;
+    font-size: 0.6875rem;
+    line-height: calc(1.125rem - 3px);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Die Wahl: drei Reiter in Kreide, der gewählte mit Kreidestrich darunter. */
+  .wahl {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .reiter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+    margin-top: 0.25rem;
+    border-bottom: 1px solid oklch(0.8 0.02 140 / 0.35);
+  }
+  .reiter-label {
+    position: relative;
+    padding: 0.625rem 0;
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--fy-kreide-matt);
+    cursor: pointer;
+    transition: color var(--duration-base) var(--ease-quiet);
+  }
+  .reiter-label::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--fy-kreide);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-quiet);
+  }
+  .reiter-label:hover,
+  .reiter-label:has(:checked) {
+    color: var(--fy-kreide);
+  }
+  .reiter-label:has(:checked)::after {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reiter-label,
+    .reiter-label::after {
+      transition: none;
+    }
+  }
+
+  .zustaende {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .zustand {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+
+  .erklaerung {
+    max-width: 30ch;
+    font-size: 1.3125rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  @media (min-width: 640px) {
+    .erklaerung {
+      font-size: 1.5rem;
+    }
+  }
+
+  /*
+   * Markierungen des Prüfers: Welle für eine Lücke, Zacke für einen
+   * Widerspruch, dazu die Nummer des Befunds, damit nichts nur an der Farbe
+   * hängt. Die erste Hintergrundschicht ist ein Deckstreifen in Tafelgrün;
+   * schrumpft er, zieht sich der Strich über alle Zeilen von links auf.
+   */
+  .markiert {
+    padding-bottom: 0.3em;
+    color: inherit;
+    background-color: transparent;
+    background-image: linear-gradient(var(--fy-deckung), var(--fy-deckung)), var(--fy-welle);
+    background-repeat: no-repeat, repeat-x;
+    background-position:
+      right bottom,
+      0 100%;
+    background-size:
+      0% 8px,
+      12px 7px;
+  }
+  .markiert.widerspruch {
+    background-image: linear-gradient(var(--fy-deckung), var(--fy-deckung)), var(--fy-zacke);
+    background-size:
+      0% 8px,
+      8px 7px;
+  }
+  .nr {
+    margin-left: 0.1em;
+    font-size: 0.55em;
+    font-weight: 600;
+    line-height: 0;
+    color: var(--fy-gelb);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Einfügezeichen: Hier fehlt etwas. */
+  .fehlt {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .fehlt svg {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.6em;
+    margin-left: 0.05em;
+    vertical-align: -0.35em;
+    fill: none;
+    stroke: var(--fy-gelb);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pruefer {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .befunde {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .befund {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--fy-gelb);
+    transform: rotate(-0.4deg);
+    transform-origin: left center;
+  }
+  .befund-nr {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .befund-art {
+    font-weight: 600;
+  }
+  .protokoll {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--fy-kreide-matt);
+  }
+  /* Jede Prüfung bricht als Ganzes um, damit das Anschreiben sie nicht zerteilt. */
+  .protokoll > span {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .protokoll .durchgefallen {
+    color: var(--fy-gelb);
+    font-weight: 600;
+  }
+  /* Vom Grounding gestrichen: Kreidestrich durch den Text, der Text wird matt. */
+  .gestrichen .befund-satz,
+  .gestrichen .befund-art {
+    color: var(--fy-kreide-matt);
+  }
+  .fy-streich {
+    background: linear-gradient(var(--fy-gelb), var(--fy-gelb)) no-repeat 0 58% / 100% 2px;
+  }
+  @media (forced-colors: active) {
+    .fy-streich {
+      text-decoration: line-through;
+    }
+  }
+  .hinweis {
+    max-width: 48ch;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--fy-kreide-matt);
+  }
+
+  .tutor {
+    display: grid;
+    gap: 0.375rem;
+  }
+  .frage {
+    max-width: 36ch;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--fy-blau);
+  }
+  .frage.leer {
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: var(--fy-kreide-matt);
+  }
+
+  .fuss {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fy-kreide-matt);
+  }
+  .ohne-netz {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /*
+   * Umschalten, nur wo der Browser `:has()` kennt: Alle drei Erklärungen
+   * liegen in derselben Rasterzelle, damit die Tafel beim Wechsel nicht
+   * springt; sichtbar ist die gewählte. Der Lerntext zeigt ihre Belege.
+   */
+  @supports selector(:has(*)) {
+    .zustand {
+      grid-area: 1 / 1;
+    }
+    .tafel:has(input[value='knapp']:not(:checked)) [data-z='knapp'],
+    .tafel:has(input[value='verdreht']:not(:checked)) [data-z='verdreht'],
+    .tafel:has(input[value='gruendlich']:not(:checked)) [data-z='gruendlich'] {
+      visibility: hidden;
+    }
+    .tafel:has(input[value='knapp']:checked) .beleg-knapp,
+    .tafel:has(input[value='verdreht']:checked) .beleg-verdreht {
+      color: var(--fy-kreide);
+    }
+    .tafel:has(input[value='knapp']:checked) .beleg-knapp .satz-nr,
+    .tafel:has(input[value='verdreht']:checked) .beleg-verdreht .satz-nr {
+      color: var(--fy-gelb);
+      border-color: var(--fy-gelb);
+    }
+  }
+
+  /*
+   * Bewegung: Der Prüfer schreibt seine Anmerkungen nacheinander an, im Takt
+   * von `--t`. Ohne Bewegung steht alles fertig da. Wechselt die Wahl, nimmt
+   * die Regel am Ende den verborgenen Erklärungen die Animation; kommt eine
+   * zurück, beginnt ihre Prüfung von vorn.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .fy-schreib,
+    .fy-zieh,
+    .fy-setz,
+    .fy-streich {
+      animation-duration: 700ms;
+      animation-timing-function: var(--ease-quiet);
+      animation-fill-mode: both;
+      animation-delay: var(--t, 0s);
+    }
+    .fy-schreib {
+      animation-name: fy-schreiben;
+    }
+    .fy-zieh {
+      animation-name: fy-ziehen;
+      animation-duration: 650ms;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fy-zieh.widerspruch {
+      animation-name: fy-ziehen-zacke;
+    }
+    .fy-setz {
+      animation-name: fy-setzen;
+      animation-duration: 320ms;
+    }
+    .fy-streich {
+      animation-name: fy-streichen;
+      animation-duration: 500ms;
+    }
+
+    @supports selector(:has(*)) {
+      .tafel:has(input[value='knapp']:checked) .beleg-knapp,
+      .tafel:has(input[value='knapp']:checked) .beleg-knapp .satz-nr {
+        animation: fy-beleg-knapp 450ms var(--ease-quiet) var(--beleg-knapp) both;
+      }
+      .tafel:has(input[value='verdreht']:checked) .beleg-verdreht,
+      .tafel:has(input[value='verdreht']:checked) .beleg-verdreht .satz-nr {
+        animation: fy-beleg-verdreht 450ms var(--ease-quiet) var(--beleg-verdreht) both;
+      }
+      .tafel:has(input[value='knapp']:not(:checked)) [data-z='knapp'] *,
+      .tafel:has(input[value='verdreht']:not(:checked)) [data-z='verdreht'] *,
+      .tafel:has(input[value='gruendlich']:not(:checked)) [data-z='gruendlich'] * {
+        animation-name: none;
+      }
+    }
+  }
+
+  @keyframes fy-schreiben {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes fy-ziehen {
+    from {
+      background-size:
+        100% 8px,
+        12px 7px;
+    }
+  }
+  @keyframes fy-ziehen-zacke {
+    from {
+      background-size:
+        100% 8px,
+        8px 7px;
+    }
+  }
+  @keyframes fy-setzen {
+    from {
+      opacity: 0;
+      transform: translateY(0.25em);
+    }
+  }
+  @keyframes fy-streichen {
+    from {
+      background-size: 0% 2px;
+    }
+  }
+  @keyframes fy-beleg-knapp {
+    from {
+      color: var(--fy-kreide-matt);
+      border-color: transparent;
+    }
+  }
+  @keyframes fy-beleg-verdreht {
+    from {
+      color: var(--fy-kreide-matt);
+      border-color: transparent;
+    }
+  }
+</style>
+
+<script>
+  // Die Randnotizen der Seite („An der Tafel: …“) wählen die passende
+  // Erklärung, bevor der Anker zur Tafel springt. Ohne Skript bleiben sie
+  // verborgen, denn dann könnten sie nicht halten, was sie sagen.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-tafel-zeigt]')) {
+    const wahl = document.querySelector<HTMLInputElement>(
+      `.tafel input[value="${link.dataset.tafelZeigt}"]`,
+    )
+    if (!wahl) continue
+    link.hidden = false
+    link.addEventListener('click', () => {
+      wahl.checked = true
+      wahl.focus({ preventScroll: true })
+    })
+  }
+</script>

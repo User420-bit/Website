@@ -1,0 +1,624 @@
+---
+/**
+ * NoteList: Die Seite ist die Fläche. Statt einer Bühne unter der H1 liegt
+ * die ganze Referenz auf Punktpapier wie in der App: Die H1 ist die
+ * Wurzelnotiz, jeder Block der Seite hängt als Notiz an einem Faden, jeder
+ * Listenpunkt als Kindnotiz daran. Ein Stammbaum aus dem Inhalt der Seite
+ * selbst, keine Beispieldaten.
+ *
+ * Die Fäden sind CSS und Inline-SVG und stehen ohne Skript. Mit Bewegung
+ * zeichnen sie sich beim Scrollen (`animation-timeline: view()`), ohne steht
+ * der Endzustand. Die Suche (Cmd K) und das Ziehen der Fläche bringt
+ * `notelist/Suche.astro` mit; ohne Skript bleibt davon ein stiller Hinweis.
+ *
+ * Gerendert wird die Fläche in den Slot `hero` von ProjectPage, deshalb steht
+ * hier die einzige H1 der Seite. Was NotelistPage mit `hide` ausblendet
+ * (Meta-Liste, Links, Bilder, Text, Listen, Code), zeigt diese Datei mit
+ * denselben Daten als Notizen.
+ *
+ * Die Stile sind global, weil die Fäden in einem wiederholten Schnipsel
+ * (`FADEN`) und im Markdown stecken, die keine Astro-Scoping-Attribute
+ * tragen. Alle Projektseiten teilen sich eine Route und damit ein Stylesheet;
+ * dass nichts davon auf andere Seiten wirkt, sichert allein das Präfix `nl-`.
+ */
+import { render } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
+import CodeBlock from '@/components/CodeBlock.astro'
+import KindLabel from '@/components/KindLabel.astro'
+import type { Projekt } from '@/components/ProjectPage.astro'
+import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
+import Suche from '@/components/scenes/notelist/Suche.astro'
+import { href } from '@/lib/site'
+
+interface Props {
+  projekt: Projekt
+}
+
+const { projekt } = Astro.props
+const { Content } = await render(projekt)
+const data = projekt.data
+
+/** Faden zur Elternnotiz: das Stück Stamm, an dem die Notiz hängt, und der Bogen hinein. */
+const FADEN =
+  '<span class="nl-stamm" aria-hidden="true"></span>' +
+  '<svg class="nl-knick" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 0C0 .6 .4 1 1 1"/></svg>'
+
+const eckdaten = [
+  { label: 'Art', wert: data.kind, art: 'kind' as const },
+  { label: 'Zeitraum', wert: data.period, art: 'numeric' as const },
+  ...(data.status ? [{ label: 'Stand', wert: data.status }] : []),
+  { label: 'Technik', wert: data.techStack.join(' · '), art: 'mono' as const },
+]
+const wertKlasse = {
+  kind: '',
+  numeric: 'tabular-nums',
+  mono: 'font-mono text-xs leading-5 text-fg-muted',
+}
+
+/** Die Blöcke der Seite in der Reihenfolge des gemeinsamen Körpers. */
+const listen = [
+  { id: 'funktionen', titel: 'Funktionen', punkte: data.features },
+  { id: 'entscheidungen', titel: 'Technische Entscheidungen', punkte: data.engineering },
+].filter((liste) => liste.punkte.length > 0)
+// Erkenntnisse laufen in voller Tinte, wie die Randnotiz im Werkstattbuch.
+const erkenntnisse = { punkte: data.learnings }
+---
+
+<div class="nl" data-nl-flaeche>
+  <div class="nl-leiste">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/projekte/')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
+    </a>
+    <Suche />
+  </div>
+
+  <div class="nl-karte nl-wurzel" id="n-wurzel" data-notiz data-ort="Wurzel">
+    <h1 class="display m-0 text-4xl font-semibold text-balance sm:text-5xl">{data.title}</h1>
+    <p class="prose-flow mt-4 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      {data.summary}
+    </p>
+  </div>
+
+  <div class="nl-baum">
+    <p class="nl-rand">
+      <span class="nl-stamm" aria-hidden="true"></span>
+      <span class="font-medium text-fg">Szene</span> · Diese Seite liegt auf einer Fläche wie in NoteList:
+      Jeder Block ist eine Notiz, und die Fäden zeigen, woran er hängt. Kein Screenshot.
+    </p>
+
+    <div class="nl-ast nl-blatt" data-knoten>
+      <Fragment set:html={FADEN} />
+      <dl class="nl-karte nl-eckdaten" id="n-eckdaten" data-notiz data-ort={data.title}>
+        {
+          eckdaten.map((zeile) => (
+            <div class="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 py-2 text-sm">
+              <dt class="text-fg-muted">{zeile.label}</dt>
+              <dd class:list={['m-0', zeile.art ? wertKlasse[zeile.art] : 'prose-flow']}>
+                {zeile.art === 'kind' ? <KindLabel kind={zeile.wert} /> : zeile.wert}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    {
+      (data.live || data.github) && (
+        <div class="nl-ast nl-blatt" data-knoten>
+          <Fragment set:html={FADEN} />
+          <ul class="nl-karte nl-links m-0 flex list-none flex-wrap gap-3">
+            {data.live && (
+              <li>
+                <Button href={data.live} external>
+                  Live ansehen
+                </Button>
+              </li>
+            )}
+            {data.github && (
+              <li>
+                <Button href={data.github} variant="secondary" external>
+                  Code auf GitHub
+                </Button>
+              </li>
+            )}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      data.screenshots.length > 0 && (
+        <section class="nl-ast" data-knoten aria-labelledby="h-bilder">
+          <Fragment set:html={FADEN} />
+          <div class="nl-karte nl-kopf" id="n-bilder" data-notiz data-ort={data.title}>
+            <h2 id="h-bilder" class="nl-titel">
+              Bilder
+            </h2>
+          </div>
+          <div class="nl-kinder">
+            <div class="nl-kind nl-frei" data-knoten>
+              <Fragment set:html={FADEN} />
+              <ScreenshotGallery shots={data.screenshots} title={data.title} />
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="nl-ast" data-knoten aria-labelledby="h-worum">
+      <Fragment set:html={FADEN} />
+      <div class="nl-karte nl-kopf" id="n-worum" data-notiz data-ort={data.title}>
+        <h2 id="h-worum" class="nl-titel">Worum es geht</h2>
+      </div>
+      <div class="nl-kinder">
+        <div class="nl-kind" data-knoten>
+          <Fragment set:html={FADEN} />
+          <div
+            class="nl-karte prose-flow space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0"
+            id="n-worum-1"
+            data-notiz
+            data-ort="Worum es geht"
+          >
+            <Content />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {
+      listen.map((liste) => (
+        <section class="nl-ast" data-knoten aria-labelledby={`h-${liste.id}`}>
+          <Fragment set:html={FADEN} />
+          <div class="nl-karte nl-kopf" id={`n-${liste.id}`} data-notiz data-ort={data.title}>
+            <h2 id={`h-${liste.id}`} class="nl-titel">
+              {liste.titel}
+            </h2>
+          </div>
+          <ul class="nl-kinder m-0 list-none p-0">
+            {liste.punkte.map((punkt, i) => (
+              <li class="nl-kind" data-knoten>
+                <Fragment set:html={FADEN} />
+                <p
+                  class="nl-karte prose-flow text-fg-muted"
+                  id={`n-${liste.id}-${i + 1}`}
+                  data-notiz
+                  data-ort={liste.titel}
+                >
+                  {punkt}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    {
+      data.codeExample && (
+        <section class="nl-ast" data-knoten aria-labelledby="h-code">
+          <Fragment set:html={FADEN} />
+          <div class="nl-karte nl-kopf" id="n-code" data-notiz data-ort={data.title}>
+            <h2 id="h-code" class="nl-titel">
+              Code
+            </h2>
+          </div>
+          <div class="nl-kinder">
+            <div class="nl-kind nl-frei" id="n-code-1" data-knoten data-notiz data-ort="Code">
+              <Fragment set:html={FADEN} />
+              <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      erkenntnisse.punkte.length > 0 && (
+        <section class="nl-ast" data-knoten aria-labelledby="h-erkenntnisse">
+          <Fragment set:html={FADEN} />
+          <div class="nl-karte nl-kopf" id="n-erkenntnisse" data-notiz data-ort={data.title}>
+            <h2 id="h-erkenntnisse" class="nl-titel">
+              Erkenntnisse
+            </h2>
+          </div>
+          <ul class="nl-kinder m-0 list-none p-0">
+            {erkenntnisse.punkte.map((punkt, i) => (
+              <li class="nl-kind" data-knoten>
+                <Fragment set:html={FADEN} />
+                <p
+                  class="nl-karte prose-flow text-fg"
+                  id={`n-erkenntnisse-${i + 1}`}
+                  data-notiz
+                  data-ort="Erkenntnisse"
+                >
+                  {punkt}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</div>
+
+<style is:global>
+  /*
+   * Registriert, damit die Farbe eines Fadens beim Aufleuchten übergeht statt
+   * zu springen. Jedes Stammstück hat zwei Farben: bis zum eigenen Bogen
+   * (`oben`) und weiter zu den nächsten Geschwistern (`unten`).
+   */
+  @property --nl-f-oben {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: transparent;
+  }
+  @property --nl-f-unten {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: transparent;
+  }
+
+  .nl {
+    /* Geometrie der Fäden, alles relativ zur linken Kante einer Notiz. */
+    --nl-x: 1rem; /* Stamm: Abstand von der linken Kante der Elternnotiz */
+    --nl-einzug: 1.5rem; /* vom Stamm bis zur Kante der Kindnotiz */
+    --nl-c: 1.375rem; /* Anschluss: Mitte der ersten Zeile einer Notiz */
+    --nl-r: 1rem; /* Höhe des Bogens */
+    --nl-spalt: 0.625rem; /* Abstand Kopfnotiz zur ersten Kindnotiz (schmal) */
+    /* Farben nur dieser Fläche (Bühnenlizenz), mit Dunkel-Zwilling. */
+    --nl-punkt: oklch(0.84 0.006 80);
+    --nl-faden: oklch(0.68 0.008 80);
+    --nl-rand: oklch(0.86 0.005 80);
+    position: relative;
+    isolation: isolate;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .nl {
+      --nl-punkt: oklch(0.32 0.006 80);
+      --nl-faden: oklch(0.52 0.008 80);
+      --nl-rand: oklch(0.36 0.006 80);
+    }
+  }
+  :root[data-theme='dark'] .nl {
+    --nl-punkt: oklch(0.32 0.006 80);
+    --nl-faden: oklch(0.52 0.008 80);
+    --nl-rand: oklch(0.36 0.006 80);
+  }
+  @media (min-width: 64rem) {
+    .nl {
+      --nl-x: 1.5rem;
+      --nl-einzug: 2rem;
+    }
+  }
+
+  /*
+   * Punktpapier über die volle Fensterbreite, vom Header bis unter die letzte
+   * Notiz, oben und unten ausgeblendet statt gerahmt: kein Kasten, eine
+   * Fläche. Den Überstand um die Scrollleiste schneidet `overflow-x: clip`
+   * auf `<body>` ab (global.css), wie bei der Bühne.
+   */
+  .nl::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -3rem calc(50% - 50vw) -3rem;
+    background-image: radial-gradient(circle, var(--nl-punkt) 1px, transparent 1.25px);
+    background-size: 1.25rem 1.25rem;
+    background-position: center top;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 4rem,
+      #000 calc(100% - 7rem),
+      transparent
+    );
+  }
+  @media (min-width: 40rem) {
+    .nl::before {
+      inset-block-start: -4rem;
+    }
+  }
+
+  .nl-leiste {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    min-height: 2.5rem;
+  }
+
+  /* Notizen: flach, 4 px, eine Linie als Kante, Fläche nur, damit das Papier den Text nicht stört. */
+  .nl-karte {
+    position: relative;
+    margin: 0;
+    max-width: 65ch;
+    padding: 0.625rem 0.875rem;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--nl-rand);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--duration-base) var(--ease-quiet);
+  }
+  .nl-wurzel {
+    margin-top: 1.5rem;
+    max-width: 42rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    border-color: var(--color-fg);
+  }
+  @media (min-width: 40rem) {
+    .nl-wurzel {
+      padding: 1.5rem 1.75rem 1.75rem;
+    }
+  }
+  .nl-kopf {
+    width: fit-content;
+    min-width: 10rem;
+    padding-top: 0.5rem;
+  }
+  .nl-titel {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  .nl-eckdaten {
+    padding-block: 0.125rem;
+    width: 100%;
+    max-width: 34rem;
+  }
+  .nl-eckdaten > div + div {
+    border-top: 1px solid var(--color-border);
+  }
+  .nl-links {
+    padding: 0.5rem;
+  }
+  .nl-frei {
+    max-width: 62rem;
+  }
+  .nl-frei > div,
+  .nl-frei > pre {
+    margin-top: 0;
+  }
+
+  /* Der Baum: ein Stamm links, jede Notiz hängt mit einem Bogen daran. */
+  .nl-baum {
+    position: relative;
+    padding-left: calc(var(--nl-x) + var(--nl-einzug));
+  }
+  .nl-rand,
+  .nl-ast,
+  .nl-kind {
+    position: relative;
+  }
+  .nl-rand {
+    margin: 0;
+    max-width: 60ch;
+    padding-block: 1.25rem 1.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--color-fg-muted);
+  }
+  .nl-ast {
+    padding-bottom: 2.25rem;
+  }
+  .nl-ast:last-child {
+    padding-bottom: 0;
+  }
+  .nl-ast:not(.nl-blatt) {
+    display: grid;
+    row-gap: var(--nl-spalt);
+    align-items: start;
+  }
+  .nl-kinder {
+    padding-left: calc(var(--nl-x) + var(--nl-einzug));
+  }
+  .nl-kind {
+    padding-bottom: 0.625rem;
+  }
+  .nl-kind:last-child {
+    padding-bottom: 0;
+  }
+
+  .nl-stamm {
+    --nl-f-oben: var(--nl-faden);
+    --nl-f-unten: var(--nl-faden);
+    /* Wo der Bogen abzweigt, gemessen vom oberen Ende dieses Stammstücks. */
+    --nl-split: calc(var(--nl-c) - var(--nl-r) - var(--nl-stamm-oben, 0px));
+    position: absolute;
+    top: var(--nl-stamm-oben, 0px);
+    bottom: 0;
+    left: calc(-1 * var(--nl-einzug) - 0.75px);
+    width: 1.5px;
+    background-image: linear-gradient(
+      to bottom,
+      var(--nl-f-oben) var(--nl-split),
+      var(--nl-f-unten) var(--nl-split)
+    );
+    transform-origin: top;
+    transition:
+      --nl-f-oben var(--duration-base) var(--ease-quiet),
+      --nl-f-unten var(--duration-base) var(--ease-quiet);
+  }
+  /* Die letzte Notiz einer Reihe: Der Stamm endet in ihrem Bogen. */
+  .nl-ast:last-child > .nl-stamm,
+  .nl-kind:last-child > .nl-stamm {
+    bottom: auto;
+    height: max(var(--nl-split), 0px);
+  }
+  /* Schmal hängt die erste Kindnotiz unter ihrer Kopfnotiz: Der Stamm reicht hinauf. */
+  .nl-kind:first-child {
+    --nl-stamm-oben: calc(-1 * var(--nl-spalt));
+  }
+
+  .nl-knick {
+    position: absolute;
+    top: calc(var(--nl-c) - var(--nl-r));
+    left: calc(-1 * var(--nl-einzug));
+    width: var(--nl-einzug);
+    height: var(--nl-r);
+    overflow: visible;
+    fill: none;
+    stroke: var(--nl-faden);
+    stroke-width: 1.5;
+    transition: stroke var(--duration-base) var(--ease-quiet);
+  }
+  .nl-knick path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  /*
+   * Breit: Kopfnotiz links, ihre Kinder rechts daneben, wie ein Stammbaum in
+   * der App. Der Stamm der Kinder läuft mittig im Spalt; die erste Kindnotiz
+   * hängt waagerecht an der Kopfnotiz.
+   */
+  @media (min-width: 64rem) {
+    .nl-ast:not(.nl-blatt) {
+      grid-template-columns: 13rem minmax(0, 1fr);
+      column-gap: calc(2 * var(--nl-einzug));
+    }
+    .nl-kopf {
+      width: auto;
+      min-width: 0;
+    }
+    .nl-kinder {
+      padding-left: 0;
+    }
+    .nl-kind:first-child {
+      --nl-stamm-oben: var(--nl-c);
+    }
+    .nl-kind:first-child > .nl-knick {
+      top: calc(var(--nl-c) - 0.75px);
+      height: 1.5px;
+    }
+    /* Der Steg von der Kopfnotiz zum Stamm der Kinder gehört allen Kindern zugleich. */
+    .nl-kind:first-child::before {
+      content: '';
+      position: absolute;
+      top: calc(var(--nl-c) - 0.75px);
+      left: calc(-2 * var(--nl-einzug));
+      width: var(--nl-einzug);
+      height: 1.5px;
+      background-color: var(--nl-faden);
+      transition: background-color var(--duration-base) var(--ease-quiet);
+    }
+    :where(.nl-kinder:has(.nl-karte:is(:hover, :focus-within))) > .nl-kind:first-child::before {
+      background-color: var(--color-fg);
+    }
+    .nl-kinder:has(> [data-pfad]) > .nl-kind:first-child::before {
+      background-color: var(--color-accent);
+    }
+  }
+
+  /*
+   * Wer über eine Notiz fährt oder sie fokussiert, sieht ihre Linie bis zur
+   * Wurzel: Die Fäden dunkeln auf Tinte. Reines CSS; `:where()` hält die
+   * Spezifität unten, damit das Orange der Suche immer gewinnt.
+   */
+  .nl-karte:not(.nl-wurzel):is(:hover, :focus-within) {
+    border-color: color-mix(in oklch, var(--color-fg) 40%, transparent);
+  }
+  :where(.nl-rand, .nl-ast):where(:has(~ .nl-ast .nl-karte:is(:hover, :focus-within))) > .nl-stamm,
+  :where(.nl-kind):where(:has(~ .nl-kind .nl-karte:is(:hover, :focus-within))) > .nl-stamm {
+    --nl-f-oben: var(--color-fg);
+    --nl-f-unten: var(--color-fg);
+  }
+  :where(.nl-ast, .nl-kind):where(:has(.nl-karte:is(:hover, :focus-within))) > .nl-stamm {
+    --nl-f-oben: var(--color-fg);
+  }
+  :where(.nl-ast, .nl-kind):where(:has(.nl-karte:is(:hover, :focus-within))) > .nl-knick {
+    stroke: var(--color-fg);
+  }
+
+  /* Suche: Treffer und der Pfad von der Wurzel zu ihnen leuchten im Werkstatt-Orange. */
+  .nl .nl-karte[data-treffer] {
+    border-color: var(--color-accent);
+  }
+  [data-durch] > .nl-stamm {
+    --nl-f-oben: var(--color-accent);
+    --nl-f-unten: var(--color-accent);
+  }
+  [data-pfad] > .nl-stamm {
+    --nl-f-oben: var(--color-accent);
+  }
+  [data-pfad] > .nl-knick {
+    stroke: var(--color-accent);
+  }
+
+  /*
+   * Die Fläche lässt sich mit der Maus ziehen wie in der App (nur mit Skript,
+   * nur auf dem Papier zwischen den Notizen). Tastatur und Touch scrollen wie
+   * immer.
+   */
+  @media (pointer: fine) {
+    .nl[data-ziehbar] {
+      cursor: grab;
+    }
+    .nl[data-ziehbar] :is(.nl-karte, .nl-rand, .nl-leiste, .nl-frei) {
+      cursor: auto;
+    }
+    .nl[data-zieht],
+    .nl[data-zieht] * {
+      cursor: grabbing;
+      user-select: none;
+    }
+  }
+
+  /*
+   * Die Fäden zeichnen sich, sobald ihre Notiz ins Bild kommt: der Stamm von
+   * oben nach unten, der Bogen von links in die Notiz. Ohne Unterstützung
+   * oder mit reduzierter Bewegung stehen sie fertig. Langschreibweise mit
+   * Absicht: Der Minifier zöge `animation-timeline` sonst in die Kurzform
+   * `animation`, und die verwirft der Browser als Ganzes.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /*
+       * Jedes Stück zeichnet genau so weit, wie es über einer gedachten Linie
+       * 12vh über der Fensterkante liegt. So wandert eine Feder den Baum
+       * hinunter, statt dass jedes Stück für sich wächst.
+       */
+      .nl-stamm,
+      .nl-knick {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry calc(0% + 12vh) entry calc(100% + 12vh);
+      }
+      .nl-stamm {
+        animation-name: nl-wachsen;
+      }
+      .nl-knick {
+        animation-name: nl-ziehen;
+        animation-range: entry calc(0% + 12vh) entry calc(100% + 12vh + 2rem);
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nl-karte,
+    .nl-stamm,
+    .nl-knick,
+    .nl-kind::before {
+      transition: none;
+    }
+  }
+
+  @keyframes nl-wachsen {
+    from {
+      transform: scaleY(0);
+    }
+  }
+  @keyframes nl-ziehen {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(-2px);
+    }
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+/**
+ * Die Seite von TIEFGANG ist der Schacht: Unter der H1 beginnt der Boden,
+ * und alles Weitere liegt in den Schichten des Spiels (TiefgangScene). Die
+ * Szene zeigt dafür selbst, was der gemeinsame Körper sonst zeigt: Meta-Liste,
+ * Links, Screenshots als Fundstücke, Text, Funktionen, Technik, Code und
+ * Erkenntnisse. Kopf, Vor/Zurück und Anfrage-Zeile bleiben die des Körpers.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import TiefgangScene from '@/components/scenes/TiefgangScene.astro'
+
+const { projekt, prev, next } = Astro.props as Props
+---
+
+<ProjectPage
+  projekt={projekt}
+  prev={prev}
+  next={next}
+  hide={['meta', 'links', 'gallery', 'text', 'features', 'engineering', 'code', 'learnings']}
+>
+  <TiefgangScene slot="stage" projekt={projekt} />
+</ProjectPage>

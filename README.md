@@ -130,6 +130,29 @@ Kachel den ersten Satz der `summary`. Die Projektseite zeigt es oben über die v
 Lightbox, ohne JavaScript. Nach einer sichtbaren Änderung am
 Projekt das Skript erneut laufen lassen und das Bild mit committen.
 
+### Eine Szene für eine Referenz
+
+Jede Projektseite kann unter H1 und Summary eine Bühne tragen: eine gezeichnete Szene über die volle
+Breite, die genau ein Merkmal des Projekts ins Bild setzt (TIEFGANG gräbt beim Scrollen tiefer,
+JustBeauty öffnet seine zwölf Seiten als Fächer). Das Konzept und die Regeln stehen in
+[`docs/PROJEKTSZENEN_PLAN.md`](docs/PROJEKTSZENEN_PLAN.md) und in `DESIGN.md` unter „Bühne der
+Projektseite“.
+
+Eine neue Referenz braucht keine Szene; ohne Eintrag sieht ihre Seite aus wie bisher. Wer eine will:
+
+1. `src/components/projekte/MeinProjektPage.astro` anlegen, nach dem Muster der vorhandenen Dateien:
+   Sie rendert den gemeinsamen Körper `ProjectPage` und füllt dessen Slots (`hero`, `stage`,
+   `after-meta`, `before-text`, `after-text`) oder blendet Teile mit `hide` aus. Die Bühne selbst liegt
+   in `src/components/scenes/MeinProjektScene.astro` mit dem Rahmen `ProjectScene` (Props `caption`,
+   `surface`, `surfaceDark`); Markup und `<style>` liegen in der Datei, ohne Bild von außen.
+2. In `src/components/projekte/index.ts` unter dem Slug eintragen.
+3. Drei Dinge prüfen: hell und dunkel, mit `prefers-reduced-motion: reduce` (dann muss der Endzustand
+   stehen), und dass die Bildunterschrift sagt, was zu sehen ist. „Kein Screenshot.“ hängt der Rahmen
+   selbst an.
+
+Eine Szene kostet etwa 100 bis 200 Zeilen und wird mit dem Projekt gepflegt. Das ist der Preis dafür,
+dass die zehn Seiten nicht gleich aussehen.
+
 ### Felder, die `null` sein dürfen
 
 `github`, `live`, `status`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity`

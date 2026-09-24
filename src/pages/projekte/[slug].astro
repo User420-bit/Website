@@ -1,14 +1,13 @@
 ---
+/**
+ * Eine Seite je Referenz. Der gemeinsame Körper steht in `ProjectPage.astro`;
+ * hat ein Projekt eine eigene Seitenkomponente unter `src/components/projekte/`,
+ * rendert die den Körper und gestaltet ihn (docs/PROJEKTSZENEN_PLAN.md).
+ */
 import type { GetStaticPaths } from 'astro'
-import { getCollection, render } from 'astro:content'
-import Arrow from '@/components/Arrow.astro'
-import Button from '@/components/Button.astro'
-import CodeBlock from '@/components/CodeBlock.astro'
-import InquiryPrompt from '@/components/InquiryPrompt.astro'
-import MetaList from '@/components/MetaList.astro'
-import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
-import BaseLayout from '@/layouts/BaseLayout.astro'
-import { href } from '@/lib/site'
+import { getCollection } from 'astro:content'
+import ProjectPage from '@/components/ProjectPage.astro'
+import { pageFor } from '@/components/projekte'
 
 export const getStaticPaths = (async () => {
   // Unveröffentlichte Projekte bekommen keine Seite und fehlen als Nachbar.
@@ -23,159 +22,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { projekt, prev, next } = Astro.props
-const { Content } = await render(projekt)
-const data = projekt.data
-
-// Wie auf der Startseite: Überschrift über dem Inhalt, Haarlinie oben.
-const block = 'mt-12 border-t border-border pt-6'
-const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
-const list = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted'
-const lists = [
-  { title: 'Funktionen', items: data.features },
-  { title: 'Technische Entscheidungen', items: data.engineering },
-]
+const Page = pageFor(projekt.id) ?? ProjectPage
 ---
 
-<BaseLayout title={`${data.title} – Klartext`} description={data.summary}>
-  <article class="py-12 sm:py-16">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
-
-    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
-      {data.title}
-    </h1>
-    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
-      {data.summary}
-    </p>
-
-    <div class="mt-8">
-      <MetaList
-        rows={[
-          { label: 'Art', value: data.kind, variant: 'kind' },
-          { label: 'Zeitraum', value: data.period, variant: 'numeric' },
-          ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
-          { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
-        ]}
-      />
-    </div>
-
-    {
-      (data.live || data.github) && (
-        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
-          {data.live && (
-            <li>
-              <Button href={data.live} external>
-                Live ansehen
-              </Button>
-            </li>
-          )}
-          {data.github && (
-            <li>
-              <Button href={data.github} variant="secondary" external>
-                Code auf GitHub
-              </Button>
-            </li>
-          )}
-        </ul>
-      )
-    }
-
-    {/* Erst das Bild, dann der Text: Der Beleg steht vor der Beschreibung. */}
-    <ScreenshotGallery shots={data.screenshots} title={data.title} />
-
-    <section class={block}>
-      <h2 class={blockTitle}>Worum es geht</h2>
-      <div
-        class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
-      >
-        <Content />
-      </div>
-    </section>
-
-    {
-      lists.map(
-        ({ title, items }) =>
-          items.length > 0 && (
-            <section class={block}>
-              <h2 class={blockTitle}>{title}</h2>
-              <ul class:list={[list, 'mt-4']}>
-                {items.map((item) => (
-                  <li class="border-b border-border pb-3">{item}</li>
-                ))}
-              </ul>
-            </section>
-          ),
-      )
-    }
-
-    {
-      data.codeExample && (
-        <section class={block}>
-          <h2 class={blockTitle}>Code</h2>
-          <div class="mt-4 min-w-0">
-            <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
-          </div>
-        </section>
-      )
-    }
-
-    {
-      /*
-      Erkenntnisse sind die Randnotiz des Werkstattbuchs: Das Label steht ueber
-      dem Text, der in voller Tinte statt in Bleistiftgrau laeuft.
-    */
-    }
-    {
-      data.learnings.length > 0 && (
-        <section class={block}>
-          <h2 class={blockTitle}>Erkenntnisse</h2>
-          <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
-            {data.learnings.map((learning) => (
-              <li class="border-b border-border pb-3">{learning}</li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <nav aria-label="Weitere Arbeiten" class="mt-16 border-t border-fg">
-      <ul class="m-0 grid list-none grid-cols-1 p-0 sm:grid-cols-2 sm:gap-x-8">
-        <li class="border-b border-border">
-          {
-            prev && (
-              <a class="group block py-4 text-fg no-underline" href={href(`/projekte/${prev.id}`)}>
-                <span class="flex items-center gap-2 text-sm text-fg-muted">
-                  <Arrow
-                    direction="left"
-                    class="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none"
-                  />
-                  Vorherige Arbeit
-                </span>
-                <span class="row-title mt-1 inline-block font-medium">{prev.data.title}</span>
-              </a>
-            )
-          }
-        </li>
-        <li class="border-b border-border sm:text-right">
-          {
-            next && (
-              <a class="group block py-4 text-fg no-underline" href={href(`/projekte/${next.id}`)}>
-                <span class="flex items-center gap-2 text-sm text-fg-muted sm:justify-end">
-                  Nächste Arbeit
-                  <Arrow class="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
-                </span>
-                <span class="row-title mt-1 inline-block font-medium">{next.data.title}</span>
-              </a>
-            )
-          }
-        </li>
-      </ul>
-    </nav>
-
-    <InquiryPrompt class="mt-10" />
-  </article>
-</BaseLayout>
+<Page projekt={projekt} prev={prev} next={next} />

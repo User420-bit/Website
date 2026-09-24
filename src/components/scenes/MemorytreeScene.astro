@@ -1,0 +1,488 @@
+---
+/**
+ * MemoryTree: dieselben Erinnerungen, vier Sichten. Acht Beispielfotos aus
+ * dem Gastzugang der App hängen als Abzüge in der Krone eines gezeichneten
+ * Baums. Der Umschalter darunter trägt die Namen der App (Baum, Zeitstrahl,
+ * Karte, Galerie) und ordnet dieselben Fotos neu: am Zeitstrahl entlang, als
+ * Markierungen auf einer Punktkarte, als Raster. Genau das ist die Idee der
+ * App, und deshalb die Szene.
+ *
+ * Kein JavaScript: Radio-Buttons, die Lage jedes Fotos steht je Sicht in
+ * CSS-Variablen, `:has()` schaltet um, `transition` führt die Fotos hinüber.
+ * Ohne `:has()` bleibt der Baum stehen und alle vier Texte stehen darunter.
+ * Beim Laden treibt der Baum aus: Äste vom Boden her, dann das Laub, dann die
+ * Fotos. Mit reduzierter Bewegung steht alles sofort, Wechsel ohne Übergang.
+ *
+ * Die Fotos sind Ausschnitte aus dem echten Galerie-Screenshot; Baum, Linie
+ * und Karte sind gezeichnet. Die Bildunterschrift sagt beides.
+ */
+import { Image } from 'astro:assets'
+import galerieScreenshot from '@/assets/projekte/memorytree-galerie.webp'
+import {
+  BODEN,
+  BREITE,
+  GROESSE,
+  HOEHE,
+  AUSTRIEB,
+  astPfade,
+  fotos,
+  kartenPunkte,
+  kronenGrund,
+  laub,
+  laubVorn,
+  stammLicht,
+} from './memorytree/geometrie'
+
+export interface Sicht {
+  wert: 'baum' | 'zeit' | 'karte' | 'galerie'
+  name: string
+  /** Was die App in dieser Sicht zeigt, aus der Bildunterschrift des Screenshots. */
+  text: string
+  /** id der Lightbox mit dem echten Screenshot dieser Sicht. */
+  bild: string
+}
+
+interface Props {
+  sichten: Sicht[]
+  class?: string
+}
+
+const { sichten, class: className } = Astro.props
+
+const lage = (f: (typeof fotos)[number], i: number) =>
+  [
+    `--i: ${i}`,
+    `--ax: ${f.ausschnitt.x}`,
+    `--ay: ${f.ausschnitt.y}`,
+    `--baum-s: ${f.baum.s}`,
+    ...(['baum', 'zeit', 'karte', 'galerie'] as const).map(
+      (s) => `--${s}-x: ${f[s].x}; --${s}-y: ${f[s].y}; --${s}-r: ${f[s].r}`,
+    ),
+  ].join('; ')
+
+/* Größen je Sicht und der Punkt, von dem aus die Krone austreibt, als Variablen für das CSS. */
+const wurzel = [
+  `--mt-austrieb: ${AUSTRIEB.x}px ${AUSTRIEB.y}px`,
+  ...Object.entries(GROESSE).map(([sicht, s]) => `--${sicht}-s: ${s}`),
+].join('; ')
+
+/* Das achte Foto hängt an zwei Fäden unter dem rechten Ast, wie die Schaukel in der App. */
+const faden = fotos[7].baum
+const zeitLinie = fotos.map((f) => f.zeit)
+---
+
+<figure class:list={['memo m-0', className]} style={wurzel}>
+  <div class="memo-feld" aria-hidden="true">
+    {/* Baum: Äste, Laub, der Faden des hängenden Fotos. */}
+    <svg class="schicht schicht-baum" viewBox={`0 0 ${BREITE} ${HOEHE}`}>
+      <g class="aeste">
+        <path
+          class="faden"
+          d={`M${faden.x - 22} 252L${faden.x - 25} ${faden.y - 30}M${faden.x + 20} 258L${faden.x + 25} ${faden.y - 30}`}
+        ></path>
+        {astPfade.map((d) => <path d={d} />)}
+        <path class="licht" d={stammLicht}></path>
+      </g>
+      <g class="grund">
+        {kronenGrund.map((k) => <ellipse cx={k.cx} cy={k.cy} rx={k.rx} ry={k.ry} />)}
+      </g>
+      {laub.map((g) => <path class={`blatt ton-${g.ton} welle-${g.welle}`} d={g.d} />)}
+    </svg>
+
+    {/* Zeitstrahl: eine Linie, ein Punkt je Erinnerung. */}
+    <svg class="schicht schicht-zeit" viewBox={`0 0 ${BREITE} ${HOEHE}`}>
+      <path class="strahl" d={`M200 18V${BODEN - 8}`}></path>
+      {
+        zeitLinie.map(({ x, y }) => (
+          <>
+            <path
+              class="steg"
+              d={`M200 ${y}H${x < 200 ? x + GROESSE.zeit / 2 : x - GROESSE.zeit / 2}`}
+            />
+            <circle class="knoten" cx="200" cy={y} r="4" />
+            <path
+              class="zeile"
+              d={
+                x < 200
+                  ? `M${x - GROESSE.zeit / 2 - 14} ${y - 7}h-64M${x - GROESSE.zeit / 2 - 14} ${y + 5}h-40`
+                  : `M${x + GROESSE.zeit / 2 + 14} ${y - 7}h64M${x + GROESSE.zeit / 2 + 14} ${y + 5}h40`
+              }
+            />
+          </>
+        ))
+      }
+    </svg>
+
+    {/* Karte: Land als Punkte, aus dem Screenshot der Karte abgeleitet. */}
+    <svg class="schicht schicht-karte" viewBox={`0 0 ${BREITE} ${HOEHE}`}>
+      <path class="land" d={kartenPunkte}></path>
+    </svg>
+
+    {
+      fotos.map((f, i) => (
+        <div class="foto" style={lage(f, i)}>
+          <div class="foto-bild">
+            <Image
+              src={galerieScreenshot}
+              alt=""
+              widths={[800, 1600]}
+              sizes="(min-width: 1024px) 640px, 440px"
+              loading="eager"
+            />
+          </div>
+        </div>
+      ))
+    }
+
+    <svg class="schicht schicht-baum laub-vorn" viewBox={`0 0 ${BREITE} ${HOEHE}`}>
+      {laubVorn.map((g) => <path class={`blatt ton-${g.ton}`} d={g.d} />)}
+    </svg>
+
+    <svg class="schicht boden" viewBox={`0 0 ${BREITE} ${HOEHE}`}>
+      <path d={`M0 ${BODEN}H${BREITE}`}></path>
+    </svg>
+  </div>
+
+  <fieldset class="m-0 min-w-0 border-0 p-0">
+    <legend class="sr-only">Sicht auf dieselben Erinnerungen</legend>
+    <div class="flex flex-wrap gap-x-5">
+      {
+        sichten.map((s, i) => (
+          <label class="relative inline-flex cursor-pointer rounded-sm py-3 text-sm font-medium text-fg-muted transition-colors before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform hover:text-fg has-checked:text-fg has-checked:before:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:before:transition-none">
+            <input
+              class="sr-only"
+              type="radio"
+              name="memorytree-sicht"
+              value={s.wert}
+              checked={i === 0}
+            />
+            {s.name}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="mt-1 max-w-[46ch] text-sm text-fg-muted">
+    {
+      sichten.map((s) => (
+        <p class="memo-text m-0 mb-2" data-sicht={s.wert}>
+          <span class="font-medium text-fg">{s.name}</span> · {s.text}{' '}
+          <button
+            type="button"
+            class="cursor-zoom-in text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent motion-reduce:transition-none"
+            popovertarget={s.bild}
+          >
+            Screenshot ansehen
+          </button>
+        </p>
+      ))
+    }
+  </div>
+
+  <figcaption class="mt-1 max-w-[46ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Szene</span> · Acht Beispielfotos aus dem Gastzugang, in den vier
+    Sichten der App nachgestellt. Die Fotos sind Ausschnitte aus dem Galerie-Screenshot, alles andere
+    ist gezeichnet. Kein Screenshot.
+  </figcaption>
+</figure>
+
+<style>
+  .memo {
+    --mt-rinde: oklch(0.4 0.035 55);
+    --mt-rinde-licht: oklch(0.45 0.04 58);
+    --mt-krone: oklch(0.43 0.09 152);
+    --mt-laub-0: oklch(0.47 0.1 152);
+    --mt-laub-1: oklch(0.54 0.12 146);
+    --mt-laub-2: oklch(0.63 0.13 140);
+    --mt-laub-3: oklch(0.72 0.13 132);
+    --mt-papier: oklch(1 0 0);
+    --mt-kante: oklch(0.86 0.005 80);
+    --mt-linie: oklch(0.6 0.01 80);
+    --mt-land: oklch(0.79 0.012 80);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .memo {
+      --mt-rinde: oklch(0.56 0.03 55);
+      --mt-rinde-licht: oklch(0.62 0.03 58);
+      --mt-krone: oklch(0.34 0.06 152);
+      --mt-laub-0: oklch(0.38 0.07 152);
+      --mt-laub-1: oklch(0.46 0.09 146);
+      --mt-laub-2: oklch(0.54 0.1 140);
+      --mt-laub-3: oklch(0.62 0.1 132);
+      --mt-papier: oklch(0.88 0.008 80);
+      --mt-kante: oklch(0.4 0.005 80);
+      --mt-linie: oklch(0.62 0.01 80);
+      --mt-land: oklch(0.42 0.008 80);
+    }
+  }
+  :root[data-theme='dark'] .memo {
+    --mt-rinde: oklch(0.56 0.03 55);
+    --mt-rinde-licht: oklch(0.62 0.03 58);
+    --mt-krone: oklch(0.34 0.06 152);
+    --mt-laub-0: oklch(0.38 0.07 152);
+    --mt-laub-1: oklch(0.46 0.09 146);
+    --mt-laub-2: oklch(0.54 0.1 140);
+    --mt-laub-3: oklch(0.62 0.1 132);
+    --mt-papier: oklch(0.88 0.008 80);
+    --mt-kante: oklch(0.4 0.005 80);
+    --mt-linie: oklch(0.62 0.01 80);
+    --mt-land: oklch(0.42 0.008 80);
+  }
+
+  .memo-feld {
+    position: relative;
+    aspect-ratio: 400 / 420;
+    container-type: inline-size;
+  }
+  .schicht {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .boden path {
+    stroke: var(--color-border);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Baum */
+  .aeste path {
+    fill: var(--mt-rinde);
+  }
+  .aeste .licht {
+    fill: var(--mt-rinde-licht);
+  }
+  .aeste .faden {
+    fill: none;
+    stroke: var(--mt-rinde);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  /* Die Krone treibt vom oberen Ende des Stamms aus. */
+  .grund,
+  .blatt {
+    transform-box: view-box;
+    transform-origin: var(--mt-austrieb);
+  }
+  .grund ellipse {
+    fill: var(--mt-krone);
+  }
+  .ton-0 {
+    fill: var(--mt-laub-0);
+  }
+  .ton-1 {
+    fill: var(--mt-laub-1);
+  }
+  .ton-2 {
+    fill: var(--mt-laub-2);
+  }
+  .ton-3 {
+    fill: var(--mt-laub-3);
+  }
+
+  /* Zeitstrahl */
+  .strahl,
+  .steg {
+    stroke: var(--mt-linie);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .knoten {
+    fill: var(--mt-laub-1);
+  }
+  .zeile {
+    stroke: var(--color-border);
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+
+  /* Karte */
+  .land {
+    fill: none;
+    stroke: var(--mt-land);
+    stroke-width: 3.8;
+    stroke-linecap: round;
+  }
+  /* Die Karte läuft zum Rand hin aus, statt an der Kante abzubrechen. */
+  .schicht-karte {
+    mask-image: radial-gradient(ellipse 72% 66% at 50% 50%, #000 68%, transparent 100%);
+  }
+
+  /* Die Schichten der anderen Sichten warten unsichtbar. */
+  .schicht-zeit,
+  .schicht-karte {
+    opacity: 0;
+  }
+
+  /* Ein Foto: Abzug mit Papierrand, Lage und Größe je Sicht. */
+  .foto {
+    --x: var(--baum-x);
+    --y: var(--baum-y);
+    --r: var(--baum-r);
+    --s: var(--baum-s);
+    --rand: 0.9cqi;
+    --rund: 2px;
+    position: absolute;
+    left: calc(var(--x) / 4 * 1%);
+    top: calc(var(--y) / 4.2 * 1%);
+    width: calc(var(--s) / 4 * 1%);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    rotate: calc(var(--r) * 1deg);
+    padding: var(--rand);
+    border: 1px solid var(--mt-kante);
+    border-radius: var(--rund);
+    background: var(--mt-papier);
+  }
+  /* Die Spitze der Markierung, nur auf der Karte. */
+  .foto::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    border: 0.9cqi solid transparent;
+    border-top: 1.4cqi solid var(--mt-kante);
+    opacity: 0;
+  }
+  .foto-bild {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--rund);
+  }
+  .foto-bild :global(img) {
+    position: absolute;
+    max-width: none;
+    width: 625%;
+    left: calc(var(--ax) / -2.56 * 1%);
+    top: calc(var(--ay) / -2.56 * 1%);
+  }
+
+  .memo:has(input[value='zeit']:checked) {
+    .foto {
+      --x: var(--zeit-x);
+      --y: var(--zeit-y);
+      --r: var(--zeit-r);
+      --s: var(--zeit-s);
+    }
+    .schicht-baum {
+      opacity: 0;
+    }
+    .schicht-zeit {
+      opacity: 1;
+    }
+  }
+  .memo:has(input[value='karte']:checked) {
+    .foto {
+      --x: var(--karte-x);
+      --y: var(--karte-y);
+      --r: var(--karte-r);
+      --s: var(--karte-s);
+      --rund: 50%;
+      --rand: 0.6cqi;
+    }
+    .foto::after {
+      opacity: 1;
+    }
+    .schicht-baum {
+      opacity: 0;
+    }
+    .schicht-karte {
+      opacity: 1;
+    }
+  }
+  .memo:has(input[value='galerie']:checked) {
+    .foto {
+      --x: var(--galerie-x);
+      --y: var(--galerie-y);
+      --r: var(--galerie-r);
+      --s: var(--galerie-s);
+      --rand: 0px;
+      --rund: 3px;
+    }
+    .schicht-baum {
+      opacity: 0;
+    }
+  }
+
+  /* Ohne `:has()` stehen alle vier Texte; mit nur der gewählte. */
+  .memo:has(input[value='baum']:checked) .memo-text:not([data-sicht='baum']),
+  .memo:has(input[value='zeit']:checked) .memo-text:not([data-sicht='zeit']),
+  .memo:has(input[value='karte']:checked) .memo-text:not([data-sicht='karte']),
+  .memo:has(input[value='galerie']:checked) .memo-text:not([data-sicht='galerie']) {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .foto {
+      transition-property: left, top, width, rotate, padding, border-radius;
+      transition-duration: 700ms;
+      transition-timing-function: var(--ease-quiet);
+      transition-delay: calc(var(--i) * 35ms);
+      animation: mt-abzug 520ms var(--ease-quiet) backwards;
+      animation-delay: calc(1500ms + var(--i) * 110ms);
+    }
+    .schicht,
+    .foto::after {
+      transition: opacity 450ms var(--ease-quiet);
+    }
+
+    /* Austrieb: die Äste wachsen vom Boden her, dann die Krone in Wellen nach außen. */
+    .aeste {
+      animation: mt-wachsen 1100ms var(--ease-quiet) backwards;
+    }
+    .grund {
+      animation: mt-krone 900ms var(--ease-quiet) 500ms backwards;
+    }
+    .blatt {
+      animation: mt-krone 700ms var(--ease-quiet) backwards;
+    }
+    .welle-0 {
+      animation-delay: 650ms;
+    }
+    .welle-1 {
+      animation-delay: 760ms;
+    }
+    .welle-2 {
+      animation-delay: 870ms;
+    }
+    .welle-3 {
+      animation-delay: 980ms;
+    }
+    .welle-4 {
+      animation-delay: 1090ms;
+    }
+    .welle-5 {
+      animation-delay: 1200ms;
+    }
+    .laub-vorn .blatt {
+      animation-delay: 2300ms;
+    }
+  }
+
+  @keyframes mt-wachsen {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes mt-krone {
+    from {
+      opacity: 0;
+      scale: 0.6;
+    }
+  }
+  @keyframes mt-abzug {
+    from {
+      opacity: 0;
+      scale: 0.7;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+/**
+ * Die Bühne einer Projektseite (docs/PROJEKTSZENEN_PLAN.md): ein `<figure>`
+ * über die volle Fensterbreite mit eigener Fläche, innen an der Spalte
+ * ausgerichtet, darunter die Bildunterschrift. Die Bühne ist die einzige
+ * Stelle, an der ein Projekt vom Designsystem abweichen darf (Bühnenlizenz in
+ * DESIGN.md): eigene Farben, Bewegung, Illustration, alles nur innerhalb der
+ * Fläche.
+ *
+ * Das Innere ist Dekoration für Sehende und trägt `aria-hidden`; Screenreader
+ * lesen die Bildunterschrift. `decorative={false}` nur, wenn die Szene
+ * bedienbar ist (NoteList: verschiebbare Fläche), denn fokussierbares in
+ * `aria-hidden` ist ein Fehler.
+ *
+ * Die Bildunterschrift beginnt immer mit „Szene“ und sagt, dass es kein
+ * Screenshot ist: Ein gezeichnetes Bild darf nie als Beleg durchgehen.
+ */
+interface Props {
+  /** Bildunterschrift ohne das vorangestellte „Szene“. Sagt, was zu sehen ist. */
+  caption: string
+  /** Fläche der Bühne im Hellmodus, ein CSS-Farbwert. */
+  surface: string
+  /** Fläche im Dunkelmodus. Fehlt sie, gilt `surface` in beiden Modi. */
+  surfaceDark?: string
+  decorative?: boolean
+  class?: string
+}
+
+const { caption, surface, surfaceDark = surface, decorative = true, class: className } = Astro.props
+---
+
+<figure
+  class:list={['szene m-0 mt-10', className]}
+  style={`--szene-flaeche: ${surface}; --szene-flaeche-dunkel: ${surfaceDark}`}
+>
+  <div class="szene-flaeche">
+    <div class="szene-buehne mx-auto max-w-5xl px-4" aria-hidden={decorative ? 'true' : undefined}>
+      <slot />
+    </div>
+  </div>
+  <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Szene</span> · {caption} Kein Screenshot.
+  </figcaption>
+</figure>
+
+<style>
+  /*
+   * Volle Fensterbreite aus der zentrierten Spalte heraus. `100vw` schließt
+   * die Scrollleiste ein; den Überstand schneidet `overflow-x: clip` auf
+   * `<body>` (global.css) weg, ohne einen Scroll-Container anzulegen.
+   */
+  .szene-flaeche {
+    margin-inline: calc(50% - 50vw);
+    background-color: var(--szene-flaeche);
+    overflow: hidden;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .szene-flaeche {
+      background-color: var(--szene-flaeche-dunkel);
+    }
+  }
+  :root[data-theme='dark'] .szene-flaeche {
+    background-color: var(--szene-flaeche-dunkel);
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+/**
+ * Das Bohrfahrzeug aus TIEFGANG, flach nachgezeichnet: Rumpf mit Kabine,
+ * Ketten links und rechts, Antenne, der Bohrkopf zeigt nach unten. Rein
+ * dekorativ. Farben kommen aus den `--tg-*`-Variablen der Szene.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<svg class={className} viewBox="0 0 32 44" aria-hidden="true">
+  <path d="M11 8V3M21 8V5.5M18.5 5.5h5" stroke="var(--tg-stahl)" stroke-width="1.5" fill="none"
+  ></path>
+  <circle cx="11" cy="2.75" r="1.75" fill="var(--tg-signal)"></circle>
+  <rect x="1.5" y="10" width="5" height="16" rx="1.5" fill="var(--tg-kette)"></rect>
+  <rect x="25.5" y="10" width="5" height="16" rx="1.5" fill="var(--tg-kette)"></rect>
+  <path
+    d="M1.5 14h5M1.5 18h5M1.5 22h5M25.5 14h5M25.5 18h5M25.5 22h5"
+    stroke="var(--tg-kette-fuge)"
+    stroke-width="1"></path>
+  <rect x="5.5" y="7.5" width="21" height="20" rx="3" fill="var(--tg-rumpf)"></rect>
+  <rect x="11.5" y="12.5" width="9" height="9" rx="2" fill="var(--tg-kabine)"></rect>
+  <path d="M9 27.5h14L16 43z" fill="var(--tg-bohrkopf)"></path>
+  <path d="M11 31h10M12.9 35h6.2M14.8 39h2.4" stroke="var(--tg-rille)" stroke-width="1.25"></path>
+</svg>

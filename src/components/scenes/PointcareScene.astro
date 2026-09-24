@@ -1,0 +1,141 @@
+---
+/**
+ * PointCare: eine Bewegung pro Abschnitt. Die Kundenseite zeigt ihre drei
+ * Leistungsbereiche als Scroll-Choreografie, in der sich je Abschnitt genau
+ * eine Sache bewegt. Hier dieselbe Regel an drei gezeichneten Standbildern:
+ * Lager (der Stapler hebt), Supply Chain (die Strecke zieht sich), Transport
+ * (der Lkw fährt). Jedes Bild bewegt sich nur, solange es durchs Fenster
+ * läuft, und nur in seiner einen Bewegung.
+ *
+ * Die Standbilder sind in beiden Farbmodi dunkel, wie Filmbilder, mit
+ * Kinobalken oben und unten (Farben: PointcarePage.astro). Die Zeichnung trägt
+ * `aria-hidden`; Titel und Satz darunter sind Text, die Bildunterschrift sagt,
+ * dass es kein Screenshot ist.
+ */
+import Kette from './pointcare/StandbildKette.astro'
+import Lager from './pointcare/StandbildLager.astro'
+import Transport from './pointcare/StandbildTransport.astro'
+
+const einstellungen = [
+  {
+    titel: 'Lager & Intralogistik',
+    bewegung: 'Heben',
+    satz: 'Der Stapler hebt eine Palette ins zweite Fach.',
+    Bild: Lager,
+  },
+  {
+    titel: 'Supply Chain',
+    bewegung: 'Linie',
+    satz: 'Die Strecke verbindet vier Stationen, vom Werk am Horizont bis zum Kunden.',
+    Bild: Kette,
+  },
+  {
+    titel: 'Transport',
+    bewegung: 'Fahrt',
+    satz: 'Der Sattelzug fährt dem Horizont entgegen.',
+    Bild: Transport,
+  },
+]
+---
+
+<section class="mt-12 border-t border-border pt-6" aria-labelledby="pc-bewegungen">
+  <h2 id="pc-bewegungen" class="m-0 text-xl font-semibold tracking-tight">
+    Eine Bewegung pro Abschnitt
+  </h2>
+  <p class="prose-flow mt-4 mb-0 max-w-[65ch] leading-relaxed text-fg-muted">
+    Die Kundenseite folgt einer Regel: eine Bewegung pro Scroll-Abschnitt statt Effekten überall.
+    Hier gilt dieselbe Regel, an drei gezeichneten Standbildern, eines je Leistungsbereich.
+  </p>
+
+  <figure class="m-0 mt-8">
+    <ol class="m-0 list-none space-y-10 p-0">
+      {
+        einstellungen.map(({ titel, bewegung, satz, Bild }, i) => (
+          <li>
+            <div class="pc-rahmen" aria-hidden="true">
+              <Bild />
+              <span class="pc-marke">Standbild 0{i + 1} / 03</span>
+            </div>
+            <div class="mt-3 grid gap-1 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+              <h3 class="m-0 text-lg font-semibold tracking-tight">{titel}</h3>
+              <p class="prose-flow m-0 max-w-[55ch] text-fg-muted sm:pt-0.5">
+                <span class="font-medium text-fg">{bewegung}.</span> {satz}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <figcaption class="mt-8 max-w-[65ch] text-sm text-fg-muted">
+      <span class="font-medium text-fg">Szene</span> · Drei gezeichnete Standbilder nach dem Prinzip der
+      Kundenseite, nicht nach ihrem Inhalt. Kein Screenshot.
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  @property --pc-t {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+
+  /* Filmbild mit Kinobalken: 3 : 2 auf dem Handy, 21 : 9 ab 640 px. */
+  .pc-rahmen {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-block: 0.625rem solid var(--pc-balken);
+    border-radius: var(--radius-sm);
+    background-color: var(--pc-nacht);
+  }
+  @media (min-width: 640px) {
+    .pc-rahmen {
+      aspect-ratio: 21 / 9;
+      border-block-width: 1rem;
+    }
+  }
+  .pc-rahmen :global(svg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .pc-marke {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--pc-kreide-matt);
+  }
+
+  /*
+   * Die eine Bewegung je Bild: `--pc-t` läuft von 0 bis 1, während das Bild
+   * vom unteren Fensterrand bis etwas über die Mitte wandert. Ohne Bewegung
+   * oder ohne Unterstützung steht 1, der Endzustand.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* Langschreibweise, sonst zieht der Minifier `animation-timeline` in die Kurzform. */
+      .pc-rahmen {
+        animation-name: pc-einstellung;
+        animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 20% cover 55%;
+      }
+    }
+  }
+
+  @keyframes pc-einstellung {
+    from {
+      --pc-t: 0;
+    }
+    to {
+      --pc-t: 1;
+    }
+  }
+</style>
