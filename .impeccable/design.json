@@ -234,7 +234,7 @@
       },
       "title-md": {
         "displayName": "Title Medium",
-        "purpose": "Titel auf der Bühne, .display; unter 640 px 1,25rem. Die Feature-Zeile unter /projekte/ nutzt immer 1,25rem. Eine Stufe unter der H2, damit kein Projekt größer steht als sein Kapitel."
+        "purpose": "Titel auf der Bühne, .display; unter 640 px 1,25rem. Die Feature-Zeile unter /projekte/ nutzt immer 1,25rem. Eine Stufe unter der H2, damit kein Projekt größer steht als sein Kapitel. In 500 und Bleistiftgrau (Zeilenhöhe 1,375) auch die Unterzeile „Für wen“ direkt unter der H1."
       },
       "title": {
         "displayName": "Title",
