@@ -1,16 +1,111 @@
 ---
 /**
- * Die Seite von Vaulter: der gemeinsame Körper (ProjectPage) mit der Bühne
- * des Projekts. Hier gehört alles hin, was nur diese Seite besonders macht;
- * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ * Die Seite von Vaulter ist selbst eine Notiz, wie Vaulter sie schreibt: `#`
+ * vor der H1, `##` vor jedem Block, `-` vor jedem Punkt, die Eckdaten als
+ * Frontmatter zwischen zwei `---` und die Nachbarn als `[[Verweise]]`. Die
+ * Zeichen hängen ab 70rem links im Rand wie in einem Markdown-Editor, darunter
+ * stehen sie vor dem Text. Sie sind CSS (`content: … / ''`): Die H1 bleibt
+ * genau `data.title`, und Screenreader lesen keine Rauten.
+ *
+ * Unter der Summary steht der Eingang (VaulterScene): Dort kann man selbst
+ * einreihen und zusehen, wie eine solche Notiz entsteht. Die Meta-Liste ist
+ * ausgeblendet und steht mit denselben Daten als Frontmatter darunter.
+ *
+ * Die Stile unten sind global, weil sie Markup aus ProjectPage treffen; jeder
+ * Selektor hängt an `.vaulter-notiz`, das es nur auf dieser Seite gibt.
  */
+import Arrow from '@/components/Arrow.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import VaulterScene from '@/components/scenes/VaulterScene.astro'
+import Frontmatter from '@/components/scenes/vaulter/Frontmatter.astro'
+import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
+const data = projekt.data
 ---
 
-<ProjectPage projekt={projekt} prev={prev} next={next}>
+<ProjectPage projekt={projekt} prev={prev} next={next} hide={['meta']} articleClass="vaulter-notiz">
+  <Fragment slot="hero">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/projekte/')}
+    >
+      <Arrow direction="left" /> Alle Arbeiten
+    </a>
+
+    <h1 class="md-h1 display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+      {data.title}
+    </h1>
+    <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      {data.summary}
+    </p>
+  </Fragment>
+
   <VaulterScene slot="stage" />
+  <Frontmatter slot="after-meta" data={data} />
 </ProjectPage>
+
+<style is:global>
+  /* Markdown-Zeichen: leise, in Mono, nie vorgelesen. */
+  .vaulter-notiz .md-h1::before,
+  .vaulter-notiz section > h2::before,
+  .vaulter-notiz section li::before,
+  .vaulter-notiz .row-title::before,
+  .vaulter-notiz .row-title::after {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--color-fg-muted);
+  }
+  .vaulter-notiz .md-h1::before {
+    content: '#' / '';
+    margin-right: 0.5ch;
+    font-size: 0.5em;
+  }
+  .vaulter-notiz section > h2::before {
+    content: '##' / '';
+    margin-right: 1ch;
+    font-size: 0.8em;
+  }
+
+  /* Ab 70rem ist links genug Rand: Die Zeichen hängen hinaus, die Kante bleibt. */
+  @media (min-width: 70rem) {
+    .vaulter-notiz .md-h1::before,
+    .vaulter-notiz section > h2::before {
+      display: inline-block;
+      width: 4ch;
+      margin-left: -4ch;
+      margin-right: 0;
+      padding-right: 1ch;
+      text-align: right;
+    }
+  }
+
+  /* Listen wie in der Notiz: Strich statt Haarlinie. */
+  .vaulter-notiz section li {
+    position: relative;
+    padding-bottom: 0;
+    padding-left: 1.25rem;
+    border-bottom: 0;
+  }
+  .vaulter-notiz section li::before {
+    content: '-' / '';
+    position: absolute;
+    left: 0;
+  }
+
+  /* Vor/Zurück als Wiki-Links. */
+  .vaulter-notiz .row-title::before,
+  .vaulter-notiz .row-title::after {
+    letter-spacing: -0.15em;
+  }
+  .vaulter-notiz .row-title::before {
+    content: '[[' / '';
+    margin-right: 0.3em;
+  }
+  .vaulter-notiz .row-title::after {
+    content: ']]' / '';
+    margin-left: 0.15em;
+  }
+</style>
