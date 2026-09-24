@@ -236,16 +236,24 @@ function blatt(rand: () => number, x: number, y: number, winkel = rand() * Math.
   }
 }
 
-/** Ein Blatt als Unterpfad: Spitze, Bogen zur anderen Spitze, Bogen zurück. */
+/**
+ * Ein Blatt als Unterpfad: Spitze, Bogen zur anderen Spitze, Bogen zurück.
+ * Ganze Einheiten reichen (eine Einheit ist gut ein Pixel) und halten das
+ * HTML klein; die Rundung bleibt für jedes Blatt geschlossen.
+ */
 function blattPfad({ x, y, winkel, laenge, breite }: Blatt): string {
   const ux = Math.cos(winkel)
   const uy = Math.sin(winkel)
-  const [nx, ny] = [-uy * breite, ux * breite]
-  const [lx, ly] = [ux * laenge, uy * laenge]
+  const lx = Math.round(ux * laenge)
+  const ly = Math.round(uy * laenge)
+  const cx = Math.round(lx / 2 - uy * breite)
+  const cy = Math.round(ly / 2 + ux * breite)
+  const zahl = (n: number) => (n < 0 ? `${n}` : ` ${n}`)
   return (
-    `M${r1(x - lx / 2)} ${r1(y - ly / 2)}` +
-    `q${r1(lx / 2 + nx)} ${r1(ly / 2 + ny)} ${r1(lx)} ${r1(ly)}` +
-    `q${r1(-lx / 2 - nx)} ${r1(-ly / 2 - ny)} ${r1(-lx)} ${r1(-ly)}`
+    `M${Math.round(x - lx / 2)}${zahl(Math.round(y - ly / 2))}` +
+    `q${cx}${zahl(cy)}${zahl(lx)}${zahl(ly)}` +
+    // Zurück über den gespiegelten Kontrollpunkt: relativ zur Spitze genau −(cx, cy).
+    `q${-cx}${zahl(-cy)}${zahl(-lx)}${zahl(-ly)}`
   )
 }
 
