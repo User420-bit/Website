@@ -1,0 +1,157 @@
+---
+/**
+ * Die echten Screenshots von MemoryTree, geordnet wie die Szene darüber:
+ * zuerst die vier Sichten der App (Baum, Zeitstrahl, Karte, Galerie) mit
+ * ihrem Namen, darunter Dashboard und Handy als Kontaktabzug. Jedes Bild
+ * öffnet eine Lightbox wie in `ScreenshotGallery` (natives Popover, kein
+ * JavaScript); die Szene öffnet dieselben Lightboxen über „Screenshot
+ * ansehen“, deshalb vergibt diese Datei die ids.
+ */
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+export interface Beleg {
+  image: ImageMetadata
+  caption: string
+  /** id der Lightbox. */
+  id: string
+  /** Name der Sicht in der App, falls das Bild eine der vier Sichten zeigt. */
+  sicht?: string
+}
+
+interface Props {
+  belege: Beleg[]
+  title: string
+}
+
+const { belege, title } = Astro.props
+const sichten = belege.filter((b) => b.sicht)
+const weitere = belege.filter((b) => !b.sicht)
+const hochformat = (b: Beleg) => b.image.height > b.image.width
+
+const knopf =
+  'block cursor-zoom-in overflow-hidden rounded-sm border border-border p-0 transition-colors hover:border-fg/40 focus-visible:border-fg/40 motion-reduce:transition-none'
+---
+
+<section class="mt-12 border-t border-border pt-6">
+  <h2 class="m-0 text-xl font-semibold tracking-tight">Im Original</h2>
+  <p class="prose-flow mt-2 mb-0 max-w-[65ch] text-fg-muted">
+    Dieselben Beispieldaten in der laufenden App, aufgenommen im Gastzugang.
+  </p>
+
+  <ul class="mt-6 grid list-none grid-cols-2 gap-x-3 gap-y-5 p-0 sm:gap-x-6 sm:gap-y-8">
+    {
+      sichten.map((b) => (
+        <li class="min-w-0">
+          <p class="m-0 mb-2 text-sm font-medium text-fg">{b.sicht}</p>
+          <button
+            type="button"
+            class:list={[knopf, 'w-full']}
+            popovertarget={b.id}
+            aria-label={`Bild vergrößern: ${b.caption}`}
+          >
+            <Image
+              class="block h-auto w-full"
+              src={b.image}
+              alt=""
+              widths={[480, 960]}
+              sizes="(min-width: 1024px) 31rem, 46vw"
+            />
+          </button>
+          {/* Die Unterschrift steckt schon im Namen des Knopfs. */}
+          <p aria-hidden="true" class="m-0 mt-2 hidden max-w-[52ch] text-sm text-fg-muted sm:block">
+            {b.caption}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    weitere.length > 0 && (
+      <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+        {weitere.map((b) => (
+          <li>
+            <button
+              type="button"
+              class={knopf}
+              popovertarget={b.id}
+              aria-label={`Bild vergrößern: ${b.caption}`}
+            >
+              <Image
+                class="block h-20 w-auto sm:h-28"
+                src={b.image}
+                alt=""
+                widths={hochformat(b) ? [80, 160] : [240, 480]}
+                sizes={
+                  hochformat(b)
+                    ? '(min-width: 640px) 52px, 37px'
+                    : '(min-width: 640px) 200px, 142px'
+                }
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    belege.map((b, i) => (
+      <div
+        id={b.id}
+        popover
+        role="dialog"
+        aria-label={`${title}, Bild ${i + 1} von ${belege.length}`}
+        class="memo-lightbox m-auto max-h-dvh max-w-[min(100vw,1600px)] overflow-auto border-0 bg-transparent p-4 text-fg backdrop:bg-bg sm:p-6"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <p class="m-0 text-sm text-fg-muted tabular-nums">
+            {title} · Bild {i + 1} von {belege.length}
+          </p>
+          {/* autofocus: Ein Popover setzt den Fokus beim Öffnen auf dieses Element. */}
+          {/* eslint-disable astro/jsx-a11y/no-autofocus */}
+          <button
+            type="button"
+            class="inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-sm border border-fg/25 px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+            popovertarget={b.id}
+            popovertargetaction="hide"
+            autofocus
+          >
+            Schließen
+            <svg
+              aria-hidden="true"
+              class="size-3.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+          {/* eslint-enable astro/jsx-a11y/no-autofocus */}
+        </div>
+        <figure class="m-0 mt-4">
+          <Image
+            class="block h-auto max-h-[calc(100dvh-10rem)] w-auto max-w-full rounded-sm border border-border"
+            src={b.image}
+            alt=""
+            widths={hochformat(b) ? [480, 780] : [960, 1600]}
+            sizes={
+              hochformat(b) ? '(min-width: 640px) 26rem, 80vw' : '(min-width: 1640px) 1600px, 96vw'
+            }
+          />
+          <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">{b.caption}</figcaption>
+        </figure>
+      </div>
+    ))
+  }
+</section>
+
+<style is:global>
+  /* Hinter der offenen Lightbox scrollt die Seite nicht mit. */
+  html:has(.memo-lightbox:popover-open) {
+    overflow: hidden;
+  }
+</style>

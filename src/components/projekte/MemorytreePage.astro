@@ -1,16 +1,144 @@
 ---
 /**
- * Die Seite von Memorytree: der gemeinsame Körper (ProjectPage) mit der Bühne
- * des Projekts. Hier gehört alles hin, was nur diese Seite besonders macht;
- * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ * Die Seite von MemoryTree. Der Kopf ist ein eigener: links Titel, Summary,
+ * Eckdaten und der Link zur App, rechts die Szene, in der dieselben acht
+ * Beispielfotos als Baum, Zeitstrahl, Karte und Galerie stehen. Darunter die
+ * echten Screenshots, nach denselben Sichten geordnet. Ab dort übernimmt der
+ * gemeinsame Körper (ProjectPage) die Textblöcke, Vor/Zurück und die Anfrage.
+ *
+ * Ausgeblendet und hier selbst gezeigt: Meta-Liste, Links, Galerie.
  */
 import type { Props } from '@/components/ProjectPage.astro'
+import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
+import MetaList from '@/components/MetaList.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
-import MemorytreeScene from '@/components/scenes/MemorytreeScene.astro'
+import MemorytreeScene, { type Sicht } from '@/components/scenes/MemorytreeScene.astro'
+import Belege, { type Beleg } from '@/components/scenes/memorytree/Belege.astro'
+import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
+const data = projekt.data
+
+/* Die vier Sichten der App, erkannt am Dateinamen des Screenshots. */
+const SICHTEN = [
+  { wert: 'baum', name: 'Baum', datei: 'memorytree-baum' },
+  { wert: 'zeit', name: 'Zeitstrahl', datei: 'memorytree-zeitstrahl' },
+  { wert: 'karte', name: 'Karte', datei: 'memorytree-karte' },
+  { wert: 'galerie', name: 'Galerie', datei: 'memorytree-galerie' },
+] as const
+const sichtVon = (src: string) => SICHTEN.find((s) => src.includes(`/${s.datei}.`))
+
+// Sichten zuerst, in der Reihenfolge der App; danach alles Übrige wie in der Projektdatei.
+const sortiert = [
+  ...SICHTEN.flatMap((s) => data.screenshots.filter((shot) => sichtVon(shot.image.src) === s)),
+  ...data.screenshots.filter((shot) => !sichtVon(shot.image.src)),
+]
+const belege: Beleg[] = sortiert.map((shot, i) => ({
+  image: shot.image,
+  caption: shot.caption,
+  id: `memorytree-bild-${i + 1}`,
+  sicht: sichtVon(shot.image.src)?.name,
+}))
+
+/* „Der Baum: Erinnerungen hängen …“ → „Erinnerungen hängen …“ */
+const ohneVorsatz = (caption: string) => {
+  const rest = caption.slice(caption.indexOf(':') + 1).trim()
+  return rest.charAt(0).toUpperCase() + rest.slice(1) + '.'
+}
+const sichten: Sicht[] = SICHTEN.flatMap((s) => {
+  const beleg = belege.find((b) => b.sicht === s.name)
+  return beleg
+    ? [{ wert: s.wert, name: s.name, text: ohneVorsatz(beleg.caption), bild: beleg.id }]
+    : []
+})
 ---
 
-<ProjectPage projekt={projekt} prev={prev} next={next}>
-  <MemorytreeScene slot="stage" />
+<ProjectPage projekt={projekt} prev={prev} next={next} hide={['meta', 'links', 'gallery']}>
+  <div slot="hero" class="memo-kopf">
+    <div class="memo-kopf-text">
+      <a
+        class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+        href={href('/projekte/')}
+      >
+        <Arrow direction="left" /> Alle Arbeiten
+      </a>
+      <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+        {data.title}
+      </h1>
+      <p class="prose-flow mt-5 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+        {data.summary}
+      </p>
+    </div>
+
+    <MemorytreeScene class="memo-kopf-szene" sichten={sichten} />
+
+    <div class="memo-kopf-fakten">
+      <MetaList
+        rows={[
+          { label: 'Art', value: data.kind, variant: 'kind' },
+          { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+          ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+          { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+        ]}
+      />
+      {
+        (data.live || data.github) && (
+          <ul class="mt-6 mb-0 flex list-none flex-wrap gap-3 p-0">
+            {data.live && (
+              <li>
+                <Button href={data.live} external>
+                  Live ansehen
+                </Button>
+              </li>
+            )}
+            {data.github && (
+              <li>
+                <Button href={data.github} variant="secondary" external>
+                  Code auf GitHub
+                </Button>
+              </li>
+            )}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+
+  <Belege slot="after-meta" belege={belege} title={data.title} />
 </ProjectPage>
+
+<style>
+  .memo-kopf {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'text' 'szene' 'fakten';
+  }
+  .memo-kopf-text {
+    grid-area: text;
+  }
+  .memo-kopf > :global(.memo-kopf-szene) {
+    grid-area: szene;
+    margin-top: 2.5rem;
+    max-width: 30rem;
+  }
+  .memo-kopf-fakten {
+    grid-area: fakten;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .memo-kopf {
+      grid-template-columns: minmax(0, 1fr) 29rem;
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 'text szene' 'fakten szene';
+      column-gap: 4rem;
+    }
+    .memo-kopf > :global(.memo-kopf-szene) {
+      margin-top: 0;
+    }
+    .memo-kopf-fakten {
+      margin-top: 2.5rem;
+    }
+  }
+</style>
