@@ -202,7 +202,8 @@ const legal = defineCollection({
 
 /**
  * Der Kontaktmoment. Hier stehen nur Zusagen, die der Inhaber bestätigt hat —
- * keine Preise, keine Fristen außer der Antwortzeit.
+ * keine Preise. Fristen sind die Antwortzeit und die Zeitrahmen der Schritte,
+ * beide am 2026-09-24 bestätigt.
  */
 const contact = defineCollection({
   loader: file('src/content/contact.json'),
