@@ -1,16 +1,187 @@
 ---
 /**
- * Die Seite von Kleinkram: der gemeinsame Körper (ProjectPage) mit der Bühne
- * des Projekts. Hier gehört alles hin, was nur diese Seite besonders macht;
- * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ * Die Seite von Kleinkram: Die Seite selbst wird gebucht. Statt einer Bühne
+ * unter der H1 steht am Rand ein Kassenzettel (KleinkramScene), der jeden
+ * Abschnitt als Posten führt und beim Lesen abhakt.
+ *
+ * Dafür rendert diese Komponente den ganzen Inhalt im Slot `hero` selbst, in
+ * einem Raster aus Text und Rand, und blendet die Standardteile von
+ * ProjectPage aus. Es sind dieselben Daten in derselben Reihenfolge; jeder
+ * Abschnitt trägt eine id (Sprungziel des Postens) und eine View-Timeline
+ * (`--kk-<anker>`), an der der Zettel abliest, wie weit gelesen ist.
+ * `timeline-scope` am Raster macht die Timelines für den Zettel sichtbar.
+ * Vor/Zurück und die Anfrage-Zeile bleiben von ProjectPage.
  */
+import { render } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
+import CodeBlock from '@/components/CodeBlock.astro'
+import MetaList from '@/components/MetaList.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
-import KleinkramScene from '@/components/scenes/KleinkramScene.astro'
+import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
+import KleinkramScene, { type Posten } from '@/components/scenes/KleinkramScene.astro'
+import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
+const { Content } = await render(projekt)
+const data = projekt.data
+
+const metaZeilen = [
+  { label: 'Art', value: data.kind, variant: 'kind' as const },
+  { label: 'Zeitraum', value: data.period, variant: 'numeric' as const },
+  ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+  { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' as const },
+]
+const absaetze = (projekt.body ?? '').split(/\n\s*\n/).filter((a) => a.trim()).length
+
+const listen = [
+  { anker: 'funktionen', label: 'Funktionen', title: 'Funktionen', items: data.features },
+  {
+    anker: 'entscheidungen',
+    label: 'Entscheidungen',
+    title: 'Technische Entscheidungen',
+    items: data.engineering,
+  },
+].filter((liste) => liste.items.length > 0)
+
+// Die Posten des Zettels, in Seitenreihenfolge. Die Menge ist echt: gezählt aus den Daten.
+const posten: Posten[] = [
+  { anker: 'eckdaten', label: 'Eckdaten', menge: metaZeilen.length },
+  ...(data.screenshots.length > 0
+    ? [{ anker: 'belege', label: 'Belege', menge: data.screenshots.length }]
+    : []),
+  ...(absaetze > 0 ? [{ anker: 'worum-es-geht', label: 'Worum es geht', menge: absaetze }] : []),
+  ...listen.map(({ anker, label, items }) => ({ anker, label, menge: items.length })),
+  ...(data.codeExample ? [{ anker: 'code', label: 'Code', menge: 1 }] : []),
+  ...(data.learnings.length > 0
+    ? [{ anker: 'erkenntnisse', label: 'Erkenntnisse', menge: data.learnings.length }]
+    : []),
+]
+const zeitleiste = (anker: string) => `view-timeline-name: --kk-${anker}`
+const scope = `timeline-scope: ${posten.map((p) => `--kk-${p.anker}`).join(', ')}`
+
+// Wie in ProjectPage: Überschrift über dem Inhalt, Haarlinie oben.
+const block = 'mt-12 border-t border-border pt-6'
+const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 ---
 
-<ProjectPage projekt={projekt} prev={prev} next={next}>
-  <KleinkramScene slot="stage" />
+<ProjectPage
+  projekt={projekt}
+  prev={prev}
+  next={next}
+  hide={['meta', 'links', 'gallery', 'text', 'features', 'engineering', 'code', 'learnings']}
+>
+  <div slot="hero" class="kk-buch" style={scope}>
+    <div class="min-w-0">
+      <a
+        class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+        href={href('/projekte/')}
+      >
+        <Arrow direction="left" /> Alle Arbeiten
+      </a>
+
+      <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
+        {data.title}
+      </h1>
+      <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+        {data.summary}
+      </p>
+
+      <div id="eckdaten" class="mt-8" style={zeitleiste('eckdaten')}>
+        <MetaList rows={metaZeilen} />
+      </div>
+
+      {
+        (data.live || data.github) && (
+          <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+            {data.live && (
+              <li>
+                <Button href={data.live} external>
+                  Live ansehen
+                </Button>
+              </li>
+            )}
+            {data.github && (
+              <li>
+                <Button href={data.github} variant="secondary" external>
+                  Code auf GitHub
+                </Button>
+              </li>
+            )}
+          </ul>
+        )
+      }
+
+      {
+        data.screenshots.length > 0 && (
+          <div id="belege" style={zeitleiste('belege')}>
+            <ScreenshotGallery shots={data.screenshots} title={data.title} />
+          </div>
+        )
+      }
+
+      {
+        absaetze > 0 && (
+          <section id="worum-es-geht" class={block} style={zeitleiste('worum-es-geht')}>
+            <h2 class={blockTitle}>Worum es geht</h2>
+            <div class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4">
+              <Content />
+            </div>
+          </section>
+        )
+      }
+
+      {
+        listen.map(({ anker, title, items }) => (
+          <section id={anker} class={block} style={zeitleiste(anker)}>
+            <h2 class={blockTitle}>{title}</h2>
+            <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted">
+              {items.map((item) => (
+                <li class="border-b border-border pb-3">{item}</li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+
+      {
+        data.codeExample && (
+          <section id="code" class={block} style={zeitleiste('code')}>
+            <h2 class={blockTitle}>Code</h2>
+            <div class="mt-4 min-w-0">
+              <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.learnings.length > 0 && (
+          <section id="erkenntnisse" class={block} style={zeitleiste('erkenntnisse')}>
+            <h2 class={blockTitle}>Erkenntnisse</h2>
+            <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
+              {data.learnings.map((learning) => (
+                <li class="border-b border-border pb-3">{learning}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+
+    <KleinkramScene posten={posten} />
+  </div>
 </ProjectPage>
+
+<style>
+  /* Text links, Zettel rechts daneben. Schmaler stapelt sich alles (siehe KleinkramScene). */
+  @media (width >= 64rem) {
+    .kk-buch {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      column-gap: 4rem;
+      align-items: start;
+    }
+  }
+</style>
