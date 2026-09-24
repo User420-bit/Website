@@ -1,271 +1,842 @@
 ---
 /**
- * TIEFGANG: der Schacht. Wer die Seite weiter scrollt, gräbt tiefer: die
- * Schichten ziehen nach oben, der Zähler zählt Meter, die Energie für den
- * Rückweg sinkt. Eine einzige Variable (`--tg-tiefe`, 0 bis 525) treibt alles;
- * ein scrollgetriebener Verlauf setzt sie. Ohne `animation-timeline` oder mit
- * reduzierter Bewegung steht der Endzustand: 525 m, Lava in Sicht.
+ * TIEFGANG: Die Seite ist der Schacht. Unter der H1 steht der Förderturm auf
+ * der Oberfläche, darunter liegen die Schichten des Spiels als Bänder hinter
+ * den Abschnitten: Erdreich, Eisschicht, Lava. Wer weiterliest, gräbt tiefer.
+ * Auf breiten Schirmen fährt das Bohrfahrzeug im linken Rand mit und lässt
+ * einen Stollen hinter sich, auf schmalen zeigt ein Kasten unten rechts die
+ * Tiefe und bringt einen zurück an die Oberfläche.
+ *
+ * Die Screenshots liegen als Fundstücke in ihrer Schicht. Die Tiefenanzeige
+ * ist an den Bildern ausgerichtet, deren Unterschrift eine Tiefe nennt: An
+ * der Eisschicht zeigt sie 330 m, an der Fahrt auf 525 m zeigt sie 525 m.
+ * Dazwischen rechnet das Skript linear; Grenzen zwischen den Schichten nennt
+ * die Seite nicht, weil die Schächte im Spiel verschiedene haben.
+ *
+ * Ohne JavaScript fehlt nur die Zahl. Mit reduzierter Bewegung steht der
+ * Endzustand: Stollen bis zur Sohle, Fahrzeug unten auf 525 m.
  */
-import ProjectScene from '@/components/ProjectScene.astro'
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Button from '@/components/Button.astro'
+import CodeBlock from '@/components/CodeBlock.astro'
+import MetaList from '@/components/MetaList.astro'
+import Fahrzeug from './tiefgang/Fahrzeug.astro'
+import Fund from './tiefgang/Fund.astro'
+import Lupe from './tiefgang/Lupe.astro'
 
-const schichten = [
-  { name: 'Erde', ab: '0 m', klasse: 'erde' },
-  { name: 'Gestein', ab: '120 m', klasse: 'gestein' },
-  { name: 'Eisschicht', ab: '330 m', klasse: 'eis' },
-  { name: 'Lava', ab: '500 m', klasse: 'lava' },
-]
+interface Props {
+  projekt: CollectionEntry<'projekte'>
+}
+
+const { projekt } = Astro.props
+const data = projekt.data
+const { Content } = await render(projekt)
+
+type Shot = (typeof data.screenshots)[number]
+type Platz = 'erdreich' | 'funktionen' | 'eis' | 'lava' | 'sohle' | 'rest'
+
+/*
+ * Welches Bild in welcher Schicht liegt, nach Dateiname. Ein neues Bild ohne
+ * Eintrag landet unter der Sohle bei den übrigen Funden: Nichts verschwindet.
+ */
+const PLATZ: Record<string, Platz> = {
+  'tiefgang-handy': 'erdreich',
+  'tiefgang-montagehalle': 'funktionen',
+  'tiefgang-eisschicht': 'eis',
+  'tiefgang-handy-story': 'lava',
+  'tiefgang-mine': 'sohle',
+}
+const REIHE: Platz[] = ['erdreich', 'funktionen', 'eis', 'lava', 'sohle', 'rest']
+const dateiname = (shot: Shot) =>
+  (shot.image.src.split('/').pop() ?? '').split('?')[0].split('.')[0]
+const platzVon = (shot: Shot): Platz => PLATZ[dateiname(shot)] ?? 'rest'
+const geordnet = REIHE.flatMap((platz) => data.screenshots.filter((s) => platzVon(s) === platz))
+
+// Tiefen nur aus den Bildunterschriften, und nur, solange sie nach unten zunehmen.
+let bisher = 0
+const funde = geordnet.map((shot, i) => {
+  const zahl = Number(shot.caption.match(/(\d+)\s?m\b/)?.[1] ?? NaN)
+  const tiefe = zahl > bisher ? (bisher = zahl) : undefined
+  return { shot, nummer: i + 1, platz: platzVon(shot), tiefe }
+})
+const gesamt = funde.length
+const fundeIn = (platz: Platz) => funde.filter((f) => f.platz === platz)
+const sohle = bisher
+
+const block = 'tg-block mt-12 border-t border-border pt-6'
+const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
+const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
 ---
 
-<ProjectScene
-  caption="Wer weiter scrollt, gräbt tiefer: der Schacht mit seinen Schichten, das Bohrfahrzeug und die Anzeigen für Tiefe und Energie, nachgezeichnet."
-  surface="oklch(0.19 0.015 60)"
->
-  <div class="schacht">
-    <dl class="hud">
-      <dt>Tiefe</dt>
-      <dd class="tiefe"></dd>
-      <dt>Energie</dt>
-      <dd><span class="energie"><span class="energie-stand"></span></span></dd>
-      <dt>Fracht</dt>
-      <dd class="fracht">Frostquarz</dd>
-    </dl>
-    <div class="welt">
-      <div class="schichten">
+<div class="tg" data-tg>
+  <div class="tg-oberflaeche">
+    <p class="tg-legende m-0 max-w-[50ch] text-sm text-fg-muted">
+      <span class="font-medium text-fg">Szene</span> · Wer weiterliest, gräbt tiefer. Förderturm, Bohrfahrzeug,
+      Schichten und Tiefenanzeige sind nachgezeichnet, die Fundstücke unterwegs sind echte Bilder aus
+      dem Spiel. Die Zeichnung ist kein Screenshot.
+    </p>
+    <div class="tg-turm" aria-hidden="true">
+      <svg
+        class="tg-turm-bild"
+        viewBox="0 0 80 96"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      >
+        <path d="M12 96 34 16M68 96 46 16M34 16 4 96M29 16h22"></path>
+        <path d="M30 30h20M25 48h30M30 30l25 18M50 30 25 48" stroke-width="1"></path>
+        <circle cx="40" cy="9" r="6.5"></circle>
+        <path d="M40 9h0" stroke-width="3" stroke-linecap="round"></path>
+        <path d="M40 15.5V96" stroke-width="1"></path>
+      </svg>
+      <Fahrzeug class="tg-turm-fahrzeug" />
+    </div>
+  </div>
+
+  <div class="tg-untertage">
+    <span class="tg-null" data-tiefe="0"></span>
+
+    <div class="tg-schacht" aria-hidden="true">
+      <div class="tg-stollen"></div>
+      <div class="tg-front"></div>
+    </div>
+    <div class="tg-fahrt" aria-hidden="true">
+      <div class="tg-fahrzeug">
+        <Fahrzeug class="tg-fahrzeug-bild" />
+        <span class="tg-hud">
+          <span class="tg-hud-label">Tiefe</span>
+          <span class="tg-hud-wert" data-tg-anzeige>{sohle} m</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="tg-schicht tg-erdreich">
+      <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
+      <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
+      <div class="tg-innen mx-auto max-w-5xl px-4">
+        <p class="tg-marke" aria-hidden="true">Erdreich</p>
+
+        <div class="tg-paar mt-6">
+          <div>
+            <MetaList
+              rows={[
+                { label: 'Art', value: data.kind, variant: 'kind' },
+                { label: 'Zeitraum', value: data.period, variant: 'numeric' },
+                ...(data.status ? [{ label: 'Stand', value: data.status }] : []),
+                { label: 'Technik', value: data.techStack.join(' · '), variant: 'mono' },
+              ]}
+            />
+            {
+              (data.live || data.github) && (
+                <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+                  {data.live && (
+                    <li>
+                      <Button href={data.live} external>
+                        Live ansehen
+                      </Button>
+                    </li>
+                  )}
+                  {data.github && (
+                    <li>
+                      <Button href={data.github} variant="secondary" external>
+                        Code auf GitHub
+                      </Button>
+                    </li>
+                  )}
+                </ul>
+              )
+            }
+            <section class={block}>
+              <h2 class={blockTitle}>Worum es geht</h2>
+              <div
+                class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+              >
+                <Content />
+              </div>
+            </section>
+          </div>
+          {fundeIn('erdreich').map((f) => <Fund {...f} gesamt={gesamt} />)}
+        </div>
+
         {
-          schichten.map(({ name, ab, klasse }) => (
-            <div class:list={['schicht', klasse]}>
-              <span class="marke">
-                {name} <span class="ab">{ab}</span>
-              </span>
+          data.features.length > 0 && (
+            <section class={block}>
+              <h2 class={blockTitle}>Funktionen</h2>
+              <div class="tg-paar mt-4">
+                <ul class:list={[liste, 'text-fg-muted']}>
+                  {data.features.map((item) => (
+                    <li class="border-b border-border pb-3">{item}</li>
+                  ))}
+                </ul>
+                {fundeIn('funktionen').map((f) => (
+                  <Fund {...f} gesamt={gesamt} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="tg-schicht tg-eis">
+      <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
+      <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
+      <div class="tg-innen mx-auto max-w-5xl px-4">
+        <p class="tg-marke" aria-hidden="true">Eisschicht</p>
+        {
+          data.engineering.length > 0 && (
+            <section class={block}>
+              <h2 class={blockTitle}>Technische Entscheidungen</h2>
+              <div class="tg-paar mt-4">
+                <ul class:list={[liste, 'text-fg-muted']}>
+                  {data.engineering.map((item) => (
+                    <li class="border-b border-border pb-3">{item}</li>
+                  ))}
+                </ul>
+                {fundeIn('eis').map((f) => (
+                  <Fund {...f} gesamt={gesamt} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+        {
+          data.codeExample && (
+            <section class={block}>
+              <h2 class={blockTitle}>Code</h2>
+              <div class="mt-4 min-w-0">
+                <CodeBlock
+                  language={data.codeExample.language}
+                  snippet={data.codeExample.snippet}
+                />
+              </div>
+            </section>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="tg-schicht tg-lava">
+      <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
+      <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
+      <div class="tg-innen mx-auto max-w-5xl px-4">
+        <p class="tg-marke" aria-hidden="true">Lava</p>
+        {
+          data.learnings.length > 0 && (
+            <section class={block}>
+              <h2 class={blockTitle}>Erkenntnisse</h2>
+              <div class="tg-paar mt-4">
+                <ul class:list={[liste, 'text-fg']}>
+                  {data.learnings.map((item) => (
+                    <li class="border-b border-border pb-3">{item}</li>
+                  ))}
+                </ul>
+                {fundeIn('lava').map((f) => (
+                  <Fund {...f} gesamt={gesamt} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+        {
+          fundeIn('sohle').map((f) => (
+            <div class="mt-12">
+              <Fund {...f} gesamt={gesamt} art="leitbild" />
             </div>
           ))
         }
+        {
+          fundeIn('rest').length > 0 && (
+            <div class="tg-paar mt-10">
+              {fundeIn('rest').map((f) => (
+                <Fund {...f} gesamt={gesamt} />
+              ))}
+            </div>
+          )
+        }
       </div>
-      <svg class="bohrer" viewBox="0 0 48 72" aria-hidden="true">
-        <rect x="8" y="4" width="32" height="34" rx="6" fill="currentColor"></rect>
-        <rect x="14" y="10" width="20" height="10" rx="2" fill="oklch(0.19 0.015 60)"></rect>
-        <rect x="2" y="24" width="8" height="18" rx="2" fill="currentColor"></rect>
-        <rect x="38" y="24" width="8" height="18" rx="2" fill="currentColor"></rect>
-        <path d="M12 38h24l-12 30z" fill="currentColor"></path>
-        <path
-          d="M16 44h16M18 52h12M21 60h6"
-          stroke="oklch(0.19 0.015 60)"
-          stroke-width="2"
-          stroke-linecap="round"></path>
-      </svg>
     </div>
+
+    <a class="tg-auftauchen" href="#inhalt">
+      <span class="tg-auftauchen-tiefe" aria-hidden="true">
+        <span class="tg-hud-label">Tiefe</span>
+        <span class="tg-hud-wert" data-tg-anzeige>0 m</span>
+      </span>
+      <span class="tg-auftauchen-text">
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"><path d="M8 13.5V3M3.5 7.5 8 3l4.5 4.5"></path></svg
+        >
+        Auftauchen
+      </span>
+    </a>
   </div>
-</ProjectScene>
+
+  {funde.map((f) => <Lupe shot={f.shot} nummer={f.nummer} gesamt={gesamt} titel={data.title} />)}
+</div>
+
+<script>
+  /*
+   * Die Tiefenanzeige. Eine Leselinie bei 40 % der Fensterhöhe; wo sie steht,
+   * wird zwischen den Ankern (`data-tiefe`) linear gerechnet. Nebenbei merkt
+   * sich das Skript, wie weit der Stollen schon gegraben ist, blendet den
+   * Kasten „Auftauchen“ erst unter Tage ein und lässt das Fahrzeug rütteln,
+   * solange gescrollt wird. Speichert nichts.
+   */
+  const tg = document.querySelector<HTMLElement>('[data-tg]')
+  if (tg) {
+    const anker = [...tg.querySelectorAll<HTMLElement>('[data-tiefe]')]
+    const anzeigen = [...tg.querySelectorAll<HTMLElement>('[data-tg-anzeige]')]
+    const schacht = tg.querySelector<HTMLElement>('.tg-schacht')
+    const front = tg.querySelector<HTMLElement>('.tg-front')
+    const ruhig = matchMedia('(prefers-reduced-motion: reduce)')
+    let bild = 0
+    let pause = 0
+    let gegraben = 0
+
+    const messen = () => {
+      bild = 0
+      const linie = innerHeight * 0.4
+      let tiefe = 0
+      let vorher: [number, number] | null = null
+      for (const a of anker) {
+        const r = a.getBoundingClientRect()
+        const y = r.top + r.height / 2
+        const t = Number(a.dataset.tiefe)
+        if (linie < y) {
+          if (vorher) tiefe = vorher[1] + ((linie - vorher[0]) / (y - vorher[0])) * (t - vorher[1])
+          break
+        }
+        vorher = [y, t]
+        tiefe = t
+      }
+      const text = `${Math.round(tiefe)} m`
+      // Unter Tage erst ab dem ersten Meter; an der Oberfläche bleibt der Kasten weg.
+      tg.classList.toggle('tg-unter', tiefe >= 1)
+      for (const el of anzeigen) {
+        // Mit reduzierter Bewegung steht das Fahrzeug auf der Sohle und behält seine Zahl.
+        if (ruhig.matches && el.closest('.tg-fahrt')) continue
+        if (el.textContent !== text) el.textContent = text
+      }
+      if (schacht && front && !ruhig.matches) {
+        const tief = front.getBoundingClientRect().top - schacht.getBoundingClientRect().top
+        if (tief > gegraben) {
+          gegraben = tief
+          schacht.style.setProperty('--tg-gegraben', `${Math.round(gegraben)}px`)
+        }
+      }
+    }
+    const planen = () => {
+      if (!bild) bild = requestAnimationFrame(messen)
+    }
+
+    addEventListener(
+      'scroll',
+      () => {
+        planen()
+        if (ruhig.matches) return
+        tg.classList.add('tg-bohrt')
+        clearTimeout(pause)
+        pause = window.setTimeout(() => tg.classList.remove('tg-bohrt'), 160)
+      },
+      { passive: true },
+    )
+    addEventListener('resize', () => {
+      // Neuer Umbruch, neue Längen: Der Stollen wird ab der jetzigen Front neu vermessen.
+      gegraben = 0
+      planen()
+    })
+    tg.classList.add('tg-live')
+    messen()
+  }
+</script>
 
 <style>
-  @property --tg-tiefe {
-    syntax: '<integer>';
-    inherits: true;
-    initial-value: 525;
+  /*
+   * Farben der Szene, jede mit Dunkel-Zwilling. Die Lava-Schicht ist in beiden
+   * Modi dunkel: Je tiefer, desto dunkler, wie im Spiel.
+   */
+  .tg {
+    --tg-farbe-erde: oklch(0.95 0.024 72);
+    --tg-farbe-eis: oklch(0.955 0.02 225);
+    --tg-farbe-lava: oklch(0.21 0.02 35);
+    --tg-textur-erde: oklch(0.87 0.04 66);
+    --tg-textur-eis: oklch(0.86 0.045 228);
+    --tg-textur-lava: oklch(0.31 0.05 40);
+    --tg-narbe: oklch(0.6 0.07 62);
+    --tg-stollen: oklch(0.23 0.012 50);
+    --tg-seil: oklch(0.5 0.01 60);
+    --tg-glut: oklch(0.8 0.16 65);
+    --tg-glut-hof: oklch(0.58 0.17 45);
+    --tg-glut-rand: oklch(0.3 0.08 38);
+    --tg-hud: oklch(0.2 0.008 60);
+    --tg-hud-rand: oklch(0.36 0.01 60);
+    --tg-kreide: oklch(0.95 0.005 80);
+    --tg-kreide-matt: oklch(0.74 0.01 80);
+    --tg-rumpf: oklch(0.58 0.17 36);
+    --tg-kabine: oklch(0.86 0.15 80);
+    --tg-kette: oklch(0.34 0.012 260);
+    --tg-kette-fuge: oklch(0.55 0.012 260);
+    --tg-stahl: oklch(0.6 0.012 260);
+    --tg-signal: oklch(0.8 0.17 145);
+    --tg-bohrkopf: oklch(0.88 0.04 230);
+    --tg-rille: oklch(0.6 0.05 235);
+    position: relative;
   }
-
-  .schacht {
-    --tg-tiefe: 525;
-    --tg-welt: 20rem;
-    --tg-schicht: 14rem;
-    --tg-kreide: oklch(0.9 0.01 80);
-    --tg-kreide-matt: oklch(0.7 0.01 80);
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding-block: 1.25rem;
-    color: var(--tg-kreide);
-  }
-
-  @media (min-width: 640px) {
-    .schacht {
-      --tg-welt: 24rem;
-      grid-template-columns: 10rem minmax(0, 1fr);
-      gap: 2rem;
-      padding-block: 2rem;
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .tg {
+      --tg-farbe-erde: oklch(0.205 0.022 55);
+      --tg-farbe-eis: oklch(0.205 0.03 240);
+      --tg-farbe-lava: oklch(0.14 0.018 35);
+      --tg-textur-erde: oklch(0.28 0.03 55);
+      --tg-textur-eis: oklch(0.29 0.045 238);
+      --tg-textur-lava: oklch(0.25 0.05 40);
+      --tg-narbe: oklch(0.45 0.05 60);
+      --tg-stollen: oklch(0.1 0.006 50);
+      --tg-seil: oklch(0.42 0.01 60);
+      --tg-hud: oklch(0.24 0.008 60);
+      --tg-hud-rand: oklch(0.4 0.01 60);
+      --tg-kette: oklch(0.42 0.012 260);
+      --tg-kette-fuge: oklch(0.62 0.012 260);
     }
   }
-
-  /* Anzeigen wie im Spiel: Label klein, Wert in Tabellenziffern. */
-  .hud {
-    margin: 0;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-content: start;
-    gap: 0.25rem 1rem;
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-  }
-  @media (min-width: 640px) {
-    .hud {
-      grid-template-columns: 1fr;
-      gap: 0.125rem;
-    }
-  }
-  .hud dt {
-    color: var(--tg-kreide-matt);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .hud dd {
-    margin: 0 0 0.5rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-  .hud dd.fracht {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  .tiefe::after {
-    counter-reset: tg-tiefe calc(var(--tg-tiefe));
-    content: counter(tg-tiefe) ' m';
+  :root[data-theme='dark'] .tg {
+    --tg-farbe-erde: oklch(0.205 0.022 55);
+    --tg-farbe-eis: oklch(0.205 0.03 240);
+    --tg-farbe-lava: oklch(0.14 0.018 35);
+    --tg-textur-erde: oklch(0.28 0.03 55);
+    --tg-textur-eis: oklch(0.29 0.045 238);
+    --tg-textur-lava: oklch(0.25 0.05 40);
+    --tg-narbe: oklch(0.45 0.05 60);
+    --tg-stollen: oklch(0.1 0.006 50);
+    --tg-seil: oklch(0.42 0.01 60);
+    --tg-hud: oklch(0.24 0.008 60);
+    --tg-hud-rand: oklch(0.4 0.01 60);
+    --tg-kette: oklch(0.42 0.012 260);
+    --tg-kette-fuge: oklch(0.62 0.012 260);
   }
 
-  .energie {
-    display: block;
-    height: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid var(--tg-kreide-matt);
-    border-radius: 2px;
+  /* ---------- Oberfläche: Szene-Hinweis links, Förderturm rechts ---------- */
+
+  .tg-oberflaeche {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
   }
-  .energie-stand {
-    display: block;
+  .tg-legende {
+    padding-bottom: 1.25rem;
+  }
+  .tg-turm {
+    position: relative;
+    flex: none;
+    width: 5rem;
+    height: 6rem;
+    color: var(--color-fg);
+  }
+  .tg-turm-bild {
+    position: absolute;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    width: calc(100% - var(--tg-tiefe) / 525 * 72%);
-    background: var(--color-accent);
   }
-
-  .welt {
-    position: relative;
-    height: var(--tg-welt);
-    overflow: hidden;
-    border: 1px solid oklch(0.32 0.02 60);
-    border-radius: var(--radius-sm);
+  .tg-turm-bild * {
+    vector-effect: non-scaling-stroke;
   }
-
-  /* Vier Bänder, zusammen höher als das Fenster: Die Kamera fährt mit dem Fahrzeug nach unten. */
-  .schichten {
-    transform: translateY(calc(var(--tg-tiefe) / 525 * (var(--tg-welt) - 4 * var(--tg-schicht))));
-  }
-  .schicht {
-    position: relative;
-    height: var(--tg-schicht);
-    border-top: 1px solid oklch(0 0 0 / 0.25);
-  }
-  .marke {
+  .tg-turm :global(.tg-turm-fahrzeug) {
     position: absolute;
-    right: 1rem;
-    top: 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--tg-kreide);
+    left: 1.5rem;
+    bottom: 0;
+    width: 2rem;
+    height: 2.75rem;
   }
-  .ab {
-    margin-left: 0.5em;
-    font-variant-numeric: tabular-nums;
-    text-transform: none;
-    letter-spacing: 0;
+
+  /* ---------- Unter Tage: die Schichten ---------- */
+
+  .tg-untertage {
+    position: relative;
+  }
+  .tg-null {
+    display: block;
+    height: 0;
+  }
+
+  .tg-schicht {
+    --tg-grund: var(--tg-farbe-erde);
+    --tg-textur: var(--tg-textur-erde);
+    position: relative;
+    margin-inline: calc(50% - 50vw);
+    padding-bottom: 8rem;
+    background-color: var(--tg-grund);
+  }
+  .tg-innen {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+   * Übergangsband wie im Spiel: In den letzten Reihen einer Schicht tauchen
+   * schon Kacheln der nächsten auf, erst vereinzelt, dann fast überall.
+   * Ausgerichtet an denselben 3rem-Kacheln wie das Gestein im Rand.
+   */
+  .tg-erdreich::after,
+  .tg-eis::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 6rem;
+    background-color: var(--tg-naechste);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 2' preserveAspectRatio='none' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h1v1H1zM8 0h2v1H8zM13 0h1v1h-1zM0 1h3v1H0zM4 1h2v1H4zM7 1h4v1H7zM12 1h2v1h-2zM15 1h1v1h-1z'/%3E%3C/svg%3E");
+    mask-size: 48rem 6rem;
+    mask-repeat: repeat-x;
+    mask-position: calc(50% + 1rem) bottom;
+  }
+
+  .tg-erdreich {
+    --tg-naechste: var(--tg-farbe-eis);
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96' stroke='%23000' fill='none'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='14' cy='18' r='2.5'/%3E%3Ccircle cx='30' cy='34' r='1.6'/%3E%3Ccircle cx='36' cy='12' r='1.2'/%3E%3Ccircle cx='66' cy='14' r='2'/%3E%3Ccircle cx='80' cy='32' r='3'/%3E%3Ccircle cx='60' cy='38' r='1.4'/%3E%3Ccircle cx='16' cy='72' r='1.8'/%3E%3Ccircle cx='34' cy='62' r='2.6'/%3E%3Ccircle cx='26' cy='86' r='1.3'/%3E%3Ccircle cx='72' cy='66' r='1.5'/%3E%3Ccircle cx='84' cy='84' r='2.2'/%3E%3Ccircle cx='62' cy='82' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+    border-top: 2px solid var(--tg-narbe);
+  }
+  .tg-eis {
+    --tg-grund: var(--tg-farbe-eis);
+    --tg-textur: var(--tg-textur-eis);
+    --tg-naechste: var(--tg-farbe-lava);
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96'/%3E%3Cpath d='M12 10l7 14M18 8l5 16M34 30l4-9M58 28l9-14M66 34l7-10M80 16l3 8M12 84l9-12M26 64l5 14M40 80l3-6M62 60l10 14M76 58l-5 16M84 82l4 6'/%3E%3C/svg%3E");
+  }
+  /*
+   * Die Lava-Schicht ist in beiden Modi dunkel. Damit Text darin lesbar bleibt,
+   * gelten hier die Werte des Dunkelmodus, nur innerhalb dieser Fläche.
+   */
+  .tg-lava {
+    --tg-grund: var(--tg-farbe-lava);
+    --tg-textur: var(--tg-textur-lava);
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linejoin='round'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96'/%3E%3Cpath d='M6 32l8-7 6 5 9-9 11 3M54 10l6 9 9-3 6 11 12 3M8 58l7 11 10-5 5 13M56 88l8-9 10 4 12-11'/%3E%3C/svg%3E");
+    --color-fg: oklch(0.96 0.003 80);
+    --color-fg-muted: oklch(0.77 0.01 60);
+    --color-border: oklch(0.34 0.025 40);
+    --color-accent: oklch(0.78 0.15 60);
+    --color-accent-fg: oklch(0.17 0.02 60);
+    color-scheme: dark;
+    color: var(--color-fg);
+  }
+
+  /* Grenze zwischen zwei Schichten: gestrichelt, darunter der Name der neuen. */
+  .tg-schicht + .tg-schicht {
+    border-top: 1px dashed var(--tg-textur);
+  }
+  .tg-marke {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 0;
+    padding-top: 1.25rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+  .tg-marke + .tg-block {
+    margin-top: 1.5rem;
+  }
+  .tg-marke::before {
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    background-color: var(--tg-textur);
+  }
+
+  /* Text links, Fundstück in der Randspalte rechts; schmal untereinander. */
+  .tg-paar {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 64rem) {
+    .tg-paar {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      column-gap: 3rem;
+      align-items: start;
+    }
+  }
+
+  /*
+   * Das Gestein links und rechts der Spalte: Kacheln wie im Spiel, eine Kachel
+   * 3rem, ausgerichtet an der Spaltenkante. Zur Spalte hin blendet es aus, damit
+   * der Text auf ruhigem Grund steht. Auf schmalen Schirmen gibt es keinen Rand.
+   */
+  .tg-wand {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: max(0px, calc(50% - 32rem));
+    pointer-events: none;
+  }
+  .tg-wand::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--tg-textur);
+    mask-image: var(--tg-muster);
+    mask-size: 6rem 6rem;
+    mask-repeat: repeat;
+  }
+  .tg-wand-links {
+    left: 0;
+    mask-image: linear-gradient(to left, transparent, #000 4rem);
+  }
+  .tg-wand-links::before {
+    mask-position: right top;
+  }
+  .tg-wand-rechts {
+    right: 0;
+    mask-image: linear-gradient(to right, transparent, #000 4rem);
+  }
+  .tg-wand-rechts::before {
+    mask-position: left top;
+  }
+
+  /* Glutnester in der Lava: einzelne Kacheln, die von innen leuchten. */
+  .tg-lava .tg-wand::after {
+    --tg-nest: radial-gradient(
+      circle,
+      var(--tg-glut) 0.3rem,
+      var(--tg-glut-hof) 0.35rem 0.8rem,
+      var(--tg-glut-rand) 0.85rem
+    );
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--tg-nest), var(--tg-nest);
+    background-repeat: no-repeat;
+    background-size: 3rem 3rem;
+  }
+  .tg-lava .tg-wand-links::after {
+    background-position:
+      right 9rem top 15rem,
+      right 6rem top 39rem;
+  }
+  .tg-lava .tg-wand-rechts::after {
+    background-position:
+      left 6rem top 9rem,
+      left 3rem top 30rem;
+  }
+
+  /* ---------- Schacht und Fahrzeug, nur mit genug Rand links ---------- */
+
+  .tg-schacht,
+  .tg-fahrt {
+    display: none;
+  }
+
+  @media (min-width: 80rem) {
+    /* Der Förderturm steht über dem Stollen, zwei Kacheln links der Spalte. */
+    .tg-turm {
+      position: absolute;
+      left: -8.5rem;
+      bottom: 0;
+      width: 6rem;
+      height: 7.2rem;
+    }
+    .tg-turm :global(.tg-turm-fahrzeug) {
+      display: none;
+    }
+
+    .tg-schacht,
+    .tg-fahrt {
+      display: block;
+      position: absolute;
+      left: -7rem;
+      bottom: 0;
+    }
+    .tg-schacht {
+      z-index: 2;
+      top: 0;
+      width: 3rem;
+      overflow: clip;
+    }
+    .tg-fahrt {
+      z-index: 3;
+      top: -2.75rem;
+      width: 6rem;
+      pointer-events: none;
+    }
+
+    /* Was schon gegraben ist, bleibt offen; das Skript setzt die Tiefe. */
+    .tg-stollen {
+      position: absolute;
+      inset: 0 0 auto;
+      height: var(--tg-gegraben, 0px);
+      background-color: var(--tg-stollen);
+    }
+    /* Die Front klebt an der Leselinie; über ihr ist der Stollen offen, mit Seil. */
+    .tg-front {
+      position: sticky;
+      top: 40vh;
+      height: 0;
+    }
+    .tg-front::before {
+      content: '';
+      position: absolute;
+      inset: auto 0 0;
+      height: 400vh;
+      background:
+        linear-gradient(var(--tg-seil), var(--tg-seil)) center / 1px 100% no-repeat,
+        var(--tg-stollen);
+    }
+
+    .tg-fahrzeug {
+      position: sticky;
+      top: calc(40vh - 2.75rem);
+      display: flex;
+      align-items: flex-start;
+    }
+    .tg-fahrzeug :global(.tg-fahrzeug-bild) {
+      flex: none;
+      width: 2rem;
+      height: 2.75rem;
+      margin-inline: 0.5rem;
+    }
+    .tg-hud {
+      display: none;
+      margin: 0.375rem 0 0 0.25rem;
+      width: 2.75rem;
+      padding: 0.25rem 0;
+      text-align: center;
+      background-color: var(--tg-hud);
+      border: 1px solid var(--tg-hud-rand);
+      border-radius: var(--radius-sm);
+      color: var(--tg-kreide);
+    }
+    .tg-live .tg-hud {
+      display: grid;
+    }
+    .tg-hud .tg-hud-wert {
+      font-size: 0.6875rem;
+    }
+  }
+
+  .tg-hud-label {
+    display: block;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
     color: var(--tg-kreide-matt);
   }
-
-  /* Gestein und Erze als gestreute Punkte, jede Schicht in eigener Farbe. */
-  .erde {
-    background:
-      radial-gradient(circle at 20% 60%, oklch(0.5 0.05 60) 3px, transparent 4px),
-      radial-gradient(circle at 70% 30%, oklch(0.5 0.05 60) 2px, transparent 3px),
-      radial-gradient(circle at 45% 85%, oklch(0.42 0.05 60) 3px, transparent 4px),
-      oklch(0.36 0.05 60);
-    background-size:
-      140px 120px,
-      90px 110px,
-      170px 140px,
-      auto;
-  }
-  .gestein {
-    background:
-      radial-gradient(circle at 30% 40%, oklch(0.55 0.02 80) 2px, transparent 3px),
-      radial-gradient(circle at 80% 75%, oklch(0.62 0.1 60) 3px, transparent 4px),
-      radial-gradient(circle at 60% 20%, oklch(0.5 0.02 80) 2px, transparent 3px),
-      oklch(0.3 0.012 80);
-    background-size:
-      120px 100px,
-      160px 130px,
-      100px 90px,
-      auto;
-  }
-  .eis {
-    background:
-      radial-gradient(circle at 25% 35%, oklch(0.95 0.03 230) 2px, transparent 3px),
-      radial-gradient(circle at 75% 70%, oklch(0.88 0.06 230) 3px, transparent 4px),
-      radial-gradient(circle at 55% 15%, oklch(0.95 0.03 230) 2px, transparent 3px),
-      oklch(0.6 0.07 230);
-    background-size:
-      130px 110px,
-      150px 120px,
-      110px 100px,
-      auto;
-  }
-  .lava {
-    background:
-      radial-gradient(ellipse at 50% 100%, oklch(0.75 0.19 45) 0%, transparent 60%),
-      radial-gradient(circle at 30% 45%, oklch(0.62 0.2 35) 4px, transparent 5px),
-      radial-gradient(circle at 70% 25%, oklch(0.62 0.2 35) 3px, transparent 4px),
-      oklch(0.28 0.08 30);
-    background-size:
-      100% 100%,
-      150px 120px,
-      120px 100px,
-      auto;
+  .tg-hud-wert {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    white-space: nowrap;
   }
 
-  /* Das Fahrzeug bleibt an seinem Platz; die Welt bewegt sich um es herum. */
-  .bohrer {
-    position: absolute;
-    left: 50%;
-    top: 38%;
-    width: 3rem;
-    height: 4.5rem;
-    color: var(--color-accent);
-    transform: translateX(-50%);
+  /* ---------- Auftauchen: Tiefe und Rückweg an die Oberfläche ---------- */
+
+  .tg-auftauchen {
+    position: sticky;
+    z-index: 4;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    width: max-content;
+    height: 3rem;
+    margin: -4.5rem 0 1.5rem auto;
+    padding-inline: 0.75rem 0.875rem;
+    background-color: var(--tg-hud);
+    border: 1px solid var(--tg-hud-rand);
+    border-radius: var(--radius-sm);
+    color: var(--tg-kreide);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color var(--duration-base) var(--ease-quiet);
   }
+  .tg-auftauchen:hover {
+    border-color: var(--tg-glut);
+  }
+  .tg-auftauchen-tiefe {
+    display: none;
+    min-width: 3.25rem;
+    padding-right: 0.875rem;
+    border-right: 1px solid var(--tg-hud-rand);
+  }
+  /* Mit Skript erscheint der Kasten erst unter Tage, ohne steht er immer da. */
+  .tg-live:not(.tg-unter) .tg-auftauchen {
+    visibility: hidden;
+  }
+  .tg-live .tg-auftauchen-tiefe {
+    display: block;
+  }
+  .tg-auftauchen-tiefe .tg-hud-wert {
+    display: block;
+    font-size: 0.9375rem;
+  }
+  .tg-auftauchen-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .tg-auftauchen-text svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  @media (min-width: 80rem) {
+    /* Breit fährt das Fahrzeug mit; der Weg nach oben wartet unten auf der Sohle. */
+    .tg-auftauchen {
+      position: relative;
+      bottom: auto;
+    }
+  }
+
+  /* ---------- Bewegung ---------- */
 
   @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      /*
-       * Langschreibweise mit Absicht: Der CSS-Minifier zieht `animation-timeline`
-       * sonst in die Kurzform `animation`, und die verwirft der Browser als Ganzes.
-       */
-      .schacht {
-        animation-name: tg-graben;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 90vh;
-      }
-      .bohrer {
-        animation: tg-ruetteln 0.24s steps(2) infinite;
-      }
+    .tg-bohrt :global(.tg-fahrzeug-bild) {
+      animation: tg-ruetteln 0.12s steps(2) infinite;
+    }
+    .tg-lava .tg-wand::after {
+      animation: tg-klopfen 3.2s ease-in-out infinite alternate;
     }
   }
 
-  @keyframes tg-graben {
-    from {
-      --tg-tiefe: 0;
+  /* Ohne Bewegung steht der Endzustand: Stollen bis zur Sohle, Fahrzeug unten. */
+  @media (prefers-reduced-motion: reduce) {
+    .tg-stollen {
+      height: 100%;
     }
-    to {
-      --tg-tiefe: 525;
+    .tg-front {
+      display: none;
+    }
+    .tg-fahrzeug {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+    }
+    .tg-auftauchen {
+      transition: none;
     }
   }
+
   @keyframes tg-ruetteln {
-    from {
-      transform: translate(-50%, 0);
-    }
     to {
-      transform: translate(calc(-50% + 1px), 1px);
+      transform: translate(0.5px, 0.5px);
+    }
+  }
+  /* Das Klopfen: Im Spiel hat der Planet einen Takt, die Glut schlägt ihn mit. */
+  @keyframes tg-klopfen {
+    to {
+      filter: brightness(1.15);
     }
   }
 </style>
