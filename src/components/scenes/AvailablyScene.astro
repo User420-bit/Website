@@ -1,198 +1,514 @@
 ---
 /**
- * Availably: zwei Telefone, zwei Personen, vier Zustände. Links wechselt der
- * Status langsam durch, rechts folgt er kurz darauf: Der andere sieht es, ohne
- * zu fragen. Vier Farben für vier Zustände, nur hier. Mit reduzierter Bewegung
- * steht links „Fokus“ und rechts dasselbe.
+ * Availably: zwei Telefone, zwei Personen, ein Status. Keine eigene Fläche,
+ * kein Rechteck über die Fensterbreite: Die Telefone stehen als Strichzeichnung
+ * auf dem Papier der Seite, bunt sind nur die vier Zustände. Das ist die
+ * leiseste Bühne der Website, und das ist die Aussage (Entscheidungsregel der
+ * App: Was lauter macht, wird nicht gebaut).
+ *
+ * Bedienbar: Auf dem linken Telefon setzt der Besucher den Status von Jonas
+ * (vier Radio-Knöpfe, ohne Skript über `:has()`), über die gepunktete Leitung
+ * mit dem Koppel-Code läuft er hinüber, und 0,6 s später steht er rechts bei
+ * Lea und im Schlusspunkt der H1 (AvailablyPage). Das kleine Skript unten
+ * ergänzt das Zeitlimit: Jeder Status außer „verfügbar“ läuft nach LIMIT
+ * Sekunden ab, der Ring um den Punkt leert sich, danach steht wieder
+ * „verfügbar“. Beim ersten Hinsehen führt die Szene das einmal selbst vor und
+ * kommt dann zur Ruhe; eine Schleife gibt es nicht mehr.
+ *
+ * Farben und die Zuordnung Status → Farbe (`--av-jetzt`) hängen am Artikel
+ * (`.av-seite`), weil der Schlusspunkt der H1 außerhalb dieser Komponente
+ * steht. Gespeichert wird nichts; nach dem Neuladen steht wieder „verfügbar“.
+ * Ohne Skript spiegelt CSS weiter, nur das Zeitlimit entfällt. Mit reduzierter
+ * Bewegung läuft kein Beispiel, der Ring steht still, und der Wechsel kommt
+ * ohne Übergang.
  */
-import ProjectScene from '@/components/ProjectScene.astro'
+
+/** Zeitlimit der Szene in Sekunden; in der App wählt man Minuten oder Stunden. */
+const LIMIT = 20
 
 const zustaende = [
-  { name: 'Fokus', klasse: 'fokus' },
-  { name: 'verfügbar', klasse: 'verfuegbar' },
-  { name: 'beschäftigt', klasse: 'beschaeftigt' },
-  { name: 'Ruhe', klasse: 'ruhe' },
-]
-const personen = [
-  { name: 'Jonas', hinweis: 'setzt den Status' },
-  { name: 'Lea', hinweis: 'sieht ihn, ohne zu fragen' },
+  { wert: 'verfuegbar', name: 'verfügbar' },
+  { wert: 'beschaeftigt', name: 'beschäftigt' },
+  { wert: 'fokus', name: 'Fokus' },
+  { wert: 'ruhe', name: 'Ruhe' },
 ]
 ---
 
-<ProjectScene
-  caption="Zwei Telefone, nachgezeichnet: Links wird ein Status gesetzt, rechts steht er kurz darauf, ohne Nachricht und ohne Nachfrage."
-  surface="oklch(0.95 0.008 250)"
-  surfaceDark="oklch(0.22 0.012 250)"
->
+<figure class="av m-0 mt-12" data-av data-limit={LIMIT} style={`--av-limit: ${LIMIT}s`}>
   <div class="paar">
-    {
-      personen.map(({ name, hinweis }, p) => (
-        <div class="person" style={`--p: ${p}`}>
-          <div class="telefon">
-            <span class="kerbe" />
-            <span class="name">{name}</span>
-            <div class="status">
-              {zustaende.map(({ name: zustand, klasse }, i) => (
-                <span class:list={['zustand', klasse]} style={`--i: ${i}`}>
-                  <span class="punkt" />
-                  {zustand}
+    <div class="person">
+      <div class="telefon">
+        <span class="schlitz" aria-hidden="true"></span>
+        <div class="anzeige" aria-hidden="true">
+          <span class="kreis">
+            <svg class="zeitring" viewBox="0 0 100 100">
+              <circle class="spur" cx="50" cy="50" r="47"></circle>
+              <circle class="rest" cx="50" cy="50" r="47" pathLength="100"></circle>
+            </svg>
+            <span class="punkt"></span>
+          </span>
+          <span class="worte">
+            {
+              zustaende.map(({ wert, name }) => (
+                <span class="wort" data-z={wert}>
+                  {name}
                 </span>
-              ))}
-            </div>
-          </div>
-          <p class="hinweis">{hinweis}</p>
+              ))
+            }
+          </span>
+          <span class="limit">mit Zeitlimit</span>
         </div>
-      ))
-    }
+        <fieldset class="wahl">
+          <legend>Status setzen</legend>
+          {
+            zustaende.map(({ wert, name }) => (
+              <label class="option" style={`--farbe: var(--av-${wert})`}>
+                <input
+                  type="radio"
+                  name="av-status"
+                  value={wert}
+                  checked={wert === 'verfuegbar'}
+                  autocomplete="off"
+                />
+                <span>{name}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+      </div>
+      <p class="hinweis">Jonas setzt den Status.</p>
+    </div>
+
+    {/* Die Kopplung: kein Chat, keine Nachricht, nur diese eine Leitung. */}
+    <div class="leitung" aria-hidden="true">
+      <span class="gekoppelt">gekoppelt</span>
+      <span class="linie"><span class="bote"></span></span>
+      <span class="code">482 913</span>
+    </div>
+
+    <div class="person lea">
+      <div class="telefon" aria-hidden="true">
+        <span class="schlitz"></span>
+        <div class="anzeige">
+          <span class="kreis"><span class="punkt"></span></span>
+          <span class="worte">
+            {
+              zustaende.map(({ wert, name }) => (
+                <span class="wort" data-z={wert}>
+                  {name}
+                </span>
+              ))
+            }
+          </span>
+        </div>
+      </div>
+      <p class="hinweis">Lea sieht ihn, ohne zu fragen.</p>
+    </div>
   </div>
-</ProjectScene>
+
+  <p class="sr-only" aria-live="polite" data-av-meldung></p>
+
+  <figcaption class="mt-6 max-w-[65ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Szene</span> · Zwei Telefone, nachgezeichnet, mit Beispielnamen
+    und Beispielcode. Links lässt sich der Status setzen, rechts steht er kurz darauf, ohne Nachricht
+    und ohne Nachfrage.<span data-av-mit-js hidden
+      >{' '}Das Zeitlimit ist hier auf {LIMIT} Sekunden verkürzt; danach steht wieder „verfügbar“.</span
+    > Kein Screenshot.
+  </figcaption>
+</figure>
+
+<script>
+  /*
+   * Zeitlimit und das Beispiel beim ersten Hinsehen. Ohne dieses Skript
+   * spiegelt CSS den Status trotzdem; nur das Zeitlimit entfällt. Kein
+   * Speicher, keine Anfrage.
+   */
+  const root = document.querySelector<HTMLElement>('[data-av]')
+  if (root) {
+    const limit = Number(root.dataset.limit) * 1000
+    const inputs = [...root.querySelectorAll<HTMLInputElement>('input[name="av-status"]')]
+    const meldung = root.querySelector('[data-av-meldung]')
+    let uhr = 0
+    let beruehrt = false
+
+    const starte = (wert: string) => {
+      root.classList.add('lebt')
+      // Ring und Bote laufen bei jedem Wechsel von vorn.
+      for (const a of root.getAnimations({ subtree: true })) {
+        if (a instanceof CSSAnimation) {
+          a.currentTime = 0
+          a.play()
+        }
+      }
+      clearTimeout(uhr)
+      if (wert !== 'verfuegbar') uhr = window.setTimeout(ablauf, limit)
+    }
+    const setze = (wert: string) => {
+      const input = inputs.find((i) => i.value === wert)
+      if (input) input.checked = true
+      starte(wert)
+    }
+    const ablauf = () => {
+      setze('verfuegbar')
+      if (meldung) meldung.textContent = 'Zeitlimit abgelaufen. Jonas ist wieder verfügbar.'
+    }
+
+    // Nichts wird gespeichert: Stellt der Browser eine alte Wahl wieder her, gilt der Anfang.
+    for (const i of inputs) i.checked = i.defaultChecked
+    for (const el of root.querySelectorAll<HTMLElement>('[data-av-mit-js]')) el.hidden = false
+    root.addEventListener('change', (e) => {
+      beruehrt = true
+      starte((e.target as HTMLInputElement).value)
+    })
+    root.addEventListener('pointerdown', () => (beruehrt = true))
+    root.addEventListener('focusin', () => (beruehrt = true))
+
+    // Einmal vorführen, wenn die Szene im Blick ist, dann Ruhe.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const blick = new IntersectionObserver(
+        ([eintrag]) => {
+          if (!eintrag?.isIntersecting) return
+          blick.disconnect()
+          window.setTimeout(() => beruehrt || setze('fokus'), 1200)
+        },
+        { threshold: 0.6 },
+      )
+      blick.observe(root)
+    }
+  }
+</script>
 
 <style>
+  /*
+   * Vier Farben für vier Zustände, nur auf dieser Seite, mit Dunkel-Zwilling.
+   * „beschäftigt“ ist bewusst gelber als das Werkstatt-Orange, damit es nicht
+   * wie eine Handlung aussieht. `--av-jetzt` ist der Status, den Jonas gerade
+   * gesetzt hat; er hängt am Artikel, damit auch die H1 ihn sieht.
+   */
+  :global(.av-seite) {
+    --av-verfuegbar: oklch(0.64 0.15 150);
+    --av-beschaeftigt: oklch(0.74 0.15 72);
+    --av-fokus: oklch(0.56 0.17 295);
+    --av-ruhe: oklch(0.66 0.012 250);
+    --av-jetzt: var(--av-verfuegbar);
+    --av-verzug: 0.6s;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light']) .av-seite) {
+      --av-verfuegbar: oklch(0.74 0.15 150);
+      --av-beschaeftigt: oklch(0.8 0.14 78);
+      --av-fokus: oklch(0.7 0.15 295);
+      --av-ruhe: oklch(0.64 0.012 250);
+    }
+  }
+  :global(:root[data-theme='dark'] .av-seite) {
+    --av-verfuegbar: oklch(0.74 0.15 150);
+    --av-beschaeftigt: oklch(0.8 0.14 78);
+    --av-fokus: oklch(0.7 0.15 295);
+    --av-ruhe: oklch(0.64 0.012 250);
+  }
+  :global(.av-seite:has(input[name='av-status'][value='beschaeftigt']:checked)) {
+    --av-jetzt: var(--av-beschaeftigt);
+  }
+  :global(.av-seite:has(input[name='av-status'][value='fokus']:checked)) {
+    --av-jetzt: var(--av-fokus);
+  }
+  :global(.av-seite:has(input[name='av-status'][value='ruhe']:checked)) {
+    --av-jetzt: var(--av-ruhe);
+  }
+
+  /*
+   * Jonas links, Lea rechts, dazwischen die Leitung. Links an der Spalte wie
+   * alles auf der Seite, so breit wie der Fließtext.
+   */
   .paar {
-    --av-glas: oklch(0.99 0.002 250);
-    --av-rand: oklch(0.3 0.01 250);
-    --av-tinte: oklch(0.2 0.01 250);
-    --av-matt: oklch(0.5 0.01 250);
-    --av-verfuegbar: oklch(0.68 0.16 150);
-    --av-beschaeftigt: oklch(0.68 0.17 50);
-    --av-fokus: oklch(0.6 0.16 300);
-    --av-ruhe: oklch(0.62 0.01 250);
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding-block: 1.5rem;
-    color: var(--av-tinte);
+    --av-breite: 9rem;
+    --av-hoehe: 20.5rem;
+    --av-kreis: 4.5rem;
+    --av-punkt: 3.25rem;
+    /* Mitte des Punkts, von der Oberkante des Telefons: Rand + Innenabstand + Abstand + halber Kreis. */
+    --av-mitte: calc(1.5px + 1.75rem + 1rem + var(--av-kreis) / 2);
+    display: grid;
+    grid-template-columns: var(--av-breite) minmax(3.5rem, 1fr) var(--av-breite);
+    max-width: 40rem;
   }
   @media (min-width: 640px) {
     .paar {
-      gap: 5rem;
-      padding-block: 2rem;
+      --av-breite: 11rem;
+      --av-hoehe: 22.5rem;
+      --av-kreis: 5rem;
+      --av-punkt: 3.5rem;
     }
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .paar {
-      --av-glas: oklch(0.17 0.01 250);
-      --av-rand: oklch(0.75 0.01 250);
-      --av-tinte: oklch(0.95 0.005 250);
-      --av-matt: oklch(0.7 0.01 250);
-      --av-fokus: oklch(0.72 0.14 300);
-    }
-  }
-  :root[data-theme='dark'] .paar {
-    --av-glas: oklch(0.17 0.01 250);
-    --av-rand: oklch(0.75 0.01 250);
-    --av-tinte: oklch(0.95 0.005 250);
-    --av-matt: oklch(0.7 0.01 250);
-    --av-fokus: oklch(0.72 0.14 300);
   }
 
-  .person {
+  .telefon {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: var(--av-hoehe);
+    padding: 1.75rem 0.625rem 0.625rem;
+    border: 1.5px solid var(--color-fg);
+    border-radius: 1.5rem;
+    background: var(--color-bg-elevated);
+  }
+  @media (min-width: 640px) {
+    .telefon {
+      padding-inline: 0.875rem;
+      border-radius: 1.75rem;
+    }
+  }
+  .schlitz {
+    position: absolute;
+    top: 0.625rem;
+    left: 50%;
+    width: 2.25rem;
+    height: 0.3125rem;
+    border-radius: 999px;
+    background: var(--color-fg);
+    transform: translateX(-50%);
+  }
+
+  .anzeige {
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .telefon {
+  .kreis {
     position: relative;
-    width: 7.5rem;
-    height: 14rem;
-    padding: 1.75rem 0.75rem 1rem;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid var(--av-rand);
-    border-radius: 1.25rem;
-    background: var(--av-glas);
-  }
-  @media (min-width: 640px) {
-    .telefon {
-      width: 9rem;
-      height: 17rem;
-    }
-  }
-  .kerbe {
-    position: absolute;
-    top: 0.6rem;
-    left: 50%;
-    width: 2.5rem;
-    height: 0.35rem;
-    border-radius: 999px;
-    background: var(--av-rand);
-    transform: translateX(-50%);
-  }
-  .name {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--av-matt);
-  }
-
-  /* Die vier Zustände liegen übereinander; sichtbar ist immer genau einer. */
-  .status {
-    position: relative;
-    flex: 1;
     display: grid;
-  }
-  .zustand {
-    grid-area: 1 / 1;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    font-size: 1.125rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    opacity: 0;
-  }
-  .zustand:first-child {
-    opacity: 1;
+    place-items: center;
+    width: var(--av-kreis);
+    height: var(--av-kreis);
   }
   .punkt {
-    width: 2rem;
-    height: 2rem;
+    width: var(--av-punkt);
+    height: var(--av-punkt);
     border-radius: 50%;
+    background-color: var(--av-jetzt);
+    transition: background-color var(--duration-base) var(--ease-quiet);
   }
-  .verfuegbar .punkt {
-    background: var(--av-verfuegbar);
+  .lea .punkt {
+    transition-duration: var(--duration-slow);
+    transition-delay: var(--av-verzug);
   }
-  .beschaeftigt .punkt {
-    background: var(--av-beschaeftigt);
+
+  /* Die vier Wörter liegen übereinander; ohne `:has()` steht „verfügbar“. */
+  .worte {
+    display: grid;
+    margin-top: 0.375rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.5;
   }
-  .fokus .punkt {
-    background: var(--av-fokus);
+  @media (min-width: 640px) {
+    .worte {
+      font-size: 1.125rem;
+    }
   }
-  .ruhe .punkt {
-    background: var(--av-ruhe);
+  .wort {
+    grid-area: 1 / 1;
+    justify-self: center;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-quiet);
   }
+  .lea .wort {
+    transition-delay: var(--av-verzug);
+  }
+  .wort[data-z='verfuegbar'],
+  .av:has([value='beschaeftigt']:checked) .wort[data-z='beschaeftigt'],
+  .av:has([value='fokus']:checked) .wort[data-z='fokus'],
+  .av:has([value='ruhe']:checked) .wort[data-z='ruhe'] {
+    opacity: 1;
+  }
+  .av:has(input:checked:not([value='verfuegbar'])) .wort[data-z='verfuegbar'] {
+    opacity: 0;
+  }
+
+  /* Zeitlimit: nur mit Skript, denn nur das Skript setzt den Status zurück. */
+  .zeitring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    rotate: -90deg;
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-quiet);
+  }
+  .zeitring circle {
+    fill: none;
+    stroke-width: 2.5;
+  }
+  .spur {
+    stroke: var(--color-border);
+  }
+  .rest {
+    stroke: var(--av-jetzt);
+    stroke-dasharray: 100;
+    stroke-linecap: round;
+  }
+  .limit {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    color: var(--color-fg-muted);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-quiet);
+  }
+  .av.lebt:has(input:checked:not([value='verfuegbar'])) :is(.zeitring, .limit) {
+    opacity: 1;
+  }
+
+  .wahl {
+    margin: auto 0 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .wahl legend {
+    padding: 0 0 0.25rem 0.25rem;
+    font-size: 0.6875rem;
+    color: var(--color-fg-muted);
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 1.75rem;
+    padding-inline: 0.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-quiet);
+  }
+  @media (min-width: 640px) {
+    .option {
+      min-height: 2rem;
+      font-size: 0.875rem;
+    }
+  }
+  .option:hover,
+  .option:has(:checked) {
+    color: var(--color-fg);
+  }
+  .option:has(:checked) {
+    font-weight: 600;
+  }
+  /* Der Fokus liegt am Knopf, sichtbar wird er an der ganzen Zeile. */
+  .option:has(:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+  .option input {
+    appearance: none;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    border: 1.5px solid var(--color-fg-muted);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--farbe) 0 0.1875rem, transparent 0.21rem);
+    cursor: pointer;
+  }
+  .option input:checked {
+    border-color: var(--color-fg);
+    background: radial-gradient(circle, var(--farbe) 0 0.3125rem, transparent 0.335rem);
+  }
+  .option input:focus-visible {
+    outline: none;
+  }
+
   .hinweis {
     margin: 0.75rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--color-fg-muted);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  /* Die Leitung auf Höhe der beiden Punkte, der Code darunter. */
+  .leitung {
+    position: relative;
+    font-size: 0.6875rem;
+    color: var(--color-fg-muted);
+  }
+  .linie {
+    position: absolute;
+    top: calc(var(--av-mitte) - 2px);
+    inset-inline: 0.5rem;
+    height: 4px;
+    container-type: inline-size;
+    background: radial-gradient(circle, var(--color-fg-muted) 0 1px, transparent 1.5px) 0 50% / 6px
+      4px repeat-x;
+  }
+  .gekoppelt,
+  .code {
+    position: absolute;
+    inset-inline: 0;
+    text-align: center;
+  }
+  .gekoppelt {
+    top: calc(var(--av-mitte) - 1.5rem);
+  }
+  .code {
+    top: calc(var(--av-mitte) + 0.5rem);
+    font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--av-matt);
+    font-variant-numeric: tabular-nums;
+    word-spacing: -0.4em;
+  }
+  .bote {
+    position: absolute;
+    top: -0.125rem;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--av-jetzt);
+    opacity: 0;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    /*
-     * Vier Zustände in 24 s, rechts 0,6 s hinterher. Die negative Verzögerung
-     * startet die Schleife mitten im Lauf, damit beim Laden schon ein Zustand steht.
-     */
-    .zustand {
-      animation: av-wechsel 24s linear infinite;
-      animation-delay: calc(var(--i) * 6s - 24s + var(--p) * 0.6s);
+    /* Der Status reist in derselben Zeit hinüber, die Lea wartet. */
+    .av.lebt .bote {
+      animation: av-bote var(--av-verzug) var(--ease-quiet) both;
     }
-    .zustand:first-child {
-      opacity: 0;
+    .av.lebt .rest {
+      animation: av-ablauf var(--av-limit) linear both;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .punkt,
+    .wort,
+    .zeitring,
+    .limit,
+    .option {
+      transition-duration: 0s;
     }
   }
 
-  @keyframes av-wechsel {
-    0%,
-    20% {
-      opacity: 1;
-    }
-    25%,
-    95% {
+  @keyframes av-bote {
+    0% {
       opacity: 0;
+      transform: translateX(0);
+    }
+    20%,
+    80% {
+      opacity: 1;
     }
     100% {
-      opacity: 1;
+      opacity: 0;
+      transform: translateX(calc(100cqi - 0.5rem));
+    }
+  }
+  @keyframes av-ablauf {
+    from {
+      stroke-dashoffset: 0;
+    }
+    to {
+      stroke-dashoffset: 100;
     }
   }
 </style>
