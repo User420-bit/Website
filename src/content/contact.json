@@ -1,6 +1,6 @@
 {
   "main": {
-    "heading": "Kontakt",
+    "heading": "Das erste Gespräch kostet nichts",
     "description": "Anfragen zu kleinen Programmen, Websites und Web-Apps beantwortet Klartext per E-Mail.",
     "responseTime": "Antwort in der Regel innerhalb eines Werktags.",
     "subject": "Anfrage an Klartext",
@@ -11,11 +11,13 @@
       },
       {
         "title": "Erstes Gespräch",
-        "description": "Per Telefon oder Video, oder vor Ort zwischen Rosenheim und München. Kostenlos und unverbindlich."
+        "description": "Per Telefon oder Video, oder vor Ort zwischen Rosenheim und München. Kostenlos und unverbindlich.",
+        "timeframe": "Etwa 30 Minuten, innerhalb einer Woche."
       },
       {
         "title": "Einschätzung und Angebot",
-        "description": "Eine ehrliche Einschätzung zu Aufwand, Nutzen und Grenzen, auch wenn sie lautet: Ein fertiges Werkzeug reicht. Passt das Vorhaben, folgt ein schriftliches Angebot."
+        "description": "Eine ehrliche Einschätzung zu Aufwand, Nutzen und Grenzen, auch wenn sie lautet: Ein fertiges Werkzeug reicht. Passt das Vorhaben, folgt ein schriftliches Angebot.",
+        "timeframe": "Innerhalb von drei Werktagen nach dem Gespräch."
       }
     ],
     "prompt": {

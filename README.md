@@ -30,16 +30,16 @@ Alle Texte liegen als Dateien im Repository. Es gibt keinen Admin-Bereich und ke
 Datenbank — ändern heißt: Datei editieren, committen, fertig. Der Deploy läuft
 automatisch.
 
-| Was                                       | Datei                            |
-| ----------------------------------------- | -------------------------------- |
-| Firmenname, Claim (H1), Intro, Leistungen | `src/content/company.json`       |
-| Leistungen im Einzelnen, mit Belegen      | `src/content/leistungen.json`    |
-| Inhaber, Werkstudenten-Hinweis, Portrait  | `src/content/profile.json`       |
-| Text, Werte, Arbeitsweise                 | `src/content/about.md`           |
-| Eine Referenz                             | `src/content/projekte/<name>.md` |
-| Werkzeug-Gruppen                          | `src/content/skills.json`        |
-| Kontakt-Abschnitt                         | `src/content/contact.json`       |
-| Impressum und Datenschutz                 | `src/content/legal.json`         |
+| Was                                                | Datei                            |
+| -------------------------------------------------- | -------------------------------- |
+| Firmenname, Claim (H1), Für wen, Intro, Leistungen | `src/content/company.json`       |
+| Leistungen im Einzelnen, mit Belegen               | `src/content/leistungen.json`    |
+| Inhaber, Werkstudenten-Hinweis, Portrait           | `src/content/profile.json`       |
+| Text, Werte, Arbeitsweise                          | `src/content/about.md`           |
+| Eine Referenz                                      | `src/content/projekte/<name>.md` |
+| Werkzeug-Gruppen                                   | `src/content/skills.json`        |
+| Kontakt-Abschnitt                                  | `src/content/contact.json`       |
+| Impressum und Datenschutz                          | `src/content/legal.json`         |
 
 Wer den Claim in `company.json` ändert, muss ihn auch in `scripts/verify-build.mjs` unter
 `ROUTES['']` nachziehen — der Build-Check prüft die H1 der Startseite gegen diesen Text.
@@ -79,8 +79,8 @@ Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
 Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/` und auf der
-Startseite (Kundenprojekte groß oben, danach die nächsten nach `order` als Index, insgesamt
-sechs) sowie die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
+Startseite (unter den ersten sechs nach `order` Kundenprojekte und Arbeiten mit Screenshot groß
+oben, der Rest als Index darunter) sowie die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
 ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
@@ -116,8 +116,8 @@ Handaufnahmen, etwa aus dem Spiel heraus oder im Handyformat, liegen daneben als
 sie nicht an und fragt bei Projekten, die schon eigene Bilder eingetragen haben, nicht mehr nach
 dem Eintrag.
 
-Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/` und, bei Kundenprojekten,
-auf der Startseite. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
+Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/` und, wenn das Projekt unter
+den ersten sechs steht, groß auf der Startseite. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
 zweispaltig und Hochformate (Handy, Dialoge) schmal darunter. Nach einer sichtbaren Änderung am
 Projekt das Skript erneut laufen lassen und das Bild mit committen.
 
