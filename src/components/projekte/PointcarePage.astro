@@ -1,0 +1,16 @@
+---
+/**
+ * Die Seite von Pointcare: der gemeinsame Körper (ProjectPage) mit der Bühne
+ * des Projekts. Hier gehört alles hin, was nur diese Seite besonders macht;
+ * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import PointcareScene from '@/components/scenes/PointcareScene.astro'
+
+const { projekt, prev, next } = Astro.props as Props
+---
+
+<ProjectPage projekt={projekt} prev={prev} next={next}>
+  <PointcareScene slot="stage" />
+</ProjectPage>

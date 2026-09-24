@@ -591,8 +591,10 @@ und ist Dekoration für Sehende; Screenreader lesen die Bildunterschrift. Einzig
 bedienbare Szene (NoteList: verschiebbare Fläche als nativer Scrollbereich mit `tabindex` und
 `aria-label`), denn Fokussierbares in `aria-hidden` ist ein Fehler.
 
-Jede Szene ist eine Datei unter `src/components/scenes/`, registriert in `scenes/index.ts`; ein
-Projekt ohne Eintrag hat keine Bühne und sieht aus wie zuvor. Eine Szene nimmt genau ein Merkmal aus
+Jede Projektseite hat eine Seitenkomponente unter `src/components/projekte/` (registriert in
+`projekte/index.ts`), die den gemeinsamen Körper `ProjectPage` rendert und an benannten Slots
+erweitert; die Bühne selbst ist eine Datei unter `src/components/scenes/`. Ein Projekt ohne
+Seitenkomponente bekommt den Körper unverändert und sieht aus wie zuvor. Eine Szene nimmt genau ein Merkmal aus
 der Projektdatei, das nur dieses Projekt hat, und setzt es ins Bild: TIEFGANG gräbt beim Scrollen
 tiefer, JustBeauty öffnet zwölf Seiten als Fächer, Kleinkram rechnet einen Kassenzettel zusammen,
 MemoryTree zeichnet seinen Baum, NoteList lässt seine Fläche schieben, Feynman unterstreicht Lücken

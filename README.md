@@ -133,10 +133,12 @@ Projektseite“.
 
 Eine neue Referenz braucht keine Szene; ohne Eintrag sieht ihre Seite aus wie bisher. Wer eine will:
 
-1. `src/components/scenes/MeinProjektScene.astro` anlegen, nach dem Muster der vorhandenen Dateien.
-   Der Rahmen ist `ProjectScene` (Props `caption`, `surface`, `surfaceDark`); Markup und `<style>`
-   liegen in der Datei, ohne Skript und ohne Bild von außen.
-2. In `src/components/scenes/index.ts` unter dem Slug eintragen.
+1. `src/components/projekte/MeinProjektPage.astro` anlegen, nach dem Muster der vorhandenen Dateien:
+   Sie rendert den gemeinsamen Körper `ProjectPage` und füllt dessen Slots (`hero`, `stage`,
+   `after-meta`, `before-text`, `after-text`) oder blendet Teile mit `hide` aus. Die Bühne selbst liegt
+   in `src/components/scenes/MeinProjektScene.astro` mit dem Rahmen `ProjectScene` (Props `caption`,
+   `surface`, `surfaceDark`); Markup und `<style>` liegen in der Datei, ohne Bild von außen.
+2. In `src/components/projekte/index.ts` unter dem Slug eintragen.
 3. Drei Dinge prüfen: hell und dunkel, mit `prefers-reduced-motion: reduce` (dann muss der Endzustand
    stehen), und dass die Bildunterschrift sagt, was zu sehen ist. „Kein Screenshot.“ hängt der Rahmen
    selbst an.

@@ -1,0 +1,16 @@
+---
+/**
+ * Die Seite von Memorytree: der gemeinsame Körper (ProjectPage) mit der Bühne
+ * des Projekts. Hier gehört alles hin, was nur diese Seite besonders macht;
+ * Slots und `hide` sind in ProjectPage.astro beschrieben.
+ */
+import type { Props } from '@/components/ProjectPage.astro'
+import ProjectPage from '@/components/ProjectPage.astro'
+import MemorytreeScene from '@/components/scenes/MemorytreeScene.astro'
+
+const { projekt, prev, next } = Astro.props as Props
+---
+
+<ProjectPage projekt={projekt} prev={prev} next={next}>
+  <MemorytreeScene slot="stage" />
+</ProjectPage>
