@@ -52,30 +52,6 @@ export function leitbild<T extends { image: { width: number; height: number } }>
   return screenshots.find((shot) => shot.image.width >= shot.image.height)
 }
 
-const ZAHLWOERTER = [
-  'null',
-  'eine',
-  'zwei',
-  'drei',
-  'vier',
-  'fünf',
-  'sechs',
-  'sieben',
-  'acht',
-  'neun',
-  'zehn',
-  'elf',
-  'zwölf',
-]
-
-/**
- * Anzahl als Wort vor einem weiblichen Nomen wie "Arbeit" ("eine", "zwei",
- * "zehn"), ab 13 als Ziffer.
- */
-export function zahlwort(n: number): string {
-  return ZAHLWOERTER[n] ?? String(n)
-}
-
 export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',
