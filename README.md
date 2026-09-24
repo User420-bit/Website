@@ -118,8 +118,9 @@ dem Eintrag.
 
 Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/`, in der Kachel auf der
 Startseite und über die volle Breite, wenn das Projekt dort oben groß steht. Ohne Bild zeigt die
-Kachel den ersten Satz der `summary`. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
-zweispaltig und Hochformate (Handy, Dialoge) schmal darunter. Nach einer sichtbaren Änderung am
+Kachel den ersten Satz der `summary`. Die Projektseite zeigt es oben über die volle Breite, die
+übrigen Bilder als Reihe kleiner Vorschaubilder darunter; jedes Bild vergrößert sich per Klick in einer
+Lightbox, ohne JavaScript. Nach einer sichtbaren Änderung am
 Projekt das Skript erneut laufen lassen und das Bild mit committen.
 
 ### Felder, die `null` sein dürfen

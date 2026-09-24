@@ -179,6 +179,14 @@ components:
     textColor: '{colors.fg}'
     typography: '{typography.title-md}'
     padding: '1.5rem 0'
+  gallery-thumb:
+    rounded: '{rounded.sm}'
+    height: '7rem'
+  lightbox:
+    backgroundColor: '{colors.bg}'
+    textColor: '{colors.fg-muted}'
+    typography: '{typography.body-sm}'
+    padding: '1.5rem'
   numbered-row:
     textColor: '{colors.fg}'
     typography: '{typography.subhead}'
@@ -393,10 +401,13 @@ Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 **Unterseiten:** Projektseiten und `/werkzeuge/` stapeln ihre Blöcke wie die Startseite: Haarlinie
 oben, Label (H2) darüber dem Inhalt, 1rem Abstand zum Inhalt, 3rem zwischen Blöcken. Text bleibt
 bei 65ch.
-Screenshots auf Projektseiten stehen in einem Raster mit vier Spalten ab 640 px (darunter zwei) und
-1,5rem Abstand. Das erste Querformat ist das Leitbild über die volle Breite, weitere Querformate
-nehmen je die halbe Breite, Hochformate (Handy, Dialoge) eine Spalte und stehen immer nach den
-Querformaten. Rahmen 4 px mit 1 px Liniengrau, Unterschrift Body Small in Bleistiftgrau.
+Screenshots stehen auf Projektseiten oben, direkt unter Meta-Liste und Links, vor dem ersten Textblock:
+erst der Beleg, dann die Beschreibung (`ScreenshotGallery`, entschieden am 2026-09-23). Das erste
+Querformat ist das Leitbild über die volle Breite, darunter seine Unterschrift in Body Small,
+Bleistiftgrau. Die übrigen Bilder folgen als Kontaktabzug: alle gleich hoch (5rem, ab 640 px 7rem),
+jedes im eigenen Seitenverhältnis, Querformate vor Hochformaten, 0,75rem Abstand, umbrechend. Rahmen
+4 px mit 1 px Liniengrau, bei Hover und Fokus `fg/40`, Mauszeiger „Vergrößern“. Jedes Bild öffnet die
+Lightbox.
 Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 
 **Header und Scrollen:** Der Header klebt oben. Er trägt Wortmarke, Navigation (Arbeiten, Leistungen,
@@ -540,6 +551,18 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Bleistiftgrau, Zeilenhöhe 1,2. Die Größe folgt der Satzlänge und der Kachelbreite (5 bis 8,5 `cqi`,
   Innenabstand 6 `cqi`), damit der Satz das Feld füllt, ohne überzulaufen. Unter dem Titel steht er
   dann nur für Screenreader.
+
+### Lightbox (`ScreenshotGallery`)
+
+Natives Popover (`popover`, `popovertarget`), kein JavaScript. Die Fläche dahinter (`::backdrop`) ist
+deckendes Papierweiß bzw. Werkbankschwarz, keine Transluzenz. Darauf, ohne eigenen Kasten: eine
+Kopfzeile mit „Projekt · Bild 2 von 6“ (Body Small, Bleistiftgrau, Tabellenziffern) und rechts
+„Schließen“ mit Kreuz im Stil des Sekundärbuttons, darunter das Bild so groß, wie das Fenster erlaubt
+(höchstens 1600 px breit, Rahmen 4 px, 1 px Liniengrau), darunter die Bildunterschrift. Beim Öffnen
+liegt der Fokus auf „Schließen“ (`autofocus`), Esc und ein Klick neben das Bild schließen, danach steht
+der Fokus wieder auf dem Vorschaubild. Solange sie offen ist, scrollt die Seite dahinter nicht.
+Blättern in der Lightbox gibt es bewusst nicht, das bräuchte ein Script; geblättert wird im
+Kontaktabzug.
 
 ### Anfrage-Zeile
 
