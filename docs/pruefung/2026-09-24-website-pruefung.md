@@ -3,6 +3,7 @@
 **Gesamturteil.** Technisch hält die Seite alles, was Besucher heute erwarten: sie steht in unter einer halben Sekunde, nichts springt, nichts verdeckt, nichts Fremdes lädt, keine Effekte bremsen. Sie verliert an zwei Stellen, die beide Vertrauen betreffen: Es gibt kein Gesicht und keinen Kundenbeleg, und die Seite verspricht im ersten Satz "was es kostet, steht vorher fest", nennt aber nirgends einen Preisrahmen.
 
 **Die drei wirksamsten Maßnahmen.**
+
 1. Unter "Leistungen" je Leistung einen Preisrahmen nennen ("ab … €" oder Stundensatz mit typischer Spanne) und die Dauer in Wochen. Hängt am Stundensatz in `kontext/leistungen.md`. · Punkt 6
 2. Auf der Startseite ein Portrait im Abschnitt "Über Klartext" und je Referenz ein Bild (die Screenshots aus `docs/vorschau/` liegen bereit; die Referenz kleinkram hat schon vier). · Punkt 7 und 2
 3. Die fünf H2 von Etiketten zu Aussagen machen ("Arbeiten" wird "Fünf Arbeiten, bei jeder steht, was davon fertig ist"; "Kontakt" wird "Antwort innerhalb eines Werktags") und die H1 um das "für wen" ergänzen. · Punkt 3 und 2
@@ -13,18 +14,18 @@
 
 ## Übersicht
 
-| Nr. | Punkt | Urteil | Kurzbefund |
-| --- | --- | --- | --- |
-| 1 | Ladezeit und Reaktion | erfüllt | LCP 0,2 s, CLS 0, TBT 0 ms, 45 KB, 4 Anfragen (Labor, Handy) |
-| 2 | Erster Bildschirm | teilweise | Fünf-Sekunden-Test bestanden, ein Knopf, aber H1 ohne "für wen" und kein Bild |
-| 3 | Scannbarer Text | teilweise | LIX 43, kein Absatz über 80 Wörter, aber alle fünf H2 sind Etiketten |
-| 4 | Nächster Schritt | erfüllt | Jede Seite endet mit "E-Mail schreiben"; Referenzen verweisen auf die nächste Arbeit |
-| 5 | Tote Klicks | erfüllt | 0 Treffer, 1 bis 2 kleine Tippziele (Pfeil-Links) |
-| 6 | Sichtbare Angaben | teilweise | Kontakt und Antwortzeit auf Bildschirm 1; Preis nur als Wort, Dauer nirgends |
-| 7 | Belege | teilweise | Ehrliche Stände und Daten, aber kein Foto, keine Kundenstimme, 0 Bilder auf der Startseite |
-| 8 | Nichts verdeckt den Einstieg | erfüllt | Keine Overlays, keine Dialoge, kein Autoplay |
-| 9 | Bewegung | erfüllt | 38 Übergänge, keiner über 200 ms, kein Text wartet auf Scrollen |
-| 10 | Personalisierung und Fremdes | erfüllt | 0 fremde Hosts, Schriften lokal, kein Chat, kein Tracking |
+| Nr. | Punkt                        | Urteil    | Kurzbefund                                                                                 |
+| --- | ---------------------------- | --------- | ------------------------------------------------------------------------------------------ |
+| 1   | Ladezeit und Reaktion        | erfüllt   | LCP 0,2 s, CLS 0, TBT 0 ms, 45 KB, 4 Anfragen (Labor, Handy)                               |
+| 2   | Erster Bildschirm            | teilweise | Fünf-Sekunden-Test bestanden, ein Knopf, aber H1 ohne "für wen" und kein Bild              |
+| 3   | Scannbarer Text              | teilweise | LIX 43, kein Absatz über 80 Wörter, aber alle fünf H2 sind Etiketten                       |
+| 4   | Nächster Schritt             | erfüllt   | Jede Seite endet mit "E-Mail schreiben"; Referenzen verweisen auf die nächste Arbeit       |
+| 5   | Tote Klicks                  | erfüllt   | 0 Treffer, 1 bis 2 kleine Tippziele (Pfeil-Links)                                          |
+| 6   | Sichtbare Angaben            | teilweise | Kontakt und Antwortzeit auf Bildschirm 1; Preis nur als Wort, Dauer nirgends               |
+| 7   | Belege                       | teilweise | Ehrliche Stände und Daten, aber kein Foto, keine Kundenstimme, 0 Bilder auf der Startseite |
+| 8   | Nichts verdeckt den Einstieg | erfüllt   | Keine Overlays, keine Dialoge, kein Autoplay                                               |
+| 9   | Bewegung                     | erfüllt   | 38 Übergänge, keiner über 200 ms, kein Text wartet auf Scrollen                            |
+| 10  | Personalisierung und Fremdes | erfüllt   | 0 fremde Hosts, Schriften lokal, kein Chat, kein Tracking                                  |
 
 ## Die zehn Punkte
 
