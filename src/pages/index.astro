@@ -80,15 +80,22 @@ const schritte = contact.steps.map((step, i) =>
   */
   }
   <section class="pt-16 pb-16 sm:pt-24 sm:pb-24">
-    {/* Für wen, vor dem Claim: Der Claim bleibt Marke, die Zeile sagt, wer gemeint ist. */}
-    <p class="m-0 mb-4 max-w-[60ch] text-sm font-medium text-balance text-fg-muted">
-      {company.audience}
-    </p>
     <h1
       class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
     >
       {company.claim}
     </h1>
+    {
+      /*
+      Für wen, direkt unter dem Claim: Der Claim bleibt Marke, die Unterzeile sagt,
+      wer gemeint ist. Darunter statt darüber, damit die H1 das Erste bleibt, was man liest.
+    */
+    }
+    <p
+      class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
+    >
+      {company.audience}
+    </p>
     <p class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted">
       {company.intro}
     </p>

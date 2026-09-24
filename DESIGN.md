@@ -305,6 +305,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   trotzdem etwas. Die Navigation behält die kurzen Namen.
 - **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): die Hauptadresse im Kontakt.
 - **Title Medium** (600, 1,5rem, 1,02, −0,03em; unter 640 px 1,25rem): Titel einer Feature-Zeile.
+  Dieselbe Größe in 500, Bleistiftgrau und Zeilenhöhe 1,375 trägt die Unterzeile „Für wen“ direkt
+  unter der H1.
   Bewusst eine Stufe unter der H2, damit ein Projekt nie größer steht als sein Kapitel.
 - **Title** (600, 1,25rem, 1,4, −0,025em): jede H2 auf Projekt-, Werkzeug- und Rechtsseiten.
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die Wortmarke.
@@ -314,9 +316,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
   Meta-Liste, Footer, Navigation.
-- **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen, die leisen
-  Zwischenüberschriften in Bleistiftgrau („Weitere Arbeiten“, „Im Einzelnen“) und die Zeile
-  „Für wen“ über der H1.
+- **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen und die leisen
+  Zwischenüberschriften in Bleistiftgrau („Weitere Arbeiten“, „Im Einzelnen“).
 - **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel).
 - **Caption** (400, 0,75rem): Belegzeile und der Webmail-Hinweis im Kontakt.
 - **Mono** (400, 0,75rem, Zeilenhöhe 1,5rem) und **Code** (400, 0,875rem, 1,625): Zeile „Technik“ der

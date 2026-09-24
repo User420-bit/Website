@@ -26,7 +26,7 @@ const company = defineCollection({
     name: z.string(),
     /** Die H1 der Startseite. `scripts/verify-build.mjs` erwartet denselben Text. */
     claim: z.string(),
-    /** Für wen: steht klein über der H1, damit der Claim bleiben kann. */
+    /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
     audience: z.string(),
     intro: z.string(),
     location: z.string(),
