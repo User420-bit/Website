@@ -1,0 +1,89 @@
+---
+/**
+ * Eine Arbeit im Raster der Startseite: Bildfeld, Titel, erster Satz, Art und
+ * Zeitraum. Alle Kacheln sind gleich groß, keine steht vor der anderen.
+ *
+ * Ohne Screenshot im Querformat steht der erste Satz der summary im Bildfeld,
+ * auf Papierfläche und so groß, dass er das Feld füllt: Die Schriftgröße folgt
+ * der Satzlänge und der Breite der Kachel (`cqi`), damit ein kurzer Satz nicht
+ * verloren in der Ecke steht und ein langer nicht überläuft. Im Bildfeld ist
+ * der Satz nur fürs Auge (`aria-hidden`); Screenreader lesen ihn nach dem
+ * Titel, wie bei einer Kachel mit Bild. Sobald ein Screenshot eingetragen ist,
+ * ersetzt er den Satz von selbst.
+ *
+ * Wie in den Zeilen ist der Titel-Link auf die ganze Kachel gestreckt, der
+ * Fokus bleibt am Titel. Das Bild ist hier Vorschau, kein Inhalt: `alt=""`,
+ * die Projektseite zeigt es mit Bildunterschrift.
+ */
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import KindLabel from '@/components/KindLabel.astro'
+import { firstSentence, href, leitbild } from '@/lib/site'
+
+interface Props {
+  projekt: CollectionEntry<'projekte'>
+  /** Steht gerade auf der Bühne darüber; `ProjectShowcase` blendet sie dann hier aus. */
+  hidden?: boolean
+}
+
+const { projekt, hidden = false } = Astro.props
+const { title, summary, kind, period, screenshots } = projekt.data
+const bild = leitbild(screenshots)
+const satz = firstSentence(summary)
+// Schriftgröße im Bildfeld nach Satzlänge, in Prozent der Kachelbreite.
+const satzGroesse =
+  satz.length <= 40
+    ? 'text-[8.5cqi]'
+    : satz.length <= 55
+      ? 'text-[7.6cqi]'
+      : satz.length <= 75
+        ? 'text-[6.8cqi]'
+        : satz.length <= 110
+          ? 'text-[5.8cqi]'
+          : 'text-[5cqi]'
+---
+
+<li class="group relative" data-kachel hidden={hidden}>
+  <div
+    class="@container aspect-video overflow-hidden rounded-sm border border-border bg-bg-elevated transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
+  >
+    {
+      bild ? (
+        <Image
+          class="h-full w-full object-cover object-top"
+          src={bild.image}
+          alt=""
+          widths={[400, 640, 960]}
+          sizes="(min-width: 1024px) 20rem, (min-width: 640px) 46vw, 92vw"
+          loading="lazy"
+        />
+      ) : (
+        <div aria-hidden="true" class="h-full p-[6cqi]">
+          <p
+            class:list={[
+              'm-0 leading-[1.2] font-medium tracking-tight text-balance text-fg-muted',
+              satzGroesse,
+            ]}
+          >
+            {satz}
+          </p>
+        </div>
+      )
+    }
+  </div>
+  <h4 class="mt-4 mb-0 text-lg font-semibold tracking-tight">
+    <a
+      class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"
+      href={href(`/projekte/${projekt.id}`)}
+    >
+      {title}
+    </a>
+  </h4>
+  <p class:list={['prose-flow mt-1 mb-0 max-w-[60ch] text-sm text-fg-muted', !bild && 'sr-only']}>
+    {satz}
+  </p>
+  <p class="mt-2 mb-0 flex flex-wrap gap-x-3 text-sm">
+    <KindLabel kind={kind} />
+    <span class="text-fg-muted tabular-nums">{period}</span>
+  </p>
+</li>

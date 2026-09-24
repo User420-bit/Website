@@ -1,0 +1,161 @@
+---
+/**
+ * Die Arbeiten der Startseite, so entschieden am 2026-09-23: ein Umschalter
+ * "Kunden" / "Eigene Projekte", beim Öffnen steht "Kunden". Je Auswahl oben
+ * ein Projekt groß, bei jedem Aufruf zufällig gewählt und ohne automatischen
+ * Wechsel; wer mehr sehen will, blättert selbst. Darunter die übrigen Arbeiten
+ * der Auswahl gleich groß im Raster. Jede Arbeit steht genau einmal da: Was
+ * auf der Bühne steht, fehlt im Raster, bis weitergeblättert wird.
+ *
+ * Ohne JavaScript bleibt alles bedienbar: Der Umschalter sind Radio-Buttons,
+ * die Auswahl blendet CSS über `:has()` um. Die Bühne zeigt dann das erste
+ * Projekt nach `order`, das Raster die übrigen, Blättern entfällt. Kann ein
+ * Browser kein `:has()`, stehen beide Auswahlen untereinander.
+ */
+import type { CollectionEntry } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
+import ProjectSpotlight from '@/components/ProjectSpotlight.astro'
+import ProjectTile from '@/components/ProjectTile.astro'
+
+interface Props {
+  /** Alle Arbeiten, schon nach `order` sortiert. */
+  projekte: CollectionEntry<'projekte'>[]
+}
+
+const { projekte } = Astro.props
+
+/** Die ids `kunden` und `eigene` stehen auch im CSS unten. */
+const gruppen = [
+  {
+    id: 'kunden',
+    label: 'Kunden',
+    rasterTitel: 'Weitere Kundenprojekte',
+    projekte: projekte.filter((p) => p.data.kind === 'kundenprojekt'),
+  },
+  {
+    id: 'eigene',
+    label: 'Eigene Projekte',
+    rasterTitel: 'Weitere eigene Projekte',
+    projekte: projekte.filter((p) => p.data.kind !== 'kundenprojekt'),
+  },
+].filter((gruppe) => gruppe.projekte.length > 0)
+
+const blaetternKnopf =
+  'inline-flex size-11 cursor-pointer items-center justify-center rounded-sm border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
+---
+
+<div class="showcase">
+  {
+    gruppen.length > 1 && (
+      <fieldset class="m-0 min-w-0 border-0 p-0">
+        <legend class="sr-only">Welche Arbeiten zeigen</legend>
+        <div class="flex flex-wrap gap-x-6 border-b border-border">
+          {gruppen.map((gruppe, i) => (
+            <label class="relative inline-flex cursor-pointer items-baseline gap-2 rounded-sm py-3 text-sm font-medium text-fg-muted transition-colors after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:text-fg has-checked:text-fg has-checked:after:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:after:transition-none">
+              <input
+                class="sr-only"
+                type="radio"
+                name="arbeiten-auswahl"
+                value={gruppe.id}
+                checked={i === 0}
+              />
+              {gruppe.label}
+              <span class="font-normal text-fg-muted tabular-nums">{gruppe.projekte.length}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    )
+  }
+
+  {
+    gruppen.map((gruppe) => {
+      const blaettern = gruppe.projekte.length > 1
+      return (
+        <div class="mt-8" data-gruppe={gruppe.id}>
+          <div class="relative">
+            {gruppe.projekte.map((projekt, i) => (
+              <ProjectSpotlight projekt={projekt} blaettern={blaettern} hidden={i > 0} />
+            ))}
+            {/* Oben rechts neben dem Titel, damit die Knöpfe beim Blättern nicht wandern. */}
+            {blaettern && (
+              <div class="absolute top-0 right-0 z-10 flex items-center gap-2" data-pager hidden>
+                <button type="button" class={blaetternKnopf} data-richtung="-1">
+                  <Arrow direction="left" />
+                  <span class="sr-only">Vorherige Arbeit</span>
+                </button>
+                <span class="min-w-16 text-center text-sm text-fg-muted tabular-nums" data-zaehler>
+                  1 von {gruppe.projekte.length}
+                </span>
+                <button type="button" class={blaetternKnopf} data-richtung="1">
+                  <Arrow />
+                  <span class="sr-only">Nächste Arbeit</span>
+                </button>
+              </div>
+            )}
+          </div>
+          <p class="sr-only" aria-live="polite" data-ansage />
+
+          {blaettern && (
+            <>
+              <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">{gruppe.rasterTitel}</h3>
+              <ul class="mt-3 grid list-none grid-cols-1 gap-x-6 gap-y-10 border-t border-border p-0 pt-6 sm:grid-cols-2 lg:grid-cols-3">
+                {gruppe.projekte.map((projekt, i) => (
+                  <ProjectTile projekt={projekt} hidden={i === 0} />
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      )
+    })
+  }
+</div>
+
+<style>
+  /* Nur die gewählte Auswahl steht da. Ohne `:has()` greift das nicht, dann stehen beide. */
+  .showcase:has(input[value='kunden']:checked) [data-gruppe='eigene'],
+  .showcase:has(input[value='eigene']:checked) [data-gruppe='kunden'] {
+    display: none;
+  }
+</style>
+
+<script>
+  // Je Auswahl: beim Aufruf ein zufälliges Projekt auf die Bühne, danach nur
+  // noch auf Knopfdruck. Kein Timer, kein automatischer Wechsel. Bühnen und
+  // Kacheln stehen in derselben Reihenfolge; was auf der Bühne steht, fehlt im
+  // Raster.
+  for (const gruppe of document.querySelectorAll<HTMLElement>('[data-gruppe]')) {
+    const buehnen = [...gruppe.querySelectorAll<HTMLElement>('[data-buehne]')]
+    const kacheln = [...gruppe.querySelectorAll<HTMLElement>('[data-kachel]')]
+    const pager = gruppe.querySelector<HTMLElement>('[data-pager]')
+    const zaehler = gruppe.querySelector<HTMLElement>('[data-zaehler]')
+    const ansage = gruppe.querySelector<HTMLElement>('[data-ansage]')
+    if (buehnen.length < 2 || !pager) continue
+
+    let aktuell = 0
+    /** Projekt `i` auf die Bühne (`oben`) oder zurück ins Raster. */
+    const setze = (i: number, oben: boolean) => {
+      buehnen[i]!.hidden = !oben
+      const kachel = kacheln[i]
+      if (kachel) kachel.hidden = oben
+    }
+    const zeige = (index: number) => {
+      setze(aktuell, false)
+      aktuell = (index + buehnen.length) % buehnen.length
+      setze(aktuell, true)
+      if (zaehler) zaehler.textContent = `${aktuell + 1} von ${buehnen.length}`
+    }
+    zeige(Math.floor(Math.random() * buehnen.length))
+    pager.hidden = false
+
+    for (const knopf of pager.querySelectorAll<HTMLButtonElement>('[data-richtung]')) {
+      knopf.addEventListener('click', () => {
+        zeige(aktuell + Number(knopf.dataset.richtung))
+        if (ansage) {
+          ansage.textContent = `${buehnen[aktuell]!.dataset.titel}, ${aktuell + 1} von ${buehnen.length}`
+        }
+      })
+    }
+  }
+</script>

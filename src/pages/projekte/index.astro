@@ -6,7 +6,7 @@ import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import { href } from '@/lib/site'
 
-// Alle Referenzen; die Startseite zeigt nur die ersten nach `order`.
+// Alle Referenzen als Liste; die Startseite zeigt dieselben als Raster.
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
 ---
 
@@ -29,7 +29,7 @@ const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order -
     </p>
 
     <div class="mt-10 border-t border-border">
-      {projekte.map((projekt) => <ProjectFeature projekt={projekt} compact />)}
+      {projekte.map((projekt) => <ProjectFeature projekt={projekt} />)}
     </div>
 
     <InquiryPrompt class="mt-10" />

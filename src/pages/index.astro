@@ -7,10 +7,9 @@ import Disclosure from '@/components/Disclosure.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
 import NumberedRows from '@/components/NumberedRows.astro'
-import ProjectFeature from '@/components/ProjectFeature.astro'
-import ProjectRow from '@/components/ProjectRow.astro'
+import ProjectShowcase from '@/components/ProjectShowcase.astro'
 import Section from '@/components/Section.astro'
-import { href, leitbild, mailto, zahlwort } from '@/lib/site'
+import { href, mailto, zahlwort } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -21,16 +20,6 @@ const { Content: AboutBody } = await render(aboutEntry)
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
 const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
-/** Die Startseite zeigt die ersten Arbeiten nach `order`, alle stehen unter /projekte/. */
-const STARTSEITE_PROJEKTE = 6
-const auswahl = projekte.slice(0, STARTSEITE_PROJEKTE)
-// Gross oben: Kundenprojekte und alle Arbeiten mit Screenshot, damit die Startseite
-// Bilder zeigt, solange die Kundenprojekte noch keine freigegebenen haben. Der Rest
-// der Auswahl steht als Index darunter.
-const gross = (p: (typeof auswahl)[number]) =>
-  p.data.kind === 'kundenprojekt' || leitbild(p.data.screenshots) !== undefined
-const referenzen = auswahl.filter(gross)
-const weitere = auswahl.filter((p) => !gross(p))
 const kundenprojekte = projekte.filter((p) => p.data.kind === 'kundenprojekt').length
 /** H2 als Aussage mit echten Zahlen, gezählt aus src/content/projekte/. */
 const arbeitenTitel = [
@@ -117,10 +106,10 @@ const schritte = contact.steps.map((step, i) =>
 
   {
     /*
-    01 Arbeiten — der Beweis zuerst: Kundenprojekte und Arbeiten mit Bild gross,
-    der Rest als Index. Die H2-Titel sind Aussagen, nicht Etiketten: Wer nur die
-    Überschriften liest, soll trotzdem etwas erfahren. Die Navigation behält die
-    kurzen Namen.
+    01 Arbeiten — der Beweis zuerst: Umschalter Kunden / Eigene Projekte, oben
+    ein Projekt gross, darunter alle als Raster (siehe ProjectShowcase). Die
+    H2-Titel sind Aussagen, nicht Etiketten: Wer nur die Überschriften liest,
+    soll trotzdem etwas erfahren. Die Navigation behält die kurzen Namen.
   */
   }
   <Section
@@ -129,36 +118,7 @@ const schritte = contact.steps.map((step, i) =>
     title={arbeitenTitel}
     intro="Kundenprojekte, eigene Produkte und Prototypen. Bei jedem Eintrag steht, was davon es ist."
   >
-    <div class="border-t border-border">
-      {referenzen.map((projekt) => <ProjectFeature projekt={projekt} />)}
-    </div>
-
-    {
-      weitere.length > 0 && (
-        <>
-          <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Weitere Arbeiten</h3>
-          <ul class="mt-3 list-none border-t border-border p-0">
-            {weitere.map((projekt) => (
-              <ProjectRow
-                slug={projekt.id}
-                title={projekt.data.title}
-                kind={projekt.data.kind}
-                period={projekt.data.period}
-              />
-            ))}
-          </ul>
-        </>
-      )
-    }
-    {
-      projekte.length > STARTSEITE_PROJEKTE && (
-        <p class="mt-6 mb-0">
-          <Button href={href('/projekte/')} variant="text">
-            Alle {projekte.length} Arbeiten
-          </Button>
-        </p>
-      )
-    }
+    <ProjectShowcase projekte={projekte} />
 
     {/* Anfrage-Zeile direkt unter den Belegen. */}
     <InquiryPrompt class="mt-10 border-t border-border pt-6" />

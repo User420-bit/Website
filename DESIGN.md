@@ -155,14 +155,30 @@ components:
   kind-label-accent:
     textColor: '{colors.accent}'
     typography: '{typography.label-sm}'
-  ledger-row:
+  selection-tab:
+    textColor: '{colors.fg-muted}'
+    typography: '{typography.label}'
+    padding: '0.75rem 0'
+  selection-tab-active:
     textColor: '{colors.fg}'
-    typography: '{typography.subhead}'
-    padding: '1rem 0'
+  spotlight:
+    textColor: '{colors.fg}'
+    typography: '{typography.title-md}'
+  spotlight-sentence:
+    textColor: '{colors.fg-muted}'
+    typography: '{typography.title-lg}'
+  project-tile:
+    textColor: '{colors.fg}'
+    typography: '{typography.title-sm}'
+    rounded: '{rounded.sm}'
+  project-tile-sentence:
+    backgroundColor: '{colors.bg-elevated}'
+    textColor: '{colors.fg-muted}'
+    rounded: '{rounded.sm}'
   feature-row:
     textColor: '{colors.fg}'
     typography: '{typography.title-md}'
-    padding: '2rem 0'
+    padding: '1.5rem 0'
   numbered-row:
     textColor: '{colors.fg}'
     typography: '{typography.subhead}'
@@ -207,8 +223,10 @@ statt zu inszenieren: warmes Papierweiß, tintenschwarze Überschriften, bleisti
 ein einziges Werkstatt-Orange, das dort auftaucht, wo gehandelt, belegt oder fokussiert wird.
 
 Die Ordnung kommt aus dem Buch selbst: Jedes Kapitel öffnet mit einer Tintenlinie, darunter Nummer,
-Überschrift und einleitender Satz, dann der Inhalt, gegliedert durch Haarlinien. Arbeiten stehen als linierte Zeilen wie
-in einem Hauptbuch, nicht als Karten. Ein Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
+Überschrift und einleitender Satz, dann der Inhalt, gegliedert durch Haarlinien. Auf der Startseite
+stehen die Arbeiten als Raster gleich großer Kacheln, jede mit einem Bildfeld, aber ohne Kasten um die
+Kachel; unter `/projekte/` als linierte Zeilen wie in einem Hauptbuch. Ein Kasten entsteht nur dort, wo
+wirklich etwas ein Behälter ist.
 
 Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen,
 begrenzte Zeilenbreite, flache Flächen ohne Schatten. Sachlich heißt: eine einzige, selbst gehostete
@@ -304,20 +322,24 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   keine Etiketten („Zehn Arbeiten, zwei davon für Kunden“): Wer nur Überschriften liest, erfährt
   trotzdem etwas. Die Navigation behält die kurzen Namen.
 - **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): die Hauptadresse im Kontakt.
-- **Title Medium** (600, 1,5rem, 1,02, −0,03em; unter 640 px 1,25rem): Titel einer Feature-Zeile.
-  Dieselbe Größe in 500, Bleistiftgrau und Zeilenhöhe 1,375 trägt die Unterzeile „Für wen“ direkt
-  unter der H1.
-  Bewusst eine Stufe unter der H2, damit ein Projekt nie größer steht als sein Kapitel.
+  Dieselbe Größe in 500, Bleistiftgrau und Zeilenhöhe 1,25 trägt die summary auf der Bühne, wenn das
+  Projekt keinen Screenshot hat.
+- **Title Medium** (600, 1,5rem, 1,02, −0,03em; unter 640 px 1,25rem): Titel auf der Bühne.
+  Bewusst eine Stufe unter der H2, damit ein Projekt nie größer steht als sein Kapitel. Dieselbe
+  Größe in 500, Bleistiftgrau und Zeilenhöhe 1,375 trägt die Unterzeile „Für wen“ direkt unter der
+  H1.
 - **Title** (600, 1,25rem, 1,4, −0,025em): jede H2 auf Projekt-, Werkzeug- und Rechtsseiten.
-- **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die Wortmarke.
-- **Subhead** (500, 1rem, 1,5): Titel einer Ledger-Zeile, eines Aufklappers, Name eines Werts.
+- **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten, einer Kachel und
+  die Wortmarke.
+- **Subhead** (500, 1rem, 1,5): Titel eines Aufklappers, Name eines Werts.
 - **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten.
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
   Meta-Liste, Footer, Navigation.
-- **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen und die leisen
-  Zwischenüberschriften in Bleistiftgrau („Weitere Arbeiten“, „Im Einzelnen“).
+- **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen, die leisen
+  Zwischenüberschriften in Bleistiftgrau („Weitere Kundenprojekte“, „Im Einzelnen“) und die Einträge
+  des Umschalters.
 - **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel).
 - **Caption** (400, 0,75rem): Belegzeile und der Webmail-Hinweis im Kontakt.
 - **Mono** (400, 0,75rem, Zeilenhöhe 1,5rem) und **Code** (400, 0,875rem, 1,625): Zeile „Technik“ der
@@ -358,10 +380,11 @@ Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Sei
 ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
 ebenfalls die volle Spalte.
 
-**Zeilen statt Raster:** Listen sind linierte Zeilen. Arbeiten: Kundenprojekte und Arbeiten mit
-Screenshot als Feature-Zeilen,
-darunter „Weitere Arbeiten“ als Ledger (Titel · Art · Zeitraum · Pfeil; ab 640 px Spalten
-`1fr | 9rem | 11rem | 1rem`). Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
+**Zeilen statt Raster, bis auf die Arbeiten:** Listen sind linierte Zeilen. Die eine Ausnahme sind die
+Arbeiten der Startseite, vom Inhaber am 2026-09-23 so entschieden: Umschalter „Kunden · Eigene
+Projekte“, darunter die Bühne mit einem Projekt, darunter die übrigen Arbeiten der Auswahl als Raster
+gleich großer Kacheln (1 Spalte, ab 640 px 2, ab 1024 px 3; 1,5rem Spalten-, 2,5rem Zeilenabstand)
+unter einer Haarlinie. Jede Arbeit steht genau einmal da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
 Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Kontakt:
 ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, die auf derselben Haarlinie beginnen — links
 Adresse, Knopf und Erreichbarkeit (Meta-Liste), rechts die Schritte als Nummernzeilen (`2rem | 1fr`).
@@ -474,18 +497,14 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 
 ### Rows
 
-- **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte und für jede
-  Arbeit der Startseiten-Auswahl, die einen Screenshot im Querformat hat. Links (ab 640 px,
-  9rem) Art und Zeitraum, rechts Titel in Title Medium, Summary (max. 60ch), optional „Stand: …“
-  (nur der erste Satz) und der erste Screenshot im Querformat (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
-  mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als eigener Link über dem gestreckten
-  Titel-Link. 2rem Innenabstand oben und unten. Keine Technik-Namen. Die Variante `compact`
-  (Titel 1,25rem, 1,5rem Innenabstand) trägt die vollständige Liste unter `/projekte/`.
-- **Ledger-Zeile** (`ProjectRow`): Titel · Art · Zeitraum · Pfeil, 1rem Innenabstand, Haarlinie
-  unten. Unter 640 px zweizeilig.
-- **Beide:** Der Titel-Link ist auf die ganze Zeile gestreckt, der Fokus bleibt am Titel. Bei Hover
-  oder Fokus zieht der Unterstrich des Titels von links auf und der Pfeil rückt 2 px; in der
-  Ledger-Zeile rückt zusätzlich der Titel 4 px.
+- **Feature-Zeile** (`ProjectFeature`): linierte Zeile der vollständigen Liste unter `/projekte/`.
+  Links (ab 640 px, 9rem) Art und Zeitraum, rechts Titel in Title Medium, immer in der Handygröße
+  1,25rem, Summary (max. 60ch), optional
+  „Stand: …“ (nur der erste Satz) und der erste Screenshot im Querformat (16:9, 4 px, 1 px
+  Liniengrau), dann „Zur Referenz“ mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als
+  eigener Link über dem gestreckten Titel-Link. 1,5rem Innenabstand oben und unten. Keine
+  Technik-Namen. Der Titel-Link ist auf die ganze Zeile gestreckt, der Fokus bleibt am Titel. Bei
+  Hover oder Fokus zieht der Unterstrich des Titels von links auf und der Pfeil rückt 2 px.
 - **Meta-Liste** (`MetaList`): `dl` mit Haarlinien, Spalten `6rem | 1fr`, Body Small; die Seite gibt
   die Zeilen als `rows` vor. Projektseiten: Art, Zeitraum, Stand, Technik — „Technik“ steht in Mono,
   Bleistiftgrau, verbunden mit „ · “, und nur dort. Kontakt: Ort, Profil, Code; Werte mit `href` sind
@@ -495,6 +514,32 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   eigener Titelspalte ab 640 px (`2rem | 10rem | 1fr`), die Kontakt-Schritte ohne (`2rem | 1fr`).
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
+
+### Arbeiten der Startseite (`ProjectShowcase`)
+
+- **Umschalter:** zwei Radio-Buttons als Textreiter, „Kunden“ und „Eigene Projekte“, je mit der
+  Anzahl in Tabellenziffern; beim Öffnen steht „Kunden“. Label in Bleistiftgrau, gewählt und bei
+  Hover Tintenschwarz; der gewählte Reiter trägt einen 2-px-Strich in Orange auf der Haarlinie
+  darunter. Ohne JavaScript schaltet CSS über `:has()` um; ohne `:has()` stehen beide Auswahlen
+  untereinander. Gespeichert wird die Wahl nicht.
+- **Bühne** (`ProjectSpotlight`): ein Projekt der Auswahl groß, beim Aufruf zufällig gewählt, ohne
+  automatischen Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter 640 px darunter),
+  dann der Screenshot über die volle Breite (16:9, 4 px, 1 px Liniengrau), dann summary, „Stand: …“
+  und die Links wie in der Feature-Zeile. Ohne Screenshot steht an der Stelle des Bildes die summary
+  in Title Large, 500, Bleistiftgrau, max. 36ch, ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter.
+- **Blättern:** oben rechts neben dem Titel, damit die Knöpfe beim Wechsel zwischen Bild und Satz
+  nicht wandern. Zwei quadratische Knöpfe (2,75rem, 4 px, Rand `fg/25`, Hover orange) mit Pfeil,
+  dazwischen „2 von 8“ in Tabellenziffern. Nur mit JavaScript sichtbar; ein unsichtbarer
+  `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Der Wechsel ist sofort, ohne
+  Übergang.
+- **Kachel** (`ProjectTile`): Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
+  Werkbankschwarz), darunter Titel in Title Small, der erste Satz der summary in Body Small und Art ·
+  Zeitraum. Kein Kasten um die Kachel. Der Titel-Link ist auf die ganze Kachel gestreckt; bei Hover
+  oder Fokus zieht der Unterstrich auf und der Rahmen des Bildfelds dunkelt auf `fg/40`.
+- **Satzkachel:** Ohne Screenshot steht der erste Satz der summary im Bildfeld, oben links, 500,
+  Bleistiftgrau, Zeilenhöhe 1,2. Die Größe folgt der Satzlänge und der Kachelbreite (5 bis 8,5 `cqi`,
+  Innenabstand 6 `cqi`), damit der Satz das Feld füllt, ohne überzulaufen. Unter dem Titel steht er
+  dann nur für Screenreader.
 
 ### Anfrage-Zeile
 
@@ -530,7 +575,8 @@ Adresse) und genau ein oranger Knopf.
 
 ### Containers
 
-Nur wo etwas wirklich ein Behälter ist. Keine Kartenraster.
+Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle; auch die Kacheln der Startseite
+rahmen nur ihr Bildfeld.
 
 - **Codeblock:** 12 px, Karteikartenweiß bzw. Werkbankschwarz, 1 px Liniengrau, 1rem Innenabstand,
   Code-Schrift, horizontal scrollbar.
@@ -570,6 +616,8 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
 - **Seitenwechsel:** native View Transition zwischen Dokumenten (`@view-transition { navigation: auto }`,
   200 ms); der Header trägt einen eigenen `view-transition-name` und bleibt stehen.
 - **Kopier-Rückmeldung:** der Statustext erscheint und verschwindet.
+- **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
+  wechseln ohne Übergang.
 - **Ankersprünge:** `scroll-behavior: smooth`.
 
 Keine Hero-Animation, kein Einblenden beim Scrollen: Die H1 ist das Erste, was gemalt wird, und steht
@@ -577,8 +625,9 @@ sofort. Alles liegt hinter `prefers-reduced-motion`; ohne Bewegung ist jeder Inh
 
 ### Skripte
 
-Kein externes Skript. Zwei winzige Inline-Skripte (`NavHighlight`, `CopyEmail`), jeweils ohne Import
-und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohne JavaScript.
+Kein externes Skript. Drei winzige Inline-Skripte (`NavHighlight`, `CopyEmail`, `ProjectShowcase`),
+jeweils ohne Import und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohne
+JavaScript; ohne Skript zeigt die Bühne das erste Projekt der Auswahl, und Blättern entfällt.
 
 ## Do's and Don'ts
 
@@ -608,7 +657,10 @@ und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohn
 - **Don't** eine zweite Akzentfarbe oder farbige Flächen einführen.
 - **Don't** Rohfarbwerte in Komponenten schreiben; sie brechen den Dunkelmodus.
 - **Don't** Fließtext breiter als 65ch laufen lassen.
-- **Don't** Listen als Kartenraster bauen. Ein Kasten nur, wo etwas wirklich ein Behälter ist.
+- **Don't** Listen als Kartenraster bauen. Die Ausnahme sind die Arbeiten der Startseite (Entscheidung
+  vom 2026-09-23), und auch dort ohne Kasten um die Kachel. Ein Kasten nur, wo etwas wirklich ein
+  Behälter ist.
+- **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
 - **Don't** Inhalte beim Scrollen einblenden oder den Hero animieren.
