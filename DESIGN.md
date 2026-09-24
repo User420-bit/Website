@@ -300,9 +300,13 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Headline Large** (600, 3rem, 1,02, −0,03em; unter 640 px 2,25rem): H1 der Projektseiten und von
   `/werkzeuge/`.
 - **Headline** (600, 2,25rem, 1,111, −0,025em; unter 640 px 1,875rem): die H2 der fünf
-  Startseiten-Kapitel sowie die H1 von Impressum, Datenschutz und 404.
+  Startseiten-Kapitel sowie die H1 von Impressum, Datenschutz und 404. Die fünf H2 sind Aussagen,
+  keine Etiketten („Zehn Arbeiten, zwei davon für Kunden“): Wer nur Überschriften liest, erfährt
+  trotzdem etwas. Die Navigation behält die kurzen Namen.
 - **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): die Hauptadresse im Kontakt.
 - **Title Medium** (600, 1,5rem, 1,02, −0,03em; unter 640 px 1,25rem): Titel einer Feature-Zeile.
+  Dieselbe Größe in 500, Bleistiftgrau und Zeilenhöhe 1,375 trägt die Unterzeile „Für wen“ direkt
+  unter der H1.
   Bewusst eine Stufe unter der H2, damit ein Projekt nie größer steht als sein Kapitel.
 - **Title** (600, 1,25rem, 1,4, −0,025em): jede H2 auf Projekt-, Werkzeug- und Rechtsseiten.
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die Wortmarke.
@@ -354,7 +358,8 @@ Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Sei
 ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
 ebenfalls die volle Spalte.
 
-**Zeilen statt Raster:** Listen sind linierte Zeilen. Arbeiten: Kundenprojekte als Feature-Zeilen,
+**Zeilen statt Raster:** Listen sind linierte Zeilen. Arbeiten: Kundenprojekte und Arbeiten mit
+Screenshot als Feature-Zeilen,
 darunter „Weitere Arbeiten“ als Ledger (Titel · Art · Zeitraum · Pfeil; ab 640 px Spalten
 `1fr | 9rem | 11rem | 1rem`). Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
 Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Kontakt:
@@ -469,7 +474,8 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 
 ### Rows
 
-- **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte. Links (ab 640 px,
+- **Feature-Zeile** (`ProjectFeature`): große linierte Zeile für Kundenprojekte und für jede
+  Arbeit der Startseiten-Auswahl, die einen Screenshot im Querformat hat. Links (ab 640 px,
   9rem) Art und Zeitraum, rechts Titel in Title Medium, Summary (max. 60ch), optional „Stand: …“
   (nur der erste Satz) und der erste Screenshot im Querformat (16:9, 4 px, 1 px Liniengrau), dann „Zur Referenz“
   mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als eigener Link über dem gestreckten
@@ -518,7 +524,8 @@ derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: die Adr
 der Webmail-Hinweis
 als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
 Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
-Nummernzeilen. Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
+Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung (Label in Tinte wie „Stand:“,
+Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
 Adresse) und genau ein oranger Knopf.
 
 ### Containers

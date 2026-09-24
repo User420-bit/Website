@@ -93,8 +93,11 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 - Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: Websites, Web-Apps und kleine
   Programme, Browser-Spiele und Interaktives, KI und Konzept.
 - Kontakt: E-Mail `info@web-klartext.de`, LinkedIn. Antwort in der Regel innerhalb eines Werktags.
-- **Nicht vorhanden, nicht erfinden:** Kundenstimmen, Kundenlogos, Preise oder Pakete, Bewertungen,
-  Kennzahlen über die Projektdateien hinaus, Portrait, Logo, GitHub-Profil-Link.
+- **Nicht vorhanden, nicht erfinden:** Kundenstimmen, Kundenlogos, Bewertungen, Kennzahlen über die
+  Projektdateien hinaus, Portrait, Logo, GitHub-Profil-Link.
+- **Bewusst nicht genannt: Preise.** Kein Stundensatz, keine Pakete, kein „ab … €“, nirgends auf der
+  Seite. Am 2026-09-24 vom Inhaber entschieden: Zahlen machen vergleichbar. Die Seite sagt stattdessen,
+  dass Kosten im schriftlichen Angebot feststehen, bevor die Arbeit beginnt.
 
 ## Product Principles
 

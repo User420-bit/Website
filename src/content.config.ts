@@ -26,6 +26,8 @@ const company = defineCollection({
     name: z.string(),
     /** Die H1 der Startseite. `scripts/verify-build.mjs` erwartet denselben Text. */
     claim: z.string(),
+    /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
+    audience: z.string(),
     intro: z.string(),
     location: z.string(),
     email: z.email(),
@@ -200,7 +202,8 @@ const legal = defineCollection({
 
 /**
  * Der Kontaktmoment. Hier stehen nur Zusagen, die der Inhaber bestätigt hat —
- * keine Preise, keine Fristen außer der Antwortzeit.
+ * keine Preise. Fristen sind die Antwortzeit und die Zeitrahmen der Schritte,
+ * beide am 2026-09-24 bestätigt.
  */
 const contact = defineCollection({
   loader: file('src/content/contact.json'),
@@ -211,12 +214,17 @@ const contact = defineCollection({
     responseTime: z.string(),
     /** Betreff aller Anfrage-Links. Wird URL-kodiert, Umlaute sind erlaubt. */
     subject: z.string(),
-    /** Ablauf nach der Anfrage, in dieser Reihenfolge. */
+    /**
+     * Ablauf nach der Anfrage, in dieser Reihenfolge. `timeframe` sagt, wann der
+     * Schritt kommt oder wie lange er dauert. Der erste Schritt ist die E-Mail;
+     * sein Zeitrahmen ist `responseTime` und wird nicht noch einmal eingetragen.
+     */
     steps: z
       .array(
         z.object({
           title: z.string(),
           description: z.string(),
+          timeframe: z.string().nullable().default(null),
         }),
       )
       .min(1),

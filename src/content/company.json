@@ -2,7 +2,8 @@
   "main": {
     "name": "Klartext",
     "claim": "Kleine Software, klar gebaut.",
-    "intro": "Klartext baut kleine Programme, Websites und Web-Apps für Selbstständige und kleine Betriebe. Was es bringt, was es kostet und wo die Grenzen liegen, steht vorher fest, nicht hinterher.",
+    "audience": "Für Selbstständige und kleine Betriebe im Raum Rosenheim",
+    "intro": "Klartext baut kleine Programme, Websites und Web-Apps. Was es bringt, was es kostet und wo die Grenzen liegen, steht schriftlich fest, bevor die Arbeit beginnt.",
     "location": "Bruckmühl, Bayern",
     "email": "info@web-klartext.de",
     "services": [

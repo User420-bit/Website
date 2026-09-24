@@ -10,7 +10,7 @@ import NumberedRows from '@/components/NumberedRows.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import ProjectRow from '@/components/ProjectRow.astro'
 import Section from '@/components/Section.astro'
-import { href, mailto } from '@/lib/site'
+import { href, leitbild, mailto, zahlwort } from '@/lib/site'
 import { Image } from 'astro:assets'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -24,9 +24,22 @@ const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
 /** Die Startseite zeigt die ersten Arbeiten nach `order`, alle stehen unter /projekte/. */
 const STARTSEITE_PROJEKTE = 6
 const auswahl = projekte.slice(0, STARTSEITE_PROJEKTE)
-// Kundenprojekte stehen gross oben, der Rest der Auswahl als Index darunter.
-const referenzen = auswahl.filter((p) => p.data.kind === 'kundenprojekt')
-const weitere = auswahl.filter((p) => p.data.kind !== 'kundenprojekt')
+// Gross oben: Kundenprojekte und alle Arbeiten mit Screenshot, damit die Startseite
+// Bilder zeigt, solange die Kundenprojekte noch keine freigegebenen haben. Der Rest
+// der Auswahl steht als Index darunter.
+const gross = (p: (typeof auswahl)[number]) =>
+  p.data.kind === 'kundenprojekt' || leitbild(p.data.screenshots) !== undefined
+const referenzen = auswahl.filter(gross)
+const weitere = auswahl.filter((p) => !gross(p))
+const kundenprojekte = projekte.filter((p) => p.data.kind === 'kundenprojekt').length
+/** H2 als Aussage mit echten Zahlen, gezählt aus src/content/projekte/. */
+const arbeitenTitel = [
+  `${zahlwort(projekte.length)} Arbeiten`,
+  kundenprojekte > 0 && `${zahlwort(kundenprojekte)} davon für Kunden`,
+]
+  .filter(Boolean)
+  .join(', ')
+  .replace(/^./, (c) => c.toUpperCase())
 const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
 
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
@@ -52,6 +65,11 @@ if (profile.social.github) {
   })
 }
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
+// Der erste Schritt ist die E-Mail; sein Zeitrahmen ist die Antwortzeit, die nur in
+// `responseTime` steht.
+const schritte = contact.steps.map((step, i) =>
+  i === 0 && !step.timeframe ? { ...step, timeframe: contact.responseTime } : step,
+)
 ---
 
 <BaseLayout title={`${company.name} – ${company.claim}`} description={description} isHome>
@@ -67,6 +85,17 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     >
       {company.claim}
     </h1>
+    {
+      /*
+      Für wen, direkt unter dem Claim: Der Claim bleibt Marke, die Unterzeile sagt,
+      wer gemeint ist. Darunter statt darüber, damit die H1 das Erste bleibt, was man liest.
+    */
+    }
+    <p
+      class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
+    >
+      {company.audience}
+    </p>
     <p class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted">
       {company.intro}
     </p>
@@ -86,30 +115,41 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     </p>
   </section>
 
-  {/* 01 Arbeiten — der Beweis zuerst: Kundenprojekte gross, der Rest als Index. */}
+  {
+    /*
+    01 Arbeiten — der Beweis zuerst: Kundenprojekte und Arbeiten mit Bild gross,
+    der Rest als Index. Die H2-Titel sind Aussagen, nicht Etiketten: Wer nur die
+    Überschriften liest, soll trotzdem etwas erfahren. Die Navigation behält die
+    kurzen Namen.
+  */
+  }
   <Section
     id="arbeiten"
     index="01"
-    title="Arbeiten"
+    title={arbeitenTitel}
     intro="Kundenprojekte, eigene Produkte und Prototypen. Bei jedem Eintrag steht, was davon es ist."
   >
     <div class="border-t border-border">
       {referenzen.map((projekt) => <ProjectFeature projekt={projekt} />)}
     </div>
 
-    <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Weitere Arbeiten</h3>
-    <ul class="mt-3 list-none border-t border-border p-0">
-      {
-        weitere.map((projekt) => (
-          <ProjectRow
-            slug={projekt.id}
-            title={projekt.data.title}
-            kind={projekt.data.kind}
-            period={projekt.data.period}
-          />
-        ))
-      }
-    </ul>
+    {
+      weitere.length > 0 && (
+        <>
+          <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Weitere Arbeiten</h3>
+          <ul class="mt-3 list-none border-t border-border p-0">
+            {weitere.map((projekt) => (
+              <ProjectRow
+                slug={projekt.id}
+                title={projekt.data.title}
+                kind={projekt.data.kind}
+                period={projekt.data.period}
+              />
+            ))}
+          </ul>
+        </>
+      )
+    }
     {
       projekte.length > STARTSEITE_PROJEKTE && (
         <p class="mt-6 mb-0">
@@ -134,7 +174,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
   <Section
     id="leistungen"
     index="02"
-    title="Leistungen"
+    title="Angeboten wird nur, was schon gebaut wurde"
     intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
   >
     <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3">
@@ -152,7 +192,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
     <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
     <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
-      Nur, was schon einmal gebaut wurde. Hinter jedem Punkt steht das Projekt, das ihn belegt.
+      Hinter jedem Punkt steht das Projekt, das ihn belegt.
     </p>
     <div class="mt-3 border-t border-border">
       {
@@ -197,7 +237,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     Commit-Historien nachlesbar ist.
   */
   }
-  <Section id="arbeitsweise" index="03" title="Arbeitsweise">
+  <Section id="arbeitsweise" index="03" title="Erst klären, was geht, dann bauen">
     <NumberedRows items={aboutEntry.data.values} titleColumn />
 
     <div class="mt-8 border-t border-border">
@@ -225,7 +265,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     genannt wird. Zweispaltig erst, wenn ein Portrait hinterlegt ist.
   */
   }
-  <Section id="ueber" index="04" title="Über Klartext">
+  <Section id="ueber" index="04" title="Eine Person, direkt ansprechbar">
     <div
       class:list={[profile.portrait && 'lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-12']}
     >
@@ -279,12 +319,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     auf einer Hoehe.
   */
   }
-  <Section
-    id="kontakt"
-    index="05"
-    title={contact.heading}
-    intro={`${contact.description} ${contact.responseTime}`}
-  >
+  <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
     <div class="grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12">
       <div class="border-t border-border pt-6">
         <CopyEmail email={company.email} />
@@ -299,7 +334,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
       <div class="border-t border-border pt-6">
         <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
-        <NumberedRows items={contact.steps} class="mt-3" />
+        <NumberedRows items={schritte} class="mt-3" />
       </div>
     </div>
   </Section>
