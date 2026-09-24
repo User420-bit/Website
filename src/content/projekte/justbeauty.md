@@ -8,6 +8,9 @@ status: Prototyp und Konzept sind fertig für die Präsentation.
 github: null
 live: null
 order: 2
+# Vorerst nicht veröffentlicht (Entscheidung vom 2026-09-24): Solange Screenshot und Live-Link
+# fehlen, gibt es nichts zu zeigen. Zum Freischalten die Zeile löschen.
+published: false
 features:
   - Ist-Analyse, Design-Rework, Tracking-Konzept und Roadmap
   - Konkurrenzanalyse als Battlecard

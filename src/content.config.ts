@@ -130,6 +130,12 @@ const projekte = defineCollection({
         .default(null),
       /** Sortierung, kleiner zuerst. Gilt für das Raster der Startseite und für /projekte/. */
       order: z.number().int(),
+      /**
+       * false: Die Datei bleibt, aber es gibt keine Projektseite, /projekte/ lässt das Projekt
+       * aus, und Belege nennen es ohne Link. Hat eine Auswahl der Startseite nur solche
+       * Projekte, steht dort bloß ihr Reiter, ausgegraut.
+       */
+      published: z.boolean().default(true),
     }),
 })
 

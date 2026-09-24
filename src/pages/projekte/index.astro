@@ -6,13 +6,15 @@ import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import ProjectFeature from '@/components/ProjectFeature.astro'
 import { href } from '@/lib/site'
 
-// Alle Referenzen als Liste; die Startseite zeigt dieselben als Raster.
-const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+// Alle veröffentlichten Referenzen als Liste; die Startseite zeigt dieselben als Raster.
+const projekte = (await getCollection('projekte', ({ data }) => data.published)).sort(
+  (a, b) => a.data.order - b.data.order,
+)
 ---
 
 <BaseLayout
   title="Alle Arbeiten – Klartext"
-  description="Alle Referenzen von Klartext: Kundenprojekte, eigene Produkte und Prototypen."
+  description="Alle Referenzen von Klartext, jede mit Art, Zeitraum und Stand."
 >
   <section class="py-12 sm:py-16">
     <a
@@ -24,8 +26,7 @@ const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order -
 
     <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">Alle Arbeiten</h1>
     <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
-      {projekte.length} Referenzen, Kundenprojekte zuerst. Bei jeder steht, um welche Art Projekt es geht:
-      Kundenprojekt, eigenes Produkt oder Prototyp.
+      Bei jeder Referenz steht, um welche Art Projekt es geht und wie weit es ist.
     </p>
 
     <div class="mt-10 border-t border-border">

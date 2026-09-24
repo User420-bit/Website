@@ -8,6 +8,9 @@ status: In Abnahme. Offen sind Portrait-Foto, Impressum, Kontaktformular und lok
 github: null
 live: null
 order: 1
+# Vorerst nicht veröffentlicht (Entscheidung vom 2026-09-24): Solange Screenshot und Live-Link
+# fehlen, gibt es nichts zu zeigen. Zum Freischalten die Zeile löschen.
+published: false
 # Kein Screenshot, solange die Seite in Abnahme ist: Der Entwurf zeigt noch Platzhalter wie
 # „[15] Jahre“. Erst nach Abnahme neu aufnehmen (`npm run screenshots -- pointcare`).
 features:

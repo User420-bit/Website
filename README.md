@@ -84,6 +84,13 @@ die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue 
 ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
+Soll ein Projekt noch nicht zu sehen sein, bekommt es `published: false`. Die Datei bleibt, aber es
+entsteht keine Detailseite, `/projekte/` lässt es aus, und ein Beleg in `leistungen.json` nennt es
+ohne Link. Hat „Kunden“ oder „Eigene Projekte“ dadurch nichts mehr zu zeigen, steht der Reiter nur
+noch ausgegraut da, mit „folgt“ statt der Anzahl. So stehen PointCare und JustBeauty seit dem
+2026-09-24. Zum Freischalten die Zeile löschen; `npm run test:build` prüft beide Richtungen: gebaut,
+was veröffentlicht ist, und nicht gebaut, was es nicht ist.
+
 ### Ein Bild hinzufügen
 
 Bilder unter `src/assets/` ablegen und relativ zur Inhaltsdatei referenzieren, also

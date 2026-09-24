@@ -7,6 +7,11 @@
  * der Auswahl gleich groß im Raster. Jede Arbeit steht genau einmal da: Was
  * auf der Bühne steht, fehlt im Raster, bis weitergeblättert wird.
  *
+ * Unveröffentlichte Arbeiten (`published: false`) fehlen hier ganz. Bleibt
+ * einer Auswahl keine, steht nur ihr Reiter da, ausgegraut, mit "folgt" statt
+ * der Anzahl und nicht wählbar; beim Öffnen steht dann die nächste Auswahl.
+ * So ist es seit dem 2026-09-24 mit "Kunden".
+ *
  * Ohne JavaScript bleibt alles bedienbar: Der Umschalter sind Radio-Buttons,
  * die Auswahl blendet CSS über `:has()` um. Die Bühne zeigt dann das erste
  * Projekt nach `order`, das Raster die übrigen, Blättern entfällt. Kann ein
@@ -18,7 +23,7 @@ import ProjectSpotlight from '@/components/ProjectSpotlight.astro'
 import ProjectTile from '@/components/ProjectTile.astro'
 
 interface Props {
-  /** Alle Arbeiten, schon nach `order` sortiert. */
+  /** Alle Arbeiten, schon nach `order` sortiert, auch die unveröffentlichten. */
   projekte: CollectionEntry<'projekte'>[]
 }
 
@@ -30,15 +35,23 @@ const gruppen = [
     id: 'kunden',
     label: 'Kunden',
     rasterTitel: 'Weitere Kundenprojekte',
-    projekte: projekte.filter((p) => p.data.kind === 'kundenprojekt'),
+    alle: projekte.filter((p) => p.data.kind === 'kundenprojekt'),
   },
   {
     id: 'eigene',
     label: 'Eigene Projekte',
     rasterTitel: 'Weitere eigene Projekte',
-    projekte: projekte.filter((p) => p.data.kind !== 'kundenprojekt'),
+    alle: projekte.filter((p) => p.data.kind !== 'kundenprojekt'),
   },
-].filter((gruppe) => gruppe.projekte.length > 0)
+]
+  .filter((gruppe) => gruppe.alle.length > 0)
+  .map(({ alle, ...gruppe }) => ({ ...gruppe, projekte: alle.filter((p) => p.data.published) }))
+const sichtbar = gruppen.filter((gruppe) => gruppe.projekte.length > 0)
+
+const reiter = 'relative inline-flex items-baseline gap-2 rounded-sm py-3 text-sm font-medium'
+const reiterWaehlbar =
+  'cursor-pointer text-fg-muted transition-colors after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:text-fg has-checked:text-fg has-checked:after:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:after:transition-none'
+const reiterAusgegraut = 'cursor-not-allowed text-fg-muted/60'
 
 const blaetternKnopf =
   'inline-flex size-11 cursor-pointer items-center justify-center rounded-sm border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
@@ -50,26 +63,32 @@ const blaetternKnopf =
       <fieldset class="m-0 min-w-0 border-0 p-0">
         <legend class="sr-only">Welche Arbeiten zeigen</legend>
         <div class="flex flex-wrap gap-x-6 border-b border-border">
-          {gruppen.map((gruppe, i) => (
-            <label class="relative inline-flex cursor-pointer items-baseline gap-2 rounded-sm py-3 text-sm font-medium text-fg-muted transition-colors after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:text-fg has-checked:text-fg has-checked:after:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:after:transition-none">
-              <input
-                class="sr-only"
-                type="radio"
-                name="arbeiten-auswahl"
-                value={gruppe.id}
-                checked={i === 0}
-              />
-              {gruppe.label}
-              <span class="font-normal text-fg-muted tabular-nums">{gruppe.projekte.length}</span>
-            </label>
-          ))}
+          {gruppen.map((gruppe) => {
+            const waehlbar = gruppe.projekte.length > 0
+            return (
+              <label class:list={[reiter, waehlbar ? reiterWaehlbar : reiterAusgegraut]}>
+                <input
+                  class="sr-only"
+                  type="radio"
+                  name="arbeiten-auswahl"
+                  value={gruppe.id}
+                  checked={gruppe === sichtbar[0]}
+                  disabled={!waehlbar}
+                />
+                {gruppe.label}
+                <span class:list={['font-normal tabular-nums', waehlbar && 'text-fg-muted']}>
+                  {waehlbar ? gruppe.projekte.length : 'folgt'}
+                </span>
+              </label>
+            )
+          })}
         </div>
       </fieldset>
     )
   }
 
   {
-    gruppen.map((gruppe) => {
+    sichtbar.map((gruppe) => {
       const blaettern = gruppe.projekte.length > 1
       return (
         <div class="mt-8" data-gruppe={gruppe.id}>
