@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-24T00:00:00Z",
+  "generatedAt": "2026-09-24T12:00:00Z",
   "title": "Design System: Klartext",
   "extensions": {
     "colorMeta": {
@@ -514,6 +514,14 @@
       "description": "Einer der zwei echten Behälter: 12 px, bg-elevated, 1 px Liniengrau. Nur auf Projektseiten.",
       "html": "<pre class=\"ds-code\"><code>const seed = hash(runId)\nconst rng = mulberry32(seed)</code></pre>",
       "css": ".ds-code { margin: 0; overflow-x: auto; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--color-border, oklch(0.89 0.004 80)); background: var(--color-bg-elevated, oklch(1 0 0)); color: var(--color-fg, oklch(0.18 0.005 80)); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.875rem; line-height: 1.625; }"
+    },
+    {
+      "name": "Bühne der Projektseite",
+      "kind": "custom",
+      "refersTo": "project-scene",
+      "description": "Ein <figure> direkt unter H1 und Summary einer Projektseite, das als einziges Element über die volle Fensterbreite läuft (margin-inline: calc(50% - 50vw); overflow-x: clip auf body). Die Fläche hat je Szene eine eigene Farbe in hell und dunkel, innen liegt die gezeichnete Szene (CSS und Inline-SVG, aria-hidden, kein Skript), an der 64-rem-Spalte ausgerichtet. Darunter in der Spalte die Bildunterschrift in Body Small, Bleistiftgrau: „Szene“ in Tinte, dann was zu sehen ist, dann „Kein Screenshot.“ Bühnenlizenz: nur innerhalb der Fläche eigene Farben als Szenen-Variablen mit Dunkel-Zwilling, Bewegung beim Laden oder Scrollen hinter prefers-reduced-motion (ohne Bewegung steht der Endzustand), Illustration. Keine Schatten, keine zweite Schrift, keine Kennzahlen, die echt aussehen. Das Specimen zeigt den Rahmen mit einer neutralen Fläche und einem Platzhalter für die Szene.",
+      "html": "<figure class=\"ds-scene\"><div class=\"ds-scene-surface\"><div class=\"ds-scene-stage\" aria-hidden=\"true\">Szene des Projekts</div></div><figcaption class=\"ds-scene-caption\"><span class=\"ds-scene-label\">Szene</span> · Wer weiter scrollt, gräbt tiefer: der Schacht mit seinen Schichten, nachgezeichnet. Kein Screenshot.</figcaption></figure>",
+      "css": ".ds-scene { margin: 0; font-family: 'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif; } .ds-scene-surface { background: oklch(0.19 0.015 60); padding: 2rem 1rem; } .ds-scene-stage { max-width: 64rem; margin: 0 auto; min-height: 12rem; display: grid; place-items: center; color: oklch(0.7 0.01 80); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px dashed oklch(0.32 0.02 60); border-radius: 0.25rem; } .ds-scene-caption { max-width: 65ch; margin: 0.75rem auto 0; padding: 0 1rem; font-size: 0.875rem; line-height: 1.429; color: var(--color-fg-muted, oklch(0.43 0.008 80)); } .ds-scene-label { font-weight: 500; color: var(--color-fg, oklch(0.18 0.005 80)); }"
     }
   ],
   "narrative": {
@@ -526,7 +534,8 @@
       "Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte",
       "Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch",
       "Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus",
-      "Bewegung aus einer geschlossenen Liste, nur bei `prefers-reduced-motion: no-preference`"
+      "Bewegung aus einer geschlossenen Liste, nur bei `prefers-reduced-motion: no-preference`",
+      "Eine Ausnahme mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung und Illustration tragen darf (Bühnenlizenz), sonst nirgends"
     ],
     "rules": [
       {
