@@ -5,7 +5,7 @@ kleine Programme, Websites und Web-Apps aus Bruckmühl. Die Person hinter Klarte
 Startseite nur in der Sektion "Über Klartext" genannt und im Impressum, wo § 5 DDG den Namen
 verlangt.
 
-- **Kein JavaScript** auf den Unterseiten, ein kleines Inline-Script auf der Startseite
+- **Kein JavaScript** auf den Unterseiten, drei kleine Inline-Scripts auf der Startseite
 - **Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser
 - Jede Seite ist echtes HTML mit eigener URL, eigenem Title und eigenen Meta-Tags
 
@@ -66,7 +66,7 @@ period: März 2026
 status: Läuft, nächster Schritt ist X # oder: null
 github: https://github.com/<nutzer>/<repo> # oder: null
 live: https://example.com # oder: null
-order: 4 # Reihenfolge, kleiner zuerst; die Startseite zeigt die ersten sechs
+order: 4 # Reihenfolge, kleiner zuerst; gilt für Startseite und /projekte/
 features:
   - Was es kann
 engineering:
@@ -78,9 +78,9 @@ learnings:
 Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
-Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/` und auf der
-Startseite (unter den ersten sechs nach `order` Kundenprojekte und Arbeiten mit Screenshot groß
-oben, der Rest als Index darunter) sowie die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
+Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/`, die Kachel auf
+der Startseite (unter „Kunden“, wenn `kind` `kundenprojekt` ist, sonst unter „Eigene Projekte“) sowie
+die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
 ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
 
@@ -116,8 +116,9 @@ Handaufnahmen, etwa aus dem Spiel heraus oder im Handyformat, liegen daneben als
 sie nicht an und fragt bei Projekten, die schon eigene Bilder eingetragen haben, nicht mehr nach
 dem Eintrag.
 
-Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/` und, wenn das Projekt unter
-den ersten sechs steht, groß auf der Startseite. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
+Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/`, in der Kachel auf der
+Startseite und über die volle Breite, wenn das Projekt dort oben groß steht. Ohne Bild zeigt die
+Kachel den ersten Satz der `summary`. Die Projektseite zeigt es über die volle Breite, die übrigen Querformate
 zweispaltig und Hochformate (Handy, Dialoge) schmal darunter. Nach einer sichtbaren Änderung am
 Projekt das Skript erneut laufen lassen und das Bild mit committen.
 

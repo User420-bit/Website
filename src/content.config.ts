@@ -128,7 +128,7 @@ const projekte = defineCollection({
         })
         .nullable()
         .default(null),
-      /** Sortierung, kleiner zuerst. Die Startseite zeigt die ersten sechs, /projekte/ alle. */
+      /** Sortierung, kleiner zuerst. Gilt für das Raster der Startseite und für /projekte/. */
       order: z.number().int(),
     }),
 })
