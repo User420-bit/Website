@@ -1,119 +1,107 @@
 ---
 /**
- * PointCare: dunkel, filmisch, eine Bewegung pro Abschnitt. Ein gezeichnetes
- * Standbild einer Lagerhalle zwischen zwei Kinobalken, das beim Scrollen
- * leicht heranzoomt, wie die Standbilder der Kundenseite. Darunter die drei
- * Leistungsbereiche als Bauchbinde, die nacheinander erscheinen. Die Fläche
- * ist in beiden Farbmodi dunkel: Das ist die Seite, nicht das Werkstattbuch.
+ * PointCare: eine Bewegung pro Abschnitt. Die Kundenseite zeigt ihre drei
+ * Leistungsbereiche als Scroll-Choreografie, in der sich je Abschnitt genau
+ * eine Sache bewegt. Hier dieselbe Regel an drei gezeichneten Standbildern:
+ * Lager (der Stapler hebt), Supply Chain (die Strecke zieht sich), Transport
+ * (der Lkw fährt). Jedes Bild bewegt sich nur, solange es durchs Fenster
+ * läuft, und nur in seiner einen Bewegung.
+ *
+ * Die Standbilder sind in beiden Farbmodi dunkel, wie Filmbilder, mit
+ * Kinobalken oben und unten (Farben: PointcarePage.astro). Die Zeichnung trägt
+ * `aria-hidden`; Titel und Satz darunter sind Text, die Bildunterschrift sagt,
+ * dass es kein Screenshot ist.
  */
-import ProjectScene from '@/components/ProjectScene.astro'
+import Kette from './pointcare/StandbildKette.astro'
+import Lager from './pointcare/StandbildLager.astro'
+import Transport from './pointcare/StandbildTransport.astro'
 
-const bereiche = ['Lager & Intralogistik', 'Supply Chain', 'Transport']
+const einstellungen = [
+  {
+    titel: 'Lager & Intralogistik',
+    bewegung: 'Heben',
+    satz: 'Der Stapler hebt eine Palette ins zweite Fach.',
+    Bild: Lager,
+  },
+  {
+    titel: 'Supply Chain',
+    bewegung: 'Linie',
+    satz: 'Die Strecke verbindet vier Stationen, vom Werk am Horizont bis zum Kunden.',
+    Bild: Kette,
+  },
+  {
+    titel: 'Transport',
+    bewegung: 'Fahrt',
+    satz: 'Der Sattelzug fährt dem Horizont entgegen.',
+    Bild: Transport,
+  },
+]
 ---
 
-<ProjectScene
-  caption="Ein gezeichnetes Standbild im Stil der Kundenseite: dunkel, mit Kinobalken, das beim Scrollen heranzoomt, darunter die drei Leistungsbereiche."
-  surface="oklch(0.13 0.004 80)"
->
-  <div class="kino">
-    <div class="standbild">
-      <svg viewBox="0 0 960 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs>
-          <radialGradient id="pc-licht" cx="50%" cy="58%" r="55%">
-            <stop offset="0" stop-color="oklch(0.6 0.06 60)" stop-opacity="0.55"></stop>
-            <stop offset="1" stop-color="oklch(0.13 0.004 80)" stop-opacity="0"></stop>
-          </radialGradient>
-        </defs>
-        <rect width="960" height="400" fill="url(#pc-licht)"></rect>
-        {/* Boden mit Fluchtlinien */}
-        <g stroke="oklch(0.35 0.01 80)" stroke-width="1">
-          <path d="M0 400 L480 230 M120 400 L480 230 M240 400 L480 230 M360 400 L480 230"></path>
-          <path d="M960 400 L480 230 M840 400 L480 230 M720 400 L480 230 M600 400 L480 230"></path>
-          <path d="M0 300 H960 M0 340 H960 M0 390 H960" opacity="0.5"></path>
-        </g>
-        {/* Regale links und rechts, nach hinten kleiner */}
-        <g fill="oklch(0.22 0.006 80)" stroke="oklch(0.45 0.01 80)" stroke-width="1.5">
-          <rect x="20" y="40" width="150" height="360"></rect>
-          <rect x="190" y="110" width="90" height="290"></rect>
-          <rect x="300" y="160" width="55" height="240"></rect>
-          <rect x="790" y="40" width="150" height="360"></rect>
-          <rect x="680" y="110" width="90" height="290"></rect>
-          <rect x="605" y="160" width="55" height="240"></rect>
-        </g>
-        <g stroke="oklch(0.45 0.01 80)" stroke-width="1.5">
-          <path d="M20 130 H170 M20 220 H170 M20 310 H170"></path>
-          <path d="M190 180 H280 M190 250 H280 M190 320 H280"></path>
-          <path d="M300 220 H355 M300 280 H355 M300 340 H355"></path>
-          <path d="M790 130 H940 M790 220 H940 M790 310 H940"></path>
-          <path d="M680 180 H770 M680 250 H770 M680 320 H770"></path>
-          <path d="M605 220 H660 M605 280 H660 M605 340 H660"></path>
-        </g>
-        {/* Paletten in den Regalen */}
-        <g fill="oklch(0.5 0.07 60)">
-          <rect x="40" y="90" width="50" height="38"></rect>
-          <rect x="105" y="180" width="50" height="38"></rect>
-          <rect x="40" y="270" width="50" height="38"></rect>
-          <rect x="205" y="215" width="28" height="33"></rect>
-          <rect x="245" y="285" width="28" height="33"></rect>
-          <rect x="870" y="90" width="50" height="38"></rect>
-          <rect x="805" y="180" width="50" height="38"></rect>
-          <rect x="870" y="270" width="50" height="38"></rect>
-          <rect x="727" y="215" width="28" height="33"></rect>
-          <rect x="687" y="285" width="28" height="33"></rect>
-        </g>
-        {/* Der Stapler im Gang */}
-        <g transform="translate(455 300)">
-          <rect x="0" y="0" width="50" height="34" rx="3" fill="oklch(0.62 0.16 50)"></rect>
-          <rect x="6" y="-22" width="26" height="24" rx="2" fill="oklch(0.3 0.01 80)"></rect>
-          <rect x="52" y="-40" width="4" height="74" fill="oklch(0.7 0.01 80)"></rect>
-          <circle cx="12" cy="36" r="6" fill="oklch(0.25 0.006 80)"></circle>
-          <circle cx="40" cy="36" r="6" fill="oklch(0.25 0.006 80)"></circle>
-        </g>
-      </svg>
-      <span class="marke">Standbild 01 / 03</span>
-    </div>
-    <ul class="bereiche">
-      {bereiche.map((bereich, i) => <li style={`--i: ${i}`}>{bereich}</li>)}
-    </ul>
-  </div>
-</ProjectScene>
+<section class="mt-12 border-t border-border pt-6" aria-labelledby="pc-bewegungen">
+  <h2 id="pc-bewegungen" class="m-0 text-xl font-semibold tracking-tight">
+    Eine Bewegung pro Abschnitt
+  </h2>
+  <p class="prose-flow mt-4 mb-0 max-w-[65ch] leading-relaxed text-fg-muted">
+    Die Kundenseite folgt einer Regel: eine Bewegung pro Scroll-Abschnitt statt Effekten überall.
+    Hier gilt dieselbe Regel, an drei gezeichneten Standbildern, eines je Leistungsbereich.
+  </p>
+
+  <figure class="m-0 mt-8">
+    <ol class="m-0 list-none space-y-10 p-0">
+      {
+        einstellungen.map(({ titel, bewegung, satz, Bild }, i) => (
+          <li>
+            <div class="pc-rahmen" aria-hidden="true">
+              <Bild />
+              <span class="pc-marke">Standbild 0{i + 1} / 03</span>
+            </div>
+            <div class="mt-3 grid gap-1 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+              <h3 class="m-0 text-lg font-semibold tracking-tight">{titel}</h3>
+              <p class="prose-flow m-0 max-w-[55ch] text-fg-muted sm:pt-0.5">
+                <span class="font-medium text-fg">{bewegung}.</span> {satz}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <figcaption class="mt-8 max-w-[65ch] text-sm text-fg-muted">
+      <span class="font-medium text-fg">Szene</span> · Drei gezeichnete Standbilder nach dem Prinzip der
+      Kundenseite, nicht nach ihrem Inhalt. Kein Screenshot.
+    </figcaption>
+  </figure>
+</section>
 
 <style>
-  @property --pc-zoom {
+  @property --pc-t {
     syntax: '<number>';
     inherits: true;
-    initial-value: 1.12;
+    initial-value: 1;
   }
 
-  .kino {
-    --pc-zoom: 1.12;
-    --pc-kreide: oklch(0.92 0.005 80);
-    --pc-kreide-matt: oklch(0.65 0.008 80);
-    padding-block: 1.25rem;
-    color: var(--pc-kreide);
+  /* Filmbild mit Kinobalken: 3 : 2 auf dem Handy, 21 : 9 ab 640 px. */
+  .pc-rahmen {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-block: 0.625rem solid var(--pc-balken);
+    border-radius: var(--radius-sm);
+    background-color: var(--pc-nacht);
   }
   @media (min-width: 640px) {
-    .kino {
-      padding-block: 2rem;
+    .pc-rahmen {
+      aspect-ratio: 21 / 9;
+      border-block-width: 1rem;
     }
   }
-
-  /* Der Kinobalken: oben und unten dunkler als die Fläche. */
-  .standbild {
-    position: relative;
-    aspect-ratio: 21 / 9;
-    overflow: hidden;
-    border-block: 0.75rem solid oklch(0.08 0.003 80);
-    background: oklch(0.13 0.004 80);
-  }
-  .standbild svg {
-    display: block;
+  .pc-rahmen :global(svg) {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    transform: scale(var(--pc-zoom));
-    transform-origin: 50% 60%;
   }
-  .marke {
+  .pc-marke {
     position: absolute;
     left: 1rem;
     top: 0.75rem;
@@ -124,64 +112,30 @@ const bereiche = ['Lager & Intralogistik', 'Supply Chain', 'Transport']
     color: var(--pc-kreide-matt);
   }
 
-  /* Bauchbinde: die drei Bereiche in einer Zeile, getrennt durch Haarlinien. */
-  .bereiche {
-    margin: 1rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 0;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-  .bereiche li {
-    padding-inline: 1rem;
-    border-left: 1px solid oklch(0.4 0.008 80);
-  }
-  .bereiche li:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
-  @media (min-width: 640px) {
-    .bereiche {
-      font-size: 1rem;
-    }
-  }
-
+  /*
+   * Die eine Bewegung je Bild: `--pc-t` läuft von 0 bis 1, während das Bild
+   * vom unteren Fensterrand bis etwas über die Mitte wandert. Ohne Bewegung
+   * oder ohne Unterstützung steht 1, der Endzustand.
+   */
   @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      /*
-       * Langschreibweise mit Absicht: Der CSS-Minifier zieht `animation-timeline`
-       * sonst in die Kurzform `animation`, und die verwirft der Browser als Ganzes.
-       */
-      .kino {
-        animation-name: pc-zoom;
-        animation-timing-function: linear;
+    @supports (animation-timeline: view()) {
+      /* Langschreibweise, sonst zieht der Minifier `animation-timeline` in die Kurzform. */
+      .pc-rahmen {
+        animation-name: pc-einstellung;
+        animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1);
         animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 70vh;
+        animation-timeline: view();
+        animation-range: cover 20% cover 55%;
       }
     }
-    .bereiche li {
-      animation: pc-erscheinen 600ms var(--ease-quiet) both;
-      animation-delay: calc(400ms + var(--i) * 350ms);
-    }
   }
 
-  @keyframes pc-zoom {
+  @keyframes pc-einstellung {
     from {
-      --pc-zoom: 1;
+      --pc-t: 0;
     }
     to {
-      --pc-zoom: 1.12;
-    }
-  }
-  @keyframes pc-erscheinen {
-    from {
-      opacity: 0;
-      transform: translateY(0.5rem);
+      --pc-t: 1;
     }
   }
 </style>

@@ -1,0 +1,204 @@
+---
+/**
+ * Standbild 01, Lager & Intralogistik: ein Regalgang, Kamera auf Augenhöhe,
+ * 10 m vor ihr der Stapler im Profil, die Gabel zum rechten Regal. Die eine
+ * Bewegung: Er hebt die Palette ins zweite Fach, gesteuert von `--pc-t` (0 bis
+ * 1, siehe PointcareScene.astro). Ohne Bewegung steht die Palette oben.
+ */
+import { kamera } from './perspektive'
+
+const FY = 290
+const k = kamera({ brennweite: 700, fluchtpunkt: [800, FY], augenhoehe: 1.6 })
+
+// Zwei Regalzeilen links und rechts, Gangbreite 4 m, Stützen alle 2,8 m.
+const stuetzen = Array.from({ length: 25 }, (_, i) => 0.8 + i * 2.8)
+const ebenen = [0.15, 2, 3.85, 5.7, 7.55]
+const OBEN = 9
+const regal = [-2, 2].flatMap((x) => [
+  ...stuetzen.map((z) => k.linie([x, 0, z], [x, OBEN, z])),
+  ...ebenen.map((y) => k.linie([x, y, 0.8], [x, y, 70])),
+  k.linie([x, OBEN, 0.8], [x, OBEN, 70]),
+])
+
+// Ware in den Fächern, nach festem Muster, erst ab dem dritten Feld (davor
+// wäre sie zu nah und zu groß); rechts auf Ebene 2 bleibt das Fach frei, in
+// das die Palette gehoben wird.
+const ware = [-2, 2].flatMap((x, seite) =>
+  stuetzen.slice(0, -1).flatMap((z, i) =>
+    ebenen.slice(0, 4).flatMap((y, ebene) => {
+      const frei =
+        i < 2 || (i * 7 + ebene * 3 + seite * 2) % 5 === 0 || (x > 0 && i === 3 && ebene === 1)
+      if (frei) return []
+      const [z0, z1] = [z + 0.25, z + 2.55]
+      return [
+        {
+          last: k.flaeche(
+            [x, y + 0.17, z0],
+            [x, y + 0.17, z1],
+            [x, y + 1.45, z1],
+            [x, y + 1.45, z0],
+          ),
+          palette: k.flaeche([x, y, z0], [x, y, z1], [x, y + 0.17, z1], [x, y + 0.17, z0]),
+        },
+      ]
+    }),
+  ),
+)
+
+const boden = k.flaeche([-2, 0, 0.8], [2, 0, 0.8], [2, 0, 200], [-2, 0, 200])
+const gangLinien = [-1.85, 1.85].map((x) => k.linie([x, 0, 0.8], [x, 0, 70]))
+const deckenLichter = [24, 32, 40, 48, 56, 64].map((z) =>
+  k.flaeche(
+    [-0.5, OBEN + 0.8, z],
+    [0.5, OBEN + 0.8, z],
+    [0.5, OBEN + 0.8, z + 2],
+    [-0.5, OBEN + 0.8, z + 2],
+  ),
+)
+
+// Der Stapler im Profil, 10,4 m vor der Kamera, Gabel nach rechts ins Regal.
+const S = 10.4
+const hub = 2 * k.massstab(S)
+const f = (x0: number, x1: number, y0: number, y1: number) => k.front(x0, x1, y0, y1, S)
+const profil = (...punkte: [number, number][]) =>
+  k.flaeche(...punkte.map(([x, y]) => [x, y, S] as const))
+const stapler = {
+  // Gegengewicht hinten rund, vorn die Stufe zum Fahrerplatz.
+  koerper: profil(
+    [-1.5, 0.3],
+    [-1.55, 0.75],
+    [-1.45, 1.08],
+    [-1.2, 1.22],
+    [-0.62, 1.22],
+    [-0.5, 0.82],
+    [0.1, 0.82],
+    [0.22, 1.0],
+    [0.42, 1.0],
+    [0.42, 0.3],
+  ),
+  sitz: profil([-0.95, 1.22], [-0.55, 1.22], [-0.6, 1.72], [-0.78, 1.72]),
+  lenkrad: k.linie([0.05, 0.82, S], [0.2, 1.38, S]),
+  dach: k.linie([-1.02, 1.22, S], [-0.9, 2.2, S], [0.34, 2.2, S], [0.36, 1.0, S]),
+  mast: f(0.42, 0.52, 0.05, 2.3),
+  raeder: [
+    [-1.1, 0.29],
+    [0.08, 0.34],
+  ].map(([x, r]) => {
+    const [cx, cy] = k.projiziere([x, r, S])
+    return { cx, cy, r: r * k.massstab(S) }
+  }),
+  // Was sich hebt: innerer Mast, Gabelträger, Gabel, Palette mit Ladung.
+  innen: f(0.46, 0.5, 0.1, 2.25),
+  traeger: f(0.52, 0.6, 0.05, 1.0),
+  gabel: f(0.6, 1.95, 0.05, 0.11),
+  palette: f(0.66, 1.95, 0.11, 0.26),
+  last: f(0.68, 1.93, 0.26, 1.4),
+  band: k.linie([1.305, 0.26, S], [1.305, 1.4, S]),
+}
+---
+
+<svg
+  class="pc-lager"
+  viewBox="0 0 1600 686"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <radialGradient id="pc-l-ende" cx="800" cy={FY} r="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="oklch(0.62 0.06 65)" stop-opacity="0.5"></stop>
+      <stop offset="1" stop-color="oklch(0.62 0.06 65)" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <path d={boden} class="pc-boden"></path>
+  <rect width="1600" height="686" fill="url(#pc-l-ende)"></rect>
+  {deckenLichter.map((d) => <path d={d} class="pc-licht" />)}
+  {gangLinien.map((d) => <path d={d} class="pc-strich-leise" />)}
+  {
+    ware.map((w) => (
+      <>
+        <path d={w.last} class="pc-ware" />
+        <path d={w.palette} class="pc-palette" />
+      </>
+    ))
+  }
+  {regal.map((d) => <path d={d} class="pc-strich" />)}
+
+  <g class="pc-stapler">
+    <path d={stapler.mast} class="pc-mast"></path>
+    <g class="pc-hub" style={`--pc-hub: ${Math.round(hub * 10) / 10}px`}>
+      <path d={stapler.innen} class="pc-mast-innen"></path>
+      <path d={stapler.traeger} class="pc-mast"></path>
+      <path d={stapler.gabel} class="pc-mast-innen"></path>
+      <path d={stapler.palette} class="pc-palette"></path>
+      <path d={stapler.last} class="pc-ware-hell"></path>
+      <path d={stapler.band} class="pc-strich"></path>
+    </g>
+    <path d={stapler.sitz} class="pc-sitz"></path>
+    <path d={stapler.koerper} class="pc-signal"></path>
+    <path d={stapler.lenkrad} class="pc-dach"></path>
+    <path d={stapler.dach} class="pc-dach"></path>
+    {stapler.raeder.map((rad) => <circle cx={rad.cx} cy={rad.cy} r={rad.r} class="pc-rad" />)}
+  </g>
+</svg>
+
+<style>
+  .pc-boden {
+    fill: var(--pc-boden);
+  }
+  .pc-licht {
+    fill: var(--pc-licht);
+    opacity: 0.55;
+  }
+  .pc-ware {
+    fill: var(--pc-ware);
+    opacity: 0.8;
+  }
+  .pc-ware-hell {
+    fill: oklch(0.52 0.06 64);
+  }
+  .pc-palette {
+    fill: oklch(0.3 0.02 60);
+  }
+  .pc-strich,
+  .pc-strich-leise {
+    fill: none;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .pc-strich {
+    stroke: var(--pc-strich);
+  }
+  .pc-strich-leise {
+    stroke: var(--pc-strich-leise);
+  }
+  .pc-signal {
+    fill: var(--pc-signal);
+  }
+  .pc-sitz {
+    fill: var(--pc-balken);
+  }
+  .pc-mast {
+    fill: oklch(0.36 0.005 80);
+  }
+  .pc-mast-innen {
+    fill: oklch(0.48 0.006 80);
+  }
+  .pc-dach {
+    fill: none;
+    stroke: oklch(0.44 0.006 80);
+    stroke-width: 5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .pc-rad {
+    fill: var(--pc-balken);
+    stroke: oklch(0.34 0.005 80);
+    stroke-width: 4;
+  }
+
+  /* Heben: 2 m nach oben, in Leinwand-Einheiten aus der Perspektive gerechnet. */
+  .pc-hub {
+    transform: translateY(calc(var(--pc-t) * var(--pc-hub) * -1));
+  }
+</style>
