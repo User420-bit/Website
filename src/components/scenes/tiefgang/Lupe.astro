@@ -1,0 +1,81 @@
+---
+/**
+ * Die Lupe zu einem Fundstück: dieselbe Lightbox wie `ScreenshotGallery`, ein
+ * natives Popover ohne JavaScript. Esc und ein Klick neben das Bild schließen
+ * sie, beim Öffnen springt der Fokus auf „Schließen“, beim Schließen zurück
+ * auf das Fundstück.
+ */
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+interface Props {
+  shot: { image: ImageMetadata; caption: string }
+  nummer: number
+  gesamt: number
+  /** Projekttitel für die Kopfzeile. */
+  titel: string
+}
+
+const { shot, nummer, gesamt, titel } = Astro.props
+const hoch = shot.image.height > shot.image.width
+const id = `fund-${nummer}`
+---
+
+<div
+  id={id}
+  popover
+  role="dialog"
+  aria-label={`${titel}, Bild ${nummer} von ${gesamt}`}
+  class="lightbox m-auto max-h-dvh max-w-[min(100vw,1600px)] overflow-auto border-0 bg-transparent p-4 text-fg backdrop:bg-bg sm:p-6"
+>
+  <div class="flex items-center justify-between gap-4">
+    <p class="m-0 text-sm text-fg-muted tabular-nums">
+      {titel} · Bild {nummer} von {gesamt}
+    </p>
+    {
+      /*
+      autofocus ist hier Absicht: Ein Popover setzt den Fokus beim Öffnen auf dieses
+      Element, sonst bliebe er hinter der Lightbox auf dem Vorschaubild stehen.
+    */
+    }
+    {/* eslint-disable astro/jsx-a11y/no-autofocus */}
+    <button
+      type="button"
+      class="inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-sm border border-fg/25 px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
+      popovertarget={id}
+      popovertargetaction="hide"
+      autofocus
+    >
+      Schließen
+      <svg
+        aria-hidden="true"
+        class="size-3.5"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <path d="M4 4l8 8M12 4l-8 8"></path>
+      </svg>
+    </button>
+    {/* eslint-enable astro/jsx-a11y/no-autofocus */}
+  </div>
+  {/* Die Bildunterschrift beschreibt das Bild; ein gleichlautendes alt würde doppelt gelesen. */}
+  <figure class="m-0 mt-4">
+    <Image
+      class="block h-auto max-h-[calc(100dvh-10rem)] w-auto max-w-full rounded-sm border border-border"
+      src={shot.image}
+      alt=""
+      widths={hoch ? [480, 780] : [960, 1600]}
+      sizes={hoch ? '(min-width: 640px) 26rem, 80vw' : '(min-width: 1640px) 1600px, 96vw'}
+    />
+    <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">{shot.caption}</figcaption>
+  </figure>
+</div>
+
+<style is:global>
+  /* Hinter der offenen Lightbox scrollt die Seite nicht mit. */
+  html:has(.lightbox:popover-open) {
+    overflow: hidden;
+  }
+</style>

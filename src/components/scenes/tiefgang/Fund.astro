@@ -1,0 +1,95 @@
+---
+/**
+ * Ein Fundstück im Schacht von TIEFGANG: ein echter Screenshot aus dem Spiel,
+ * abgelegt in der Schicht, zu der er gehört. Ein Klick öffnet die Lupe
+ * (`Lupe.astro`, dieselbe Lightbox wie in der Galerie der anderen
+ * Projektseiten). Die Lupe steht außerhalb der Schichten, damit sie nicht die
+ * Farben der Lava-Schicht erbt.
+ *
+ * Nennt die Bildunterschrift eine Tiefe („auf 330 m“), trägt das Fundstück
+ * sie als `data-tiefe`: Daran richtet das Skript der Szene die Tiefenanzeige
+ * aus, damit sie an diesem Bild genau diese Zahl zeigt.
+ */
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+interface Props {
+  shot: { image: ImageMetadata; caption: string }
+  /** Stelle auf der Seite, von oben gezählt, und Zahl aller Fundstücke. */
+  nummer: number
+  gesamt: number
+  /** `leitbild`: über die volle Spalte, sonst in der Randspalte neben dem Text. */
+  art?: 'rand' | 'leitbild'
+  tiefe?: number
+}
+
+const { shot, nummer, gesamt, art = 'rand', tiefe } = Astro.props
+const hoch = shot.image.height > shot.image.width
+
+const vorschau =
+  art === 'leitbild'
+    ? { widths: [800, 1200, 1600], sizes: '(min-width: 1024px) 62rem, 92vw' }
+    : hoch
+      ? { widths: [160, 320], sizes: '(min-width: 1024px) 10rem, 8rem' }
+      : { widths: [480, 960], sizes: '(min-width: 1024px) 15rem, 92vw' }
+---
+
+<figure
+  class:list={['tg-fund m-0', hoch ? 'tg-fund-hoch' : 'tg-fund-quer', `tg-fund-${art}`]}
+  data-tiefe={tiefe}
+>
+  <button
+    type="button"
+    class="block w-full cursor-zoom-in overflow-hidden rounded-sm border border-border p-0 transition-colors hover:border-fg/40 focus-visible:border-fg/40 motion-reduce:transition-none"
+    popovertarget={`fund-${nummer}`}
+    aria-label={`Bild vergrößern: ${shot.caption}`}
+  >
+    <Image
+      class="block h-auto w-full"
+      src={shot.image}
+      alt=""
+      widths={vorschau.widths}
+      sizes={vorschau.sizes}
+      loading={art === 'leitbild' ? 'lazy' : undefined}
+    />
+  </button>
+  {/* Die Unterschrift steckt schon im Namen des Knopfs; Screenreader lesen sie nicht doppelt. */}
+  <figcaption aria-hidden="true" class="text-sm text-fg-muted">
+    <span class="tg-fund-nr">Fund {nummer} von {gesamt}</span>
+    {shot.caption}
+  </figcaption>
+</figure>
+
+<style>
+  /* Handybilder stehen auf schmalen Schirmen links neben ihrer Unterschrift. */
+  .tg-fund-hoch {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: end;
+  }
+  .tg-fund-quer figcaption {
+    margin-top: 0.5rem;
+  }
+  .tg-fund-leitbild figcaption {
+    max-width: 65ch;
+  }
+  @media (min-width: 64rem) {
+    .tg-fund-hoch {
+      grid-template-columns: 10rem;
+      gap: 0.5rem;
+      justify-content: end;
+    }
+  }
+
+  .tg-fund-nr {
+    display: block;
+    margin-bottom: 0.125rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-fg);
+  }
+</style>
