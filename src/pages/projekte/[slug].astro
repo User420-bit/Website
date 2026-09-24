@@ -11,7 +11,10 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import { href } from '@/lib/site'
 
 export const getStaticPaths = (async () => {
-  const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
+  // Unveröffentlichte Projekte bekommen keine Seite und fehlen als Nachbar.
+  const projekte = (await getCollection('projekte', ({ data }) => data.published)).sort(
+    (a, b) => a.data.order - b.data.order,
+  )
   return projekte.map((projekt, i) => ({
     params: { slug: projekt.id },
     // Nachbarn in Startseiten-Reihenfolge, an den Enden ohne Umlauf.

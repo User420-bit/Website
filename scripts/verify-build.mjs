@@ -17,18 +17,25 @@ const BASE = '/'
 /**
  * Projektrouten kommen aus dem Content, nicht aus einer Liste hier: Jede Datei
  * in `src/content/projekte/` muss als Seite gebaut sein und ihren `title` als
- * H1 tragen. Sonst veraltet diese Pruefung mit dem naechsten Projekt.
+ * H1 tragen. Sonst veraltet diese Pruefung mit dem naechsten Projekt. Die
+ * Ausnahme sind Dateien mit `published: false`: Die duerfen gar nicht gebaut
+ * sein, und kein Link darf auf sie zeigen (das faengt die Linkpruefung unten).
  */
 const PROJEKTE_DIR = 'src/content/projekte'
+const projekte = readdirSync(PROJEKTE_DIR)
+  // `._<name>.md` sind AppleDouble-Dateien, die macOS auf exFAT neben jeder Datei anlegt,
+  // kein Content: Der Glob-Loader ueberspringt Punktdateien und baut dafuer keine Seite.
+  .filter((name) => name.endsWith('.md') && !name.startsWith('._'))
+  .map((name) => {
+    const text = readFileSync(join(PROJEKTE_DIR, name), 'utf8')
+    return {
+      route: `projekte/${name.replace(/\.md$/, '')}`,
+      title: text.match(/^title:\s*(.+)$/m)?.[1]?.trim(),
+      published: !/^published:\s*false\s*$/m.test(text),
+    }
+  })
 const projektRouten = Object.fromEntries(
-  readdirSync(PROJEKTE_DIR)
-    // `._<name>.md` sind AppleDouble-Dateien, die macOS auf exFAT neben jeder Datei anlegt,
-    // kein Content: Der Glob-Loader ueberspringt Punktdateien und baut dafuer keine Seite.
-    .filter((name) => name.endsWith('.md') && !name.startsWith('._'))
-    .map((name) => {
-      const title = readFileSync(join(PROJEKTE_DIR, name), 'utf8').match(/^title:\s*(.+)$/m)?.[1]
-      return [`projekte/${name.replace(/\.md$/, '')}`, title?.trim()]
-    }),
+  projekte.filter((p) => p.published).map((p) => [p.route, p.title]),
 )
 
 /** Route -> erwartete H1. */
@@ -72,6 +79,12 @@ for (const [route, expectedH1] of Object.entries(ROUTES)) {
 
   if (/\[[A-ZÄÖÜ][^\]]*\]/.test(html.replace(/<script[\s\S]*?<\/script>/g, ''))) {
     fail(`/${route}: sieht nach einem Platzhalter in eckigen Klammern aus`)
+  }
+}
+
+for (const { route } of projekte.filter((p) => !p.published)) {
+  if (existsSync(join(DIST, route, 'index.html'))) {
+    fail(`/${route} ist unveroeffentlicht (published: false) und darf nicht gebaut sein`)
   }
 }
 

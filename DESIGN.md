@@ -276,7 +276,8 @@ nutzen die Tailwind-Utilities dieser Tokens (`bg-bg`, `text-fg-muted`, `border-b
 
 Abgeleitete Tönungen entstehen nur über Tailwind-Deckkraft, nie als eigene Farbe: `accent/10` und
 `accent/50` (Fläche und Rand des Hinweiskastens), `fg/25` (Rand von Sekundärbutton und
-„Adresse kopieren“).
+„Adresse kopieren“), `fg-muted/60` (ausgegrauter Reiter im Umschalter, 2,9 : 1 hell, 3,7 : 1
+dunkel; als nicht bedienbares Element von WCAG 1.4.3 ausgenommen).
 
 ### Neutral
 
@@ -327,8 +328,9 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   `/werkzeuge/`.
 - **Headline** (600, 2,25rem, 1,111, −0,025em; unter 640 px 1,875rem): die H2 der fünf
   Startseiten-Kapitel sowie die H1 von Impressum, Datenschutz und 404. Die fünf H2 sind Aussagen,
-  keine Etiketten („Zehn Arbeiten, zwei davon für Kunden“): Wer nur Überschriften liest, erfährt
-  trotzdem etwas. Die Navigation behält die kurzen Namen.
+  keine Etiketten („Jedes Projekt sagt, wie weit es ist“): Wer nur Überschriften liest, erfährt
+  trotzdem etwas. Eine Anzahl der Arbeiten nennen sie nicht (Entscheidung vom 2026-09-24). Die
+  Navigation behält die kurzen Namen.
 - **Title Large** (600, 1,875rem, 1,02, −0,03em; unter 640 px 1,5rem): die Hauptadresse im Kontakt.
   Dieselbe Größe in 500, Bleistiftgrau und Zeilenhöhe 1,25 trägt die summary auf der Bühne, wenn das
   Projekt keinen Screenshot hat.
@@ -533,6 +535,11 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Hover Tintenschwarz; der gewählte Reiter trägt einen 2-px-Strich in Orange auf der Haarlinie
   darunter. Ohne JavaScript schaltet CSS über `:has()` um; ohne `:has()` stehen beide Auswahlen
   untereinander. Gespeichert wird die Wahl nicht.
+- **Ausgegrauter Reiter:** Sind alle Arbeiten einer Auswahl unveröffentlicht (`published: false`),
+  bleibt ihr Reiter stehen, aber in `fg-muted/60`, mit „folgt“ statt der Anzahl, ohne Hover, mit
+  Cursor `not-allowed` und `disabled`, also weder per Klick noch per Pfeiltaste wählbar. Bühne und
+  Raster der Auswahl fehlen, beim Öffnen steht die nächste. So steht „Kunden“ seit dem
+  2026-09-24, bis PointCare oder JustBeauty freigeschaltet sind.
 - **Bühne** (`ProjectSpotlight`): ein Projekt der Auswahl groß, beim Aufruf zufällig gewählt, ohne
   automatischen Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter 640 px darunter),
   dann der Screenshot über die volle Breite (16:9, 4 px, 1 px Liniengrau), dann summary, „Stand: …“
@@ -624,7 +631,8 @@ rahmen nur ihr Bildfeld.
 
 Unter jedem Leistungspunkt in den Aufklappern von „Leistungen“ steht „Beleg:“ in 0,75rem
 Bleistiftgrau, gefolgt von den Projektnamen als orange Links ohne Unterstrich. Sie ist das sichtbare
-Versprechen des Werkstattbuchs: kein Punkt ohne Nachweis.
+Versprechen des Werkstattbuchs: kein Punkt ohne Nachweis. Ein unveröffentlichtes Projekt steht dort
+als Name ohne Link in Bleistiftgrau, weil es keine Seite hat, auf die er zeigen könnte.
 
 ### Bewegung (Signature Motion)
 

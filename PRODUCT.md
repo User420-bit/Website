@@ -89,7 +89,10 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 - 10 Referenzen in `src/content/projekte/`: TIEFGANG (eigenes Produkt, spielbar unter
   https://tiefgang.pages.dev, 184 Commits, 61 Pull Requests), PointCare (Kundenprojekt für point-care.de,
   Live-Link folgt), JustBeauty (Analyse und Prototyp), kleinkram, MemoryTree, NoteList, Feynman,
-  DealerSim, Vaulter, Availably.
+  DealerSim, Vaulter, Availably. PointCare und JustBeauty sind vorerst unveröffentlicht
+  (`published: false`, am 2026-09-24 vom Inhaber entschieden): Ohne Screenshot und Live-Link gibt es
+  dort noch nichts zu zeigen. Bis dahin steht „Kunden“ auf der Startseite ausgegraut, und die Belege
+  in „Leistungen“ nennen beide ohne Link.
 - Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: Websites, Web-Apps und kleine
   Programme, Browser-Spiele und Interaktives, KI und Konzept.
 - Kontakt: E-Mail `info@web-klartext.de`, LinkedIn. Antwort in der Regel innerhalb eines Werktags.
@@ -98,6 +101,9 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 - **Bewusst nicht genannt: Preise.** Kein Stundensatz, keine Pakete, kein „ab … €“, nirgends auf der
   Seite. Am 2026-09-24 vom Inhaber entschieden: Zahlen machen vergleichbar. Die Seite sagt stattdessen,
   dass Kosten im schriftlichen Angebot feststehen, bevor die Arbeit beginnt.
+- **Bewusst nicht genannt: die Anzahl der Arbeiten.** Keine Zählung wie „Zehn Arbeiten, zwei davon
+  für Kunden“ in Überschriften oder Fließtext. Am 2026-09-24 vom Inhaber entschieden: gestalterisch
+  fragwürdig, und jede Zahl im Text muss mit jedem Projekt nachgezogen werden.
 
 ## Product Principles
 
