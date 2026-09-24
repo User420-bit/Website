@@ -1,0 +1,160 @@
+---
+/**
+ * Standbild 02, Supply Chain: Land von oben, aus 45 m Höhe, darauf vier
+ * Stationen vom Werk am Horizont bis zum Kunden vorn. Die eine Bewegung: Die
+ * Strecke zieht sich in Orange von Station zu Station, in jeder geht das Licht
+ * an, wenn die Linie sie erreicht. Gesteuert von `--pc-t` (0 bis 1, siehe
+ * PointcareScene.astro); ohne Bewegung ist die Strecke ganz gezogen.
+ */
+import { kamera, type Punkt } from './perspektive'
+
+const FY = 110
+const k = kamera({ brennweite: 700, fluchtpunkt: [800, FY], augenhoehe: 45 })
+
+// Feldraster: Wege in die Tiefe und quer.
+const raster = [
+  ...Array.from({ length: 17 }, (_, i) => -400 + i * 50).map((x) =>
+    k.linie([x, 0, 55], [x, 0, 2000]),
+  ),
+  ...[70, 95, 130, 180, 250, 350, 500, 750, 1200].map((z) => k.linie([-900, 0, z], [900, 0, z])),
+]
+
+interface Station {
+  x: [number, number]
+  z: [number, number]
+  hoehe: number
+  /** Punkt auf dem Boden vor der Station, an dem die Strecke anliegt. */
+  halt: Punkt
+}
+
+// Werk, Lager, Umschlag, Kunde: im Zickzack von hinten nach vorn.
+const stationen: Station[] = [
+  { x: [-230, -170], z: [605, 650], hoehe: 16, halt: [-200, 0, 598] },
+  { x: [85, 155], z: [305, 335], hoehe: 12, halt: [120, 0, 298] },
+  { x: [-115, -50], z: [135, 150], hoehe: 9, halt: [-82, 0, 131] },
+  { x: [25, 55], z: [80, 90], hoehe: 7, halt: [40, 0, 76] },
+]
+
+const koerper = stationen.map(({ x: [x0, x1], z: [z0, z1], hoehe }) => {
+  const innen = (x0 + x1) / 2 < 0 ? x1 : x0
+  return {
+    dach: k.flaeche([x0, hoehe, z0], [x1, hoehe, z0], [x1, hoehe, z1], [x0, hoehe, z1]),
+    front: k.front(x0, x1, 0, hoehe, z0),
+    // Eine Fensterreihe: alle 6 m ein Fenster, 3 m breit.
+    fenster: Array.from({ length: Math.floor((x1 - x0 - 3) / 6) }, (_, i) => x0 + 3 + i * 6).map(
+      (x) => k.front(x, x + 3, hoehe * 0.55, hoehe * 0.72, z0),
+    ),
+    seite: k.flaeche([innen, 0, z0], [innen, 0, z1], [innen, hoehe, z1], [innen, hoehe, z0]),
+  }
+})
+const schlot = k.front(-182, -178, 16, 34, 640)
+
+// Die Strecke und, für jede Station, der Anteil der Strecke bis dorthin.
+const punkte = stationen.map((s) => k.projiziere(s.halt))
+const strecke = k.linie(...stationen.map((s) => s.halt))
+const laengen = punkte.slice(1).map(([x, y], i) => Math.hypot(x - punkte[i][0], y - punkte[i][1]))
+const gesamt = laengen.reduce((a, b) => a + b, 0)
+const anteile = punkte.map((_, i) => laengen.slice(0, i).reduce((a, b) => a + b, 0) / gesamt)
+---
+
+<svg
+  class="pc-kette"
+  viewBox="0 0 1600 686"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id="pc-k-horizont" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2={FY}>
+      <stop offset="0" stop-color="oklch(0.1 0.004 80)"></stop>
+      <stop offset="1" stop-color="oklch(0.18 0.014 60)"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height={FY} fill="url(#pc-k-horizont)"></rect>
+  <rect y={FY} width="1600" height={686 - FY} class="pc-boden"></rect>
+  {raster.map((d) => <path d={d} class="pc-strich-leise" />)}
+
+  <path d={strecke} class="pc-geplant"></path>
+  <path d={strecke} pathLength="1" class="pc-strecke"></path>
+
+  {
+    koerper.map((b, i) => (
+      <g class="pc-station" style={`--pc-ab: ${Math.round(anteile[i] * 1000) / 1000}`}>
+        <path d={b.seite} class="pc-seite" />
+        <path d={b.front} class="pc-front" />
+        <path d={b.dach} class="pc-dach" />
+        {b.fenster.map((d) => (
+          <path d={d} class="pc-fenster" />
+        ))}
+        {i === 0 && <path d={schlot} class="pc-front" />}
+      </g>
+    ))
+  }
+  {
+    punkte.map(([cx, cy], i) => (
+      <g class="pc-halt" style={`--pc-ab: ${Math.round(anteile[i] * 1000) / 1000}`}>
+        <circle cx={cx} cy={cy} r="7" class="pc-ring" />
+        <circle cx={cx} cy={cy} r="5" class="pc-punkt" />
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .pc-boden {
+    fill: var(--pc-boden);
+  }
+  .pc-strich-leise {
+    fill: none;
+    stroke: var(--pc-strich-leise);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .pc-geplant {
+    fill: none;
+    stroke: var(--pc-strich);
+    stroke-width: 1;
+    stroke-dasharray: 3 6;
+    vector-effect: non-scaling-stroke;
+  }
+  .pc-strecke {
+    fill: none;
+    stroke: var(--pc-signal);
+    stroke-width: 3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: calc(1 - var(--pc-t));
+  }
+  .pc-dach {
+    fill: oklch(0.3 0.006 80);
+  }
+  .pc-front {
+    fill: var(--pc-koerper);
+  }
+  .pc-seite {
+    fill: var(--pc-wand);
+  }
+  .pc-ring {
+    fill: var(--pc-boden);
+    stroke: var(--pc-strich);
+    stroke-width: 1.5;
+  }
+
+  /*
+   * Eine Station gilt als erreicht, sobald `--pc-t` ihren Anteil `--pc-ab`
+   * überschreitet: Dann gehen ihre Fenster an und ihr Haltepunkt wird orange.
+   */
+  .pc-station,
+  .pc-halt {
+    --pc-da: clamp(0, calc((var(--pc-t) - var(--pc-ab)) * 40 + 1), 1);
+  }
+  .pc-fenster {
+    fill: var(--pc-licht);
+    opacity: calc(0.1 + var(--pc-da) * 0.7);
+  }
+  .pc-punkt {
+    fill: var(--pc-signal);
+    opacity: var(--pc-da);
+  }
+</style>
