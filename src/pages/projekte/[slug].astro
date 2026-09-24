@@ -6,9 +6,9 @@ import Button from '@/components/Button.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
+import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { href } from '@/lib/site'
-import { Image } from 'astro:assets'
 
 export const getStaticPaths = (async () => {
   const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
@@ -31,29 +31,6 @@ const lists = [
   { title: 'Funktionen', items: data.features },
   { title: 'Technische Entscheidungen', items: data.engineering },
 ]
-
-// Querformate zuerst, das erste als Leitbild über die volle Breite. Hochformate (Handy, Dialoge)
-// danach in schmalen Spalten, sonst wird ein einzelnes Handybild höher als der Bildschirm.
-type Shot = (typeof data.screenshots)[number]
-const hochformat = (shot: Shot) => shot.image.height > shot.image.width
-const shots = [
-  ...data.screenshots.filter((shot) => !hochformat(shot)),
-  ...data.screenshots.filter(hochformat),
-]
-const shotLayout = (shot: Shot, index: number) =>
-  hochformat(shot)
-    ? { span: 'col-span-1', widths: [240, 480], sizes: '(min-width: 640px) 15rem, 46vw' }
-    : index === 0
-      ? {
-          span: 'col-span-2 sm:col-span-4',
-          widths: [800, 1200, 1600],
-          sizes: '(min-width: 1024px) 62rem, 92vw',
-        }
-      : {
-          span: 'col-span-2',
-          widths: [400, 800],
-          sizes: '(min-width: 1024px) 30rem, (min-width: 640px) 45vw, 92vw',
-        }
 ---
 
 <BaseLayout title={`${data.title} – Klartext`} description={data.summary}>
@@ -104,6 +81,9 @@ const shotLayout = (shot: Shot, index: number) =>
       )
     }
 
+    {/* Erst das Bild, dann der Text: Der Beleg steht vor der Beschreibung. */}
+    <ScreenshotGallery shots={data.screenshots} title={data.title} />
+
     <section class={block}>
       <h2 class={blockTitle}>Worum es geht</h2>
       <div
@@ -126,33 +106,6 @@ const shotLayout = (shot: Shot, index: number) =>
               </ul>
             </section>
           ),
-      )
-    }
-
-    {
-      data.screenshots.length > 0 && (
-        <section class={block}>
-          <h2 class={blockTitle}>Screenshots</h2>
-          <ul class="mt-4 grid list-none grid-cols-2 items-start gap-6 p-0 sm:grid-cols-4">
-            {shots.map((shot, index) => {
-              const layout = shotLayout(shot, index)
-              return (
-                <li class={layout.span}>
-                  <figure class="m-0">
-                    <Image
-                      class="w-full rounded-sm border border-border"
-                      src={shot.image}
-                      alt={shot.caption}
-                      widths={layout.widths}
-                      sizes={layout.sizes}
-                    />
-                    <figcaption class="mt-2 text-sm text-fg-muted">{shot.caption}</figcaption>
-                  </figure>
-                </li>
-              )
-            })}
-          </ul>
-        </section>
       )
     }
 
