@@ -1,0 +1,133 @@
+---
+/**
+ * MemoryTree: der Baum. Stamm und Äste zeichnen sich beim Laden, dann
+ * erscheinen in der Krone kleine Bildkarten als Erinnerungen. Mit reduzierter
+ * Bewegung steht der Baum fertig. Linien in Tinte, Karten in Laubgrün.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+const aeste = [
+  'M300 300 C300 250 298 210 300 170',
+  'M300 230 C270 215 235 205 205 170',
+  'M300 215 C330 195 360 185 395 160',
+  'M300 185 C285 160 270 140 255 120',
+  'M300 180 C320 155 335 135 350 110',
+  'M205 170 C190 150 180 135 170 115',
+  'M395 160 C410 145 425 130 440 120',
+]
+const karten = [
+  { x: 288, y: 138 },
+  { x: 160, y: 96 },
+  { x: 428, y: 100 },
+  { x: 240, y: 98 },
+  { x: 340, y: 88 },
+  { x: 192, y: 150 },
+  { x: 384, y: 142 },
+  { x: 300, y: 60 },
+]
+---
+
+<ProjectScene
+  caption="Der Baum, der sich beim Laden zeichnet, und in der Krone die Erinnerungen als kleine Bildkarten."
+  surface="oklch(0.97 0.012 90)"
+  surfaceDark="oklch(0.2 0.01 90)"
+>
+  <div class="hain">
+    <svg viewBox="0 0 600 320" aria-hidden="true">
+      <path class="boden" d="M120 300 H480"></path>
+      {aeste.map((d, i) => <path class="ast" d={d} pathLength="1" style={`--i: ${i}`} />)}
+      {
+        karten.map(({ x, y }, i) => (
+          <g class="karte" style={`--i: ${i}; --x: ${x}px; --y: ${y}px`}>
+            <rect x="-15" y="-11" width="30" height="22" rx="2" />
+            <rect class="bild" x="-11" y="-7" width="22" height="12" rx="1" />
+          </g>
+        ))
+      }
+      <text class="datum" x="300" y="316" text-anchor="middle">seit dem ersten Tag</text>
+    </svg>
+  </div>
+</ProjectScene>
+
+<style>
+  .hain {
+    --mt-laub: oklch(0.62 0.13 145);
+    --mt-karte: oklch(1 0 0);
+    --mt-tinte: oklch(0.25 0.01 90);
+    --mt-matt: oklch(0.5 0.01 90);
+    padding-block: 1rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .hain {
+      --mt-laub: oklch(0.74 0.13 145);
+      --mt-karte: oklch(0.32 0.01 90);
+      --mt-tinte: oklch(0.94 0.005 90);
+      --mt-matt: oklch(0.7 0.01 90);
+    }
+  }
+  :root[data-theme='dark'] .hain {
+    --mt-laub: oklch(0.74 0.13 145);
+    --mt-karte: oklch(0.32 0.01 90);
+    --mt-tinte: oklch(0.94 0.005 90);
+    --mt-matt: oklch(0.7 0.01 90);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    max-height: 22rem;
+    margin-inline: auto;
+  }
+  .boden {
+    stroke: var(--mt-matt);
+    stroke-width: 1;
+  }
+  .ast {
+    fill: none;
+    stroke: var(--mt-tinte);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .karte {
+    transform: translate(var(--x), var(--y));
+  }
+  .karte rect {
+    fill: var(--mt-karte);
+    stroke: var(--mt-tinte);
+    stroke-width: 1;
+  }
+  .karte .bild {
+    fill: var(--mt-laub);
+    stroke: none;
+  }
+  .datum {
+    fill: var(--mt-matt);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ast {
+      animation: mt-zeichnen 900ms var(--ease-quiet) both;
+      animation-delay: calc(var(--i) * 220ms);
+    }
+    .karte {
+      animation: mt-wachsen 400ms var(--ease-quiet) both;
+      animation-delay: calc(1500ms + var(--i) * 140ms);
+    }
+  }
+
+  @keyframes mt-zeichnen {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  @keyframes mt-wachsen {
+    from {
+      transform: translate(var(--x), var(--y)) scale(0);
+    }
+  }
+</style>

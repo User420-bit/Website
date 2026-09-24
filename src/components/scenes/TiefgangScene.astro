@@ -1,0 +1,271 @@
+---
+/**
+ * TIEFGANG: der Schacht. Wer die Seite weiter scrollt, gräbt tiefer: die
+ * Schichten ziehen nach oben, der Zähler zählt Meter, die Energie für den
+ * Rückweg sinkt. Eine einzige Variable (`--tg-tiefe`, 0 bis 525) treibt alles;
+ * ein scrollgetriebener Verlauf setzt sie. Ohne `animation-timeline` oder mit
+ * reduzierter Bewegung steht der Endzustand: 525 m, Lava in Sicht.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+const schichten = [
+  { name: 'Erde', ab: '0 m', klasse: 'erde' },
+  { name: 'Gestein', ab: '120 m', klasse: 'gestein' },
+  { name: 'Eisschicht', ab: '330 m', klasse: 'eis' },
+  { name: 'Lava', ab: '500 m', klasse: 'lava' },
+]
+---
+
+<ProjectScene
+  caption="Wer weiter scrollt, gräbt tiefer: der Schacht mit seinen Schichten, das Bohrfahrzeug und die Anzeigen für Tiefe und Energie, nachgezeichnet."
+  surface="oklch(0.19 0.015 60)"
+>
+  <div class="schacht">
+    <dl class="hud">
+      <dt>Tiefe</dt>
+      <dd class="tiefe"></dd>
+      <dt>Energie</dt>
+      <dd><span class="energie"><span class="energie-stand"></span></span></dd>
+      <dt>Fracht</dt>
+      <dd class="fracht">Frostquarz</dd>
+    </dl>
+    <div class="welt">
+      <div class="schichten">
+        {
+          schichten.map(({ name, ab, klasse }) => (
+            <div class:list={['schicht', klasse]}>
+              <span class="marke">
+                {name} <span class="ab">{ab}</span>
+              </span>
+            </div>
+          ))
+        }
+      </div>
+      <svg class="bohrer" viewBox="0 0 48 72" aria-hidden="true">
+        <rect x="8" y="4" width="32" height="34" rx="6" fill="currentColor"></rect>
+        <rect x="14" y="10" width="20" height="10" rx="2" fill="oklch(0.19 0.015 60)"></rect>
+        <rect x="2" y="24" width="8" height="18" rx="2" fill="currentColor"></rect>
+        <rect x="38" y="24" width="8" height="18" rx="2" fill="currentColor"></rect>
+        <path d="M12 38h24l-12 30z" fill="currentColor"></path>
+        <path
+          d="M16 44h16M18 52h12M21 60h6"
+          stroke="oklch(0.19 0.015 60)"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+      </svg>
+    </div>
+  </div>
+</ProjectScene>
+
+<style>
+  @property --tg-tiefe {
+    syntax: '<integer>';
+    inherits: true;
+    initial-value: 525;
+  }
+
+  .schacht {
+    --tg-tiefe: 525;
+    --tg-welt: 20rem;
+    --tg-schicht: 14rem;
+    --tg-kreide: oklch(0.9 0.01 80);
+    --tg-kreide-matt: oklch(0.7 0.01 80);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 1.25rem;
+    color: var(--tg-kreide);
+  }
+
+  @media (min-width: 640px) {
+    .schacht {
+      --tg-welt: 24rem;
+      grid-template-columns: 10rem minmax(0, 1fr);
+      gap: 2rem;
+      padding-block: 2rem;
+    }
+  }
+
+  /* Anzeigen wie im Spiel: Label klein, Wert in Tabellenziffern. */
+  .hud {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-content: start;
+    gap: 0.25rem 1rem;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (min-width: 640px) {
+    .hud {
+      grid-template-columns: 1fr;
+      gap: 0.125rem;
+    }
+  }
+  .hud dt {
+    color: var(--tg-kreide-matt);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hud dd {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hud dd.fracht {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .tiefe::after {
+    counter-reset: tg-tiefe calc(var(--tg-tiefe));
+    content: counter(tg-tiefe) ' m';
+  }
+
+  .energie {
+    display: block;
+    height: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--tg-kreide-matt);
+    border-radius: 2px;
+  }
+  .energie-stand {
+    display: block;
+    height: 100%;
+    width: calc(100% - var(--tg-tiefe) / 525 * 72%);
+    background: var(--color-accent);
+  }
+
+  .welt {
+    position: relative;
+    height: var(--tg-welt);
+    overflow: hidden;
+    border: 1px solid oklch(0.32 0.02 60);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Vier Bänder, zusammen höher als das Fenster: Die Kamera fährt mit dem Fahrzeug nach unten. */
+  .schichten {
+    transform: translateY(calc(var(--tg-tiefe) / 525 * (var(--tg-welt) - 4 * var(--tg-schicht))));
+  }
+  .schicht {
+    position: relative;
+    height: var(--tg-schicht);
+    border-top: 1px solid oklch(0 0 0 / 0.25);
+  }
+  .marke {
+    position: absolute;
+    right: 1rem;
+    top: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tg-kreide);
+  }
+  .ab {
+    margin-left: 0.5em;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--tg-kreide-matt);
+  }
+
+  /* Gestein und Erze als gestreute Punkte, jede Schicht in eigener Farbe. */
+  .erde {
+    background:
+      radial-gradient(circle at 20% 60%, oklch(0.5 0.05 60) 3px, transparent 4px),
+      radial-gradient(circle at 70% 30%, oklch(0.5 0.05 60) 2px, transparent 3px),
+      radial-gradient(circle at 45% 85%, oklch(0.42 0.05 60) 3px, transparent 4px),
+      oklch(0.36 0.05 60);
+    background-size:
+      140px 120px,
+      90px 110px,
+      170px 140px,
+      auto;
+  }
+  .gestein {
+    background:
+      radial-gradient(circle at 30% 40%, oklch(0.55 0.02 80) 2px, transparent 3px),
+      radial-gradient(circle at 80% 75%, oklch(0.62 0.1 60) 3px, transparent 4px),
+      radial-gradient(circle at 60% 20%, oklch(0.5 0.02 80) 2px, transparent 3px),
+      oklch(0.3 0.012 80);
+    background-size:
+      120px 100px,
+      160px 130px,
+      100px 90px,
+      auto;
+  }
+  .eis {
+    background:
+      radial-gradient(circle at 25% 35%, oklch(0.95 0.03 230) 2px, transparent 3px),
+      radial-gradient(circle at 75% 70%, oklch(0.88 0.06 230) 3px, transparent 4px),
+      radial-gradient(circle at 55% 15%, oklch(0.95 0.03 230) 2px, transparent 3px),
+      oklch(0.6 0.07 230);
+    background-size:
+      130px 110px,
+      150px 120px,
+      110px 100px,
+      auto;
+  }
+  .lava {
+    background:
+      radial-gradient(ellipse at 50% 100%, oklch(0.75 0.19 45) 0%, transparent 60%),
+      radial-gradient(circle at 30% 45%, oklch(0.62 0.2 35) 4px, transparent 5px),
+      radial-gradient(circle at 70% 25%, oklch(0.62 0.2 35) 3px, transparent 4px),
+      oklch(0.28 0.08 30);
+    background-size:
+      100% 100%,
+      150px 120px,
+      120px 100px,
+      auto;
+  }
+
+  /* Das Fahrzeug bleibt an seinem Platz; die Welt bewegt sich um es herum. */
+  .bohrer {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    width: 3rem;
+    height: 4.5rem;
+    color: var(--color-accent);
+    transform: translateX(-50%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      /*
+       * Langschreibweise mit Absicht: Der CSS-Minifier zieht `animation-timeline`
+       * sonst in die Kurzform `animation`, und die verwirft der Browser als Ganzes.
+       */
+      .schacht {
+        animation-name: tg-graben;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 90vh;
+      }
+      .bohrer {
+        animation: tg-ruetteln 0.24s steps(2) infinite;
+      }
+    }
+  }
+
+  @keyframes tg-graben {
+    from {
+      --tg-tiefe: 0;
+    }
+    to {
+      --tg-tiefe: 525;
+    }
+  }
+  @keyframes tg-ruetteln {
+    from {
+      transform: translate(-50%, 0);
+    }
+    to {
+      transform: translate(calc(-50% + 1px), 1px);
+    }
+  }
+</style>

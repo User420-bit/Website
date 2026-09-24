@@ -7,6 +7,7 @@ import CodeBlock from '@/components/CodeBlock.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
 import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
+import { sceneFor } from '@/components/scenes'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { href } from '@/lib/site'
 
@@ -22,6 +23,8 @@ export const getStaticPaths = (async () => {
 const { projekt, prev, next } = Astro.props
 const { Content } = await render(projekt)
 const data = projekt.data
+// Die Bühne des Projekts, falls es eine hat (docs/PROJEKTSZENEN_PLAN.md).
+const Scene = sceneFor(projekt.id)
 
 // Wie auf der Startseite: Überschrift über dem Inhalt, Haarlinie oben.
 const block = 'mt-12 border-t border-border pt-6'
@@ -48,6 +51,9 @@ const lists = [
     <p class="prose-flow mt-5 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
       {data.summary}
     </p>
+
+    {/* Erst sagen, worum es geht, dann zeigen, dann die Fakten. */}
+    {Scene && <Scene />}
 
     <div class="mt-8">
       <MetaList

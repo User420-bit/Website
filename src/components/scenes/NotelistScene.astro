@@ -1,0 +1,147 @@
+---
+/**
+ * NoteList: die freie Fläche. Notizkarten auf Punktpapier, verbunden durch
+ * Fäden wie ein Stammbaum, auf einer Leinwand, die breiter ist als das
+ * Fenster: Sie lässt sich schieben, als nativer Scrollbereich ohne Skript.
+ * Deshalb ist diese Bühne nicht `aria-hidden` und per Tastatur erreichbar.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+interface Notiz {
+  id: string
+  titel: string
+  x: number
+  y: number
+  eltern?: string
+}
+
+const notizen: Notiz[] = [
+  { id: 'a', titel: 'Haus', x: 40, y: 120 },
+  { id: 'b', titel: 'Garten', x: 260, y: 40, eltern: 'a' },
+  { id: 'c', titel: 'Werkstatt', x: 260, y: 200, eltern: 'a' },
+  { id: 'd', titel: 'Hochbeet', x: 480, y: 10, eltern: 'b' },
+  { id: 'e', titel: 'Pflanzplan 2027', x: 480, y: 90, eltern: 'b' },
+  { id: 'f', titel: 'Regale', x: 480, y: 170, eltern: 'c' },
+  { id: 'g', titel: 'Werkzeugliste', x: 480, y: 250, eltern: 'c' },
+  { id: 'h', titel: 'Tomaten', x: 720, y: 60, eltern: 'e' },
+  { id: 'i', titel: 'Schrauben', x: 720, y: 240, eltern: 'g' },
+]
+const BREITE = 140
+const HOEHE = 44
+const byId = new Map(notizen.map((n) => [n.id, n]))
+const faeden = notizen.flatMap((n) => {
+  const eltern = n.eltern ? byId.get(n.eltern) : undefined
+  if (!eltern) return []
+  const x1 = eltern.x + BREITE
+  const y1 = eltern.y + HOEHE / 2
+  const x2 = n.x
+  const y2 = n.y + HOEHE / 2
+  const dx = (x2 - x1) / 2
+  return [`M${x1} ${y1} C${x1 + dx} ${y1} ${x2 - dx} ${y2} ${x2} ${y2}`]
+})
+---
+
+<ProjectScene
+  caption="Die freie Fläche mit Notizen und den Fäden dazwischen. Sie ist breiter als das Fenster und lässt sich schieben."
+  surface="oklch(0.985 0.003 80)"
+  surfaceDark="oklch(0.21 0.005 80)"
+  decorative={false}
+>
+  {
+    /* Ein scrollbarer Bereich muss per Tastatur erreichbar sein; deshalb tabindex auf einer Region. */
+  }
+  {/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */}
+  <div
+    class="flaeche"
+    role="region"
+    aria-label="Beispiel-Notizen auf einer verschiebbaren Fläche"
+    tabindex="0"
+  >
+    {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
+    <div class="leinwand">
+      <svg class="faeden" viewBox="0 0 900 310" aria-hidden="true">
+        {faeden.map((d) => <path d={d} />)}
+      </svg>
+      {
+        notizen.map((n) => (
+          <p class="notiz" style={`left: ${n.x}px; top: ${n.y}px`}>
+            {n.titel}
+          </p>
+        ))
+      }
+      <span class="hinweis" aria-hidden="true">Fläche verschieben</span>
+    </div>
+  </div>
+</ProjectScene>
+
+<style>
+  .flaeche {
+    --nl-punkt: oklch(0.8 0.006 80);
+    --nl-karte: oklch(1 0 0);
+    --nl-linie: oklch(0.82 0.006 80);
+    --nl-faden: oklch(0.6 0.008 80);
+    --nl-tinte: oklch(0.2 0.005 80);
+    height: 20rem;
+    overflow: auto;
+    overscroll-behavior: contain;
+    background-image: radial-gradient(var(--nl-punkt) 1px, transparent 1.5px);
+    background-size: 16px 16px;
+    border-radius: var(--radius-sm);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .flaeche {
+      --nl-punkt: oklch(0.38 0.006 80);
+      --nl-karte: oklch(0.28 0.005 80);
+      --nl-linie: oklch(0.42 0.006 80);
+      --nl-faden: oklch(0.6 0.008 80);
+      --nl-tinte: oklch(0.95 0.003 80);
+    }
+  }
+  :root[data-theme='dark'] .flaeche {
+    --nl-punkt: oklch(0.38 0.006 80);
+    --nl-karte: oklch(0.28 0.005 80);
+    --nl-linie: oklch(0.42 0.006 80);
+    --nl-faden: oklch(0.6 0.008 80);
+    --nl-tinte: oklch(0.95 0.003 80);
+  }
+
+  .leinwand {
+    position: relative;
+    width: 900px;
+    height: 310px;
+    margin: 0.75rem 1rem;
+  }
+  .faeden {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: var(--nl-faden);
+    stroke-width: 1.5;
+  }
+  .notiz {
+    position: absolute;
+    margin: 0;
+    width: 140px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding-inline: 0.75rem;
+    background: var(--nl-karte);
+    border: 1px solid var(--nl-linie);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--nl-tinte);
+  }
+  .hinweis {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--nl-faden);
+  }
+</style>

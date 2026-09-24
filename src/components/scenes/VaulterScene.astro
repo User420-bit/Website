@@ -1,0 +1,208 @@
+---
+/**
+ * Vaulter: drei Stufen. Links die Adresse, die eingereiht wird, in der Mitte
+ * die Tonspur, die beim Mitschreiben atmet, rechts die fertige Notiz in
+ * Monospace, deren Zeilen nacheinander erscheinen. Nur Tokens: Das Werkzeug
+ * ist ein Mac-Fenster, keine Marke.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+const balken = [3, 6, 9, 14, 10, 16, 12, 7, 11, 15, 8, 5, 12, 9, 14, 6, 10, 4]
+const zeilen = [
+  { text: '# Wie Sauerteig geht', klasse: 'titel' },
+  { text: 'quelle: youtube.com/…', klasse: 'meta' },
+  { text: '## Zusammenfassung', klasse: 'kopf' },
+  { text: 'Reifes Anstellgut, lange Ruhe, wenig Hefe.', klasse: '' },
+  { text: '## Kernaussagen', klasse: 'kopf' },
+  { text: '- Temperatur schlägt Rezept', klasse: '' },
+  { text: '- Substanz: hoch', klasse: '' },
+]
+---
+
+<ProjectScene
+  caption="Die drei Stufen, nachgezeichnet: die Adresse wird eingereiht, die Aufnahme mitgeschrieben, und am Ende liegt die Notiz in Obsidian."
+  surface="oklch(0.96 0.004 80)"
+  surfaceDark="oklch(0.21 0.005 80)"
+>
+  <div class="stufen">
+    <div class="stufe">
+      <span class="label">Link</span>
+      <p class="feld">
+        <span class="feld-adresse">youtube.com/watch?v=…</span>
+        <span class="feld-knopf">Einreihen</span>
+      </p>
+    </div>
+    <span class="pfeil" aria-hidden="true">→</span>
+    <div class="stufe">
+      <span class="label">Aufnahme</span>
+      <p class="tonspur">
+        {balken.map((h, i) => <span class="balken" style={`--h: ${h}; --i: ${i}`} />)}
+      </p>
+      <span class="live">wird live mitgeschrieben</span>
+    </div>
+    <span class="pfeil" aria-hidden="true">→</span>
+    <div class="stufe">
+      <span class="label">Notiz</span>
+      <p class="notiz">
+        {
+          zeilen.map(({ text, klasse }, i) => (
+            <span class:list={['zeile', klasse]} style={`--i: ${i}`} set:text={text} />
+          ))
+        }
+      </p>
+    </div>
+  </div>
+</ProjectScene>
+
+<style>
+  .stufen {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    color: var(--color-fg);
+  }
+  @media (min-width: 640px) {
+    .stufen {
+      grid-template-columns: 1fr auto 1fr auto 1.2fr;
+      align-items: center;
+      gap: 1rem;
+      padding-block: 2rem;
+    }
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+  .pfeil {
+    display: none;
+    color: var(--color-fg-muted);
+    font-size: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .pfeil {
+      display: block;
+    }
+  }
+
+  /* Das Eingabefeld: eine Zeile im Mac-Fenster. */
+  .feld {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .feld-adresse {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+  .feld-knopf {
+    flex: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  .tonspur {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 3rem;
+  }
+  .balken {
+    flex: 1;
+    height: calc(var(--h) * 3px);
+    border-radius: 1px;
+    background: var(--color-fg);
+    transform-origin: center;
+  }
+  .live {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  .live::before {
+    content: '';
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    vertical-align: 0;
+  }
+
+  .notiz {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.7;
+    overflow: hidden;
+  }
+  .zeile {
+    display: block;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+  .titel {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+  .kopf {
+    color: var(--color-accent);
+  }
+  .meta {
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .balken {
+      animation: vt-atmen 2.4s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * -0.17s);
+    }
+    .zeile {
+      animation: vt-schreiben 400ms var(--ease-quiet) both;
+      animation-delay: calc(600ms + var(--i) * 260ms);
+    }
+  }
+
+  @keyframes vt-atmen {
+    from {
+      transform: scaleY(0.35);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes vt-schreiben {
+    from {
+      opacity: 0;
+      transform: translateY(0.25rem);
+    }
+  }
+</style>

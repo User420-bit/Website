@@ -1,0 +1,198 @@
+---
+/**
+ * Availably: zwei Telefone, zwei Personen, vier Zustände. Links wechselt der
+ * Status langsam durch, rechts folgt er kurz darauf: Der andere sieht es, ohne
+ * zu fragen. Vier Farben für vier Zustände, nur hier. Mit reduzierter Bewegung
+ * steht links „Fokus“ und rechts dasselbe.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+const zustaende = [
+  { name: 'Fokus', klasse: 'fokus' },
+  { name: 'verfügbar', klasse: 'verfuegbar' },
+  { name: 'beschäftigt', klasse: 'beschaeftigt' },
+  { name: 'Ruhe', klasse: 'ruhe' },
+]
+const personen = [
+  { name: 'Jonas', hinweis: 'setzt den Status' },
+  { name: 'Lea', hinweis: 'sieht ihn, ohne zu fragen' },
+]
+---
+
+<ProjectScene
+  caption="Zwei Telefone, nachgezeichnet: Links wird ein Status gesetzt, rechts steht er kurz darauf, ohne Nachricht und ohne Nachfrage."
+  surface="oklch(0.95 0.008 250)"
+  surfaceDark="oklch(0.22 0.012 250)"
+>
+  <div class="paar">
+    {
+      personen.map(({ name, hinweis }, p) => (
+        <div class="person" style={`--p: ${p}`}>
+          <div class="telefon">
+            <span class="kerbe" />
+            <span class="name">{name}</span>
+            <div class="status">
+              {zustaende.map(({ name: zustand, klasse }, i) => (
+                <span class:list={['zustand', klasse]} style={`--i: ${i}`}>
+                  <span class="punkt" />
+                  {zustand}
+                </span>
+              ))}
+            </div>
+          </div>
+          <p class="hinweis">{hinweis}</p>
+        </div>
+      ))
+    }
+  </div>
+</ProjectScene>
+
+<style>
+  .paar {
+    --av-glas: oklch(0.99 0.002 250);
+    --av-rand: oklch(0.3 0.01 250);
+    --av-tinte: oklch(0.2 0.01 250);
+    --av-matt: oklch(0.5 0.01 250);
+    --av-verfuegbar: oklch(0.68 0.16 150);
+    --av-beschaeftigt: oklch(0.68 0.17 50);
+    --av-fokus: oklch(0.6 0.16 300);
+    --av-ruhe: oklch(0.62 0.01 250);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding-block: 1.5rem;
+    color: var(--av-tinte);
+  }
+  @media (min-width: 640px) {
+    .paar {
+      gap: 5rem;
+      padding-block: 2rem;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .paar {
+      --av-glas: oklch(0.17 0.01 250);
+      --av-rand: oklch(0.75 0.01 250);
+      --av-tinte: oklch(0.95 0.005 250);
+      --av-matt: oklch(0.7 0.01 250);
+      --av-fokus: oklch(0.72 0.14 300);
+    }
+  }
+  :root[data-theme='dark'] .paar {
+    --av-glas: oklch(0.17 0.01 250);
+    --av-rand: oklch(0.75 0.01 250);
+    --av-tinte: oklch(0.95 0.005 250);
+    --av-matt: oklch(0.7 0.01 250);
+    --av-fokus: oklch(0.72 0.14 300);
+  }
+
+  .person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .telefon {
+    position: relative;
+    width: 7.5rem;
+    height: 14rem;
+    padding: 1.75rem 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--av-rand);
+    border-radius: 1.25rem;
+    background: var(--av-glas);
+  }
+  @media (min-width: 640px) {
+    .telefon {
+      width: 9rem;
+      height: 17rem;
+    }
+  }
+  .kerbe {
+    position: absolute;
+    top: 0.6rem;
+    left: 50%;
+    width: 2.5rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: var(--av-rand);
+    transform: translateX(-50%);
+  }
+  .name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--av-matt);
+  }
+
+  /* Die vier Zustände liegen übereinander; sichtbar ist immer genau einer. */
+  .status {
+    position: relative;
+    flex: 1;
+    display: grid;
+  }
+  .zustand {
+    grid-area: 1 / 1;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    opacity: 0;
+  }
+  .zustand:first-child {
+    opacity: 1;
+  }
+  .punkt {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+  }
+  .verfuegbar .punkt {
+    background: var(--av-verfuegbar);
+  }
+  .beschaeftigt .punkt {
+    background: var(--av-beschaeftigt);
+  }
+  .fokus .punkt {
+    background: var(--av-fokus);
+  }
+  .ruhe .punkt {
+    background: var(--av-ruhe);
+  }
+  .hinweis {
+    margin: 0.75rem 0 0;
+    font-size: 0.75rem;
+    color: var(--av-matt);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /*
+     * Vier Zustände in 24 s, rechts 0,6 s hinterher. Die negative Verzögerung
+     * startet die Schleife mitten im Lauf, damit beim Laden schon ein Zustand steht.
+     */
+    .zustand {
+      animation: av-wechsel 24s linear infinite;
+      animation-delay: calc(var(--i) * 6s - 24s + var(--p) * 0.6s);
+    }
+    .zustand:first-child {
+      opacity: 0;
+    }
+  }
+
+  @keyframes av-wechsel {
+    0%,
+    20% {
+      opacity: 1;
+    }
+    25%,
+    95% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+/**
+ * Feynman-Prototyp: die Tafel. Ein Erklärsatz in Kreide; nach dem Laden
+ * unterstreicht der Prüfer zwei Stellen und schreibt die Lücke daneben, so
+ * wie das Programm Lücken findet und gezielt nacherklärt. Tafelgrün in beiden
+ * Farbmodi, Kreide weiß, die Anmerkungen in Kreidegelb.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+---
+
+<ProjectScene
+  caption="Eine Tafel, nachgezeichnet: Man erklärt, und der Prüfer unterstreicht die Stellen, an denen die Erklärung eine Lücke hat."
+  surface="oklch(0.32 0.04 165)"
+>
+  <div class="tafel">
+    <p class="erklaerung">
+      <span class="rolle">Ich erkläre:</span>
+      Warum ist der Himmel blau? Sonnenlicht wird{' '}
+      <mark class="luecke" style="--i: 0" set:text="in der Luft" />{' '}
+      gestreut, und blaues Licht{' '}
+      <mark class="luecke" style="--i: 1" set:text="stärker" />{' '}
+      als rotes.
+    </p>
+    <ul class="notizen">
+      <li class="notiz" style="--i: 0">
+        <span class="rolle">Lücke:</span> Woran genau? An den Molekülen der Luft, nicht am Staub.
+      </li>
+      <li class="notiz" style="--i: 1">
+        <span class="rolle">Lücke:</span> Warum stärker? Die Erklärung nennt keinen Grund.
+      </li>
+    </ul>
+    <p class="fuss">Prüfer und Tutor · läuft lokal · kein Netz</p>
+  </div>
+</ProjectScene>
+
+<style>
+  .tafel {
+    --fy-kreide: oklch(0.94 0.01 90);
+    --fy-kreide-matt: oklch(0.72 0.02 120);
+    --fy-gelb: oklch(0.88 0.13 90);
+    --fy-rahmen: oklch(0.55 0.06 60);
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.75rem 0 1.5rem;
+    color: var(--fy-kreide);
+    border-block: 0.5rem solid var(--fy-rahmen);
+  }
+  @media (min-width: 640px) {
+    .tafel {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      column-gap: 3rem;
+      padding-block: 2.5rem;
+    }
+    .fuss {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .rolle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fy-kreide-matt);
+  }
+  .erklaerung {
+    margin: 0;
+    max-width: 28ch;
+    font-size: 1.375rem;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .erklaerung .rolle {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .erklaerung {
+      font-size: 1.625rem;
+    }
+  }
+
+  .luecke {
+    background: none;
+    color: inherit;
+    text-decoration: underline wavy var(--fy-gelb);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  .notizen {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    align-content: center;
+  }
+  .notiz {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--fy-gelb);
+    transform: rotate(-1deg);
+    transform-origin: left center;
+  }
+  .notiz .rolle {
+    color: var(--fy-gelb);
+  }
+  .fuss {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fy-kreide-matt);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .luecke {
+      animation: fy-unterstreichen 300ms steps(1) both;
+      animation-delay: calc(1200ms + var(--i) * 1400ms);
+    }
+    .notiz {
+      animation: fy-anschreiben 500ms var(--ease-quiet) both;
+      animation-delay: calc(1700ms + var(--i) * 1400ms);
+    }
+  }
+
+  @keyframes fy-unterstreichen {
+    from {
+      text-decoration-color: transparent;
+    }
+  }
+  @keyframes fy-anschreiben {
+    from {
+      opacity: 0;
+      transform: rotate(-1deg) translateX(-0.5rem);
+    }
+  }
+</style>

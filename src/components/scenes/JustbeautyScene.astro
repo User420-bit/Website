@@ -1,0 +1,194 @@
+---
+/**
+ * JustBeauty: zwölf Seiten als Fächer. Jedes Blatt trägt den Namen einer
+ * Seite des Entwurfs; beim Scrollen öffnet sich der Fächer, alle Blätter in
+ * einem Takt, wie das Master-Timing des Prototyps. Die Fläche ist Rosé: die
+ * einzige Farbe, die der Kosmetik-Shop mitbringt.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+const seiten = [
+  'Shop',
+  'Kategorien',
+  'Produkt',
+  'Bestseller',
+  'Routinen',
+  'Beratung',
+  'Händler',
+  'Über uns',
+  'Prämien',
+  'Kontakt',
+  'Suche',
+  'Warenkorb',
+]
+---
+
+<ProjectScene
+  caption="Die zwölf Seiten des Entwurfs als Fächer, der sich beim Scrollen öffnet, alle Blätter in einem Takt."
+  surface="oklch(0.95 0.025 15)"
+  surfaceDark="oklch(0.25 0.03 15)"
+>
+  <div class="faecher">
+    <ul class="blaetter">
+      {
+        seiten.map((seite, i) => (
+          <li class="blatt" style={`--i: ${i}`}>
+            <span class="titel">{seite}</span>
+            <span class="zeile zeile-lang" />
+            <span class="zeile" />
+            <span class="produkt" />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="notiz">
+      <span>12 Seiten</span>
+      <span>315 Produkte</span>
+      <span>ein Takt</span>
+    </p>
+  </div>
+</ProjectScene>
+
+<style>
+  @property --jb-takt {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+
+  .faecher {
+    --jb-takt: 1;
+    --jb-blatt-breite: 4.5rem;
+    --jb-blatt-hoehe: 6rem;
+    --jb-winkel: 6deg;
+    --jb-papier: oklch(0.99 0.005 15);
+    --jb-linie: oklch(0.86 0.02 15);
+    --jb-tinte: oklch(0.3 0.03 15);
+    --jb-rose: oklch(0.72 0.12 15);
+    position: relative;
+    height: 17rem;
+    color: var(--jb-tinte);
+  }
+  @media (min-width: 640px) {
+    .faecher {
+      --jb-blatt-breite: 6.5rem;
+      --jb-blatt-hoehe: 8.5rem;
+      --jb-winkel: 7deg;
+      height: 24rem;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .faecher {
+      --jb-papier: oklch(0.32 0.02 15);
+      --jb-linie: oklch(0.45 0.02 15);
+      --jb-tinte: oklch(0.95 0.01 15);
+      --jb-rose: oklch(0.78 0.12 15);
+    }
+  }
+  :root[data-theme='dark'] .faecher {
+    --jb-papier: oklch(0.32 0.02 15);
+    --jb-linie: oklch(0.45 0.02 15);
+    --jb-tinte: oklch(0.95 0.01 15);
+    --jb-rose: oklch(0.78 0.12 15);
+  }
+
+  .blaetter {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /*
+   * Alle Blätter drehen um denselben Punkt unter der Fläche. Der Takt ist ein
+   * Faktor von 0 bis 1 auf den Winkel: geschlossen liegen sie aufeinander.
+   */
+  .blatt {
+    position: absolute;
+    left: 50%;
+    bottom: 4rem;
+    width: var(--jb-blatt-breite);
+    height: var(--jb-blatt-hoehe);
+    margin-left: calc(var(--jb-blatt-breite) / -2);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: var(--jb-papier);
+    border: 1px solid var(--jb-linie);
+    border-radius: var(--radius-sm);
+    transform-origin: 50% calc(100% + 9rem);
+    transform: rotate(calc((var(--i) - 5.5) * var(--jb-winkel) * var(--jb-takt)));
+  }
+  .titel {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (min-width: 640px) {
+    .titel {
+      font-size: 0.8125rem;
+    }
+  }
+  .zeile {
+    display: block;
+    height: 2px;
+    width: 55%;
+    background: var(--jb-linie);
+  }
+  .zeile-lang {
+    width: 85%;
+  }
+  .produkt {
+    display: block;
+    margin-top: auto;
+    aspect-ratio: 1;
+    width: 45%;
+    background: var(--jb-rose);
+    border-radius: 2px;
+  }
+
+  .notiz {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--jb-tinte);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      /*
+       * Langschreibweise mit Absicht: Der CSS-Minifier zieht `animation-timeline`
+       * sonst in die Kurzform `animation`, und die verwirft der Browser als Ganzes.
+       */
+      .faecher {
+        animation-name: jb-oeffnen;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 45vh;
+      }
+    }
+  }
+
+  /* Beim Laden schon einen Spalt offen, damit die Blätter als Fächer lesbar sind. */
+  @keyframes jb-oeffnen {
+    from {
+      --jb-takt: 0.3;
+    }
+    to {
+      --jb-takt: 1;
+    }
+  }
+</style>

@@ -1,0 +1,231 @@
+---
+/**
+ * DealerSim: der erste Raum, isometrisch und pixelig. Ein Boden aus Kacheln,
+ * die drei Stationen der Produktionskette und dazwischen die Ware, die endlos
+ * weiterfährt. Ein Zähler zählt seit dem Aufruf der Seite mit, denn das Spiel
+ * läuft auch, wenn niemand spielt. `shape-rendering: crispEdges` hält die
+ * Kanten hart wie im Sprite-Studio.
+ */
+import ProjectScene from '@/components/ProjectScene.astro'
+
+// Isometrisches Raster: Kachelbreite 64, -höhe 32, Ursprung oben in der Mitte.
+const ISO_W = 32
+const ISO_H = 16
+const iso = (cx: number, cy: number) => ({ x: 240 + (cx - cy) * ISO_W, y: 40 + (cx + cy) * ISO_H })
+const kacheln = Array.from({ length: 6 }, (_, cy) =>
+  Array.from({ length: 6 }, (_, cx) => ({ cx, cy })),
+)
+  .flat()
+  .map(({ cx, cy }) => {
+    const { x, y } = iso(cx, cy)
+    return {
+      points: `${x},${y} ${x + ISO_W},${y + ISO_H} ${x},${y + 2 * ISO_H} ${x - ISO_W},${y + ISO_H}`,
+      hell: (cx + cy) % 2 === 0,
+    }
+  })
+
+const stationen = [
+  { name: 'Anbau', cx: 1, cy: 1, klasse: 'anbau' },
+  { name: 'Verarbeitung', cx: 3, cy: 3, klasse: 'maschine' },
+  { name: 'Verkauf', cx: 5, cy: 5, klasse: 'theke' },
+]
+// Ein Block auf der Kachel: linke und rechte Wand, Deckel.
+const block = (cx: number, cy: number, h: number) => {
+  const { x, y } = iso(cx, cy)
+  const oben = y - h
+  return {
+    links: `${x - ISO_W},${y + ISO_H} ${x},${y + 2 * ISO_H} ${x},${y + 2 * ISO_H - h} ${x - ISO_W},${y + ISO_H - h}`,
+    rechts: `${x},${y + 2 * ISO_H} ${x + ISO_W},${y + ISO_H} ${x + ISO_W},${y + ISO_H - h} ${x},${y + 2 * ISO_H - h}`,
+    deckel: `${x},${oben} ${x + ISO_W},${oben + ISO_H} ${x},${oben + 2 * ISO_H} ${x - ISO_W},${oben + ISO_H}`,
+  }
+}
+const start = iso(1, 1)
+const ziel = iso(5, 5)
+---
+
+<ProjectScene
+  caption="Der erste Raum, nachgezeichnet: Boden aus Pixel-Kacheln, drei Stationen, und die Ware fährt weiter, auch wenn niemand spielt."
+  surface="oklch(0.93 0.03 85)"
+  surfaceDark="oklch(0.24 0.02 85)"
+>
+  <div class="raum">
+    <svg viewBox="0 0 480 260" aria-hidden="true">
+      <g class="boden">
+        {
+          kacheln.map(({ points, hell }) => (
+            <polygon points={points} class:list={[hell && 'hell']} />
+          ))
+        }
+      </g>
+      {
+        stationen.map(({ cx, cy, klasse }) => {
+          const b = block(cx, cy, 28)
+          return (
+            <g class:list={['station', klasse]}>
+              <polygon class="links" points={b.links} />
+              <polygon class="rechts" points={b.rechts} />
+              <polygon class="deckel" points={b.deckel} />
+            </g>
+          )
+        })
+      }
+      <g
+        class="ware"
+        style={`--x0: ${start.x}px; --y0: ${start.y - 6}px; --x1: ${ziel.x}px; --y1: ${ziel.y - 6}px`}
+      >
+        <rect class="stueck" style="--i: 0" x="-5" y="-5" width="10" height="10"></rect>
+        <rect class="stueck" style="--i: 1" x="-5" y="-5" width="10" height="10"></rect>
+        <rect class="stueck" style="--i: 2" x="-5" y="-5" width="10" height="10"></rect>
+      </g>
+      {
+        stationen.map(({ name, cx, cy }) => {
+          const { x, y } = iso(cx, cy)
+          return (
+            <text class="name" x={x + ISO_W + 8} y={y + ISO_H - 6}>
+              {name}
+            </text>
+          )
+        })
+      }
+    </svg>
+    <p class="zaehler">
+      <span class="zaehler-label">Raum 1 · Level 1</span>
+      <span class="stueck-zahl"></span>
+    </p>
+  </div>
+</ProjectScene>
+
+<style>
+  @property --ds-stueck {
+    syntax: '<integer>';
+    inherits: true;
+    initial-value: 0;
+  }
+
+  .raum {
+    --ds-stueck: 0;
+    --ds-kachel: oklch(0.86 0.04 85);
+    --ds-kachel-hell: oklch(0.9 0.04 85);
+    --ds-holz: oklch(0.55 0.08 60);
+    --ds-holz-hell: oklch(0.68 0.09 65);
+    --ds-blatt: oklch(0.62 0.14 140);
+    --ds-blatt-hell: oklch(0.72 0.14 140);
+    --ds-eisen: oklch(0.45 0.01 80);
+    --ds-eisen-hell: oklch(0.6 0.01 80);
+    --ds-ware: oklch(0.62 0.16 50);
+    --ds-tinte: oklch(0.28 0.03 60);
+    position: relative;
+    padding-block: 1rem 0.5rem;
+    color: var(--ds-tinte);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .raum {
+      --ds-kachel: oklch(0.32 0.03 85);
+      --ds-kachel-hell: oklch(0.36 0.03 85);
+      --ds-tinte: oklch(0.94 0.01 85);
+    }
+  }
+  :root[data-theme='dark'] .raum {
+    --ds-kachel: oklch(0.32 0.03 85);
+    --ds-kachel-hell: oklch(0.36 0.03 85);
+    --ds-tinte: oklch(0.94 0.01 85);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    max-height: 18rem;
+    margin-inline: auto;
+    shape-rendering: crispEdges;
+  }
+  .boden polygon {
+    fill: var(--ds-kachel);
+  }
+  .boden .hell {
+    fill: var(--ds-kachel-hell);
+  }
+  .anbau .links {
+    fill: var(--ds-holz);
+  }
+  .anbau .rechts {
+    fill: var(--ds-holz-hell);
+  }
+  .anbau .deckel {
+    fill: var(--ds-blatt);
+  }
+  .maschine .links {
+    fill: var(--ds-eisen);
+  }
+  .maschine .rechts {
+    fill: var(--ds-eisen-hell);
+  }
+  .maschine .deckel {
+    fill: var(--ds-ware);
+  }
+  .theke .links {
+    fill: var(--ds-holz);
+  }
+  .theke .rechts {
+    fill: var(--ds-holz-hell);
+  }
+  .theke .deckel {
+    fill: var(--ds-holz-hell);
+  }
+  .stueck {
+    fill: var(--ds-ware);
+    transform: translate(var(--x1), var(--y1));
+  }
+  .name {
+    fill: var(--ds-tinte);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .zaehler {
+    margin: 0.5rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  .stueck-zahl::after {
+    content: 'läuft weiter';
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .stueck {
+      animation: ds-fahren 6s linear infinite;
+      animation-delay: calc(var(--i) * -2s);
+    }
+    @supports (animation-timeline: scroll()) {
+      /* Ein Stück alle zwei Sekunden, eine Stunde lang: Dann hat niemand mehr die Seite offen. */
+      .raum {
+        animation: ds-produzieren 3600s linear forwards;
+      }
+      .stueck-zahl::after {
+        counter-reset: ds-stueck calc(var(--ds-stueck));
+        content: 'produziert: ' counter(ds-stueck) ' Stück';
+      }
+    }
+  }
+
+  @keyframes ds-fahren {
+    from {
+      transform: translate(var(--x0), var(--y0));
+    }
+    to {
+      transform: translate(var(--x1), var(--y1));
+    }
+  }
+  @keyframes ds-produzieren {
+    to {
+      --ds-stueck: 1800;
+    }
+  }
+</style>
