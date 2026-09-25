@@ -557,14 +557,14 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
 
   .tg-erdreich {
     --tg-naechste: var(--tg-farbe-eis);
-    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96' stroke='%23000' fill='none'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='14' cy='18' r='2.5'/%3E%3Ccircle cx='30' cy='34' r='1.6'/%3E%3Ccircle cx='36' cy='12' r='1.2'/%3E%3Ccircle cx='66' cy='14' r='2'/%3E%3Ccircle cx='80' cy='32' r='3'/%3E%3Ccircle cx='60' cy='38' r='1.4'/%3E%3Ccircle cx='16' cy='72' r='1.8'/%3E%3Ccircle cx='34' cy='62' r='2.6'/%3E%3Ccircle cx='26' cy='86' r='1.3'/%3E%3Ccircle cx='72' cy='66' r='1.5'/%3E%3Ccircle cx='84' cy='84' r='2.2'/%3E%3Ccircle cx='62' cy='82' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cg fill='%23000'%3E%3Ccircle cx='14' cy='18' r='2.5'/%3E%3Ccircle cx='30' cy='34' r='1.6'/%3E%3Ccircle cx='36' cy='12' r='1.2'/%3E%3Ccircle cx='66' cy='14' r='2'/%3E%3Ccircle cx='80' cy='32' r='3'/%3E%3Ccircle cx='60' cy='38' r='1.4'/%3E%3Ccircle cx='16' cy='72' r='1.8'/%3E%3Ccircle cx='34' cy='62' r='2.6'/%3E%3Ccircle cx='26' cy='86' r='1.3'/%3E%3Ccircle cx='72' cy='66' r='1.5'/%3E%3Ccircle cx='84' cy='84' r='2.2'/%3E%3Ccircle cx='62' cy='82' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
     border-top: 2px solid var(--tg-narbe);
   }
   .tg-eis {
     --tg-grund: var(--tg-farbe-eis);
     --tg-textur: var(--tg-textur-eis);
     --tg-naechste: var(--tg-farbe-lava);
-    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96'/%3E%3Cpath d='M12 10l7 14M18 8l5 16M34 30l4-9M58 28l9-14M66 34l7-10M80 16l3 8M12 84l9-12M26 64l5 14M40 80l3-6M62 60l10 14M76 58l-5 16M84 82l4 6'/%3E%3C/svg%3E");
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath d='M12 10l7 14M18 8l5 16M34 30l4-9M58 28l9-14M66 34l7-10M80 16l3 8M12 84l9-12M26 64l5 14M40 80l3-6M62 60l10 14M76 58l-5 16M84 82l4 6'/%3E%3C/svg%3E");
   }
   /*
    * Die Lava-Schicht ist in beiden Modi dunkel. Damit Text darin lesbar bleibt,
@@ -573,7 +573,7 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
   .tg-lava {
     --tg-grund: var(--tg-farbe-lava);
     --tg-textur: var(--tg-textur-lava);
-    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linejoin='round'%3E%3Cpath d='M0 .5h96M0 48.5h96M.5 0v96M48.5 0v96'/%3E%3Cpath d='M6 32l8-7 6 5 9-9 11 3M54 10l6 9 9-3 6 11 12 3M8 58l7 11 10-5 5 13M56 88l8-9 10 4 12-11'/%3E%3C/svg%3E");
+    --tg-muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23000' stroke-linejoin='round'%3E%3Cpath d='M6 32l8-7 6 5 9-9 11 3M54 10l6 9 9-3 6 11 12 3M8 58l7 11 10-5 5 13M56 88l8-9 10 4 12-11'/%3E%3C/svg%3E");
     --color-fg: oklch(0.96 0.003 80);
     --color-fg-muted: oklch(0.77 0.01 60);
     --color-border: oklch(0.34 0.025 40);
@@ -624,8 +624,9 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
   }
 
   /*
-   * Das Gestein links und rechts der Spalte: Kacheln wie im Spiel, eine Kachel
-   * 3rem, ausgerichtet an der Spaltenkante. Zur Spalte hin blendet es aus, damit
+   * Das Gestein links und rechts der Spalte: Punkte, Risse und Glut wie im
+   * Spiel, im Raster von 3rem an der Spaltenkante ausgerichtet, aber ohne
+   * Kachelränder, damit der Rand in die Seite übergeht. Zur Spalte hin blendet es aus, damit
    * der Text auf ruhigem Grund steht. Schmal bleibt nur ein Streifen links um den
    * Stollen (siehe unten).
    */
