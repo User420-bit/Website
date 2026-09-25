@@ -32,6 +32,8 @@ interface Props {
 
 const { posten } = Astro.props
 const summe = posten.reduce((s, p) => s + p.menge, 0)
+// Nachbarn für die Zeile im Kopf (schmal): Sie zeigt einen Posten, bis der nächste gebucht ist.
+const zeitleiste = (p?: Posten) => (p ? `--kk-${p.anker}` : 'none')
 
 // Zackenkante wie beim Abreißen: 28 Zacken, je 0,4rem hoch, über die volle Breite.
 const ZACKEN = 28
@@ -47,6 +49,22 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
 <div class="kk-rand">
   <div class="kk-kopf" style={`clip-path: ${oben}`} aria-hidden="true">
     <p class="kk-titel">Beleg zu dieser Seite</p>
+    <ol class="kk-ticker">
+      <li class="kk-titel" style={`--kk-von: none; --kk-bis: ${zeitleiste(posten[0])}`}>
+        Beleg zu dieser Seite
+      </li>
+      {
+        posten.map((p, i) => (
+          <li style={`--kk-von: ${zeitleiste(p)}; --kk-bis: ${zeitleiste(posten[i + 1])}`}>
+            <svg class="kk-haken" viewBox="0 0 12 12">
+              <path d="M2 6.5l2.75 2.75L10 3.5" pathLength="1" />
+            </svg>
+            <span class="kk-ticker-label">{p.label}</span>
+            <span class="kk-menge">{p.menge}</span>
+          </li>
+        ))
+      }
+    </ol>
     <p class="kk-lesen">
       <span class="kk-balken"><span class="kk-balken-stand"></span></span>
       <span class="kk-prozent"></span>
@@ -102,6 +120,16 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     inherits: false;
     initial-value: 0;
   }
+  @property --kk-an {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 1;
+  }
+  @property --kk-ab {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+  }
   @property --kk-gelesen {
     syntax: '<integer>';
     inherits: true;
@@ -149,6 +177,35 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+
+  /*
+   * Die Zeile im Kopf, nur schmal und nur, wo gebucht wird (siehe unten): Alle
+   * Zeilen liegen übereinander, sichtbar ist die des zuletzt gebuchten Postens.
+   */
+  .kk-ticker {
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kk-ticker li {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: 0.75rem minmax(0, 1fr) auto;
+    column-gap: 0.5rem;
+    align-items: center;
+    color: var(--color-fg);
+    opacity: calc(var(--kk-an) - var(--kk-ab));
+  }
+  .kk-ticker li.kk-titel {
+    display: block;
+    color: inherit;
+  }
+  .kk-ticker-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* Lesefortschritt: nur, wo er sich wirklich bewegt (siehe unten). */
@@ -332,6 +389,29 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
         animation-timeline: var(--kk-zeitleiste);
         animation-range: cover 40vh cover 46vh;
       }
+
+      /*
+       * Schmal zeigt der Kopf statt des Titels den Posten, der gerade gebucht
+       * wurde: Man sieht das Buchen beim Lesen, nicht erst am Ende der Seite.
+       * Eine Zeile erscheint mit ihrem Posten und geht mit dem nächsten.
+       */
+      @media (width < 64rem) {
+        .kk-kopf > .kk-titel {
+          display: none;
+        }
+        .kk-kopf .kk-ticker {
+          display: grid;
+          flex: 0 1 10rem;
+          min-width: 0;
+        }
+        .kk-ticker li {
+          animation-name: kk-an, kk-ab;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: var(--kk-von), var(--kk-bis);
+          animation-range: cover 40vh cover 46vh;
+        }
+      }
     }
   }
 
@@ -346,6 +426,16 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   @keyframes kk-ausgeben {
     from {
       translate: 0 100%;
+    }
+  }
+  @keyframes kk-an {
+    from {
+      --kk-an: 0;
+    }
+  }
+  @keyframes kk-ab {
+    to {
+      --kk-ab: 1;
     }
   }
   @keyframes kk-lesen {

@@ -229,7 +229,11 @@ const zustaende = [
     /* Mitte des Punkts, von der Oberkante des Telefons: Rand + Innenabstand + Abstand + halber Kreis. */
     --av-mitte: calc(1.5px + 1.75rem + 1rem + var(--av-kreis) / 2);
     display: grid;
-    grid-template-columns: var(--av-breite) minmax(3.5rem, 1fr) var(--av-breite);
+    /* Unter 360 px Fensterbreite geben die Telefone nach, statt über den Rand zu laufen. */
+    grid-template-columns: minmax(0, var(--av-breite)) minmax(3.75rem, 1fr) minmax(
+        0,
+        var(--av-breite)
+      );
     max-width: 40rem;
   }
   @media (min-width: 640px) {

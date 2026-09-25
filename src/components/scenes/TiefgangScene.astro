@@ -3,8 +3,9 @@
  * TIEFGANG: Die Seite ist der Schacht. Unter der H1 steht der Förderturm auf
  * der Oberfläche, darunter liegen die Schichten des Spiels als Bänder hinter
  * den Abschnitten: Erdreich, Eisschicht, Lava. Wer weiterliest, gräbt tiefer.
- * Auf breiten Schirmen fährt das Bohrfahrzeug im linken Rand mit und lässt
- * einen Stollen hinter sich, auf schmalen zeigt ein Kasten unten rechts die
+ * Das Bohrfahrzeug fährt links mit und lässt einen Stollen hinter sich: breit
+ * im Rand neben der Spalte, schmal in einem Streifen am Fensterrand, neben
+ * dem der Text einrückt. Schmal zeigt zusätzlich ein Kasten unten rechts die
  * Tiefe und bringt einen zurück an die Oberfläche.
  *
  * Die Screenshots liegen als Fundstücke in ihrer Schicht. Die Tiefenanzeige
@@ -570,7 +571,8 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
   /*
    * Das Gestein links und rechts der Spalte: Kacheln wie im Spiel, eine Kachel
    * 3rem, ausgerichtet an der Spaltenkante. Zur Spalte hin blendet es aus, damit
-   * der Text auf ruhigem Grund steht. Auf schmalen Schirmen gibt es keinen Rand.
+   * der Text auf ruhigem Grund steht. Schmal bleibt nur ein Streifen links um den
+   * Stollen (siehe unten).
    */
   .tg-wand {
     position: absolute;
@@ -629,11 +631,107 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       left 3rem top 30rem;
   }
 
-  /* ---------- Schacht und Fahrzeug, nur mit genug Rand links ---------- */
+  /*
+   * ---------- Schacht und Fahrzeug ----------
+   * Breit liegen sie im Rand links der Spalte, schmal in einem Streifen am
+   * linken Fensterrand, neben dem der Text einrückt. Das Handy gräbt also mit,
+   * statt nur eine Zahl im Kasten zu zeigen.
+   */
 
   .tg-schacht,
   .tg-fahrt {
+    position: absolute;
+    bottom: 0;
+  }
+  .tg-schacht {
+    z-index: 2;
+    top: 0;
+    overflow: clip;
+  }
+  .tg-fahrt {
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Was schon gegraben ist, bleibt offen; das Skript setzt die Tiefe. */
+  .tg-stollen {
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--tg-gegraben, 0px);
+    background-color: var(--tg-stollen);
+  }
+  /* Die Front klebt an der Leselinie; über ihr ist der Stollen offen, mit Seil. */
+  .tg-front {
+    position: sticky;
+    top: 40vh;
+    height: 0;
+  }
+  .tg-front::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 400vh;
+    background:
+      linear-gradient(var(--tg-seil), var(--tg-seil)) center / 1px 100% no-repeat,
+      var(--tg-stollen);
+  }
+
+  .tg-fahrzeug {
+    position: sticky;
+    display: flex;
+    align-items: flex-start;
+  }
+  .tg-fahrzeug :global(.tg-fahrzeug-bild) {
+    flex: none;
+  }
+  /* Die Tiefe am Fahrzeug nur breit; schmal steht sie im Kasten „Auftauchen“. */
+  .tg-hud {
     display: none;
+  }
+
+  /*
+   * Schmal: Stollen 1,5rem breit, 0,5rem vor der Spaltenkante. Der Förderturm
+   * steht klein über ihm, Szene-Hinweis und Text rücken daneben ein, und im
+   * Streifen um den Stollen liegt das Gestein der Schicht.
+   */
+  @media (width < 80rem) {
+    .tg-oberflaeche {
+      padding-left: 1.75rem;
+    }
+    .tg-turm {
+      position: absolute;
+      left: -1rem;
+      bottom: 0;
+      width: 2.5rem;
+      height: 3rem;
+    }
+    .tg-turm :global(.tg-turm-fahrzeug) {
+      display: none;
+    }
+    .tg-innen {
+      padding-left: 2.75rem;
+    }
+    .tg-wand-links {
+      width: calc(max(0px, 50% - 32rem) + 2.25rem);
+      mask-image: linear-gradient(to left, transparent, #000 0.75rem);
+    }
+
+    .tg-schacht,
+    .tg-fahrt {
+      left: -0.5rem;
+      width: 1.5rem;
+    }
+    .tg-fahrt {
+      top: -1.75rem;
+    }
+    .tg-fahrzeug {
+      top: calc(40vh - 1.75rem);
+    }
+    .tg-fahrzeug :global(.tg-fahrzeug-bild) {
+      width: 1.25rem;
+      height: 1.75rem;
+      margin-inline: 0.125rem;
+    }
   }
 
   @media (min-width: 80rem) {
@@ -651,61 +749,25 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
 
     .tg-schacht,
     .tg-fahrt {
-      display: block;
-      position: absolute;
       left: -7rem;
-      bottom: 0;
     }
     .tg-schacht {
-      z-index: 2;
-      top: 0;
       width: 3rem;
-      overflow: clip;
     }
     .tg-fahrt {
-      z-index: 3;
       top: -2.75rem;
       width: 6rem;
-      pointer-events: none;
-    }
-
-    /* Was schon gegraben ist, bleibt offen; das Skript setzt die Tiefe. */
-    .tg-stollen {
-      position: absolute;
-      inset: 0 0 auto;
-      height: var(--tg-gegraben, 0px);
-      background-color: var(--tg-stollen);
-    }
-    /* Die Front klebt an der Leselinie; über ihr ist der Stollen offen, mit Seil. */
-    .tg-front {
-      position: sticky;
-      top: 40vh;
-      height: 0;
-    }
-    .tg-front::before {
-      content: '';
-      position: absolute;
-      inset: auto 0 0;
-      height: 400vh;
-      background:
-        linear-gradient(var(--tg-seil), var(--tg-seil)) center / 1px 100% no-repeat,
-        var(--tg-stollen);
     }
 
     .tg-fahrzeug {
-      position: sticky;
       top: calc(40vh - 2.75rem);
-      display: flex;
-      align-items: flex-start;
     }
     .tg-fahrzeug :global(.tg-fahrzeug-bild) {
-      flex: none;
       width: 2rem;
       height: 2.75rem;
       margin-inline: 0.5rem;
     }
     .tg-hud {
-      display: none;
       margin: 0.375rem 0 0 0.25rem;
       width: 2.75rem;
       padding: 0.25rem 0;

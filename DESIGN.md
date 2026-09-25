@@ -350,7 +350,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten, einer Kachel und
   die Wortmarke.
 - **Subhead** (500, 1rem, 1,5): Titel eines Aufklappers, Name eines Werts.
-- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten.
+- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten. Auf
+  Projektseiten unter 640 px 1rem, damit die Bühne früher beginnt (siehe Bühne der Projektseite).
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
@@ -627,6 +628,21 @@ Was auch die Lizenz nicht erlaubt: Schrift von Drittanbietern oder eine zweite F
 bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatten, JavaScript (alle
 zehn Szenen kommen ohne aus; Zähler laufen über `@property` und `counter-reset`), und Zahlen, die wie
 echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bildunterschrift Beispieldaten.
+
+**Auf dem Handy** (entschieden am 2026-09-25). Die Bühne muss dort im ersten Bildschirm anfangen und
+ihr Merkmal zeigen, nicht erst nach mehreren Bildschirmen Text. Gemessen wird bei 390 × 664 px
+(Safari mit Leisten): Die Oberkante des Merkmals liegt unter 620 px. Drei Regeln folgen daraus:
+
+- **Kompakter Kopf unter 640 px:** Artikel oben 1,5rem statt 3rem, H1 1rem unter dem Zurück-Link,
+  Summary in 1rem statt 1,125rem und 0,75rem unter der H1, Bühne 1,5rem darunter. Wer den Kopf in
+  einer Seitenkomponente selbst setzt, übernimmt dieselben Klassen.
+- **Was breit im Rand liegt, bekommt schmal einen eigenen Ort,** statt auszufallen. TIEFGANG gräbt
+  unter 80rem in einem 1,5rem schmalen Stollen am linken Fensterrand, der Text rückt daneben ein;
+  der Kassenzettel von Kleinkram zeigt unter 64rem im Bon am unteren Rand den Posten, der gerade
+  gebucht wurde.
+- **Das Ergebnis vor dem Weg:** Wo eine Szene auf ein Ergebnis hinläuft, steht es schmal direkt
+  unter der Eingabe. Vaulter zeigt die Meldungen unter 768px als eine durchlaufende Zeile, damit die
+  Notiz im ersten Bildschirm entsteht; ohne Bewegung bleibt die volle Liste.
 
 ### Anfrage-Zeile
 
