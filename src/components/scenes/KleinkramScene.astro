@@ -32,8 +32,19 @@ interface Props {
 
 const { posten } = Astro.props
 const summe = posten.reduce((s, p) => s + p.menge, 0)
-// Nachbarn für die Zeile im Kopf (schmal): Sie zeigt einen Posten, bis der nächste gebucht ist.
-const zeitleiste = (p?: Posten) => (p ? `--kk-${p.anker}` : 'none')
+/*
+ * Die Zeile im Kopf (schmal) zeigt einen Posten, bis der nächste gebucht ist:
+ * `kk-an` hängt an seiner Zeitleiste, `kk-ab` an der des nächsten. Fehlt ein
+ * Nachbar, fehlt auch die Animation; `animation-timeline: none` wertet Chromium
+ * als abgelaufen, und die letzte Zeile bliebe unsichtbar.
+ */
+const zeile = (von?: Posten, bis?: Posten) => {
+  const teile = [
+    ...(von ? [['kk-an', `--kk-${von.anker}`]] : []),
+    ...(bis ? [['kk-ab', `--kk-${bis.anker}`]] : []),
+  ]
+  return `--kk-namen: ${teile.map((t) => t[0]).join(', ')}; --kk-zeiten: ${teile.map((t) => t[1]).join(', ')}`
+}
 
 // Zackenkante wie beim Abreißen: 28 Zacken, je 0,4rem hoch, über die volle Breite.
 const ZACKEN = 28
@@ -50,12 +61,10 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   <div class="kk-kopf" style={`clip-path: ${oben}`} aria-hidden="true">
     <p class="kk-titel">Beleg zu dieser Seite</p>
     <ol class="kk-ticker">
-      <li class="kk-titel" style={`--kk-von: none; --kk-bis: ${zeitleiste(posten[0])}`}>
-        Beleg zu dieser Seite
-      </li>
+      <li class="kk-titel" style={zeile(undefined, posten[0])}>Beleg zu dieser Seite</li>
       {
         posten.map((p, i) => (
-          <li style={`--kk-von: ${zeitleiste(p)}; --kk-bis: ${zeitleiste(posten[i + 1])}`}>
+          <li style={zeile(p, posten[i + 1])}>
             <svg class="kk-haken" viewBox="0 0 12 12">
               <path d="M2 6.5l2.75 2.75L10 3.5" pathLength="1" />
             </svg>
@@ -405,10 +414,10 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
           min-width: 0;
         }
         .kk-ticker li {
-          animation-name: kk-an, kk-ab;
+          animation-name: var(--kk-namen);
           animation-timing-function: linear;
           animation-fill-mode: both;
-          animation-timeline: var(--kk-von), var(--kk-bis);
+          animation-timeline: var(--kk-zeiten);
           animation-range: cover 40vh cover 46vh;
         }
       }
