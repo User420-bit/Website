@@ -65,6 +65,22 @@ const gesamt = funde.length
 const fundeIn = (platz: Platz) => funde.filter((f) => f.platz === platz)
 const sohle = bisher
 
+/*
+ * Brocken, die beim Graben am Bohrkopf abbrechen: seitlicher Wurf `x` und Wurfhöhe
+ * `h` in Vielfachen von `--tg-wurf`, Drehung `r`, Größe `g` in Pixeln des
+ * Gesteins, Verzögerung `d` in s. Feste Werte, damit jeder Aufruf gleich aussieht.
+ */
+const BROCKEN = [
+  { x: -1, h: 0.9, r: -150, g: 1, d: 0 },
+  { x: 0.8, h: 1.1, r: 120, g: 1.5, d: 0.07 },
+  { x: -0.45, h: 1.35, r: 200, g: 1, d: 0.15 },
+  { x: 1.1, h: 0.6, r: -90, g: 1, d: 0.22 },
+  { x: -0.85, h: 0.5, r: 80, g: 1.5, d: 0.3 },
+  { x: 0.35, h: 1.5, r: -210, g: 1, d: 0.37 },
+  { x: -1.2, h: 1.2, r: 160, g: 1, d: 0.45 },
+  { x: 0.65, h: 0.75, r: -130, g: 1.5, d: 0.52 },
+]
+
 const block = 'tg-block mt-12 border-t border-border pt-6'
 const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
@@ -106,6 +122,13 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     <div class="tg-fahrt" aria-hidden="true">
       <div class="tg-fahrzeug">
         <Fahrzeug class="tg-fahrzeug-bild" />
+        <span class="tg-broeckel">
+          {
+            BROCKEN.map((b) => (
+              <i style={`--x: ${b.x}; --h: ${b.h}; --r: ${b.r}deg; --g: ${b.g}; --d: ${b.d}s`} />
+            ))
+          }
+        </span>
         <span class="tg-hud">
           <span class="tg-hud-label">Tiefe</span>
           <span class="tg-hud-wert" data-tg-anzeige>{sohle} m</span>
@@ -113,7 +136,7 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       </div>
     </div>
 
-    <div class="tg-schicht tg-erdreich">
+    <div class="tg-schicht tg-erdreich" data-schicht="erde">
       <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
       <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
       <div class="tg-innen mx-auto max-w-5xl px-4">
@@ -181,7 +204,7 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       </div>
     </div>
 
-    <div class="tg-schicht tg-eis">
+    <div class="tg-schicht tg-eis" data-schicht="eis">
       <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
       <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
       <div class="tg-innen mx-auto max-w-5xl px-4">
@@ -219,7 +242,7 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       </div>
     </div>
 
-    <div class="tg-schicht tg-lava">
+    <div class="tg-schicht tg-lava" data-schicht="lava">
       <div class="tg-wand tg-wand-links" aria-hidden="true"></div>
       <div class="tg-wand tg-wand-rechts" aria-hidden="true"></div>
       <div class="tg-innen mx-auto max-w-5xl px-4">
@@ -299,6 +322,17 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     let bild = 0
     let pause = 0
     let gegraben = 0
+    let grabPause = 0
+    // Nach dem Laden und nach einer Größenänderung wird der Stollen nur vermessen, nicht gegraben.
+    let frisch = true
+    const schichten = [...tg.querySelectorAll<HTMLElement>('[data-schicht]')]
+
+    // Brocken nur, wo neues Gestein abgebaut wird, nicht auf dem Weg durch den offenen Stollen.
+    const graben = () => {
+      tg.classList.add('tg-graebt')
+      clearTimeout(grabPause)
+      grabPause = window.setTimeout(() => tg.classList.remove('tg-graebt'), 180)
+    }
 
     const messen = () => {
       bild = 0
@@ -327,10 +361,20 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       if (schacht && front && !ruhig.matches) {
         const tief = front.getBoundingClientRect().top - schacht.getBoundingClientRect().top
         if (tief > gegraben) {
+          if (!frisch && tief - gegraben >= 1) graben()
           gegraben = tief
           schacht.style.setProperty('--tg-gegraben', `${Math.round(gegraben)}px`)
         }
+        frisch = false
       }
+
+      // Die Brocken haben die Farbe der Schicht, in der die Leselinie gerade steht.
+      const hier = schichten.find((el) => {
+        const r = el.getBoundingClientRect()
+        return r.top <= linie && r.bottom > linie
+      })
+      const art = hier?.dataset.schicht ?? 'erde'
+      if (tg.dataset.schicht !== art) tg.dataset.schicht = art
     }
     const planen = () => {
       if (!bild) bild = requestAnimationFrame(messen)
@@ -350,6 +394,7 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     addEventListener('resize', () => {
       // Neuer Umbruch, neue Längen: Der Stollen wird ab der jetzigen Front neu vermessen.
       gegraben = 0
+      frisch = true
       planen()
     })
     tg.classList.add('tg-live')
@@ -676,10 +721,71 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       var(--tg-stollen);
   }
 
+  /*
+   * Ausgebrochen statt gesägt: Die Wände des Stollens haben Pixelkerben im Raster
+   * des Gesteins, die Sohle unter dem Bohrkopf hängt in Brocken nach. Die Kerben
+   * sitzen fest am Fels und wandern beim Scrollen nicht mit.
+   */
+  .tg-schacht {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h6v16H1zM0 0h1v3H0zM0 5h1v6H0zM0 13h1v2H0zM7 2h1v5H7zM7 9h1v3H7zM7 14h1v2H7z'/%3E%3C/svg%3E");
+    mask-size: 100% auto;
+    mask-repeat: repeat-y;
+  }
+  .tg-stollen::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 8 / 3;
+    background-color: var(--tg-stollen);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 3' preserveAspectRatio='none' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h8v1H0zM1 1h2v1H1zM4 1h3v1H4zM2 2h1v1H2zM5 2h1v1H5z'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+  }
+
   .tg-fahrzeug {
     position: sticky;
     display: flex;
     align-items: flex-start;
+  }
+
+  /*
+   * Brocken am Bohrkopf. Solange neues Gestein abgebaut wird (`.tg-graebt`, vom
+   * Skript), fliegen sie seitlich hoch und fallen zurück; hört das Graben auf,
+   * blenden sie aus. Farbe je Schicht, die das Skript an `data-schicht` setzt.
+   */
+  .tg {
+    --tg-brocken-farbe: oklch(0.6 0.075 60);
+  }
+  .tg[data-schicht='eis'] {
+    --tg-brocken-farbe: oklch(0.82 0.08 225);
+  }
+  .tg[data-schicht='lava'] {
+    --tg-brocken-farbe: var(--tg-glut);
+  }
+  /* Hinter dem Fahrzeug: `.tg-fahrzeug` ist sticky und damit eigener Stapelkontext. */
+  .tg-broeckel {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    left: var(--tg-spitze-x);
+    top: var(--tg-spitze-y);
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: opacity 240ms var(--ease-quiet);
+  }
+  .tg-graebt .tg-broeckel {
+    opacity: 1;
+    transition-duration: 60ms;
+  }
+  .tg-broeckel i {
+    position: absolute;
+    left: calc(var(--tg-pixel) * var(--g) / -2);
+    top: calc(var(--tg-pixel) * var(--g) / -2);
+    width: calc(var(--tg-pixel) * var(--g));
+    height: calc(var(--tg-pixel) * var(--g));
+    background-color: var(--tg-brocken-farbe);
   }
   .tg-fahrzeug :global(.tg-fahrzeug-bild) {
     flex: none;
@@ -725,6 +831,10 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       top: -1.75rem;
     }
     .tg-fahrzeug {
+      --tg-spitze-x: 0.75rem;
+      --tg-spitze-y: 1.625rem;
+      --tg-pixel: 0.1875rem;
+      --tg-wurf: 0.75rem;
       top: calc(40vh - 1.75rem);
     }
     .tg-fahrzeug :global(.tg-fahrzeug-bild) {
@@ -760,6 +870,10 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     }
 
     .tg-fahrzeug {
+      --tg-spitze-x: 1.5rem;
+      --tg-spitze-y: 2.5rem;
+      --tg-pixel: 0.375rem;
+      --tg-wurf: 1.5rem;
       top: calc(40vh - 2.75rem);
     }
     .tg-fahrzeug :global(.tg-fahrzeug-bild) {
@@ -867,6 +981,14 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     .tg-bohrt :global(.tg-fahrzeug-bild) {
       animation: tg-ruetteln 0.12s steps(2) infinite;
     }
+    /* Nur mit Skript: Ohne es gräbt nichts, und es gäbe nichts, das bröckelt. */
+    .tg-live .tg-broeckel {
+      display: block;
+    }
+    .tg-broeckel i {
+      animation: tg-broeckeln 560ms cubic-bezier(0.25, 0.6, 0.55, 1) infinite;
+      animation-delay: var(--d);
+    }
     .tg-lava .tg-wand::after {
       animation: tg-klopfen 3.2s ease-in-out infinite alternate;
     }
@@ -890,6 +1012,26 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
     }
   }
 
+  /* Hoch und seitlich weg, dann zurück in den Stollen fallen und verlöschen. */
+  @keyframes tg-broeckeln {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 1;
+    }
+    45% {
+      transform: translate(
+          calc(var(--x) * var(--tg-wurf) * 0.75),
+          calc(var(--h) * var(--tg-wurf) * -1)
+        )
+        rotate(calc(var(--r) / 2));
+      opacity: 1;
+    }
+    100% {
+      transform: translate(calc(var(--x) * var(--tg-wurf)), calc(var(--tg-wurf) * 0.3))
+        rotate(var(--r));
+      opacity: 0;
+    }
+  }
   @keyframes tg-ruetteln {
     to {
       transform: translate(0.5px, 0.5px);
