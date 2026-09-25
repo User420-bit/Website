@@ -117,25 +117,34 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   }
 
   /*
-   * Stand und Summe als Text. Die Werte rechnen weiter die Animationen aus; das
-   * Skript liest sie nur ab und schreibt sie hin. Grund: Safari zeichnet einen
-   * CSS-Zähler in `::before` nicht neu, während eine scrollgetriebene Animation
-   * ihn ändert (auf dem iPhone blieb „0 %“ stehen, während der Balken lief).
-   * Ohne Skript bleiben die Zähler in CSS.
+   * Stand und Summe als Text. Grund: Safari zeichnet einen CSS-Zähler in
+   * `::before` nicht neu, während eine scrollgetriebene Animation ihn ändert
+   * (auf dem iPhone blieb „0 %“ stehen, während der Balken lief).
+   *
+   * Den Stand rechnet das Skript selbst: gelesen bis zum Ende des Textes, nicht
+   * bis zum Ende der Seite. 100 % also, wenn das Textende unten im Fenster
+   * steht; schmal ist das der Moment, in dem der Kopf auf dem Rumpf landet.
+   * Es setzt `--kk-gelesen`, daran hängt auch der Balken. Die Summe liest es
+   * aus den Buchungs-Animationen der Posten ab. Ohne Skript bleibt alles in CSS.
    */
   const rand = document.querySelector<HTMLElement>('.kk-rand')
   const lesen = rand?.querySelector<HTMLElement>('.kk-lesen')
   const prozent = rand?.querySelector<HTMLElement>('[data-kk-prozent]')
   const summe = rand?.querySelector<HTMLElement>('[data-kk-summe]')
   const posten = [...(rand?.querySelectorAll<HTMLElement>('.kk-posten') ?? [])]
+  // Die Textspalte: das erste Kind des Rasters, in dem der Zettel steht (KleinkramPage).
+  const text = rand?.parentElement?.firstElementChild
   const wert = (el: HTMLElement, name: string) =>
     Math.round(Number(getComputedStyle(el).getPropertyValue(name)))
 
-  if (rand && lesen && prozent && summe && Number.isFinite(wert(lesen, '--kk-gelesen'))) {
+  if (rand && lesen && prozent && summe && text) {
     let bild = 0
     const schreiben = () => {
       bild = 0
-      prozent.textContent = `${wert(lesen, '--kk-gelesen')} %`
+      const ende = text.getBoundingClientRect().bottom + scrollY - innerHeight
+      const stand = Math.round(Math.min(1, Math.max(0, scrollY / Math.max(1, ende))) * 100)
+      lesen.style.setProperty('--kk-gelesen', String(stand))
+      prozent.textContent = `${stand} %`
       summe.textContent = `${posten.reduce((s, p) => s + (wert(p, '--kk-zaehlt') || 0), 0)} `
     }
     const planen = () => {
@@ -143,7 +152,7 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     }
     rand.classList.add('kk-js')
     schreiben()
-    // Die Scroll-Animationen haben erst nach dem ersten Bild ihren Stand; dann noch einmal ablesen.
+    // Die Buchungs-Animationen haben erst nach dem ersten Bild ihren Stand; dann noch einmal ablesen.
     requestAnimationFrame(() => requestAnimationFrame(schreiben))
     addEventListener('load', planen)
     addEventListener('scroll', planen, { passive: true })
@@ -435,6 +444,11 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
         animation-fill-mode: both;
         animation-timeline: scroll(root);
       }
+    }
+    /* Mit Skript: Stand vom Skript (bis Textende), der Balken läuft auch ohne Scroll-Timeline. */
+    .kk-js .kk-kopf .kk-lesen {
+      display: flex;
+      animation-name: none;
     }
 
     /* Gebucht wird, wenn der Abschnitt knapp über der Fenstermitte steht. */
