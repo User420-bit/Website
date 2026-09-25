@@ -362,12 +362,6 @@ export const kartenPunkte = LAND.flatMap((zeile, r) =>
   ),
 ).join('')
 
-/** Ein Foto aus dem Galerie-Screenshot (1600 × 900): linke obere Ecke des 256-px-Ausschnitts. */
-interface Ausschnitt {
-  x: number
-  y: number
-}
-
 interface Lage {
   x: number
   y: number
@@ -380,17 +374,21 @@ interface BaumLage extends Lage {
   s: number
 }
 
+/**
+ * Ein Beispielfoto aus dem Gastzugang der App, Dateiname ohne Endung unter
+ * `src/assets/projekte/memorytree-fotos/` (Quelle: `static/demo/` im
+ * MemoryTree-Repository).
+ */
+export type Bild =
+  'amalfi-1' | 'konzert-2' | 'paris-2' | 'paris-1' | 'ski-1' | 'dinner-2' | 'wien-1' | 'allgaeu-2'
+
 export interface Foto {
-  ausschnitt: Ausschnitt
+  bild: Bild
   baum: BaumLage
   zeit: Lage
   karte: Lage
   galerie: Lage
 }
-
-const spalte = (i: number) => 314 + i * 324 - 128
-const REIHE_1 = 287
-const REIHE_2 = 592
 
 /* Zeitstrahl: abwechselnd links und rechts einer senkrechten Linie. */
 const zeit = (i: number): Lage => ({ x: i % 2 ? 258 : 142, y: 44 + i * 47, r: 0 })
@@ -410,7 +408,7 @@ const ort = (px: number, py: number, r = 0): Lage => ({
 export const fotos: Foto[] = [
   // Küste mit Auto
   {
-    ausschnitt: { x: spalte(0), y: REIHE_1 },
+    bild: 'amalfi-1',
     baum: { x: 132, y: 92, r: -6, s: 62 },
     karte: ort(918, 660),
     zeit: zeit(0),
@@ -418,7 +416,7 @@ export const fotos: Foto[] = [
   },
   // Konzert im Park
   {
-    ausschnitt: { x: spalte(1), y: REIHE_1 },
+    bild: 'konzert-2',
     baum: { x: 204, y: 64, r: 3, s: 64 },
     karte: ort(784, 352),
     zeit: zeit(1),
@@ -426,7 +424,7 @@ export const fotos: Foto[] = [
   },
   // Gasse mit Croissant
   {
-    ausschnitt: { x: spalte(2), y: REIHE_1 },
+    bild: 'paris-2',
     baum: { x: 274, y: 96, r: 5, s: 60 },
     karte: ort(628, 384, -8),
     zeit: zeit(2),
@@ -434,7 +432,7 @@ export const fotos: Foto[] = [
   },
   // Brücke am Abend
   {
-    ausschnitt: { x: spalte(3), y: REIHE_1 },
+    bild: 'paris-1',
     baum: { x: 94, y: 172, r: 4, s: 60 },
     karte: ort(646, 404, 5),
     zeit: zeit(3),
@@ -442,7 +440,7 @@ export const fotos: Foto[] = [
   },
   // Berge im Schnee
   {
-    ausschnitt: { x: spalte(0), y: REIHE_2 },
+    bild: 'ski-1',
     baum: { x: 166, y: 152, r: -3, s: 64 },
     karte: ort(959, 420),
     zeit: zeit(4),
@@ -450,7 +448,7 @@ export const fotos: Foto[] = [
   },
   // Küche
   {
-    ausschnitt: { x: spalte(1), y: REIHE_2 },
+    bild: 'dinner-2',
     baum: { x: 238, y: 162, r: -5, s: 62 },
     karte: ort(813, 227),
     zeit: zeit(5),
@@ -458,7 +456,7 @@ export const fotos: Foto[] = [
   },
   // Abend am Fluss
   {
-    ausschnitt: { x: spalte(2), y: REIHE_2 },
+    bild: 'wien-1',
     baum: { x: 308, y: 176, r: 6, s: 58 },
     karte: ort(891, 266),
     zeit: zeit(6),
@@ -466,7 +464,7 @@ export const fotos: Foto[] = [
   },
   // Wanderung
   {
-    ausschnitt: { x: spalte(3), y: REIHE_2 },
+    bild: 'allgaeu-2',
     baum: { x: 312, y: 318, r: 2, s: 58 },
     karte: ort(842, 431),
     zeit: zeit(7),
