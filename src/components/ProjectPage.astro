@@ -18,6 +18,7 @@
  * `hide` blendet Standardteile aus, wenn die Seitenkomponente sie selbst
  * anders zeigt. `articleClass` hängt Klassen an den `<article>`.
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import type { CollectionEntry } from 'astro:content'
 import { render } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
@@ -72,12 +73,7 @@ const lists = [
         <slot name="hero" />
       ) : (
         <>
-          <a
-            class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-            href={href('/projekte/')}
-          >
-            <Arrow direction="left" /> Alle Arbeiten
-          </a>
+          <ProjectNav prev={prev} next={next} />
 
           <h1 class="display mt-4 mb-0 text-4xl font-semibold text-balance sm:mt-6 sm:text-5xl">
             {data.title}
@@ -198,7 +194,7 @@ const lists = [
     {
       zeigt('pager') && (
         <nav aria-label="Weitere Arbeiten" class="mt-16 border-t border-fg">
-          <ul class="m-0 grid list-none grid-cols-1 p-0 sm:grid-cols-2 sm:gap-x-8">
+          <ul class="m-0 grid list-none grid-cols-2 gap-x-4 p-0 sm:gap-x-8">
             <li class="border-b border-border">
               {prev && (
                 <a
@@ -216,13 +212,13 @@ const lists = [
                 </a>
               )}
             </li>
-            <li class="border-b border-border sm:text-right">
+            <li class="border-b border-border text-right">
               {next && (
                 <a
                   class="group block py-4 text-fg no-underline"
                   href={href(`/projekte/${next.id}`)}
                 >
-                  <span class="flex items-center gap-2 text-sm text-fg-muted sm:justify-end">
+                  <span class="flex items-center justify-end gap-2 text-sm text-fg-muted">
                     Nächste Arbeit
                     <Arrow class="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
                   </span>

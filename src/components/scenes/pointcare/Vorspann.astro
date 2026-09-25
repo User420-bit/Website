@@ -14,16 +14,18 @@
  * Bildunterschrift steht als Untertitel im unteren Balken und sagt, dass es
  * kein Screenshot ist.
  */
-import Arrow from '@/components/Arrow.astro'
-import { href } from '@/lib/site'
+import ProjectNav from '@/components/ProjectNav.astro'
+import type { Projekt } from '@/components/ProjectPage.astro'
 import { kamera } from './perspektive'
 
 interface Props {
   title: string
   summary: string
+  prev: Projekt | null
+  next: Projekt | null
 }
 
-const { title, summary } = Astro.props
+const { title, summary, prev, next } = Astro.props
 
 // Kamera 1,6 m über dem Hof, die Halle 42,7 m entfernt. Der Fluchtpunkt liegt
 // im offenen Tor, rechts der Mitte, damit links unten Platz für die Schrift ist.
@@ -116,12 +118,11 @@ const ferne = k.front(-140, -75, 0, 8, 150)
 <header class="pc-vorspann">
   <div class="pc-balken">
     <div class="pc-spalte">
-      <a
-        class="inline-flex items-center gap-2 py-2 text-sm text-fg-muted no-underline transition-colors hover:text-fg motion-reduce:transition-none"
-        href={href('/projekte/')}
-      >
-        <Arrow direction="left" /> Alle Arbeiten
-      </a>
+      <ProjectNav
+        prev={prev}
+        next={next}
+        linkClass="inline-flex items-center gap-2 py-2 text-sm text-fg-muted no-underline transition-colors hover:text-fg motion-reduce:transition-none"
+      />
     </div>
   </div>
 

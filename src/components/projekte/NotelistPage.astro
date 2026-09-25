@@ -19,5 +19,5 @@ const { projekt, prev, next } = Astro.props as Props
   next={next}
   hide={['meta', 'links', 'gallery', 'text', 'features', 'engineering', 'code', 'learnings']}
 >
-  <NotelistScene slot="hero" projekt={projekt} />
+  <NotelistScene slot="hero" projekt={projekt} prev={prev} next={next} />
 </ProjectPage>

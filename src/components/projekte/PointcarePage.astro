@@ -18,7 +18,13 @@ const { projekt, prev, next } = Astro.props as Props
 ---
 
 <ProjectPage projekt={projekt} prev={prev} next={next} articleClass="pc-seite pt-0 sm:pt-0">
-  <Vorspann slot="hero" title={projekt.data.title} summary={projekt.data.summary} />
+  <Vorspann
+    slot="hero"
+    title={projekt.data.title}
+    summary={projekt.data.summary}
+    prev={prev}
+    next={next}
+  />
   <PointcareScene slot="after-meta" />
 </ProjectPage>
 

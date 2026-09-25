@@ -14,12 +14,11 @@
  * Ausgeblendet und hier selbst gezeigt, mit denselben Daten: die Meta-Liste
  * (im Deckblatt) und die Erkenntnisse (mit dem Verweis auf den Fächer).
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import type { Props } from '@/components/ProjectPage.astro'
-import Arrow from '@/components/Arrow.astro'
 import MetaList from '@/components/MetaList.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import JustbeautyScene from '@/components/scenes/JustbeautyScene.astro'
-import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
 const data = projekt.data
@@ -36,12 +35,7 @@ const zeigtTakt = (learning: string) => learning.includes('Zeitbasis')
   articleClass="jb-seite"
 >
   <Fragment slot="hero">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
+    <ProjectNav prev={prev} next={next} />
 
     <div class="jb-deckblatt mt-6">
       <div class="jb-titel">

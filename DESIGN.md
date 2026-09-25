@@ -710,7 +710,12 @@ rahmen nur ihr Bildfeld.
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
   unterstrichen, Hover Tintenschwarz.
 - **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 4-px-Feld oben links.
-- **Zurück-Link:** Pfeil nach links und Text in Body Small, Bleistiftgrau, Hover orange.
+- **Zurück-Link:** Pfeil nach links und Text in Body Small, Bleistiftgrau, Hover orange. Auf
+  Projektseiten Teil der Kopfzeile (`ProjectNav`): rechts daneben zwei 2-rem-Knöpfe zur vorherigen
+  und nächsten Arbeit (1 px Rand in Bleistiftgrau, Hover orange, Trefferfläche 44 px), damit man
+  gleich am Anfang weiterblättert. Fehlt ein Nachbar, steht der Knopf blass ohne Link. Vor/Zurück
+  mit Titeln steht zusätzlich am Seitenende, auch auf dem Handy nebeneinander (entschieden am
+  2026-09-25).
 
 ### Belegzeile (Signature)
 
