@@ -12,8 +12,8 @@
  * `timeline-scope` am Raster macht die Timelines für den Zettel sichtbar.
  * Vor/Zurück und die Anfrage-Zeile bleiben von ProjectPage.
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import { render } from 'astro:content'
-import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
 import MetaList from '@/components/MetaList.astro'
@@ -21,7 +21,6 @@ import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
 import KleinkramScene, { type Posten } from '@/components/scenes/KleinkramScene.astro'
-import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
 const { Content } = await render(projekt)
@@ -75,12 +74,7 @@ const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 >
   <div slot="hero" class="kk-buch" style={scope}>
     <div class="min-w-0">
-      <a
-        class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-        href={href('/projekte/')}
-      >
-        <Arrow direction="left" /> Alle Arbeiten
-      </a>
+      <ProjectNav prev={prev} next={next} />
 
       <h1 class="display mt-4 mb-0 text-4xl font-semibold text-balance sm:mt-6 sm:text-5xl">
         {data.title}

@@ -14,12 +14,11 @@
  * Die Stile unten sind global, weil sie Markup aus ProjectPage treffen; jeder
  * Selektor hängt an `.vaulter-notiz`, das es nur auf dieser Seite gibt.
  */
-import Arrow from '@/components/Arrow.astro'
+import ProjectNav from '@/components/ProjectNav.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import VaulterScene from '@/components/scenes/VaulterScene.astro'
 import Frontmatter from '@/components/scenes/vaulter/Frontmatter.astro'
-import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
 const data = projekt.data
@@ -27,12 +26,7 @@ const data = projekt.data
 
 <ProjectPage projekt={projekt} prev={prev} next={next} hide={['meta']} articleClass="vaulter-notiz">
   <Fragment slot="hero">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
+    <ProjectNav prev={prev} next={next} />
 
     <h1 class="md-h1 display mt-4 mb-0 text-4xl font-semibold text-balance sm:mt-6 sm:text-5xl">
       {data.title}

@@ -21,21 +21,22 @@
  * tragen. Alle Projektseiten teilen sich eine Route und damit ein Stylesheet;
  * dass nichts davon auf andere Seiten wirkt, sichert allein das Präfix `nl-`.
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import { render } from 'astro:content'
-import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import CodeBlock from '@/components/CodeBlock.astro'
 import KindLabel from '@/components/KindLabel.astro'
 import type { Projekt } from '@/components/ProjectPage.astro'
 import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
 import Suche from '@/components/scenes/notelist/Suche.astro'
-import { href } from '@/lib/site'
 
 interface Props {
   projekt: Projekt
+  prev: Projekt | null
+  next: Projekt | null
 }
 
-const { projekt } = Astro.props
+const { projekt, prev, next } = Astro.props
 const { Content } = await render(projekt)
 const data = projekt.data
 
@@ -67,12 +68,7 @@ const erkenntnisse = { punkte: data.learnings }
 
 <div class="nl" data-nl-flaeche>
   <div class="nl-leiste">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
+    <ProjectNav prev={prev} next={next} class="flex-1" />
     <Suche />
   </div>
 

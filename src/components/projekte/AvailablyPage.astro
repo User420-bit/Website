@@ -10,11 +10,10 @@
  * Alles andere bleibt beim Körper: Meta-Liste, Text, Funktionen, Technische
  * Entscheidungen, Erkenntnisse, Vor/Zurück und Anfrage.
  */
-import Arrow from '@/components/Arrow.astro'
+import ProjectNav from '@/components/ProjectNav.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import AvailablyScene from '@/components/scenes/AvailablyScene.astro'
-import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
 const data = projekt.data
@@ -22,12 +21,7 @@ const data = projekt.data
 
 <ProjectPage projekt={projekt} prev={prev} next={next} articleClass="av-seite">
   <Fragment slot="hero">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
+    <ProjectNav prev={prev} next={next} />
 
     <h1 class="display mt-4 mb-0 text-4xl font-semibold text-balance sm:mt-6 sm:text-5xl">
       {data.title}<span class="schlusspunkt" aria-hidden="true"></span>

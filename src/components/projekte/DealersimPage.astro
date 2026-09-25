@@ -10,15 +10,14 @@
  * Links (im Kopf neben dem Raum), „Worum es geht“ und „Funktionen“ (vor den
  * übrigen Textblöcken, in derselben Reihenfolge wie im gemeinsamen Körper).
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import { render } from 'astro:content'
-import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import MetaList from '@/components/MetaList.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import DealersimScene from '@/components/scenes/DealersimScene.astro'
 import Skillzweig from '@/components/scenes/dealersim/Skillzweig.astro'
-import { href } from '@/lib/site'
 
 const { projekt, prev, next } = Astro.props as Props
 const { Content } = await render(projekt)
@@ -31,12 +30,7 @@ const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 
 <ProjectPage projekt={projekt} prev={prev} next={next} hide={['meta', 'links', 'text', 'features']}>
   <Fragment slot="hero">
-    <a
-      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-      href={href('/projekte/')}
-    >
-      <Arrow direction="left" /> Alle Arbeiten
-    </a>
+    <ProjectNav prev={prev} next={next} />
 
     <div class="ds-kopf">
       <h1

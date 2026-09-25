@@ -12,12 +12,12 @@
  * Entscheidungen und Erkenntnisse (mit Randnotizen, in derselben Reihenfolge).
  * Alles andere kommt unverändert aus ProjectPage.
  */
+import ProjectNav from '@/components/ProjectNav.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import Arrow from '@/components/Arrow.astro'
 import MetaList from '@/components/MetaList.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
 import FeynmanScene from '@/components/scenes/FeynmanScene.astro'
-import { href } from '@/lib/site'
 import { render } from 'astro:content'
 
 const { projekt, prev, next } = Astro.props as Props
@@ -61,12 +61,7 @@ const listen = [
     class="@container grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12"
   >
     <div>
-      <a
-        class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
-        href={href('/projekte/')}
-      >
-        <Arrow direction="left" /> Alle Arbeiten
-      </a>
+      <ProjectNav prev={prev} next={next} />
       <h1 class="display mt-4 mb-0 text-4xl font-semibold text-balance sm:mt-6 sm:text-5xl">
         {data.title}
       </h1>
