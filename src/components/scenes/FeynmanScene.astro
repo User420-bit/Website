@@ -387,6 +387,13 @@ const belegZeiten = lerntext.map((_, i) =>
       gap: 1.75rem;
     }
   }
+  /* Schmal enger, damit die geprüfte Erklärung noch im ersten Bildschirm steht. */
+  @media (width < 640px) {
+    .tafel {
+      padding: 1.25rem 0 1.5rem 1.25rem;
+      gap: 1rem;
+    }
+  }
 
   .tafel :focus-visible,
   .reiter-label:has(:focus-visible) {
@@ -491,6 +498,11 @@ const belegZeiten = lerntext.map((_, i) =>
   }
   .reiter-label:has(:checked)::after {
     transform: scaleX(1);
+  }
+  @media (width < 640px) {
+    .reiter-label {
+      padding-block: 0.5rem;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .reiter-label,

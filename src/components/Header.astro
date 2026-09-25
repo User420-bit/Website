@@ -1,4 +1,11 @@
 ---
+/**
+ * Kopf jeder Seite. Breit steht alles in einer Zeile und klebt oben. Auf dem
+ * Handy klebt nur die Zeile mit Name und Anfrage; die Navigation steht darunter
+ * außerhalb des `<header>` und scrollt mit der Seite weg, damit der klebende
+ * Kopf beim Lesen 58 statt 90 bis 121 px des Bildschirms belegt. Beide
+ * Navigationen kommen aus derselben Liste, sichtbar ist immer nur eine.
+ */
 import Button from '@/components/Button.astro'
 import NavHighlight from '@/components/NavHighlight.astro'
 import { href, NAV_ITEMS } from '@/lib/site'
@@ -10,6 +17,9 @@ interface Props {
 }
 
 const { isHome = false, name } = Astro.props
+
+const linkClass =
+  'nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:after:scale-x-100 motion-reduce:after:transition-none'
 ---
 
 <header class="site-header sticky top-0 z-50 bg-bg">
@@ -20,7 +30,7 @@ const { isHome = false, name } = Astro.props
     Zum Inhalt springen
   </a>
   <div
-    class="mx-auto grid max-w-5xl grid-cols-[1fr_auto] items-center gap-x-6 gap-y-1 px-4 py-3 sm:grid-cols-[auto_1fr_auto] sm:py-4"
+    class="mx-auto grid max-w-5xl grid-cols-[1fr_auto] items-center gap-x-6 px-4 py-2.5 sm:grid-cols-[auto_1fr_auto] sm:py-4"
   >
     <a
       href={href('/')}
@@ -29,21 +39,12 @@ const { isHome = false, name } = Astro.props
     >
       {name}
     </a>
-    <nav
-      aria-label="Hauptnavigation"
-      class="col-span-2 row-start-2 sm:col-span-1 sm:row-start-auto"
-    >
-      <ul
-        class="-mx-1 flex list-none flex-wrap gap-x-2 gap-y-1 p-0 text-sm sm:justify-end sm:gap-x-3"
-      >
+    <nav aria-label="Hauptnavigation" class="hidden sm:block">
+      <ul class="-mx-1 flex list-none flex-wrap justify-end gap-x-3 gap-y-1 p-0 text-sm">
         {
           NAV_ITEMS.map((item) => (
             <li>
-              <a
-                class="nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:after:scale-x-100 motion-reduce:after:transition-none"
-                href={href(`/#${item.id}`)}
-                data-nav-target={item.id}
-              >
+              <a class={linkClass} href={href(`/#${item.id}`)} data-nav-target={item.id}>
                 {item.label}
               </a>
             </li>
@@ -51,10 +52,27 @@ const { isHome = false, name } = Astro.props
         }
       </ul>
     </nav>
-    <div class="col-start-2 row-start-1 sm:col-start-3">
+    <div>
       <Button href={href('/#kontakt')} size="sm">Anfrage</Button>
     </div>
   </div>
 </header>
+
+{
+  /* Handy: dieselben Anker unter dem Kopf, nicht klebend. Verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen. */
+}
+<nav aria-label="Hauptnavigation" class="mx-auto w-full max-w-5xl px-4 pb-2 sm:hidden">
+  <ul class="-mx-1 flex list-none flex-wrap justify-between gap-y-1 p-0 text-sm">
+    {
+      NAV_ITEMS.map((item) => (
+        <li>
+          <a class={linkClass} href={href(`/#${item.id}`)} data-nav-target={item.id}>
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
 
 {isHome && <NavHighlight />}

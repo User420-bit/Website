@@ -350,7 +350,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten, einer Kachel und
   die Wortmarke.
 - **Subhead** (500, 1rem, 1,5): Titel eines Aufklappers, Name eines Werts.
-- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten.
+- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten. Auf
+  Projektseiten unter 640 px 1rem, damit die Bühne früher beginnt (siehe Bühne der Projektseite).
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
@@ -628,6 +629,22 @@ bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatt
 zehn Szenen kommen ohne aus; Zähler laufen über `@property` und `counter-reset`), und Zahlen, die wie
 echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bildunterschrift Beispieldaten.
 
+**Auf dem Handy** (entschieden am 2026-09-25). Die Bühne muss dort im ersten Bildschirm anfangen und
+ihr Merkmal zeigen, nicht erst nach mehreren Bildschirmen Text. Gemessen wird bei 390 × 664 px
+(Safari mit Leisten): Die Oberkante des Merkmals liegt unter 620 px. Drei Regeln folgen daraus, dazu der
+schmalere klebende Header (siehe Navigation):
+
+- **Kompakter Kopf unter 640 px:** Artikel oben 1,5rem statt 3rem, H1 1rem unter dem Zurück-Link,
+  Summary in 1rem statt 1,125rem und 0,75rem unter der H1, Bühne 1,5rem darunter. Wer den Kopf in
+  einer Seitenkomponente selbst setzt, übernimmt dieselben Klassen.
+- **Was breit im Rand liegt, bekommt schmal einen eigenen Ort,** statt auszufallen. TIEFGANG gräbt
+  unter 80rem in einem 1,5rem schmalen Stollen am linken Fensterrand, der Text rückt daneben ein;
+  der Kassenzettel von Kleinkram zeigt unter 64rem im Bon am unteren Rand den Posten, der gerade
+  gebucht wurde.
+- **Das Ergebnis vor dem Weg:** Wo eine Szene auf ein Ergebnis hinläuft, steht es schmal direkt
+  unter der Eingabe. Vaulter zeigt die Meldungen unter 768px als eine durchlaufende Zeile, damit die
+  Notiz im ersten Bildschirm entsteht; ohne Bewegung bleibt die volle Liste.
+
 ### Anfrage-Zeile
 
 `InquiryPrompt`: ruhige Zeile nach „Arbeiten“, am Ende jeder Projektseite und unter `/projekte/`.
@@ -678,7 +695,12 @@ rahmen nur ihr Bildfeld.
 - **Zustände:** Hover und aktiver Anker wechseln auf Tintenschwarz und ziehen einen 1-px-Strich in Orange
   von links auf. Den aktiven Anker setzt auf der Startseite ein IntersectionObserver
   (`aria-current="true"`).
-- **Mobil:** Wortmarke und Anfrage in der ersten Zeile, Linkzeile darunter, Links umbrechen bei Bedarf.
+- **Mobil (unter 640 px):** Nur die Zeile mit Wortmarke und Anfrage klebt (53 px). Die Linkzeile steht
+  darunter außerhalb des Headers und scrollt mit der Seite weg; ihre Links sind über die Breite
+  verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen (erst bei 320 px brechen
+  sie um). Vorher klebten beide Zeilen: 89 px, bei 360 und 375 px mit umbrochener Linkzeile 121 px.
+  Preis: Wer weit unten ist, erreicht die Anker über die Wortmarke oder nach oben scrollend
+  (entschieden am 2026-09-25).
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
   unterstrichen, Hover Tintenschwarz.
 - **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 4-px-Feld oben links.

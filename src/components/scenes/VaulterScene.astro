@@ -117,7 +117,7 @@ const atemzuege = (d: number) => Math.max(1, Math.round(d / ATEM)) | 1
 const syntax = (text: string) => text.match(/^(#+ )(.*)$/)
 ---
 
-<figure class="eingang m-0 mt-10" data-eingang>
+<figure class="eingang m-0 mt-6 sm:mt-10" data-eingang>
   <fieldset class="reiter m-0 min-w-0 border-0 p-0">
     <legend class="sr-only">Welche Quelle einreihen</legend>
     <div class="reiter-leiste">
@@ -598,6 +598,29 @@ const syntax = (text: string) => text.match(/^(#+ )(.*)$/)
     }
   }
 
+  /*
+   * Schmal, beim ersten Lauf: Die Meldungen laufen als eine Zeile durch, jede
+   * neue wischt über die vorige. So steht die Notiz direkt unter dem Feld und
+   * schreibt sich im ersten Bildschirm, statt unter einer Liste zu warten.
+   * Ohne Bewegung bleibt die Liste, denn dann steht alles auf einmal da; die
+   * übrigen Läufe (wieder, ersetzen) brauchen ihre Zeilen im Zusammenhang.
+   */
+  @media (width < 768px) and (prefers-reduced-motion: no-preference) {
+    .lauf {
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    [data-lauf='neu'] .log {
+      display: grid;
+      margin-top: 0.75rem;
+    }
+    [data-lauf='neu'] .log .neu {
+      grid-area: 1 / 1;
+      background-color: var(--color-bg);
+      animation-name: vt-wischen;
+    }
+  }
+
   @keyframes vt-da {
     from {
       opacity: 0;
@@ -608,6 +631,11 @@ const syntax = (text: string) => text.match(/^(#+ )(.*)$/)
     from,
     to {
       background-color: var(--color-accent);
+    }
+  }
+  @keyframes vt-wischen {
+    from {
+      clip-path: inset(0 100% 0 0);
     }
   }
   @keyframes vt-atmen {

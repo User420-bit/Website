@@ -9,10 +9,11 @@
 }
 <script>
   const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-target]')
-  const byId = new Map<string, HTMLAnchorElement>()
+  // Je Anker mehrere Links: Der Header hat eine Navigation für breit und eine für das Handy.
+  const byId = new Map<string, HTMLAnchorElement[]>()
   for (const link of links) {
     const id = link.dataset.navTarget
-    if (id) byId.set(id, link)
+    if (id) byId.set(id, [...(byId.get(id) ?? []), link])
   }
 
   const sections = [...byId.keys()]
@@ -33,9 +34,11 @@
           break
         }
       }
-      for (const [id, link] of byId) {
-        if (id === current) link.setAttribute('aria-current', 'true')
-        else link.removeAttribute('aria-current')
+      for (const [id, gruppe] of byId) {
+        for (const link of gruppe) {
+          if (id === current) link.setAttribute('aria-current', 'true')
+          else link.removeAttribute('aria-current')
+        }
       }
     }
 
