@@ -631,7 +631,8 @@ echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bilduntersc
 
 **Auf dem Handy** (entschieden am 2026-09-25). Die Bühne muss dort im ersten Bildschirm anfangen und
 ihr Merkmal zeigen, nicht erst nach mehreren Bildschirmen Text. Gemessen wird bei 390 × 664 px
-(Safari mit Leisten): Die Oberkante des Merkmals liegt unter 620 px. Drei Regeln folgen daraus:
+(Safari mit Leisten): Die Oberkante des Merkmals liegt unter 620 px. Drei Regeln folgen daraus, dazu der
+schmalere klebende Header (siehe Navigation):
 
 - **Kompakter Kopf unter 640 px:** Artikel oben 1,5rem statt 3rem, H1 1rem unter dem Zurück-Link,
   Summary in 1rem statt 1,125rem und 0,75rem unter der H1, Bühne 1,5rem darunter. Wer den Kopf in
@@ -694,7 +695,12 @@ rahmen nur ihr Bildfeld.
 - **Zustände:** Hover und aktiver Anker wechseln auf Tintenschwarz und ziehen einen 1-px-Strich in Orange
   von links auf. Den aktiven Anker setzt auf der Startseite ein IntersectionObserver
   (`aria-current="true"`).
-- **Mobil:** Wortmarke und Anfrage in der ersten Zeile, Linkzeile darunter, Links umbrechen bei Bedarf.
+- **Mobil (unter 640 px):** Nur die Zeile mit Wortmarke und Anfrage klebt (53 px). Die Linkzeile steht
+  darunter außerhalb des Headers und scrollt mit der Seite weg; ihre Links sind über die Breite
+  verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen (erst bei 320 px brechen
+  sie um). Vorher klebten beide Zeilen: 89 px, bei 360 und 375 px mit umbrochener Linkzeile 121 px.
+  Preis: Wer weit unten ist, erreicht die Anker über die Wortmarke oder nach oben scrollend
+  (entschieden am 2026-09-25).
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
   unterstrichen, Hover Tintenschwarz.
 - **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 4-px-Feld oben links.
