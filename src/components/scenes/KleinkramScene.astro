@@ -76,7 +76,7 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     </ol>
     <p class="kk-lesen">
       <span class="kk-balken"><span class="kk-balken-stand"></span></span>
-      <span class="kk-prozent"></span>
+      <span class="kk-prozent" data-kk-prozent></span>
     </p>
   </div>
   <nav class="kk-rumpf" style={`clip-path: ${unten}`} aria-label="Beleg zu dieser Seite">
@@ -96,7 +96,7 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     </ol>
     <p class="kk-summe" aria-hidden="true">
       <span>Gebucht</span>
-      <span class="kk-summe-wert">von {summe}</span>
+      <span class="kk-summe-wert"><span data-kk-summe></span>von {summe}</span>
     </p>
     <p class="kk-fuss">Im Browser gerechnet,<br />nirgends gespeichert.</p>
   </nav>
@@ -114,6 +114,40 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   for (const el of document.querySelectorAll<HTMLElement>('[data-kk-heute]')) {
     el.textContent = `${datum} · ${zeit} Uhr, Ortszeit`
     el.hidden = false
+  }
+
+  /*
+   * Stand und Summe als Text. Die Werte rechnen weiter die Animationen aus; das
+   * Skript liest sie nur ab und schreibt sie hin. Grund: Safari zeichnet einen
+   * CSS-Zähler in `::before` nicht neu, während eine scrollgetriebene Animation
+   * ihn ändert (auf dem iPhone blieb „0 %“ stehen, während der Balken lief).
+   * Ohne Skript bleiben die Zähler in CSS.
+   */
+  const rand = document.querySelector<HTMLElement>('.kk-rand')
+  const lesen = rand?.querySelector<HTMLElement>('.kk-lesen')
+  const prozent = rand?.querySelector<HTMLElement>('[data-kk-prozent]')
+  const summe = rand?.querySelector<HTMLElement>('[data-kk-summe]')
+  const posten = [...(rand?.querySelectorAll<HTMLElement>('.kk-posten') ?? [])]
+  const wert = (el: HTMLElement, name: string) =>
+    Math.round(Number(getComputedStyle(el).getPropertyValue(name)))
+
+  if (rand && lesen && prozent && summe && Number.isFinite(wert(lesen, '--kk-gelesen'))) {
+    let bild = 0
+    const schreiben = () => {
+      bild = 0
+      prozent.textContent = `${wert(lesen, '--kk-gelesen')} %`
+      summe.textContent = `${posten.reduce((s, p) => s + (wert(p, '--kk-zaehlt') || 0), 0)} `
+    }
+    const planen = () => {
+      if (!bild) bild = requestAnimationFrame(schreiben)
+    }
+    rand.classList.add('kk-js')
+    schreiben()
+    // Die Scroll-Animationen haben erst nach dem ersten Bild ihren Stand; dann noch einmal ablesen.
+    requestAnimationFrame(() => requestAnimationFrame(schreiben))
+    addEventListener('load', planen)
+    addEventListener('scroll', planen, { passive: true })
+    addEventListener('resize', planen)
   }
 </script>
 
@@ -137,6 +171,11 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   @property --kk-ab {
     syntax: '<number>';
     inherits: false;
+    initial-value: 0;
+  }
+  @property --kk-gelandet {
+    syntax: '<number>';
+    inherits: true;
     initial-value: 0;
   }
   @property --kk-gelesen {
@@ -176,6 +215,8 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     margin-top: -1px;
     padding: 1px 1.25rem 1.6rem;
     counter-reset: kk-summe;
+    /* Schmal landet der Kopf auf dem Rumpf; daran liest die Zeile im Kopf ab, wann. */
+    view-timeline-name: --kk-rumpf;
   }
   .kk-kopf p,
   .kk-rumpf p {
@@ -205,11 +246,13 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
     column-gap: 0.5rem;
     align-items: center;
     color: var(--color-fg);
-    opacity: calc(var(--kk-an) - var(--kk-ab));
+    opacity: calc((var(--kk-an) - var(--kk-ab)) * (1 - var(--kk-gelandet)));
   }
+  /* Der Titel steht vor dem ersten Posten und wieder, wenn der Kopf auf dem Rumpf gelandet ist. */
   .kk-ticker li.kk-titel {
     display: block;
     color: inherit;
+    opacity: max(calc(var(--kk-an) - var(--kk-ab)), var(--kk-gelandet));
   }
   .kk-ticker-label {
     overflow: hidden;
@@ -246,6 +289,11 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   .kk-prozent::before {
     counter-reset: kk-gelesen var(--kk-gelesen);
     content: counter(kk-gelesen) ' %';
+  }
+  /* Mit Skript stehen Stand und Summe als Text da (siehe Skript oben). */
+  .kk-js .kk-prozent::before,
+  .kk-js .kk-summe-wert::before {
+    content: none;
   }
 
   .kk-datum,
@@ -412,6 +460,11 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
           display: grid;
           flex: 0 1 10rem;
           min-width: 0;
+          animation-name: kk-landen;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: --kk-rumpf;
+          animation-range: entry 0px entry 3rem;
         }
         .kk-ticker li {
           animation-name: var(--kk-namen);
@@ -435,6 +488,14 @@ const unten = `polygon(0 0, 100% 0, ${kante((i) => (i % 2 ? 'calc(100% - 0.4rem)
   @keyframes kk-ausgeben {
     from {
       translate: 0 100%;
+    }
+  }
+  @keyframes kk-landen {
+    from {
+      --kk-gelandet: 0;
+    }
+    to {
+      --kk-gelandet: 1;
     }
   }
   @keyframes kk-an {

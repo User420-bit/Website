@@ -59,7 +59,8 @@ const posten: Posten[] = [
     : []),
 ]
 const zeitleiste = (anker: string) => `view-timeline-name: --kk-${anker}`
-const scope = `timeline-scope: ${posten.map((p) => `--kk-${p.anker}`).join(', ')}`
+// Dazu `--kk-rumpf`: Der Kopf des Zettels liest daran ab, wann er schmal auf seinem Rumpf landet.
+const scope = `timeline-scope: ${[...posten.map((p) => `--kk-${p.anker}`), '--kk-rumpf'].join(', ')}`
 
 // Wie in ProjectPage: Überschrift über dem Inhalt, Haarlinie oben.
 const block = 'mt-12 border-t border-border pt-6'

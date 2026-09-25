@@ -629,6 +629,12 @@ bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatt
 zehn Szenen kommen ohne aus; Zähler laufen über `@property` und `counter-reset`), und Zahlen, die wie
 echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bildunterschrift Beispieldaten.
 
+**Zähler und Safari** (2026-09-25). Safari zeichnet einen CSS-Zähler in `::before` nicht neu, solange
+eine scrollgetriebene Animation seinen Wert ändert: Kleinkram zeigte auf dem iPhone „0 %“ bei fast
+vollem Balken. Zahlen, die beim Scrollen laufen, rechnet deshalb weiter die Animation, ein kleines
+Skript liest sie per `getComputedStyle` ab und schreibt sie als Text. Ohne Skript bleibt der Zähler
+in CSS.
+
 **Auf dem Handy** (entschieden am 2026-09-25). Die Bühne muss dort im ersten Bildschirm anfangen und
 ihr Merkmal zeigen, nicht erst nach mehreren Bildschirmen Text. Gemessen wird bei 390 × 664 px
 (Safari mit Leisten): Die Oberkante des Merkmals liegt unter 620 px. Drei Regeln folgen daraus, dazu der
