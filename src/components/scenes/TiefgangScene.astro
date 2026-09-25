@@ -391,10 +391,20 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       },
       { passive: true },
     )
+    /*
+     * Neuer Umbruch, neue Längen: Der Stollen wird ab der jetzigen Front neu
+     * vermessen, aber nur, wenn sich die Breite ändert. Safari auf dem iPhone
+     * meldet beim schnellen Scrollen ein `resize`, sobald die Adressleiste ein-
+     * oder ausfährt; darauf zurückgesetzt, wuchs der gegrabene Stollen unter der
+     * Front wieder zu.
+     */
+    let breite = innerWidth
     addEventListener('resize', () => {
-      // Neuer Umbruch, neue Längen: Der Stollen wird ab der jetzigen Front neu vermessen.
-      gegraben = 0
-      frisch = true
+      if (innerWidth !== breite) {
+        breite = innerWidth
+        gegraben = 0
+        frisch = true
+      }
       planen()
     })
     tg.classList.add('tg-live')
