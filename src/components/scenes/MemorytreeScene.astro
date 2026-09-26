@@ -9,6 +9,8 @@
  *
  * Kein JavaScript: Radio-Buttons, die Lage jedes Fotos steht je Sicht in
  * CSS-Variablen, `:has()` schaltet um, `transition` führt die Fotos hinüber.
+ * Bewegt werden nur `translate`, `rotate` und `scale`: Die laufen auf dem
+ * Compositor, ohne Layout und ohne den Baum je Frame neu zu malen.
  * Ohne `:has()` bleibt der Baum stehen und alle vier Texte stehen darunter.
  * Beim Laden treibt der Baum aus: Äste vom Boden her, dann das Laub, dann die
  * Fotos. Mit reduzierter Bewegung steht alles sofort, Wechsel ohne Übergang.
@@ -71,9 +73,15 @@ const lage = (f: (typeof fotos)[number], i: number) =>
     ),
   ].join('; ')
 
-/* Größen je Sicht und der Punkt, von dem aus die Krone austreibt, als Variablen für das CSS. */
+/*
+ * Größen je Sicht und der Punkt, von dem aus die Krone austreibt, als Variablen für das CSS.
+ * Die Basis ist die größte Kantenlänge: Jedes Foto wird in dieser Größe gesetzt und nur
+ * verkleinert, damit es nach dem Skalieren scharf bleibt.
+ */
+const basis = Math.max(...Object.values(GROESSE), ...fotos.map((f) => f.baum.s))
 const wurzel = [
   `--mt-austrieb: ${AUSTRIEB.x}px ${AUSTRIEB.y}px`,
+  `--mt-basis: ${basis}`,
   ...Object.entries(GROESSE).map(([sicht, s]) => `--${sicht}-s: ${s}`),
 ].join('; ')
 
@@ -328,24 +336,34 @@ const zeitLinie = fotos.map((f) => f.zeit)
     opacity: 0;
   }
 
-  /* Ein Foto: Abzug mit Papierrand, Lage und Größe je Sicht. */
+  /*
+   * Ein Foto: Abzug mit Papierrand, Lage und Größe je Sicht. Jedes Foto liegt
+   * in der Basisgröße oben links im Feld; `translate` setzt die Mitte auf den
+   * Punkt der Sicht (eine Einheit ist 1/4 cqi, auch senkrecht, weil das Feld
+   * 400 × 420 misst), `scale` bringt es auf seine Größe. Kante, Ecken und die
+   * Spitze der Markierung rechnen die Skalierung heraus, damit sie so dick
+   * bleiben, wie sie gemeint sind.
+   */
   .foto {
     --x: var(--baum-x);
     --y: var(--baum-y);
     --r: var(--baum-r);
     --s: var(--baum-s);
-    --rand: 0.9cqi;
+    /* Papierrand in cqi, als Zahl. */
+    --rand: 0.9;
     --rund: 2px;
+    --gegen: calc(var(--mt-basis) / var(--s));
     position: absolute;
-    left: calc(var(--x) / 4 * 1%);
-    top: calc(var(--y) / 4.2 * 1%);
-    width: calc(var(--s) / 4 * 1%);
+    left: 0;
+    top: 0;
+    width: calc(var(--mt-basis) / 4 * 1cqi);
     aspect-ratio: 1;
-    translate: -50% -50%;
+    translate: calc((var(--x) - var(--mt-basis) / 2) / 4 * 1cqi)
+      calc((var(--y) - var(--mt-basis) / 2) / 4 * 1cqi);
     rotate: calc(var(--r) * 1deg);
-    padding: var(--rand);
-    border: 1px solid var(--mt-kante);
-    border-radius: var(--rund);
+    scale: calc(var(--s) / var(--mt-basis));
+    border: calc(1px * var(--gegen)) solid var(--mt-kante);
+    border-radius: calc(var(--rund) * var(--gegen));
     background: var(--mt-papier);
   }
   /* Die Spitze der Markierung, nur auf der Karte. */
@@ -355,16 +373,18 @@ const zeitLinie = fotos.map((f) => f.zeit)
     top: 100%;
     left: 50%;
     translate: -50% 0;
-    border: 0.9cqi solid transparent;
-    border-top: 1.4cqi solid var(--mt-kante);
+    border: calc(0.9cqi * var(--gegen)) solid transparent;
+    border-top: calc(1.4cqi * var(--gegen)) solid var(--mt-kante);
     opacity: 0;
   }
+  /* Der Papierrand als Verkleinerung des Bilds im Abzug, nicht als `padding`. */
   .foto-bild {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: var(--rund);
+    scale: calc(1 - 8 * var(--rand) / var(--s));
+    border-radius: calc(var(--rund) * var(--gegen));
   }
   .foto-bild :global(img) {
     display: block;
@@ -394,7 +414,7 @@ const zeitLinie = fotos.map((f) => f.zeit)
       --r: var(--karte-r);
       --s: var(--karte-s);
       --rund: 50%;
-      --rand: 0.6cqi;
+      --rand: 0.6;
     }
     .foto::after {
       opacity: 1;
@@ -412,7 +432,7 @@ const zeitLinie = fotos.map((f) => f.zeit)
       --y: var(--galerie-y);
       --r: var(--galerie-r);
       --s: var(--galerie-s);
-      --rand: 0px;
+      --rand: 0;
       --rund: 3px;
     }
     .schicht-baum {
@@ -429,11 +449,14 @@ const zeitLinie = fotos.map((f) => f.zeit)
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .foto {
-      transition-property: left, top, width, rotate, padding, border-radius;
+    .foto,
+    .foto-bild {
+      transition-property: translate, rotate, scale, border-radius;
       transition-duration: 700ms;
       transition-timing-function: var(--ease-quiet);
       transition-delay: calc(var(--i) * 35ms);
+    }
+    .foto {
       animation: mt-abzug 520ms var(--ease-quiet) backwards;
       animation-delay: calc(1500ms + var(--i) * 110ms);
     }
@@ -489,10 +512,11 @@ const zeitLinie = fotos.map((f) => f.zeit)
       scale: 0.6;
     }
   }
+  /* `scale` trägt schon die Größe des Fotos; der Abzug beginnt bei 70 % davon. */
   @keyframes mt-abzug {
     from {
       opacity: 0;
-      scale: 0.7;
+      scale: calc(0.7 * var(--s) / var(--mt-basis));
     }
   }
 </style>
