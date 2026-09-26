@@ -228,12 +228,42 @@
   }
 }
 
-/* Seitenwechsel: ein kurzes Ueberblenden, der Header bleibt stehen. */
+/*
+ * Seitenwechsel: ein kurzes Ueberblenden, der Header bleibt stehen. Dazu
+ * waechst das Bildfeld einer Kachel in das erste Bild der Projektseite und
+ * beim Zurueck wieder in die Kachel: Beide tragen `data-uebergang`, der Name
+ * `projekt-<slug>` kommt ueber `--uebergang` (`uebergang` in src/lib/site.ts).
+ * Die Seitenverhaeltnisse unterscheiden sich; `overflow: clip` schneidet den
+ * wachsenden Rahmen zu, statt die Bilder zu verzerren.
+ *
+ * Den Namen tragen die Elemente nur waehrend des Uebergangs: Ein Name macht
+ * das Element zum eigenen Stapelkontext, und der laege dann ueber dem
+ * gestreckten Link der Buehne und schluckte den Klick. Was ausserhalb des
+ * Fensters liegt, nimmt `ProjectTransition` vorher aus dem Spiel.
+ */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
   }
   ::view-transition-group(root) {
+    animation-duration: var(--duration-base);
+  }
+  :root:active-view-transition [data-uebergang] {
+    view-transition-name: var(--uebergang, none);
+    view-transition-class: projektbild;
+  }
+  ::view-transition-group(.projektbild) {
+    animation-duration: var(--duration-slow);
+    animation-timing-function: var(--ease-quiet);
+    overflow: clip;
+  }
+  /* Das alte Bild geht schnell, damit es nicht vergroessert ueber dem neuen steht. */
+  ::view-transition-old(.projektbild) {
+    animation-duration: var(--duration-fast);
+  }
+  /* Ohne Gegenstueck (die uebrigen Kacheln) blendet ein Bild so schnell wie die Seite. */
+  ::view-transition-old(.projektbild):only-child,
+  ::view-transition-new(.projektbild):only-child {
     animation-duration: var(--duration-base);
   }
 }

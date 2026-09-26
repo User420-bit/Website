@@ -568,7 +568,8 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Kachel** (`ProjectTile`): Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
   Werkbankschwarz), darunter Titel in Title Small, der erste Satz der summary in Body Small und Art ·
   Zeitraum. Kein Kasten um die Kachel. Der Titel-Link ist auf die ganze Kachel gestreckt; bei Hover
-  oder Fokus zieht der Unterstrich auf und der Rahmen des Bildfelds dunkelt auf `fg/40`.
+  oder Fokus zieht der Unterstrich auf und der Rahmen des Bildfelds dunkelt auf `fg/40`. Beim Klick
+  wächst das Bildfeld in die Projektseite (Bewegung, Seitenwechsel).
 - **Satzkachel:** Ohne Screenshot steht der erste Satz der summary im Bildfeld, oben links, 500,
   Bleistiftgrau, Zeilenhöhe 1,2. Die Größe folgt der Satzlänge und der Kachelbreite (5 bis 8,5 `cqi`,
   Innenabstand 6 `cqi`), damit der Satz das Feld füllt, ohne überzulaufen. Unter dem Titel steht er
@@ -735,7 +736,12 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
   Plus wird Minus.
 - **Header-Haarlinie:** erscheint scrollgesteuert zwischen 0 und 4rem.
 - **Seitenwechsel:** native View Transition zwischen Dokumenten (`@view-transition { navigation: auto }`,
-  200 ms); der Header trägt einen eigenen `view-transition-name` und bleibt stehen.
+  200 ms); der Header trägt einen eigenen `view-transition-name` und bleibt stehen. Dazu wächst das
+  Bildfeld der Kachel, der Bühne oben oder der Zeile unter `/projekte/` in 320 ms in das erste große
+  Bild der Projektseite und beim Zurück wieder hinein (`data-uebergang`, Name `projekt-<slug>`). Der
+  Rahmen schneidet zu (`overflow: clip`), statt zu verzerren; das alte Bild blendet in 120 ms aus,
+  damit es nicht vergrößert über dem neuen steht. Namen gelten nur während des Übergangs und nur für
+  Elemente im Fenster (`ProjectTransition`); ohne Gegenstück im Fenster blendet die Seite nur über.
 - **Kopier-Rückmeldung:** der Statustext erscheint und verschwindet.
 - **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
   wechseln ohne Übergang.
@@ -749,8 +755,11 @@ sofort. Alles liegt hinter `prefers-reduced-motion`; ohne Bewegung ist jeder Inh
 ### Skripte
 
 Kein externes Skript. Drei winzige Inline-Skripte (`NavHighlight`, `CopyEmail`, `ProjectShowcase`),
-jeweils ohne Import und unter 4 KB, damit Astro sie inline ausliefert. Alles andere funktioniert ohne
-JavaScript; ohne Skript zeigt die Bühne das erste Projekt der Auswahl, und Blättern entfällt.
+jeweils ohne Import und unter 4 KB, damit Astro sie inline ausliefert. Dazu `ProjectTransition` als
+`is:inline` im `<head>`, weil `pagereveal` vor dem ersten Bild der neuen Seite feuert: Es nimmt
+Elementen außerhalb des Fensters den Übergangsnamen. Alles andere funktioniert ohne JavaScript; ohne
+Skript zeigt die Bühne das erste Projekt der Auswahl, Blättern entfällt, und jedes Übergangspaar
+morpht, auch von außerhalb des Fensters.
 
 ## Do's and Don'ts
 
@@ -774,6 +783,8 @@ JavaScript; ohne Skript zeigt die Bühne das erste Projekt der Auswahl, und Blä
 - **Do** einer neuen Referenz eine Szene geben, die genau ein Merkmal aus ihrer Projektdatei ins Bild
   setzt, mit eigenen Variablen, Dunkel-Zwilling, Endzustand ohne Bewegung und der Bildunterschrift
   „Szene · … Kein Screenshot.“
+- **Do** jeder Projektseite genau ein Übergangsziel geben: `data-uebergang` am ersten großen Bild im
+  ersten Bildschirm, meist der Bühne. `scripts/verify-build.mjs` prüft es.
 
 ### Don't:
 

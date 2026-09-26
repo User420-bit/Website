@@ -172,7 +172,7 @@ const stationen = gesetzt.filter((f) => f.station)
 const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3)}%`
 ---
 
-<figure class="ds-raum m-0" data-ds-raum>
+<figure class="ds-raum m-0" data-ds-raum data-uebergang>
   <div class="ds-bild">
     <svg viewBox={`0 0 ${B} ${H}`} aria-hidden="true">
       <path class="wand-l" d={wand.links}></path>

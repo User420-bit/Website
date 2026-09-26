@@ -5,12 +5,14 @@
  * (`ProjectShowcase`).
  * Bewusst ohne Technik-Namen — die stehen auf der Projektseite. Stattdessen
  * der Stand: Kunden fragen, ob es laeuft, nicht womit.
+ * Der Screenshot wächst beim Klick in das erste Bild der Projektseite
+ * (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import Arrow from '@/components/Arrow.astro'
 import KindLabel from '@/components/KindLabel.astro'
-import { firstSentence, href, leitbild } from '@/lib/site'
+import { firstSentence, href, leitbild, uebergang } from '@/lib/site'
 
 interface Props {
   projekt: CollectionEntry<'projekte'>
@@ -56,6 +58,8 @@ const screenshot = leitbild(screenshots)
           widths={[480, 960]}
           sizes="(min-width: 1024px) 36rem, 92vw"
           loading="lazy"
+          data-uebergang
+          style={uebergang(projekt.id)}
         />
       )
     }

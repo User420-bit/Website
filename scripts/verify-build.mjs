@@ -88,6 +88,23 @@ for (const { route } of projekte.filter((p) => !p.published)) {
   }
 }
 
+// Uebergang Kachel -> Projektseite (DESIGN.md, Bewegung): Jede Projektseite
+// markiert genau ein Ziel, und die Startseite hat fuer jedes Projekt ein
+// Bildfeld mit demselben Namen. Zwei Ziele auf einer Seite brechen den
+// Uebergang im Browser ab, ohne Ziel blendet die Kachel nur aus.
+const ohneSkripte = (html) => html.replace(/<(script|style)\b[\s\S]*?<\/\1>/g, '')
+for (const { route, published } of projekte) {
+  const html = published && pages.get(route)
+  if (!html) continue
+  const name = `--uebergang: projekt-${route.split('/').pop()}`
+  const ziele = ohneSkripte(html).match(/\sdata-uebergang(?=[\s>=/])/g)?.length ?? 0
+  if (ziele !== 1) {
+    fail(`/${route}: erwartet genau ein Uebergangsziel (data-uebergang), gefunden ${ziele}`)
+  }
+  if (!html.includes(name)) fail(`/${route}: der <article> setzt ${name} nicht`)
+  if (!pages.get('')?.includes(name)) fail(`Startseite: kein Bildfeld mit ${name}`)
+}
+
 if (!existsSync(join(DIST, '404.html'))) fail('404.html fehlt')
 if (!existsSync(join(DIST, 'sitemap-index.xml'))) fail('sitemap-index.xml fehlt')
 if (!existsSync(join(DIST, 'robots.txt'))) fail('robots.txt fehlt')

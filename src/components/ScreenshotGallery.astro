@@ -23,9 +23,15 @@ interface Props {
   shots: readonly Shot[]
   /** Projekttitel, für die Kopfzeile der Lightbox. */
   title: string
+  /**
+   * Das Leitbild ist das Ziel des Übergangs von der Kachel (`data-uebergang`,
+   * siehe ProjectPage). Nur setzen, wenn es im ersten Bildschirm steht und die
+   * Seite kein anderes Ziel markiert.
+   */
+  uebergang?: boolean
 }
 
-const { shots, title } = Astro.props
+const { shots, title, uebergang = false } = Astro.props
 
 const hochformat = (shot: Shot) => shot.image.height > shot.image.width
 // Querformate zuerst, das erste davon ist das Leitbild. Hochformate (Handy, Dialoge) danach.
@@ -49,6 +55,7 @@ const knopf =
             class:list={[knopf, 'w-full']}
             popovertarget={id(leitbild)}
             aria-label={`Bild vergrößern: ${leitbild.caption}`}
+            data-uebergang={uebergang || undefined}
           >
             <Image
               class="block w-full"

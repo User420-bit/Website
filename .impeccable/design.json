@@ -328,6 +328,11 @@
         "purpose": "Nativer Seitenwechsel zwischen Dokumenten, der Header bleibt stehen."
       },
       {
+        "name": "project-transition",
+        "value": ":root:active-view-transition [data-uebergang] { view-transition-name: var(--uebergang) /* projekt-<slug> */; view-transition-class: projektbild }; ::view-transition-group(.projektbild) 320ms ease-quiet, overflow: clip; ::view-transition-old(.projektbild) 120ms; ohne Gegenstück 200ms",
+        "purpose": "Das Bildfeld von Kachel, Bühne oder Zeile wächst in das erste große Bild der Projektseite und beim Zurück wieder hinein. Namen nur während des Übergangs und nur im Fenster (ProjectTransition, is:inline im <head>)."
+      },
+      {
         "name": "copy-feedback",
         "value": "role=status Text erscheint, verschwindet nach 2000ms",
         "purpose": "Rückmeldung von „Adresse kopieren“."

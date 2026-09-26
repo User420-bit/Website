@@ -17,6 +17,13 @@
  *
  * `hide` blendet Standardteile aus, wenn die Seitenkomponente sie selbst
  * anders zeigt. `articleClass` hängt Klassen an den `<article>`.
+ *
+ * Übergang von der Kachel (DESIGN.md, Bewegung): Der `<article>` trägt den
+ * Namen `projekt-<slug>`, genau ein Element darin markiert mit
+ * `data-uebergang` das erste große Bild im ersten Bildschirm, meist die Bühne.
+ * Dorthin wächst das Bildfeld der Kachel. Welches es ist, entscheidet die
+ * Seiten- oder Szenenkomponente; `scripts/verify-build.mjs` prüft, dass es
+ * genau eins gibt.
  */
 import ProjectNav from '@/components/ProjectNav.astro'
 import type { CollectionEntry } from 'astro:content'
@@ -28,7 +35,7 @@ import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
 import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import { href } from '@/lib/site'
+import { href, uebergang } from '@/lib/site'
 
 export type Projekt = CollectionEntry<'projekte'>
 export type Teil =
@@ -67,7 +74,7 @@ const lists = [
 ---
 
 <BaseLayout title={`${data.title} – Klartext`} description={data.summary}>
-  <article class:list={['pt-6 pb-12 sm:py-16', articleClass]}>
+  <article class:list={['pt-6 pb-12 sm:py-16', articleClass]} style={uebergang(projekt.id)}>
     {
       Astro.slots.has('hero') ? (
         <slot name="hero" />
