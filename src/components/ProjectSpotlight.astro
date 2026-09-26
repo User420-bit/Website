@@ -10,12 +10,15 @@
  * immer genau eine, die übrigen tragen `hidden`. Die Blättern-Knöpfe gehören
  * der Auswahl, nicht der Bühne, und stehen oben rechts neben dem Titel;
  * `blaettern` hält ihnen dort Platz frei.
+ *
+ * Beim Klick wächst der Screenshot, ohne ihn die große summary, in das erste
+ * Bild der Projektseite (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import Arrow from '@/components/Arrow.astro'
 import KindLabel from '@/components/KindLabel.astro'
-import { firstSentence, href, leitbild } from '@/lib/site'
+import { firstSentence, href, leitbild, uebergang } from '@/lib/site'
 
 interface Props {
   projekt: CollectionEntry<'projekte'>
@@ -50,7 +53,11 @@ const bild = leitbild(screenshots)
 
   {
     bild ? (
-      <div class="mt-4 aspect-video overflow-hidden rounded-sm border border-border transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none">
+      <div
+        class="mt-4 aspect-video overflow-hidden rounded-sm border border-border transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
+        data-uebergang
+        style={uebergang(projekt.id)}
+      >
         <Image
           class="h-full w-full object-cover object-top"
           src={bild.image}
@@ -64,6 +71,8 @@ const bild = leitbild(screenshots)
       <p
         aria-hidden="true"
         class="mt-6 mb-0 max-w-[36ch] text-2xl leading-[1.25] font-medium tracking-tight text-balance text-fg-muted sm:text-3xl"
+        data-uebergang
+        style={uebergang(projekt.id)}
       >
         {summary}
       </p>

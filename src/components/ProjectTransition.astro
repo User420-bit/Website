@@ -1,0 +1,28 @@
+---
+/**
+ * Übergang Kachel ↔ Projektseite (DESIGN.md, Bewegung): Den Namen bekommt nur
+ * ein `data-uebergang`-Element, das im Fenster steht. Sonst flöge die Bühne
+ * nach dem Lesen einer Projektseite von weit oben in ihre Kachel, oder eine
+ * Kachel von außerhalb des Fensters auf die Projektseite; so blenden beide
+ * nur über.
+ *
+ * `is:inline` im `<head>`, weil `pagereveal` vor dem ersten Bild der neuen
+ * Seite feuert und ein Modul-Skript dann noch nicht liefe. Ohne Skript morpht
+ * jedes Paar, auch von außerhalb des Fensters.
+ */
+---
+
+<script is:inline>
+  ;(() => {
+    const pruefe = (event) => {
+      if (!event.viewTransition) return
+      for (const el of document.querySelectorAll('[data-uebergang]')) {
+        const rahmen = el.getBoundingClientRect()
+        const imFenster = rahmen.width > 0 && rahmen.bottom > 0 && rahmen.top < innerHeight
+        el.style.viewTransitionName = imFenster ? '' : 'none'
+      }
+    }
+    addEventListener('pageswap', pruefe)
+    addEventListener('pagereveal', pruefe)
+  })()
+</script>

@@ -113,7 +113,8 @@ const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
       {
         data.screenshots.length > 0 && (
           <div id="belege" style={zeitleiste('belege')}>
-            <ScreenshotGallery shots={data.screenshots} title={data.title} />
+            {/* Das Leitbild zeigt, was die Kachel zeigt: Dorthin wächst sie. */}
+            <ScreenshotGallery shots={data.screenshots} title={data.title} uebergang />
           </div>
         )
       }

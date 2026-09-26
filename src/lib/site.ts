@@ -52,6 +52,16 @@ export function leitbild<T extends { image: { width: number; height: number } }>
   return screenshots.find((shot) => shot.image.width >= shot.image.height)
 }
 
+/**
+ * Name für den Übergang von der Kachel zur Projektseite (DESIGN.md, Bewegung),
+ * als Inline-Style. Kachel, Bühne und Zeile setzen ihn auf ihr Bildfeld, die
+ * Projektseite auf ihren `<article>`. Wirksam wird er nur an einem Element mit
+ * `data-uebergang`, davon trägt jede Seite je Projekt höchstens eins.
+ */
+export function uebergang(id: string): string {
+  return `--uebergang: projekt-${id}`
+}
+
 export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',

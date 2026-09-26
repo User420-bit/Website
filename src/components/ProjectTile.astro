@@ -14,11 +14,14 @@
  * Wie in den Zeilen ist der Titel-Link auf die ganze Kachel gestreckt, der
  * Fokus bleibt am Titel. Das Bild ist hier Vorschau, kein Inhalt: `alt=""`,
  * die Projektseite zeigt es mit Bildunterschrift.
+ *
+ * Beim Klick wächst das Bildfeld in das erste Bild der Projektseite
+ * (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import KindLabel from '@/components/KindLabel.astro'
-import { firstSentence, href, leitbild } from '@/lib/site'
+import { firstSentence, href, leitbild, uebergang } from '@/lib/site'
 
 interface Props {
   projekt: CollectionEntry<'projekte'>
@@ -46,6 +49,8 @@ const satzGroesse =
 <li class="group relative" data-kachel hidden={hidden}>
   <div
     class="@container aspect-video overflow-hidden rounded-sm border border-border bg-bg-elevated transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
+    data-uebergang
+    style={uebergang(projekt.id)}
   >
     {
       bild ? (
