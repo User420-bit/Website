@@ -11,6 +11,7 @@ import ProjectShowcase from '@/components/ProjectShowcase.astro'
 import Section from '@/components/Section.astro'
 import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
+import rosenheimerLand from '@/assets/kontakt/rosenheimer-land.jpg'
 
 const company = (await getEntry('company', 'main'))!.data
 const profile = (await getEntry('profile', 'main'))!.data
@@ -295,5 +296,26 @@ const schritte = contact.steps.map((step, i) =>
         <NumberedRows items={schritte} class="mt-3" />
       </div>
     </div>
+
+    {
+      /*
+      Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer Land
+      von den Bergen aus. Unter dem Raster, damit die Adresse das eine grosse
+      Element des Bereichs bleibt. Beleg für den Ort, keine Stimmungsfläche.
+    */
+    }
+    <figure class="m-0 mt-12">
+      <Image
+        class="block h-auto w-full rounded-sm border border-border"
+        src={rosenheimerLand}
+        alt="Blick aus den Bergen nach Norden über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und der Simssee bis zum Horizont."
+        widths={[640, 1024, 1600, 2048]}
+        sizes="(min-width: 1024px) 64rem, calc(100vw - 2rem)"
+        loading="lazy"
+      />
+      <figcaption class="mt-3 text-xs text-fg-muted">
+        Das Rosenheimer Land, von den Bergen aus gesehen. Eigenes Foto.
+      </figcaption>
+    </figure>
   </Section>
 </BaseLayout>

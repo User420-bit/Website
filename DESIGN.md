@@ -684,6 +684,12 @@ Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung (Labe
 Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
 Adresse) und genau ein oranger Knopf.
 
+Unter dem Raster, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
+Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`), darunter die Bildunterschrift als
+Caption in Bleistiftgrau. Es belegt den Ort aus dem Hero („im Raum Rosenheim“) und steht deshalb
+hinter der Handlung, nie davor. Nur echte, eigene Aufnahmen aus der Region, ohne GPS- und
+EXIF-Daten im Repository.
+
 ### Containers
 
 Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle; auch die Kacheln der Startseite
