@@ -40,7 +40,7 @@ const projektRouten = Object.fromEntries(
 
 /** Route -> erwartete H1. */
 const ROUTES = {
-  '': 'Kleine Software, klar gebaut.',
+  '': 'Ihre Probleme, klar gelöst',
   impressum: 'Impressum',
   datenschutz: 'Datenschutzerklärung',
   projekte: 'Alle Arbeiten',
