@@ -1,0 +1,106 @@
+---
+/**
+ * Der Horizont am Ende der Startseite: ein eigenes Foto des Rosenheimer Landes
+ * über die volle Fensterbreite. Der Himmel läuft aus dem Seitenhintergrund
+ * heraus (Maske statt Kante), sodass der Kontakt ins Land übergeht, und die
+ * Seite endet auf dem Land; der Footer schließt direkt darunter an.
+ *
+ * Beim Hereinscrollen hebt sich die Landschaft um ein Sechstel ihrer Höhe,
+ * scrollgesteuert und nur mit `prefers-reduced-motion: no-preference`. Ohne
+ * Bewegung oder ohne `animation-timeline` (Firefox) steht der Endzustand.
+ *
+ * Die Bildunterschrift steht auf dem Wald. Der ist in beiden Farbmodi dunkel,
+ * deshalb ist die Schrift dort immer hell und kein Token (DESIGN.md, Horizont).
+ */
+import { Image } from 'astro:assets'
+import rosenheimerLand from '@/assets/kontakt/rosenheimer-land.jpg'
+---
+
+<figure class="horizont m-0">
+  <div class="horizont-flaeche">
+    <Image
+      class="horizont-bild"
+      src={rosenheimerLand}
+      alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
+      widths={[640, 960, 1280, 1920, 2576]}
+      sizes="(min-width: 640px) 100vw, 190vw"
+      loading="lazy"
+    />
+    <div class="relative mx-auto flex h-full max-w-5xl items-end px-4 pb-5 sm:pb-8">
+      <figcaption class="horizont-text m-0 text-xs sm:text-sm">
+        Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
+      </figcaption>
+    </div>
+  </div>
+</figure>
+
+<style>
+  /*
+   * Volle Fensterbreite aus der Spalte heraus wie die Bühne (ProjectScene):
+   * den Überstand um die Scrollleiste schneidet `overflow-x: clip` auf <body>.
+   * Die Maske lässt die obere Hälfte aus dem Seitenhintergrund auftauchen;
+   * darunter ist das Foto deckend.
+   */
+  .horizont-flaeche {
+    position: relative;
+    height: clamp(19rem, 42vw, 38rem);
+    margin-inline: calc(50% - 50vw);
+    /* `clip` statt `hidden`: kein Scroll-Container, sonst liefe die Zeitleiste ins Leere. */
+    overflow: clip;
+    view-timeline: --horizont;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 48%);
+  }
+
+  /*
+   * Das Bild ist 20 % höher als die Fläche. Ruhend steht es um diesen
+   * Überstand nach oben verschoben (Land im Bild); die Bewegung startet
+   * unverschoben, also mit mehr Himmel, und hebt das Land in den Rahmen.
+   */
+  .horizont-bild {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    width: 100%;
+    height: 120%;
+    max-width: none;
+    object-fit: cover;
+    object-position: 60% 70%;
+    transform: translateY(-16.667%);
+  }
+
+  .horizont-text {
+    color: oklch(0.97 0.003 80 / 0.9);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .horizont-bild {
+        /* Langschreibweise, sonst zieht der Minifier `animation-timeline` in die Kurzform. */
+        animation-name: horizont-heben;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --horizont;
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+
+  @keyframes horizont-heben {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-16.667%);
+    }
+  }
+
+  /* Im Dunkelmodus nimmt das Foto etwas Helligkeit zurück, damit der Himmel nicht blendet. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .horizont-bild {
+      filter: brightness(0.82);
+    }
+  }
+  :root[data-theme='dark'] .horizont-bild {
+    filter: brightness(0.82);
+  }
+</style>

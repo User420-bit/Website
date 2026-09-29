@@ -684,12 +684,17 @@ Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung (Labe
 Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
 Adresse) und genau ein oranger Knopf.
 
-Unter dem Raster, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
-Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`; unter 640 px als 4:3-Ausschnitt,
-der auf das Land zoomt), darunter die Bildunterschrift als
-Caption in Bleistiftgrau. Es belegt den Ort aus dem Hero („im Raum Rosenheim“) und steht deshalb
-hinter der Handlung, nie davor. Nur echte, eigene Aufnahmen aus der Region, ohne GPS- und
-EXIF-Daten im Repository.
+**Horizont** (`Horizont.astro`, entschieden am 2026-09-29). Unter dem Raster endet die Startseite
+auf einem eigenen Foto des Rosenheimer Landes, aufgenommen vom Breitenstein. Es steht über die volle
+Fensterbreite wie die Bühne, 19–38rem hoch (`clamp`, 42vw), ohne Rahmen. Die obere Hälfte läuft
+über eine Maske aus dem Seitenhintergrund heraus: Der Kontakt hat keine Kante zum Foto, er geht in
+den Himmel über. Unten stößt das Foto an den Footer; die Kontaktsektion hat dafür keinen
+Innenabstand unten, und eine negative Marge nimmt dem Footer seinen Abstand. Die Bildunterschrift
+steht auf dem Wald, an der Spalte ausgerichtet, immer hell (`oklch(0.97 0.003 80 / 0.9)`), weil der
+Wald in beiden Modi dunkel ist; das ist die einzige feste Schriftfarbe außerhalb der Bühne. Im
+Dunkelmodus nimmt das Foto 18 % Helligkeit zurück. Das Foto belegt den Ort aus dem Hero („im Raum
+Rosenheim“) und steht deshalb hinter der Handlung, nie davor und nie hinter Text. Nur echte, eigene
+Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository.
 
 ### Containers
 
@@ -753,6 +758,8 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
 - **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
   wechseln ohne Übergang.
 - **Ankersprünge:** `scroll-behavior: smooth`.
+- **Horizont:** beim Hereinscrollen hebt sich das Land um ein Sechstel der Fotohöhe in den Rahmen
+  (`view-timeline`, linear, von Eintritt bis vollständig sichtbar). Ruhend steht der Endzustand.
 - **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
   der Bühnenlizenz (siehe Components). Außerhalb der Bühne gilt die Liste oben unverändert.
 

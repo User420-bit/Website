@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Button from '@/components/Button.astro'
 import CopyEmail from '@/components/CopyEmail.astro'
+import Horizont from '@/components/Horizont.astro'
 import Disclosure from '@/components/Disclosure.astro'
 import InquiryPrompt from '@/components/InquiryPrompt.astro'
 import MetaList from '@/components/MetaList.astro'
@@ -11,7 +12,6 @@ import ProjectShowcase from '@/components/ProjectShowcase.astro'
 import Section from '@/components/Section.astro'
 import { href, mailto } from '@/lib/site'
 import { Image } from 'astro:assets'
-import rosenheimerLand from '@/assets/kontakt/rosenheimer-land.jpg'
 
 const company = (await getEntry('company', 'main'))!.data
 const profile = (await getEntry('profile', 'main'))!.data
@@ -278,7 +278,13 @@ const schritte = contact.steps.map((step, i) =>
     auf einer Hoehe.
   */
   }
-  <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
+  <Section
+    id="kontakt"
+    index="05"
+    title={contact.heading}
+    intro={contact.description}
+    class="pb-0 sm:pb-0"
+  >
     <div class="grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12">
       <div class="border-t border-border pt-6">
         <CopyEmail email={company.email} />
@@ -299,25 +305,13 @@ const schritte = contact.steps.map((step, i) =>
 
     {
       /*
-      Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer Land
-      vom Breitenstein aus. Unter dem Raster, damit die Adresse das eine grosse
-      Element des Bereichs bleibt. Beleg für den Ort, keine Stimmungsfläche.
-      Unter 640 px zeigt ein 4:3-Ausschnitt die Mitte grösser, sonst bliebe
-      vom Land nur ein Strich; `sizes` rechnet den Zoom (Faktor 1,84) mit ein.
+      Der Horizont: das Rosenheimer Land vom Breitenstein, über die volle
+      Breite. Der Himmel läuft aus dem Seitenhintergrund heraus, die Seite endet
+      auf dem Land. Die negative Marge zieht den Footer direkt darunter.
     */
     }
-    <figure class="m-0 mt-12">
-      <Image
-        class="block aspect-[4/3] h-auto w-full rounded-sm border border-border object-cover object-[60%_50%] sm:aspect-auto"
-        src={rosenheimerLand}
-        alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
-        widths={[640, 1024, 1600, 2048]}
-        sizes="(min-width: 1024px) 64rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
-        loading="lazy"
-      />
-      <figcaption class="mt-3 text-xs text-fg-muted">
-        Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
-      </figcaption>
-    </figure>
+    <div class="mt-6 -mb-16 sm:mt-8 sm:-mb-24">
+      <Horizont />
+    </div>
   </Section>
 </BaseLayout>
