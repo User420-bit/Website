@@ -445,8 +445,9 @@ const clips = await Promise.all(
 
   /*
    * Das Gerät: Titanrand als Fläche, darüber der schwarze Glasrand, darin der
-   * Bildschirm. Eine zweite Lage dahinter gibt dem Rand Tiefe, sobald sich
-   * das Telefon dreht; Tasten und Kamerasteuerung sitzen in dieser Tiefe.
+   * Bildschirm. Bewusst flach (kein `preserve-3d`): Safari sortiert ein Video
+   * in einem 3D-Kontext sonst hinter das schwarze Glas, und der Bildschirm
+   * bleibt schwarz. Die Drehung trägt das Gerät als Ganzes.
    */
   .iphone {
     position: relative;
@@ -466,15 +467,6 @@ const clips = await Promise.all(
       var(--av-rand);
     transform: rotateY(var(--av-dreh));
     transform-origin: 50% 100%;
-    transform-style: preserve-3d;
-  }
-  .iphone::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--av-rand-dunkel);
-    transform: translateZ(calc(var(--av-w) * -0.05));
   }
 
   .taste,
@@ -482,9 +474,10 @@ const clips = await Promise.all(
     position: absolute;
     width: calc(var(--av-w) * 0.016);
     border-radius: calc(var(--av-w) * 0.01);
-    transform: translateZ(calc(var(--av-w) * -0.025));
   }
+  /* Tasten hinter dem Rand, damit nur der Teil außerhalb zu sehen ist. */
   .taste {
+    z-index: -1;
     background: linear-gradient(
       90deg,
       var(--av-rand-dunkel),
@@ -520,7 +513,6 @@ const clips = await Promise.all(
     top: 57%;
     height: 10.5%;
     background: linear-gradient(90deg, #2c2c2e, #6e6e73 55%, #3a3a3c);
-    transform: none;
   }
 
   .glas {
