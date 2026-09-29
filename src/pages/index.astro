@@ -302,15 +302,17 @@ const schritte = contact.steps.map((step, i) =>
       Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer Land
       vom Breitenstein aus. Unter dem Raster, damit die Adresse das eine grosse
       Element des Bereichs bleibt. Beleg für den Ort, keine Stimmungsfläche.
+      Unter 640 px zeigt ein 4:3-Ausschnitt die Mitte grösser, sonst bliebe
+      vom Land nur ein Strich; `sizes` rechnet den Zoom (Faktor 1,84) mit ein.
     */
     }
     <figure class="m-0 mt-12">
       <Image
-        class="block h-auto w-full rounded-sm border border-border"
+        class="block aspect-[4/3] h-auto w-full rounded-sm border border-border object-cover object-[60%_50%] sm:aspect-auto"
         src={rosenheimerLand}
         alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
         widths={[640, 1024, 1600, 2048]}
-        sizes="(min-width: 1024px) 64rem, calc(100vw - 2rem)"
+        sizes="(min-width: 1024px) 64rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
         loading="lazy"
       />
       <figcaption class="mt-3 text-xs text-fg-muted">

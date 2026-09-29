@@ -685,7 +685,8 @@ Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. G
 Adresse) und genau ein oranger Knopf.
 
 Unter dem Raster, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
-Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`), darunter die Bildunterschrift als
+Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`; unter 640 px als 4:3-Ausschnitt,
+der auf das Land zoomt), darunter die Bildunterschrift als
 Caption in Bleistiftgrau. Es belegt den Ort aus dem Hero („im Raum Rosenheim“) und steht deshalb
 hinter der Handlung, nie davor. Nur echte, eigene Aufnahmen aus der Region, ohne GPS- und
 EXIF-Daten im Repository.
