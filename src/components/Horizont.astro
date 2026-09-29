@@ -1,100 +1,198 @@
 ---
 /**
- * Der Horizont am Ende der Startseite: ein eigenes Foto des Rosenheimer Landes
- * über die volle Fensterbreite. Der Himmel läuft aus dem Seitenhintergrund
- * heraus (Maske statt Kante), sodass der Kontakt ins Land übergeht, und die
- * Seite endet auf dem Land; der Footer schließt direkt darunter an.
+ * Kopf des Kapitels Kontakt auf dem Foto des Rosenheimer Landes (vom
+ * Breitenstein). Das Foto ist kein Bild unter dem Kontakt, sondern sein
+ * Grund: Nummer, Überschrift und Einleitung stehen auf dem Himmel, ab 640 px
+ * ab 1024 px daneben auch die Handlung (Slot: Adresse und Knopf), darunter
+ * das Land. Schmaler reicht der Himmel dafür nicht; dort folgt die Handlung direkt
+ * unter dem Foto auf dem Seitengrund. Dieselbe Reihenfolge, kein Doppel.
  *
- * Beim Hereinscrollen hebt sich die Landschaft um ein Sechstel ihrer Höhe,
- * scrollgesteuert und nur mit `prefers-reduced-motion: no-preference`. Ohne
- * Bewegung oder ohne `animation-timeline` (Firefox) steht der Endzustand.
+ * Raster über die volle Fensterbreite mit denselben Spalten wie der Kontakt
+ * darunter (3fr | 2fr, 3rem Abstand, 62rem Inhalt), damit alles an denselben
+ * Kanten steht. Das Foto liegt als eigene Ebene über den ersten beiden Zeilen.
  *
- * Die Bildunterschrift steht auf dem Wald. Der ist in beiden Farbmodi dunkel,
- * deshalb ist die Schrift dort immer hell und kein Token (DESIGN.md, Horizont).
+ * Auf dem Foto gelten helle Tokens (wie im Dunkelmodus), weil das Foto in
+ * beiden Modi derselbe Grund ist. Der obere Himmel hält gegen Weiß mindestens
+ * 5 : 1, ein Schleier von oben legt nach. Beim Scrollen gleitet das Foto
+ * langsamer als die Seite; die Schrift bewegt sich nie.
  */
 import { Image } from 'astro:assets'
 import rosenheimerLand from '@/assets/kontakt/rosenheimer-land.jpg'
+
+interface Props {
+  index: string
+  title: string
+  intro?: string
+}
+
+const { index, title, intro } = Astro.props
 ---
 
-<figure class="horizont m-0">
-  <div class="horizont-flaeche">
+<div class="horizont">
+  <div class="horizont-foto" aria-hidden="true">
     <Image
       class="horizont-bild"
       src={rosenheimerLand}
-      alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
+      alt=""
       widths={[640, 960, 1280, 1920, 2576]}
       sizes="(min-width: 640px) 100vw, 190vw"
       loading="lazy"
     />
-    <div class="relative mx-auto flex h-full max-w-5xl items-end px-4 pb-5 sm:pb-8">
-      <figcaption class="horizont-text m-0 text-xs sm:text-sm">
-        Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
-      </figcaption>
-    </div>
+    <div class="horizont-schleier"></div>
   </div>
-</figure>
+
+  <div class="horizont-kopf auf-foto pt-12 sm:pt-20">
+    <span aria-hidden="true" class="block text-sm text-fg-muted tabular-nums">{index}</span>
+    <h2 class="mt-1 mb-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+      {title}
+    </h2>
+    {intro && <p class="prose-flow mt-4 mb-0 max-w-[48ch] text-fg-muted">{intro}</p>}
+  </div>
+
+  <div class="horizont-aktion pt-10 sm:pt-20">
+    <slot />
+  </div>
+
+  <p class="horizont-land auf-foto m-0 pb-5 text-xs text-fg-muted sm:pb-8 sm:text-sm">
+    Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
+  </p>
+</div>
 
 <style>
   /*
-   * Volle Fensterbreite aus der Spalte heraus wie die Bühne (ProjectScene):
+   * Volle Fensterbreite aus der Spalte heraus wie die Bühne (ProjectScene);
    * den Überstand um die Scrollleiste schneidet `overflow-x: clip` auf <body>.
-   * Die Maske lässt die obere Hälfte aus dem Seitenhintergrund auftauchen;
-   * darunter ist das Foto deckend.
+   * `clip` statt `hidden`, sonst wäre das Raster ein Scroll-Container und die
+   * Zeitleiste liefe ins Leere.
    */
-  .horizont-flaeche {
-    position: relative;
-    height: clamp(19rem, 42vw, 38rem);
+  .horizont {
+    --rand: max(1rem, calc((100% - 62rem) / 2));
+    display: grid;
+    grid-template-columns:
+      [voll-start] var(--rand) [inhalt-start] minmax(0, 1fr) [inhalt-end] var(--rand)
+      [voll-end];
+    grid-template-rows: auto minmax(16rem, auto) auto;
     margin-inline: calc(50% - 50vw);
-    /* `clip` statt `hidden`: kein Scroll-Container, sonst liefe die Zeitleiste ins Leere. */
     overflow: clip;
     view-timeline: --horizont;
-    mask-image: linear-gradient(to bottom, transparent 0, #000 48%);
+  }
+
+  .horizont-foto {
+    grid-column: voll;
+    grid-row: 1 / 3;
+    position: relative;
+    overflow: clip;
+  }
+  .horizont-kopf {
+    grid-column: inhalt;
+    grid-row: 1;
+  }
+  .horizont-land {
+    grid-column: inhalt;
+    grid-row: 2;
+    align-self: end;
+  }
+  /* Positioniert wie `.auf-foto`, sonst malt die Fotoebene darüber. */
+  .horizont-aktion {
+    position: relative;
+    grid-column: inhalt;
+    grid-row: 3;
+  }
+
+  @media (width >= 40rem) {
+    .horizont {
+      grid-template-rows: auto minmax(clamp(16rem, 30vw, 26rem), auto) auto;
+    }
   }
 
   /*
-   * Das Bild ist 20 % höher als die Fläche. Ruhend steht es um diesen
-   * Überstand nach oben verschoben (Land im Bild); die Bewegung startet
-   * unverschoben, also mit mehr Himmel, und hebt das Land in den Rahmen.
+   * Erst ab 1024 px ist der Himmel breit genug für Kopf und Handlung
+   * nebeneinander; darunter folgt die Handlung dem Foto.
    */
+  @media (width >= 64rem) {
+    .horizont {
+      grid-template-columns:
+        [voll-start] var(--rand) [inhalt-start kopf-start] minmax(0, 3fr)
+        [kopf-end] 3rem [aktion-start] minmax(0, 2fr) [aktion-end inhalt-end] var(--rand)
+        [voll-end];
+      grid-template-rows: auto minmax(clamp(16rem, 30vw, 26rem), auto);
+    }
+    .horizont-kopf {
+      grid-column: kopf;
+    }
+    .horizont-aktion {
+      grid-column: aktion;
+      grid-row: 1;
+      --color-fg: oklch(0.99 0.002 80);
+      --color-fg-muted: oklch(0.93 0.006 80);
+      --color-border: oklch(0.99 0.002 80 / 0.45);
+      --color-accent: oklch(0.78 0.15 60);
+      --color-accent-fg: oklch(0.17 0.02 60);
+      color: var(--color-fg);
+    }
+  }
+
+  .auf-foto {
+    position: relative;
+    --color-fg: oklch(0.99 0.002 80);
+    --color-fg-muted: oklch(0.93 0.006 80);
+    --color-accent: oklch(0.78 0.15 60);
+    color: var(--color-fg);
+  }
+
+  /* 12 % höher als die Fläche, damit die Bewegung nie eine Kante zeigt. Ruhend: oben bündig. */
   .horizont-bild {
     position: absolute;
     inset-inline: 0;
     top: 0;
     width: 100%;
-    height: 120%;
+    height: 112%;
     max-width: none;
     object-fit: cover;
-    object-position: 60% 70%;
-    transform: translateY(-16.667%);
+    object-position: 60% 55%;
   }
 
-  .horizont-text {
-    color: oklch(0.97 0.003 80 / 0.9);
+  /*
+   * Zwei Schleier: oben für Kopf und Handlung auf dem Himmel, unten für die
+   * Bildunterschrift auf dem Land. Gemessen hält jede Schrift auf dem Foto
+   * mindestens 4,5 : 1 (DESIGN.md, Horizont).
+   */
+  .horizont-schleier {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        oklch(0.22 0.08 260 / 0.5),
+        oklch(0.22 0.08 260 / 0.38) 40%,
+        oklch(0.22 0.08 260 / 0) 70%
+      ),
+      linear-gradient(to top, oklch(0.15 0.02 150 / 0.6), oklch(0.15 0.02 150 / 0) 30%);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       .horizont-bild {
         /* Langschreibweise, sonst zieht der Minifier `animation-timeline` in die Kurzform. */
-        animation-name: horizont-heben;
+        animation-name: horizont-gleiten;
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: --horizont;
-        animation-range: entry 0% entry 100%;
+        animation-range: cover 0% cover 100%;
       }
     }
   }
 
-  @keyframes horizont-heben {
+  @keyframes horizont-gleiten {
     from {
-      transform: translateY(0);
+      transform: translateY(-10.714%);
     }
     to {
-      transform: translateY(-16.667%);
+      transform: translateY(0);
     }
   }
 
-  /* Im Dunkelmodus nimmt das Foto etwas Helligkeit zurück, damit der Himmel nicht blendet. */
+  /* Im Dunkelmodus nimmt das Foto Helligkeit zurück, damit es nicht blendet. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) .horizont-bild {
       filter: brightness(0.82);

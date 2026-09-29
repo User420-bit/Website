@@ -675,25 +675,29 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Ein Raster, keine Freischweber: ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit
-derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: die Adresse (`CopyEmail`),
-der Webmail-Hinweis
-als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
-Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
-Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung (Label in Tinte wie „Stand:“,
-Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
-Adresse) und genau ein oranger Knopf.
+Die Handlung steht auf dem Foto (siehe Horizont): die Adresse (`CopyEmail`), der Webmail-Hinweis als
+Caption und der einzige Primärbutton des Bereichs. Darunter ein Raster, keine Freischweber: ab 640 px
+zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit derselben Haarlinie und beginnen so auf
+einer Höhe. Links „Erreichbar“ mit der Meta-Liste (Ort, Profil, Code), rechts der Ablauf:
+Zwischenüberschrift „So läuft eine Anfrage ab“ und drei Nummernzeilen, jede mit einer Zeile
+„Zeitrahmen:“ unter der Erklärung (Label in Tinte wie „Stand:“, Text in Bleistiftgrau). Unter 640 px
+stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die Adresse) und genau ein oranger
+Knopf.
 
-**Horizont** (`Horizont.astro`, entschieden am 2026-09-29). Unter dem Raster endet die Startseite
-auf einem eigenen Foto des Rosenheimer Landes, aufgenommen vom Breitenstein. Es steht über die volle
-Fensterbreite wie die Bühne, 19–38rem hoch (`clamp`, 42vw), ohne Rahmen. Die obere Hälfte läuft
-über eine Maske aus dem Seitenhintergrund heraus: Der Kontakt hat keine Kante zum Foto, er geht in
-den Himmel über. Unten stößt das Foto an den Footer; die Kontaktsektion hat dafür keinen
-Innenabstand unten, und eine negative Marge nimmt dem Footer seinen Abstand. Die Bildunterschrift
-steht auf dem Wald, an der Spalte ausgerichtet, immer hell (`oklch(0.97 0.003 80 / 0.9)`), weil der
-Wald in beiden Modi dunkel ist; das ist die einzige feste Schriftfarbe außerhalb der Bühne. Im
-Dunkelmodus nimmt das Foto 18 % Helligkeit zurück. Das Foto belegt den Ort aus dem Hero („im Raum
-Rosenheim“) und steht deshalb hinter der Handlung, nie davor und nie hinter Text. Nur echte, eigene
+**Horizont** (`Horizont.astro`, entschieden am 2026-09-29). Der Kontakt beginnt nicht mit der
+Tintenlinie, sondern auf einem eigenen Foto des Rosenheimer Landes, aufgenommen vom Breitenstein, über
+die volle Fensterbreite. Es ist der Grund des Kapitels, kein Bild daneben: Nummer, Überschrift und
+Einleitung stehen auf dem Himmel, ab 1024 px daneben in der 2fr-Spalte auch die Handlung (Adresse,
+„Adresse kopieren“, Webmail-Hinweis, Primärbutton). Darunter bleibt das Land frei, unten links die
+Bildunterschrift. Schmaler reicht der Himmel nicht für beides; dort folgt die Handlung direkt unter
+dem Foto auf dem Seitengrund, in derselben Reihenfolge. Das Raster des Fotos hat dieselben Spalten
+wie der Kontakt darunter (3fr | 2fr, 3rem, 62rem Inhalt), alles steht an denselben Kanten.
+
+Auf dem Foto gelten helle Tokens (die Werte des Dunkelmodus), in beiden Modi, weil das Foto derselbe
+Grund bleibt; der Primärbutton wird dort zum hellen Orange mit dunkler Schrift. Zwei Schleier sichern
+die Lesbarkeit: oben ein Dunkelblau von 50 % auf 0 bei 70 % der Höhe, unten ein dunkles Grün für die
+Bildunterschrift. Gemessen hält jede Schrift auf dem Foto in hell und dunkel, von 390 bis 1920 px,
+mindestens 4,5 : 1. Im Dunkelmodus nimmt das Foto 18 % Helligkeit zurück. Nur echte, eigene
 Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository.
 
 ### Containers
@@ -758,8 +762,9 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
 - **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
   wechseln ohne Übergang.
 - **Ankersprünge:** `scroll-behavior: smooth`.
-- **Horizont:** beim Hereinscrollen hebt sich das Land um ein Sechstel der Fotohöhe in den Rahmen
-  (`view-timeline`, linear, von Eintritt bis vollständig sichtbar). Ruhend steht der Endzustand.
+- **Horizont:** das Foto gleitet beim Scrollen langsamer als die Seite (um ein Neuntel seiner Höhe,
+  `view-timeline`, linear, über den ganzen Durchlauf). Die Schrift darauf bewegt sich nie. Ruhend
+  steht das Foto oben bündig.
 - **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
   der Bühnenlizenz (siehe Components). Außerhalb der Bühne gilt die Liste oben unverändert.
 
