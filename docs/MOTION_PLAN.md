@@ -44,7 +44,7 @@ Datenschutzerklärung bleibt dadurch gültig, und `scripts/verify-build.mjs` bra
 |     | **Phase 1: die Arbeiten zeigen**                                       |          |                                     |                          |
 | 1   | Kachel wächst in die Projektseite                                      | klein    | erweitert „Seitenwechsel“           | umgesetzt (Abschnitt 3)  |
 | 2   | Echte Bildschirmaufnahmen in den Kacheln                               | groß     | neuer Eintrag nötig                 | offen, Entscheidung      |
-| 3   | Die Bühne oben spielt die Aufnahme                                     | mittel   | neuer Eintrag nötig                 | offen, hängt an 2        |
+| 3   | Die Bühne oben spielt die Aufnahme                                     | mittel   | neuer Eintrag nötig                 | Availably umgesetzt      |
 | 4   | Satzkacheln (NoteList, Feynman, Availably) bekommen Aufnahme oder Bild | mittel   | ändert „Don't: Szene in die Kachel“ | offen, Entscheidung      |
 |     | **Phase 2: Rhythmus über die Seite**                                   |          |                                     |                          |
 | 5   | Kapitel-Linie zieht beim Hereinscrollen auf                            | klein    | neuer Eintrag nötig                 | offen                    |
@@ -59,6 +59,12 @@ Datenschutzerklärung bleibt dadurch gültig, und `scripts/verify-build.mjs` bra
 | 12  | Loop des Bühnenprojekts neben der H1                                   | mittel   | ändert „Keine Hero-Animation“       | nach Phase 1 entscheiden |
 
 Notizen zu den offenen Punkten:
+
+- **3, Availably (2026-09-29):** zwei gezeichnete iPhone 16 Pro mit echten Clips aus zwei Simulatoren
+  (Quelle: `Availably/docs/vorschau/`, Briefing dort). Clips als MP4 (H.264, 540 px breit, 26 bis 89 KB)
+  unter `public/aufnahmen/availably/`; eine WebM-Fassung braucht es bei dieser Größe nicht. Die
+  iPhones stehen beim Laden auf, der erste Moment läuft einmal, dann ist Ruhe; Pause-Taste daneben.
+  Regel in `DESIGN.md` unter „Aufnahme statt Szene“.
 
 - **2 und 3:** Aufnahme mit Playwright (`scripts/screenshots.mjs` erweitern), Umwandlung mit ffmpeg
   in WebM und MP4, 4 bis 8 s, stumm, höchstens 500 KB je Clip, `preload="none"`, das heutige

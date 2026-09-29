@@ -148,7 +148,8 @@ Eine neue Referenz braucht keine Szene; ohne Eintrag sieht ihre Seite aus wie bi
 2. In `src/components/projekte/index.ts` unter dem Slug eintragen.
 3. Drei Dinge prüfen: hell und dunkel, mit `prefers-reduced-motion: reduce` (dann muss der Endzustand
    stehen), und dass die Bildunterschrift sagt, was zu sehen ist. „Kein Screenshot.“ hängt der Rahmen
-   selbst an.
+   selbst an. Zeigt die Bühne echte Aufnahmen wie bei Availably, beginnt die Bildunterschrift mit
+   „Aufnahme“ (DESIGN.md, „Aufnahme statt Szene“); die Clips liegen dann unter `public/aufnahmen/<slug>/`.
 
 Eine Szene kostet etwa 100 bis 200 Zeilen und wird mit dem Projekt gepflegt. Das ist der Preis dafür,
 dass die zehn Seiten nicht gleich aussehen.

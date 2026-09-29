@@ -596,7 +596,15 @@ die Szene, an der 64-rem-Spalte ausgerichtet. Darunter, wieder in der Spalte, di
 Body Small, Bleistiftgrau: Sie beginnt immer mit dem Wort „Szene“ in Tinte, sagt, was zu sehen ist,
 und endet mit „Kein Screenshot.“ Das ist die Ehrlichkeitsregel: Ein gezeichnetes Bild darf nie als
 Beleg durchgehen; die Screenshots folgen als Beleg weiter unten. Die Szene selbst trägt `aria-hidden`
-und ist Dekoration für Sehende; Screenreader lesen die Bildunterschrift. Einzige Ausnahme ist eine
+und ist Dekoration für Sehende; Screenreader lesen die Bildunterschrift.
+
+**Aufnahme statt Szene** (entschieden am 2026-09-29, Availably). Zeigt eine Bühne echte
+Bildschirmaufnahmen in einem gezeichneten Gerät, ist sie keine Szene: Die Bildunterschrift beginnt dann
+mit „Aufnahme“ in Tinte, nennt Gerät und Quelle der Clips, sagt, wie sie bearbeitet sind (zugeschnitten,
+nicht beschleunigt, ohne Überblendung), und nennt, was gezeichnet ist. „Kein Screenshot“ entfällt, weil
+es nicht stimmen würde. Die Clips liegen als MP4 unter `public/aufnahmen/<slug>/`, stumm, höchstens
+500 KB je Clip, mit `preload="none"`; darunter liegt das letzte Bild als Standbild, damit ohne Skript und
+mit reduzierter Bewegung der Endzustand steht und der Browser keine eigene Videosteuerung einblendet. Einzige Ausnahme ist eine
 bedienbare Szene (NoteList: verschiebbare Fläche als nativer Scrollbereich mit `tabindex` und
 `aria-label`), denn Fokussierbares in `aria-hidden` ist ein Fehler.
 
@@ -608,7 +616,7 @@ der Projektdatei, das nur dieses Projekt hat, und setzt es ins Bild: TIEFGANG gr
 tiefer, JustBeauty öffnet zwölf Seiten als Fächer, Kleinkram rechnet einen Kassenzettel zusammen,
 MemoryTree zeichnet seinen Baum, NoteList lässt seine Fläche schieben, Feynman unterstreicht Lücken
 auf der Tafel, DealerSim produziert weiter, Vaulter macht aus dem Link eine Notiz, Availably wechselt
-den Status auf zwei Telefonen, PointCare zoomt in ein dunkles Standbild. Die Prüffrage: Würde ein
+den Status auf zwei iPhones (echte Aufnahmen, siehe oben), PointCare zoomt in ein dunkles Standbild. Die Prüffrage: Würde ein
 Besucher die Szene einem anderen Projekt zuordnen? Dann ist sie falsch.
 
 **Die Bühnenlizenz.** Nur innerhalb ihrer Fläche darf eine Szene, was die Seite sonst nicht darf:
@@ -622,12 +630,14 @@ Besucher die Szene einem anderen Projekt zuordnen? Dann ist sie falsch.
   (`animation-timeline: scroll(root)`, Bereich 0 bis 45–90vh) zusätzlich hinter `@supports`; sie wird
   in Langschreibweise notiert, weil der Minifier `animation-timeline` sonst in die Kurzform zieht und
   der Browser die ganze Deklaration verwirft. Endlosschleifen nur, wo sie die Aussage sind (DealerSim
-  produziert weiter, Availably wechselt den Status, Vaulter schreibt mit), und dann langsam.
+  produziert weiter, Vaulter schreibt mit), und dann langsam. Availably führt einmal vor und kommt dann
+  zur Ruhe, wie die App selbst.
 - **Illustration** in CSS und Inline-SVG aus dem Repository, kein Bild von außen.
 
 Was auch die Lizenz nicht erlaubt: Schrift von Drittanbietern oder eine zweite Familie (Monospace
-bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatten, JavaScript (alle
-zehn Szenen kommen ohne aus; Zähler laufen über `@property` und `counter-reset`), und Zahlen, die wie
+bleibt die Ausnahme für Technisches), Text, der nur animiert lesbar ist, Schatten, JavaScript, das mehr
+tut als abspielen und abzählen (Zähler laufen über `@property` und `counter-reset`; Availably spielt
+seine Clips per Inline-Skript ohne Import, ohne Skript stehen die letzten Bilder), und Zahlen, die wie
 echte Kennzahlen von Klartext aussehen: Beispieldaten heißen in der Bildunterschrift Beispieldaten.
 
 **Zähler und Safari** (2026-09-25). Safari zeichnet einen CSS-Zähler in `::before` nicht neu, solange
@@ -812,7 +822,7 @@ morpht, auch von außerhalb des Fensters.
 - **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Kachel der
   Startseite oder die Zeile unter `/projekte/`. Dort ist Gleichheit die Aussage.
 - **Don't** eine Szene als Screenshot ausgeben oder eine Bildunterschrift ohne „Kein Screenshot“
-  schreiben.
+  schreiben. Echte Aufnahmen beginnen mit „Aufnahme“ und sagen, was daran gezeichnet ist.
 - **Don't** innerhalb eines Kapitels mehr Abstand lassen als zwischen zwei Kapiteln, und keinen Titel
   größer setzen als die H2 des Kapitels.
 - **Don't** Technik-Namen auf der Startseite nennen; sie stehen in der Meta-Liste der Projektseite.
