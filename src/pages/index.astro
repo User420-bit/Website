@@ -271,15 +271,14 @@ const schritte = contact.steps.map((step, i) =>
 
   {
     /*
-    05 Kontakt — der Kapitelkopf steht auf dem Foto des Rosenheimer Landes
-    (Horizont): Nummer, Ueberschrift, Einleitung und ab 640 px die Handlung auf
-    dem Himmel. Die Adresse gross und markierbar (wer am PC nur Webmail nutzt,
-    klickt mit einem mailto:-Knopf allein ins Leere), darunter der Knopf.
-    Unter dem Foto das Raster: links die Erreichbarkeit, rechts der Ablauf,
-    beide mit derselben Haarlinie oben.
+    05 Kontakt — eine dunkle Flaeche ueber die volle Breite, dahinter das
+    Rosenheimer Land (Horizont), stark abgedunkelt. Links Kopf und Handlung:
+    die Adresse gross und markierbar (wer am PC nur Webmail nutzt, klickt mit
+    einem mailto:-Knopf allein ins Leere), der Knopf, die Erreichbarkeit.
+    Rechts der Ablauf.
   */
   }
-  <section id="kontakt" class="pb-16 sm:pb-24">
+  <section id="kontakt">
     <Horizont index="05" title={contact.heading} intro={contact.description}>
       <CopyEmail email={company.email} />
       <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
@@ -288,20 +287,12 @@ const schritte = contact.steps.map((step, i) =>
       <p class="mt-8 mb-0">
         <Button href={anfrage}>E-Mail schreiben</Button>
       </p>
-    </Horizont>
+      <MetaList rows={erreichbarkeit} class="mt-12" />
 
-    <div
-      class="mt-10 grid grid-cols-1 gap-10 sm:mt-12 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12"
-    >
-      <div class="border-t border-border pt-6">
-        <h3 class="m-0 text-sm font-medium text-fg-muted">Erreichbar</h3>
-        <MetaList rows={erreichbarkeit} class="mt-3" />
-      </div>
-
-      <div class="border-t border-border pt-6">
+      <Fragment slot="ablauf">
         <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
         <NumberedRows items={schritte} class="mt-3" />
-      </div>
-    </div>
+      </Fragment>
+    </Horizont>
   </section>
 </BaseLayout>

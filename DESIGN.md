@@ -675,30 +675,27 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Die Handlung steht auf dem Foto (siehe Horizont): die Adresse (`CopyEmail`), der Webmail-Hinweis als
-Caption und der einzige Primärbutton des Bereichs. Darunter ein Raster, keine Freischweber: ab 640 px
-zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit derselben Haarlinie und beginnen so auf
-einer Höhe. Links „Erreichbar“ mit der Meta-Liste (Ort, Profil, Code), rechts der Ablauf:
-Zwischenüberschrift „So läuft eine Anfrage ab“ und drei Nummernzeilen, jede mit einer Zeile
-„Zeitrahmen:“ unter der Erklärung (Label in Tinte wie „Stand:“, Text in Bleistiftgrau). Unter 640 px
-stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die Adresse) und genau ein oranger
-Knopf.
+Das ganze Kapitel ist eine dunkle Fläche über die volle Fensterbreite (siehe Horizont). Kopf:
+oranger Punkt, „05 – Kontakt“ in Body Small, darunter die H2 größer als in den anderen Kapiteln
+(`.display`, 2,25–3,75rem, max. 16ch), dann das Intro in Body Large. Ab 640 px zwei Spalten
+`3fr | 2fr` mit 3rem Abstand. Links die Handlung: die Adresse (`CopyEmail`), der Webmail-Hinweis
+als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
+Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
+Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung. Unten über beide Spalten
+die Bildunterschrift. Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes
+Element (die Adresse) und genau ein oranger Knopf. Ein Formular gibt es bewusst nicht: Es bräuchte
+einen Versanddienst und änderte die Datenschutzerklärung.
 
-**Horizont** (`Horizont.astro`, entschieden am 2026-09-29). Der Kontakt beginnt nicht mit der
-Tintenlinie, sondern auf einem eigenen Foto des Rosenheimer Landes, aufgenommen vom Breitenstein, über
-die volle Fensterbreite. Es ist der Grund des Kapitels, kein Bild daneben: Nummer, Überschrift und
-Einleitung stehen auf dem Himmel, ab 1024 px daneben in der 2fr-Spalte auch die Handlung (Adresse,
-„Adresse kopieren“, Webmail-Hinweis, Primärbutton). Darunter bleibt das Land frei, unten links die
-Bildunterschrift. Schmaler reicht der Himmel nicht für beides; dort folgt die Handlung direkt unter
-dem Foto auf dem Seitengrund, in derselben Reihenfolge. Das Raster des Fotos hat dieselben Spalten
-wie der Kontakt darunter (3fr | 2fr, 3rem, 62rem Inhalt), alles steht an denselben Kanten.
-
-Auf dem Foto gelten helle Tokens (die Werte des Dunkelmodus), in beiden Modi, weil das Foto derselbe
-Grund bleibt; der Primärbutton wird dort zum hellen Orange mit dunkler Schrift. Zwei Schleier sichern
-die Lesbarkeit: oben ein Dunkelblau von 50 % auf 0 bei 70 % der Höhe, unten ein dunkles Grün für die
-Bildunterschrift. Gemessen hält jede Schrift auf dem Foto in hell und dunkel, von 390 bis 1920 px,
-mindestens 4,5 : 1. Im Dunkelmodus nimmt das Foto 18 % Helligkeit zurück. Nur echte, eigene
-Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository.
+**Horizont** (`Horizont.astro`, entschieden am 2026-09-29 nach der PointCare-Kontaktseite als
+Vorbild). Hinter dem Kapitel liegt ein eigenes Foto des Rosenheimer Landes, aufgenommen vom
+Breitenstein, entsättigt (55 %), abgedunkelt und unter einem Schleier in Werkbankschwarz, der oben
+90 % deckt und nach unten auf 55 % nachlässt: Oben steht die Schrift auf fast Schwarz, unten
+scheint das Land durch. Das Foto ist Grund, kein Bild, und trägt deshalb `alt=""`; was es zeigt,
+sagt die Bildunterschrift. In der Fläche gelten die Tokens des Dunkelmodus, in beiden Modi; das ist
+die einzige Stelle außerhalb der Bühne, an der der Hellmodus eine dunkle Fläche zeigt. Das Kapitel
+beginnt mit der Kante der Fläche statt mit der Tintenlinie. Der dunkelste Grund unter der Schrift hält gegen Weiß über 12 : 1, auch
+Bleistiftgrau bleibt damit weit über 4,5 : 1. Nur echte, eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im
+Repository.
 
 ### Containers
 
@@ -762,9 +759,9 @@ Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 
 - **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
   wechseln ohne Übergang.
 - **Ankersprünge:** `scroll-behavior: smooth`.
-- **Horizont:** das Foto gleitet beim Scrollen langsamer als die Seite (um ein Neuntel seiner Höhe,
-  `view-timeline`, linear, über den ganzen Durchlauf). Die Schrift darauf bewegt sich nie. Ruhend
-  steht das Foto oben bündig.
+- **Horizont:** das Foto hinter dem Kontakt gleitet beim Scrollen langsamer als die Seite (um ein
+  Neuntel seiner Höhe, `view-timeline`, linear, über den ganzen Durchlauf). Die Schrift bewegt sich
+  nie. Ruhend steht das Foto unten bündig.
 - **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
   der Bühnenlizenz (siehe Components). Außerhalb der Bühne gilt die Liste oben unverändert.
 
