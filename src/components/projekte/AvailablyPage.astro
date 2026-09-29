@@ -1,11 +1,11 @@
 ---
 /**
  * Die Seite von Availably: der gemeinsame Körper (ProjectPage) mit eigenem
- * Kopf und einer Bühne ohne Fläche. Der Kopf ist der Standardkopf mit einem
- * Unterschied: Die H1 endet mit einem Schlusspunkt in der Farbe des Status,
- * den Lea gerade sieht. Wer auf dem linken Telefon der Szene einen Status
- * setzt, sieht ihn kurz darauf auch dort, ohne zu fragen. Farben und
- * `--av-jetzt` setzt AvailablyScene auf `.av-seite`.
+ * Kopf und einer Bühne mit zwei iPhones, auf denen echte Aufnahmen der App
+ * laufen. Der Kopf ist der Standardkopf mit einem Unterschied: Die H1 endet
+ * mit einem Schlusspunkt in der Farbe des Status, den der Partner in der
+ * Aufnahme gerade sieht. Er wechselt im selben Moment wie der Bildschirm.
+ * Farben und `--av-jetzt` setzt AvailablyScene auf `.av-seite`.
  *
  * Alles andere bleibt beim Körper: Meta-Liste, Text, Funktionen, Technische
  * Entscheidungen, Erkenntnisse, Vor/Zurück und Anfrage.
@@ -39,7 +39,7 @@ const data = projekt.data
 <style>
   /*
    * Ein Punkt statt eines Punkts: so groß wie ein Satzzeichen der H1, in der
-   * Farbe des Status, und wie bei Lea 0,6 s hinter dem Telefon von Jonas.
+   * Farbe des Status. Den Zeitpunkt gibt die Aufnahme vor, nicht der Punkt.
    */
   .schlusspunkt {
     display: inline-block;
@@ -48,7 +48,7 @@ const data = projekt.data
     margin-left: 0.06em;
     border-radius: 50%;
     background-color: var(--av-jetzt, currentColor);
-    transition: background-color var(--duration-slow) var(--ease-quiet) var(--av-verzug, 0s);
+    transition: background-color var(--duration-slow) var(--ease-quiet);
   }
   @media (prefers-reduced-motion: reduce) {
     .schlusspunkt {
