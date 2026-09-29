@@ -1,473 +1,631 @@
 ---
 /**
- * Availably: zwei Telefone, zwei Personen, ein Status. Keine eigene Fläche,
- * kein Rechteck über die Fensterbreite: Die Telefone stehen als Strichzeichnung
- * auf dem Papier der Seite, bunt sind nur die vier Zustände. Das ist die
- * leiseste Bühne der Website, und das ist die Aussage (Entscheidungsregel der
- * App: Was lauter macht, wird nicht gebaut).
+ * Availably: zwei iPhones auf dem Tisch, darin die echte App. Die Rahmen sind
+ * gezeichnet (iPhone 16 Pro: Titanrand, Tasten, Kamerasteuerung), die
+ * Bildschirme zeigen Aufnahmen aus zwei Simulatoren mit Beispielnamen
+ * (Availably/docs/vorschau/BRIEFING_WEBSITE.md). Das ist die eine Bühne, die
+ * keine Szene ist: Was auf den Bildschirmen läuft, ist Beleg, deshalb beginnt
+ * die Bildunterschrift mit „Aufnahme“ statt „Szene“ (DESIGN.md, Bühne).
  *
- * Bedienbar: Auf dem linken Telefon setzt der Besucher den Status von Jonas
- * (vier Radio-Knöpfe, ohne Skript über `:has()`), über die gepunktete Leitung
- * mit dem Koppel-Code läuft er hinüber, und 0,6 s später steht er rechts bei
- * Lea und im Schlusspunkt der H1 (AvailablyPage). Das kleine Skript unten
- * ergänzt das Zeitlimit: Jeder Status außer „verfügbar“ läuft nach LIMIT
- * Sekunden ab, der Ring um den Punkt leert sich, danach steht wieder
- * „verfügbar“. Beim ersten Hinsehen führt die Szene das einmal selbst vor und
- * kommt dann zur Ruhe; eine Schleife gibt es nicht mehr.
+ * Der Ablauf folgt der Regel der App („Macht das Availably ruhiger oder
+ * lauter?“): Beim Laden liegen beide iPhones flach und stehen auf, der
+ * Bildschirm geht an, der erste Moment läuft einmal, dann ist Ruhe. Drei
+ * Momente stehen zur Wahl (Radio-Knöpfe, ohne Skript über `:has()`): Status
+ * teilen, Koppeln, Zeitlimit. Auf der Leitung zwischen den Telefonen wandert
+ * ein Punkt nur, wenn die App wirklich etwas sendet; beim Zeitlimit bleibt sie
+ * still, weil beide Seiten das Ende selbst ausrechnen.
  *
- * Farben und die Zuordnung Status → Farbe (`--av-jetzt`) hängen am Artikel
- * (`.av-seite`), weil der Schlusspunkt der H1 außerhalb dieser Komponente
- * steht. Gespeichert wird nichts; nach dem Neuladen steht wieder „verfügbar“.
- * Ohne Skript spiegelt CSS weiter, nur das Zeitlimit entfällt. Mit reduzierter
- * Bewegung läuft kein Beispiel, der Ring steht still, und der Wechsel kommt
- * ohne Übergang.
+ * Ohne Skript und mit reduzierter Bewegung steht der Endzustand: iPhones
+ * aufrecht, das letzte Bild jedes Clips als Standbild. Das Skript spielt die
+ * Clips, legt die Farbe des Schlusspunkts der H1 (AvailablyPage) im Takt der
+ * Aufnahme fest und schickt den Punkt über die Leitung.
  */
+import type { ImageMetadata } from 'astro'
+import { getImage } from 'astro:assets'
 
-/** Zeitlimit der Szene in Sekunden; in der App wählt man Minuten oder Stunden. */
-const LIMIT = 20
+const MOMENTE = [
+  {
+    id: 'status',
+    name: 'Status teilen',
+    text: 'Jonas setzt „Fokus“ für 30 Minuten und tippt „Fertig“. Lea zieht die Ansicht nach unten und holt den neuen Stand vom Server, von allein spätestens nach einer Minute. Keine Nachricht, keine Nachfrage.',
+  },
+  {
+    id: 'koppeln',
+    name: 'Koppeln',
+    text: 'Lea gibt den Code von Jonas ein. Bei ihr steht sofort „Ihr seid verbunden.“, bei Jonas wird aus der offenen Einladung ihre Karte. Keine Anfrage, keine Annahme.',
+  },
+  {
+    id: 'zeitlimit',
+    name: 'Zeitlimit',
+    text: 'Leas „Beschäftigt“ läuft ab, und ihr iPhone springt von selbst auf „Verfügbar“. Das von Jonas rechnet das Ende ebenfalls selbst aus, spätestens 15 Sekunden später. Gesendet wird dafür nichts.',
+  },
+] as const
 
-const zustaende = [
-  { wert: 'verfuegbar', name: 'verfügbar' },
-  { wert: 'beschaeftigt', name: 'beschäftigt' },
-  { wert: 'fokus', name: 'Fokus' },
-  { wert: 'ruhe', name: 'Ruhe' },
-]
+const PERSONEN = [
+  { id: 'jonas', name: 'Jonas' },
+  { id: 'lea', name: 'Lea' },
+] as const
+
+// Erstes und letztes Bild jedes Clips, aus den Rohaufnahmen gezogen.
+const bilder = import.meta.glob<ImageMetadata>('/src/assets/projekte/availably/*.png', {
+  eager: true,
+  import: 'default',
+})
+const standbild = async (name: string) => {
+  const src = bilder[`/src/assets/projekte/availably/${name}.png`]
+  if (!src) throw new Error(`Standbild fehlt: ${name}.png`)
+  return (await getImage({ src, width: 540, format: 'webp' })).src
+}
+
+const clips = await Promise.all(
+  PERSONEN.map(async (person) => ({
+    ...person,
+    clips: await Promise.all(
+      MOMENTE.map(async ({ id }) => ({
+        id,
+        src: `${import.meta.env.BASE_URL}aufnahmen/availably/${id}-${person.id}.mp4`,
+        anfang: await standbild(`${id}-${person.id}-anfang`),
+        ende: await standbild(`${id}-${person.id}-ende`),
+      })),
+    ),
+  })),
+)
 ---
 
-<figure
-  class="av m-0 mt-12"
-  data-av
-  data-limit={LIMIT}
-  data-uebergang
-  style={`--av-limit: ${LIMIT}s`}
->
-  <div class="paar">
-    <div class="person">
-      <div class="telefon">
-        <span class="schlitz" aria-hidden="true"></span>
-        <div class="anzeige" aria-hidden="true">
-          <span class="kreis">
-            <svg class="zeitring" viewBox="0 0 100 100">
-              <circle class="spur" cx="50" cy="50" r="47"></circle>
-              <circle class="rest" cx="50" cy="50" r="47" pathLength="100"></circle>
-            </svg>
-            <span class="punkt"></span>
+<figure class="av m-0 mt-6 sm:mt-10" data-av>
+  <div class="av-flaeche" data-uebergang>
+    <div class="av-buehne mx-auto max-w-5xl px-4">
+      <div class="paar" aria-hidden="true">
+        {
+          clips.map((person) => (
+            <div class:list={['geraet', person.id]}>
+              <div class="iphone">
+                <span class="taste aktion" />
+                <span class="taste lauter" />
+                <span class="taste leiser" />
+                <span class="taste seite" />
+                <span class="kamerasteuerung" />
+                <div class="glas">
+                  <div class="schirm">
+                    {person.clips.map((clip) => (
+                      <img data-m={clip.id} src={clip.ende} alt="" width="540" height="1174" />
+                    ))}
+                    {person.clips.map((clip) => (
+                      <video
+                        data-m={clip.id}
+                        src={clip.src}
+                        poster={clip.ende}
+                        data-anfang={clip.anfang}
+                        width="540"
+                        height="1174"
+                        muted
+                        playsinline
+                        preload="none"
+                        disablepictureinpicture
+                        disableRemotePlayback
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p class="wer">{person.name}</p>
+            </div>
+          ))
+        }
+
+        {/* Die Kopplung: kein Chat, keine Nachricht, nur diese eine Leitung. */}
+        <div class="leitung">
+          <span class="oben">
+            <span class="gekoppelt">gekoppelt</span>
+            <span class="offen">Einladung offen</span>
           </span>
-          <span class="worte">
+          <span class="linie"><span class="server"></span><span class="bote"></span></span>
+          <span class="unten">
+            <span class="code">U7M2TG</span>
+            <span class="still">nichts gesendet</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="pult">
+        <div class="steuerung">
+          <fieldset class="momente">
+            <legend class="sr-only">Moment wählen</legend>
+            <span class="daumen" aria-hidden="true"></span>
             {
-              zustaende.map(({ wert, name }) => (
-                <span class="wort" data-z={wert}>
-                  {name}
-                </span>
+              MOMENTE.map(({ id, name }, i) => (
+                <label class="moment">
+                  <input
+                    type="radio"
+                    name="av-moment"
+                    value={id}
+                    checked={i === 0}
+                    autocomplete="off"
+                  />
+                  <span>{name}</span>
+                </label>
               ))
             }
-          </span>
-          <span class="limit">mit Zeitlimit</span>
+          </fieldset>
+          <button type="button" class="knopf" data-av-knopf aria-label="Abspielen" hidden>
+            <svg class="spielen" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5 3.2v9.6a.6.6 0 0 0 .9.5l7.6-4.8a.6.6 0 0 0 0-1L5.9 2.7a.6.6 0 0 0-.9.5Z"
+              ></path>
+            </svg>
+            <svg class="anhalten" viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="4" y="3" width="2.75" height="10" rx="0.6"></rect>
+              <rect x="9.25" y="3" width="2.75" height="10" rx="0.6"></rect>
+            </svg>
+          </button>
         </div>
-        <fieldset class="wahl">
-          <legend>Status setzen</legend>
+        <div class="texte">
           {
-            zustaende.map(({ wert, name }) => (
-              <label class="option" style={`--farbe: var(--av-${wert})`}>
-                <input
-                  type="radio"
-                  name="av-status"
-                  value={wert}
-                  checked={wert === 'verfuegbar'}
-                  autocomplete="off"
-                />
-                <span>{name}</span>
-              </label>
+            MOMENTE.map(({ id, text }) => (
+              <p class="text" data-m={id}>
+                {text}
+              </p>
             ))
           }
-        </fieldset>
-      </div>
-      <p class="hinweis">Jonas setzt den Status.</p>
-    </div>
-
-    {/* Die Kopplung: kein Chat, keine Nachricht, nur diese eine Leitung. */}
-    <div class="leitung" aria-hidden="true">
-      <span class="gekoppelt">gekoppelt</span>
-      <span class="linie"><span class="bote"></span></span>
-      <span class="code">482 913</span>
-    </div>
-
-    <div class="person lea">
-      <div class="telefon" aria-hidden="true">
-        <span class="schlitz"></span>
-        <div class="anzeige">
-          <span class="kreis"><span class="punkt"></span></span>
-          <span class="worte">
-            {
-              zustaende.map(({ wert, name }) => (
-                <span class="wort" data-z={wert}>
-                  {name}
-                </span>
-              ))
-            }
-          </span>
         </div>
       </div>
-      <p class="hinweis">Lea sieht ihn, ohne zu fragen.</p>
     </div>
   </div>
 
-  <p class="sr-only" aria-live="polite" data-av-meldung></p>
-
-  <figcaption class="mt-6 max-w-[65ch] text-sm text-fg-muted">
-    <span class="font-medium text-fg">Szene</span> · Zwei Telefone, nachgezeichnet, mit Beispielnamen
-    und Beispielcode. Links lässt sich der Status setzen, rechts steht er kurz darauf, ohne Nachricht
-    und ohne Nachfrage.<span data-av-mit-js hidden
-      >{' '}Das Zeitlimit ist hier auf {LIMIT} Sekunden verkürzt; danach steht wieder „verfügbar“.</span
-    > Kein Screenshot.
+  <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">
+    <span class="font-medium text-fg">Aufnahme</span> · Zwei iPhone-Simulatoren (iPhone 16 Pro, iOS 18.6)
+    mit Beispielnamen und einem Server auf dem eigenen Rechner. Die Clips sind echt und zugeschnitten,
+    nicht beschleunigt und ohne Überblendung. Gezeichnet sind nur die Rahmen der iPhones und der Punkt
+    auf der Leitung.
   </figcaption>
 </figure>
 
 <script>
   /*
-   * Zeitlimit und das Beispiel beim ersten Hinsehen. Ohne dieses Skript
-   * spiegelt CSS den Status trotzdem; nur das Zeitlimit entfällt. Kein
-   * Speicher, keine Anfrage.
+   * Spielt die Clips eines Moments auf beiden iPhones gleichzeitig und hält
+   * Schlusspunkt und Leitung im Takt der Aufnahme. Ohne dieses Skript stehen
+   * die letzten Bilder als Standbild; kein Speicher, keine Anfrage außer den
+   * Clips selbst.
    */
   const root = document.querySelector<HTMLElement>('[data-av]')
-  if (root) {
-    const limit = Number(root.dataset.limit) * 1000
-    const inputs = [...root.querySelectorAll<HTMLInputElement>('input[name="av-status"]')]
-    const meldung = root.querySelector('[data-av-meldung]')
-    let uhr = 0
+  const knopf = root?.querySelector<HTMLButtonElement>('[data-av-knopf]')
+  if (root && knopf) {
+    const seite = root.closest<HTMLElement>('.av-seite')
+    const radios = [...root.querySelectorAll<HTMLInputElement>('input[name="av-moment"]')]
+    const alle = [...root.querySelectorAll('video')]
+    // Sekunde im Clip → Status, den der Partner sieht (Farbe des Schlusspunkts),
+    // oder mit „>“ der Weg des Punkts auf der Leitung.
+    const TAKTE: Record<string, [number, string][]> = {
+      status: [
+        [0, 'verfuegbar'],
+        [1.45, '>hin'],
+        [3.05, '>weiter'],
+        [3.5, 'fokus'],
+      ],
+      koppeln: [
+        [0, 'keiner'],
+        [2.1, '>zurueck'],
+        [2.5, 'verfuegbar'],
+      ],
+      zeitlimit: [
+        [0, 'beschaeftigt'],
+        [2.5, 'verfuegbar'],
+      ],
+    }
+    let bild = 0
+    let laeuft = false
     let beruehrt = false
 
-    const starte = (wert: string) => {
-      root.classList.add('lebt')
-      // Ring und Bote laufen bei jedem Wechsel von vorn.
-      for (const a of root.getAnimations({ subtree: true })) {
-        if (a instanceof CSSAnimation) {
-          a.currentTime = 0
-          a.play()
+    const moment = () => radios.find((r) => r.checked)?.value ?? 'status'
+    const clips = () => alle.filter((v) => v.dataset.m === moment())
+    const knopfZeigt = (an: boolean) => {
+      laeuft = an
+      knopf.dataset.an = String(an)
+      knopf.setAttribute('aria-label', an ? 'Anhalten' : 'Abspielen')
+    }
+    const setze = (t: number) => {
+      for (const [ab, was] of TAKTE[moment()] ?? []) {
+        if (t < ab) break
+        if (was.startsWith('>')) {
+          if (root.dataset.bote !== was.slice(1)) root.dataset.bote = was.slice(1)
+        } else {
+          seite?.style.setProperty(
+            '--av-jetzt',
+            was === 'keiner' ? 'currentColor' : `var(--av-${was})`,
+          )
         }
       }
-      clearTimeout(uhr)
-      if (wert !== 'verfuegbar') uhr = window.setTimeout(ablauf, limit)
     }
-    const setze = (wert: string) => {
-      const input = inputs.find((i) => i.value === wert)
-      if (input) input.checked = true
-      starte(wert)
+    const halt = () => {
+      cancelAnimationFrame(bild)
+      for (const v of alle) v.pause()
+      root.classList.remove('spielt')
+      delete root.dataset.bote
+      seite?.style.removeProperty('--av-jetzt')
+      knopfZeigt(false)
     }
-    const ablauf = () => {
-      setze('verfuegbar')
-      if (meldung) meldung.textContent = 'Zeitlimit abgelaufen. Jonas ist wieder verfügbar.'
+    const takt = () => {
+      const vs = clips()
+      setze(vs[0]?.currentTime ?? 0)
+      if (vs.every((v) => v.ended)) return halt()
+      bild = requestAnimationFrame(takt)
+    }
+    const weiter = (vs: HTMLVideoElement[]) => {
+      knopfZeigt(true)
+      Promise.all(vs.map((v) => v.play())).then(takt, halt)
+    }
+    const spiele = () => {
+      halt()
+      const vs = clips()
+      for (const v of vs) v.currentTime = 0
+      root.classList.add('spielt')
+      setze(0)
+      weiter(vs)
     }
 
-    // Nichts wird gespeichert: Stellt der Browser eine alte Wahl wieder her, gilt der Anfang.
-    for (const i of inputs) i.checked = i.defaultChecked
-    for (const el of root.querySelectorAll<HTMLElement>('[data-av-mit-js]')) el.hidden = false
-    root.addEventListener('change', (e) => {
+    knopf.hidden = false
+    knopf.addEventListener('click', () => {
       beruehrt = true
-      starte((e.target as HTMLInputElement).value)
+      if (laeuft) {
+        cancelAnimationFrame(bild)
+        for (const v of alle) v.pause()
+        knopfZeigt(false)
+      } else if (root.classList.contains('spielt')) weiter(clips())
+      else spiele()
     })
-    root.addEventListener('pointerdown', () => (beruehrt = true))
-    root.addEventListener('focusin', () => (beruehrt = true))
 
-    // Einmal vorführen, wenn die Szene im Blick ist, dann Ruhe.
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches
+    root.addEventListener('change', () => {
+      beruehrt = true
+      if (ruhig) halt()
+      else spiele()
+    })
+
+    // Einmal vorführen, wenn die iPhones stehen und im Blick sind, dann Ruhe.
+    // Bis dahin zeigt jeder Clip sein erstes Bild, damit nichts zurückspringt.
+    if (!ruhig) {
+      for (const v of alle) v.poster = v.dataset.anfang ?? v.poster
+      for (const v of clips()) v.preload = 'auto'
       const blick = new IntersectionObserver(
         ([eintrag]) => {
           if (!eintrag?.isIntersecting) return
           blick.disconnect()
-          window.setTimeout(() => beruehrt || setze('fokus'), 1200)
+          window.setTimeout(() => beruehrt || spiele(), 1900)
         },
-        { threshold: 0.6 },
+        { threshold: 0.4 },
       )
-      blick.observe(root)
+      // Die Telefone, nicht die ganze Figur: Auf dem Handy ist sie höher als der halbe Bildschirm.
+      const paar = root.querySelector('.paar')
+      if (paar) blick.observe(paar)
     }
   }
 </script>
 
 <style>
   /*
-   * Vier Farben für vier Zustände, nur auf dieser Seite, mit Dunkel-Zwilling.
-   * „beschäftigt“ ist bewusst gelber als das Werkstatt-Orange, damit es nicht
-   * wie eine Handlung aussieht. `--av-jetzt` ist der Status, den Jonas gerade
-   * gesetzt hat; er hängt am Artikel, damit auch die H1 ihn sieht.
+   * Farben des Schlusspunkts: Apples Systemfarben, so wie die App sie zeigt
+   * (Briefing, Abschnitt 4), mit den Werten des Dunkelmodus als Zwilling. Sie
+   * hängen am Artikel, weil der Schlusspunkt der H1 außerhalb dieser
+   * Komponente steht. Ohne Skript gilt das Ende des gewählten Moments.
    */
   :global(.av-seite) {
-    --av-verfuegbar: oklch(0.64 0.15 150);
-    --av-beschaeftigt: oklch(0.74 0.15 72);
-    --av-fokus: oklch(0.56 0.17 295);
-    --av-ruhe: oklch(0.66 0.012 250);
-    --av-jetzt: var(--av-verfuegbar);
-    --av-verzug: 0.6s;
+    --av-verfuegbar: #34c759;
+    --av-beschaeftigt: #ff9500;
+    --av-fokus: #007aff;
+    --av-jetzt: var(--av-fokus);
   }
   @media (prefers-color-scheme: dark) {
     :global(:root:not([data-theme='light']) .av-seite) {
-      --av-verfuegbar: oklch(0.74 0.15 150);
-      --av-beschaeftigt: oklch(0.8 0.14 78);
-      --av-fokus: oklch(0.7 0.15 295);
-      --av-ruhe: oklch(0.64 0.012 250);
+      --av-verfuegbar: #30d158;
+      --av-beschaeftigt: #ff9f0a;
+      --av-fokus: #0a84ff;
     }
   }
   :global(:root[data-theme='dark'] .av-seite) {
-    --av-verfuegbar: oklch(0.74 0.15 150);
-    --av-beschaeftigt: oklch(0.8 0.14 78);
-    --av-fokus: oklch(0.7 0.15 295);
-    --av-ruhe: oklch(0.64 0.012 250);
+    --av-verfuegbar: #30d158;
+    --av-beschaeftigt: #ff9f0a;
+    --av-fokus: #0a84ff;
   }
-  :global(.av-seite:has(input[name='av-status'][value='beschaeftigt']:checked)) {
-    --av-jetzt: var(--av-beschaeftigt);
-  }
-  :global(.av-seite:has(input[name='av-status'][value='fokus']:checked)) {
-    --av-jetzt: var(--av-fokus);
-  }
-  :global(.av-seite:has(input[name='av-status'][value='ruhe']:checked)) {
-    --av-jetzt: var(--av-ruhe);
+  :global(
+    .av-seite:has(input[name='av-moment']:is([value='koppeln'], [value='zeitlimit']):checked)
+  ) {
+    --av-jetzt: var(--av-verfuegbar);
   }
 
   /*
-   * Jonas links, Lea rechts, dazwischen die Leitung. Links an der Spalte wie
-   * alles auf der Seite, so breit wie der Fließtext.
+   * Maße: Alles hängt an der Breite eines iPhones (`--av-w`), abgeleitet aus
+   * der Fensterbreite, damit auch die Tischkante im Hintergrund weiß, wo die
+   * Telefone stehen. Rand 1,4 %, schwarzer Glasrand 2,2 %, darin der
+   * Bildschirm im Seitenverhältnis der Aufnahmen (1206 × 2622); so kommt das
+   * Gerät auf das Verhältnis des iPhone 16 Pro (71,5 × 149,6 mm).
    */
+  .av {
+    --av-mitte: 3.25rem;
+    --av-paar: min(100vw - 2rem, 33rem);
+    --av-w: calc((var(--av-paar) - var(--av-mitte)) / 2);
+    --av-h: calc(var(--av-w) * 2.0896);
+    --av-oben: 2rem;
+    --av-steh: 0.75rem;
+    --av-drehung: 8deg;
+
+    --av-wand: oklch(0.955 0.004 80);
+    --av-kante: oklch(0.85 0.01 75);
+    --av-tisch-hinten: oklch(0.93 0.007 75);
+    --av-tisch: oklch(0.905 0.009 75);
+
+    /* Die Geräte haben eine Farbe, egal wie die Seite steht: Wüstentitan und Titan natur. */
+    --av-glas: #0a0a0b;
+  }
+  @media (min-width: 640px) {
+    .av {
+      --av-mitte: 5.5rem;
+      --av-oben: 2.5rem;
+      --av-steh: 1rem;
+      --av-drehung: 10deg;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .av {
+      --av-wand: oklch(0.205 0.004 80);
+      --av-kante: oklch(0.33 0.006 75);
+      --av-tisch-hinten: oklch(0.25 0.006 75);
+      --av-tisch: oklch(0.225 0.006 75);
+    }
+  }
+  :root[data-theme='dark'] .av {
+    --av-wand: oklch(0.205 0.004 80);
+    --av-kante: oklch(0.33 0.006 75);
+    --av-tisch-hinten: oklch(0.25 0.006 75);
+    --av-tisch: oklch(0.225 0.006 75);
+  }
+
+  /*
+   * Wand und Tisch, über die volle Fensterbreite. Die Kante liegt knapp über
+   * dem Fuß der iPhones, damit sie auf dem Tisch stehen und nicht davor.
+   */
+  .av-flaeche {
+    --av-kante-y: calc(var(--av-oben) + var(--av-h) - var(--av-steh));
+    margin-inline: calc(50% - 50vw);
+    padding-block: var(--av-oben) 1.5rem;
+    overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      var(--av-wand) var(--av-kante-y),
+      var(--av-kante) var(--av-kante-y) calc(var(--av-kante-y) + 1px),
+      var(--av-tisch-hinten) calc(var(--av-kante-y) + 1px),
+      var(--av-tisch)
+    );
+  }
+
+  .av-buehne {
+    display: grid;
+    row-gap: 1.75rem;
+  }
+  @media (min-width: 960px) {
+    .av-flaeche {
+      padding-bottom: 2.5rem;
+    }
+    .av-buehne {
+      grid-template-columns: var(--av-paar) minmax(0, 24rem);
+      column-gap: 4.5rem;
+      align-items: center;
+    }
+    /* Das Pult hängt an der Wand, auf Höhe der Karten in der App. */
+    .pult {
+      margin-bottom: calc(var(--av-h) * 0.25);
+    }
+  }
+
+  /* Jonas links, Lea rechts, dazwischen die Leitung. */
   .paar {
-    --av-breite: 9rem;
-    --av-hoehe: 20.5rem;
-    --av-kreis: 4.5rem;
-    --av-punkt: 3.25rem;
-    /* Mitte des Punkts, von der Oberkante des Telefons: Rand + Innenabstand + Abstand + halber Kreis. */
-    --av-mitte: calc(1.5px + 1.75rem + 1rem + var(--av-kreis) / 2);
     display: grid;
-    /* Unter 360 px Fensterbreite geben die Telefone nach, statt über den Rand zu laufen. */
-    grid-template-columns: minmax(0, var(--av-breite)) minmax(3.75rem, 1fr) minmax(
-        0,
-        var(--av-breite)
-      );
-    max-width: 40rem;
+    grid-template-columns: var(--av-w) var(--av-mitte) var(--av-w);
+    width: var(--av-paar);
   }
-  @media (min-width: 640px) {
-    .paar {
-      --av-breite: 11rem;
-      --av-hoehe: 22.5rem;
-      --av-kreis: 5rem;
-      --av-punkt: 3.5rem;
-    }
+  .geraet {
+    perspective: 1400px;
+  }
+  .jonas {
+    grid-column: 1;
+    perspective-origin: 110% 30%;
+    --av-rand: #b8a08b;
+    --av-rand-hell: #e2d1c1;
+    --av-rand-dunkel: #7b6858;
+    --av-dreh: var(--av-drehung);
+    --av-spaet: 0s;
+  }
+  .lea {
+    grid-column: 3;
+    perspective-origin: -10% 30%;
+    --av-rand: #b2ada5;
+    --av-rand-hell: #dcd8d1;
+    --av-rand-dunkel: #75706a;
+    --av-dreh: calc(var(--av-drehung) * -1);
+    --av-spaet: 0.12s;
   }
 
-  .telefon {
+  /*
+   * Das Gerät: Titanrand als Fläche, darüber der schwarze Glasrand, darin der
+   * Bildschirm. Eine zweite Lage dahinter gibt dem Rand Tiefe, sobald sich
+   * das Telefon dreht; Tasten und Kamerasteuerung sitzen in dieser Tiefe.
+   */
+  .iphone {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    height: var(--av-hoehe);
-    padding: 1.75rem 0.625rem 0.625rem;
-    border: 1.5px solid var(--color-fg);
-    border-radius: 1.5rem;
-    background: var(--color-bg-elevated);
+    height: var(--av-h);
+    padding: calc(var(--av-w) * 0.014);
+    border-radius: calc(var(--av-w) * 0.179);
+    background:
+      linear-gradient(
+        90deg,
+        var(--av-rand-dunkel),
+        var(--av-rand-hell) 1.2%,
+        var(--av-rand) 3%,
+        var(--av-rand) 97%,
+        var(--av-rand-hell) 98.8%,
+        var(--av-rand-dunkel)
+      ),
+      var(--av-rand);
+    transform: rotateY(var(--av-dreh));
+    transform-origin: 50% 100%;
+    transform-style: preserve-3d;
   }
-  @media (min-width: 640px) {
-    .telefon {
-      padding-inline: 0.875rem;
-      border-radius: 1.75rem;
-    }
-  }
-  .schlitz {
-    position: absolute;
-    top: 0.625rem;
-    left: 50%;
-    width: 2.25rem;
-    height: 0.3125rem;
-    border-radius: 999px;
-    background: var(--color-fg);
-    transform: translateX(-50%);
-  }
-
-  .anzeige {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .kreis {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: var(--av-kreis);
-    height: var(--av-kreis);
-  }
-  .punkt {
-    width: var(--av-punkt);
-    height: var(--av-punkt);
-    border-radius: 50%;
-    background-color: var(--av-jetzt);
-    transition: background-color var(--duration-base) var(--ease-quiet);
-  }
-  .lea .punkt {
-    transition-duration: var(--duration-slow);
-    transition-delay: var(--av-verzug);
-  }
-
-  /* Die vier Wörter liegen übereinander; ohne `:has()` steht „verfügbar“. */
-  .worte {
-    display: grid;
-    margin-top: 0.375rem;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.5;
-  }
-  @media (min-width: 640px) {
-    .worte {
-      font-size: 1.125rem;
-    }
-  }
-  .wort {
-    grid-area: 1 / 1;
-    justify-self: center;
-    opacity: 0;
-    transition: opacity var(--duration-fast) var(--ease-quiet);
-  }
-  .lea .wort {
-    transition-delay: var(--av-verzug);
-  }
-  .wort[data-z='verfuegbar'],
-  .av:has([value='beschaeftigt']:checked) .wort[data-z='beschaeftigt'],
-  .av:has([value='fokus']:checked) .wort[data-z='fokus'],
-  .av:has([value='ruhe']:checked) .wort[data-z='ruhe'] {
-    opacity: 1;
-  }
-  .av:has(input:checked:not([value='verfuegbar'])) .wort[data-z='verfuegbar'] {
-    opacity: 0;
-  }
-
-  /* Zeitlimit: nur mit Skript, denn nur das Skript setzt den Status zurück. */
-  .zeitring {
+  .iphone::before {
+    content: '';
     position: absolute;
     inset: 0;
+    border-radius: inherit;
+    background: var(--av-rand-dunkel);
+    transform: translateZ(calc(var(--av-w) * -0.05));
+  }
+
+  .taste,
+  .kamerasteuerung {
+    position: absolute;
+    width: calc(var(--av-w) * 0.016);
+    border-radius: calc(var(--av-w) * 0.01);
+    transform: translateZ(calc(var(--av-w) * -0.025));
+  }
+  .taste {
+    background: linear-gradient(
+      90deg,
+      var(--av-rand-dunkel),
+      var(--av-rand-hell) 45%,
+      var(--av-rand)
+    );
+  }
+  .aktion,
+  .lauter,
+  .leiser {
+    left: calc(var(--av-w) * -0.012);
+  }
+  .aktion {
+    top: 18.5%;
+    height: 5.2%;
+  }
+  .lauter {
+    top: 26.5%;
+    height: 9%;
+  }
+  .leiser {
+    top: 37.5%;
+    height: 9%;
+  }
+  .seite {
+    right: calc(var(--av-w) * -0.012);
+    top: 28%;
+    height: 14%;
+  }
+  /* Kamerasteuerung: flach im Rand, aus Saphirglas, deshalb dunkel. */
+  .kamerasteuerung {
+    right: 0;
+    top: 57%;
+    height: 10.5%;
+    background: linear-gradient(90deg, #2c2c2e, #6e6e73 55%, #3a3a3c);
+    transform: none;
+  }
+
+  .glas {
+    position: relative;
+    height: 100%;
+    padding: calc(var(--av-w) * 0.022);
+    border-radius: calc(var(--av-w) * 0.165);
+    background: var(--av-glas);
+  }
+  .schirm {
+    position: relative;
+    display: grid;
+    height: 100%;
+    overflow: hidden;
+    border-radius: calc(var(--av-w) * 0.143);
+    background: #f2f2f7;
+  }
+  /*
+   * Unter jedem Clip liegt sein letztes Bild. Ohne Skript zeigt der Browser
+   * an einem Video eigene Bedienelemente, deshalb steht dann nur das Bild.
+   */
+  .schirm :is(img, video) {
+    grid-area: 1 / 1;
+    display: block;
     width: 100%;
     height: 100%;
-    rotate: -90deg;
+    object-fit: cover;
+    visibility: hidden;
+  }
+  @media (scripting: none) {
+    .schirm video {
+      display: none;
+    }
+  }
+  .av:has([value='status']:checked) [data-m='status'],
+  .av:has([value='koppeln']:checked) [data-m='koppeln'],
+  .av:has([value='zeitlimit']:checked) [data-m='zeitlimit'] {
+    visibility: visible;
+  }
+
+  /* Ausgeschalteter Bildschirm und ein Lichtstreif auf dem Glas; beide nur beim Aufstehen. */
+  .schirm::after,
+  .glas::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
     opacity: 0;
-    transition: opacity var(--duration-base) var(--ease-quiet);
   }
-  .zeitring circle {
-    fill: none;
-    stroke-width: 2.5;
+  .schirm::after {
+    inset: 0;
+    background: var(--av-glas);
   }
-  .spur {
-    stroke: var(--color-border);
+  .glas::after {
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgb(255 255 255 / 0.2) 50%,
+        transparent 60%
+      )
+      0 0 / 300% 100% no-repeat;
   }
-  .rest {
-    stroke: var(--av-jetzt);
-    stroke-dasharray: 100;
-    stroke-linecap: round;
+
+  .wer {
+    margin: 0.625rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    color: var(--color-fg-muted);
+    text-align: center;
   }
-  .limit {
+
+  /*
+   * Die Leitung auf Höhe der Partnerkarte in der App. Der Kreis in der Mitte
+   * ist der Server: Dort wartet der Status, bis das andere iPhone nachfragt.
+   */
+  .leitung {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    height: var(--av-h);
     font-size: 0.6875rem;
     line-height: 1rem;
     color: var(--color-fg-muted);
-    opacity: 0;
-    transition: opacity var(--duration-base) var(--ease-quiet);
-  }
-  .av.lebt:has(input:checked:not([value='verfuegbar'])) :is(.zeitring, .limit) {
-    opacity: 1;
-  }
-
-  .wahl {
-    margin: auto 0 0;
-    padding: 0;
-    border: 0;
-    min-width: 0;
-  }
-  .wahl legend {
-    padding: 0 0 0.25rem 0.25rem;
-    font-size: 0.6875rem;
-    color: var(--color-fg-muted);
-  }
-  .option {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: 1.75rem;
-    padding-inline: 0.25rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.8125rem;
-    color: var(--color-fg-muted);
-    cursor: pointer;
-    transition: color var(--duration-fast) var(--ease-quiet);
-  }
-  @media (min-width: 640px) {
-    .option {
-      min-height: 2rem;
-      font-size: 0.875rem;
-    }
-  }
-  .option:hover,
-  .option:has(:checked) {
-    color: var(--color-fg);
-  }
-  .option:has(:checked) {
-    font-weight: 600;
-  }
-  /* Der Fokus liegt am Knopf, sichtbar wird er an der ganzen Zeile. */
-  .option:has(:focus-visible) {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 1px;
-  }
-  .option input {
-    appearance: none;
-    flex: none;
-    width: 1rem;
-    height: 1rem;
-    margin: 0;
-    border: 1.5px solid var(--color-fg-muted);
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--farbe) 0 0.1875rem, transparent 0.21rem);
-    cursor: pointer;
-  }
-  .option input:checked {
-    border-color: var(--color-fg);
-    background: radial-gradient(circle, var(--farbe) 0 0.3125rem, transparent 0.335rem);
-  }
-  .option input:focus-visible {
-    outline: none;
-  }
-
-  .hinweis {
-    margin: 0.75rem 0 0;
-    font-size: 0.8125rem;
-    line-height: 1.4;
-    color: var(--color-fg-muted);
     text-align: center;
-    text-wrap: balance;
-  }
-
-  /* Die Leitung auf Höhe der beiden Punkte, der Code darunter. */
-  .leitung {
-    position: relative;
-    font-size: 0.6875rem;
-    color: var(--color-fg-muted);
   }
   .linie {
     position: absolute;
-    top: calc(var(--av-mitte) - 2px);
-    inset-inline: 0.5rem;
+    top: calc(var(--av-w) * 0.56 - 2px);
+    inset-inline: 0.375rem;
     height: 4px;
     container-type: inline-size;
     background: radial-gradient(circle, var(--color-fg-muted) 0 1px, transparent 1.5px) 0 50% / 6px
       4px repeat-x;
+    transition: opacity var(--duration-slow) var(--ease-quiet);
   }
-  .gekoppelt,
-  .code {
+  .server {
     position: absolute;
-    inset-inline: 0;
-    text-align: center;
-  }
-  .gekoppelt {
-    top: calc(var(--av-mitte) - 1.5rem);
-  }
-  .code {
-    top: calc(var(--av-mitte) + 0.5rem);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-    word-spacing: -0.4em;
+    top: -0.1875rem;
+    left: calc(50% - 0.3125rem);
+    width: 0.625rem;
+    height: 0.625rem;
+    border: 1.5px solid var(--color-fg-muted);
+    border-radius: 50%;
+    background: var(--av-wand);
   }
   .bote {
     position: absolute;
@@ -476,49 +634,282 @@ const zustaende = [
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background-color: var(--av-jetzt);
+    background-color: var(--av-fokus);
     opacity: 0;
+  }
+  .av:has([value='koppeln']:checked) .bote {
+    background-color: var(--av-verfuegbar);
+  }
+  .oben,
+  .unten {
+    position: absolute;
+    inset-inline: -0.5rem;
+    display: grid;
+  }
+  .oben {
+    top: calc(var(--av-w) * 0.56 - 1.625rem);
+  }
+  .unten {
+    top: calc(var(--av-w) * 0.56 + 0.625rem);
+  }
+  .oben > *,
+  .unten > * {
+    grid-area: 1 / 1;
+  }
+  .code {
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+  .offen,
+  .still,
+  .av:has([value='zeitlimit']:checked) .code {
+    visibility: hidden;
+  }
+  .av:has([value='zeitlimit']:checked) .still {
+    visibility: visible;
+  }
+  /* Beim Koppeln steht die Einladung offen, bis Lea den Code eingibt. */
+  .av.spielt:not([data-bote]):has([value='koppeln']:checked) .offen {
+    visibility: visible;
+  }
+  .av.spielt:not([data-bote]):has([value='koppeln']:checked) .gekoppelt {
+    visibility: hidden;
+  }
+  .av.spielt:not([data-bote]):has([value='koppeln']:checked) .linie {
+    opacity: 0.35;
+  }
+
+  /* Das Pult: drei Momente als Segmentschalter wie in iOS, daneben Abspielen. */
+  .pult {
+    display: grid;
+    row-gap: 1rem;
+    max-width: 34rem;
+  }
+  .steuerung {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .momente {
+    position: relative;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 2px;
+    min-width: 0;
+    border: 0;
+    border-radius: 0.5625rem;
+    background: color-mix(in oklch, var(--color-fg) 8%, transparent);
+    --av-i: 0;
+  }
+  .momente:has([value='koppeln']:checked) {
+    --av-i: 1;
+  }
+  .momente:has([value='zeitlimit']:checked) {
+    --av-i: 2;
+  }
+  .daumen {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    width: calc((100% - 4px) / 3);
+    border: 1px solid var(--color-border);
+    border-radius: 0.4375rem;
+    background: var(--color-bg-elevated);
+    translate: calc(var(--av-i) * 100%) 0;
+    transition: translate var(--duration-slow) var(--ease-quiet);
+  }
+  .moment {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 2.25rem;
+    padding-inline: 0.25rem;
+    border-radius: 0.4375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-quiet);
+  }
+  @media (min-width: 640px) {
+    .moment {
+      font-size: 0.875rem;
+    }
+  }
+  .moment:hover,
+  .moment:has(:checked) {
+    color: var(--color-fg);
+  }
+  .moment:has(:checked) {
+    font-weight: 600;
+  }
+  .moment:has(:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .moment input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .knopf {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg-elevated);
+    color: var(--color-fg);
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-quiet);
+  }
+  .knopf:hover {
+    border-color: var(--color-fg);
+  }
+  .knopf[hidden] {
+    display: none;
+  }
+  .knopf svg {
+    grid-area: 1 / 1;
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+  }
+  .knopf .anhalten,
+  .knopf[data-an='true'] .spielen {
+    visibility: hidden;
+  }
+  .knopf[data-an='true'] .anhalten {
+    visibility: visible;
+  }
+
+  /* Alle drei Texte liegen übereinander; so springt beim Wechsel nichts. */
+  .texte {
+    display: grid;
+  }
+  .text {
+    grid-area: 1 / 1;
+    margin: 0;
+    max-width: 65ch;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    text-wrap: pretty;
+    visibility: hidden;
+  }
+  .av:has([value='status']:checked) .text[data-m='status'],
+  .av:has([value='koppeln']:checked) .text[data-m='koppeln'],
+  .av:has([value='zeitlimit']:checked) .text[data-m='zeitlimit'] {
+    visibility: visible;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    /* Der Status reist in derselben Zeit hinüber, die Lea wartet. */
-    .av.lebt .bote {
-      animation: av-bote var(--av-verzug) var(--ease-quiet) both;
+    /*
+     * Aufwachen: Die iPhones liegen auf dem Rücken und stehen auf, Lea einen
+     * Wimpernschlag später. Kurz bevor sie stehen, geht der Bildschirm an,
+     * und ein Lichtstreif läuft einmal über das Glas.
+     */
+    .iphone {
+      animation: av-aufstehen 1.5s cubic-bezier(0.5, 0, 0.15, 1) calc(0.25s + var(--av-spaet)) both;
     }
-    .av.lebt .rest {
-      animation: av-ablauf var(--av-limit) linear both;
+    .schirm::after {
+      animation: av-an 0.45s var(--ease-quiet) calc(1.3s + var(--av-spaet)) backwards;
+    }
+    .glas::after {
+      animation: av-glanz 1.1s var(--ease-quiet) calc(0.95s + var(--av-spaet)) both;
+    }
+
+    /* Der Status reist zum Server und wartet dort, bis das andere iPhone fragt. */
+    .av[data-bote='hin'] .bote {
+      animation: av-hin 0.5s var(--ease-quiet) both;
+    }
+    .av[data-bote='weiter'] .bote {
+      animation: av-weiter 0.5s var(--ease-quiet) both;
+    }
+    .av[data-bote='zurueck'] .bote {
+      animation: av-zurueck 0.5s var(--ease-quiet) both;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .punkt,
-    .wort,
-    .zeitring,
-    .limit,
-    .option {
+    .daumen,
+    .moment,
+    .linie {
       transition-duration: 0s;
     }
   }
 
-  @keyframes av-bote {
-    0% {
+  @keyframes av-aufstehen {
+    from {
+      transform: rotateY(var(--av-dreh)) rotateX(84deg);
+    }
+    to {
+      transform: rotateY(var(--av-dreh)) rotateX(0deg);
+    }
+  }
+  @keyframes av-an {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes av-glanz {
+    from {
+      opacity: 1;
+      background-position: 100% 0;
+    }
+    to {
+      opacity: 0;
+      background-position: 0% 0;
+    }
+  }
+  @keyframes av-hin {
+    from {
       opacity: 0;
       transform: translateX(0);
+    }
+    20% {
+      opacity: 1;
+    }
+    to {
+      opacity: 1;
+      transform: translateX(calc(50cqi - 0.25rem));
+    }
+  }
+  @keyframes av-weiter {
+    from {
+      opacity: 1;
+      transform: translateX(calc(50cqi - 0.25rem));
+    }
+    80% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(calc(100cqi - 0.5rem));
+    }
+  }
+  @keyframes av-zurueck {
+    from {
+      opacity: 0;
+      transform: translateX(calc(100cqi - 0.5rem));
     }
     20%,
     80% {
       opacity: 1;
     }
-    100% {
-      opacity: 0;
-      transform: translateX(calc(100cqi - 0.5rem));
-    }
-  }
-  @keyframes av-ablauf {
-    from {
-      stroke-dashoffset: 0;
-    }
     to {
-      stroke-dashoffset: 100;
+      opacity: 0;
+      transform: translateX(0);
     }
   }
 </style>
