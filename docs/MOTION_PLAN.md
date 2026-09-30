@@ -45,7 +45,7 @@ Datenschutzerklärung bleibt dadurch gültig, und `scripts/verify-build.mjs` bra
 | 1   | Kachel wächst in die Projektseite                                      | klein    | erweitert „Seitenwechsel“           | umgesetzt (Abschnitt 3)  |
 | 2   | Echte Bildschirmaufnahmen in den Kacheln                               | groß     | neuer Eintrag nötig                 | offen, Entscheidung      |
 | 3   | Die Bühne oben spielt die Aufnahme                                     | mittel   | neuer Eintrag nötig                 | Availably umgesetzt      |
-| 4   | Satzkacheln (NoteList, Feynman, Availably) bekommen Aufnahme oder Bild | mittel   | ändert „Don't: Szene in die Kachel“ | offen, Entscheidung      |
+| 4   | Satzkacheln (NoteList, Feynman, Availably) bekommen Aufnahme oder Bild | mittel   | ändert „Don't: Szene in die Kachel“ | Availably: Bild          |
 |     | **Phase 2: Rhythmus über die Seite**                                   |          |                                     |                          |
 | 5   | Kapitel-Linie zieht beim Hereinscrollen auf                            | klein    | neuer Eintrag nötig                 | offen                    |
 | 6   | Ablauf-Linien füllen sich beim Scrollen                                | klein    | neuer Eintrag nötig                 | offen                    |

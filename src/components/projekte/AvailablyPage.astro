@@ -7,19 +7,25 @@
  * Aufnahme gerade sieht. Er wechselt im selben Moment wie der Bildschirm.
  * Farben und `--av-jetzt` setzt AvailablyScene auf `.av-seite`.
  *
+ * Die Galerie zeigt nur die Hochformate. Das Querformat in der Projektdatei
+ * ist das Kachelbild für Startseite und `/projekte/` (beide iPhones auf
+ * Weiß); hier stünde es direkt unter der Bühne, die dasselbe bewegt zeigt.
+ *
  * Alles andere bleibt beim Körper: Meta-Liste, Text, Funktionen, Technische
  * Entscheidungen, Erkenntnisse, Vor/Zurück und Anfrage.
  */
 import ProjectNav from '@/components/ProjectNav.astro'
 import type { Props } from '@/components/ProjectPage.astro'
 import ProjectPage from '@/components/ProjectPage.astro'
+import ScreenshotGallery from '@/components/ScreenshotGallery.astro'
 import AvailablyScene from '@/components/scenes/AvailablyScene.astro'
 
 const { projekt, prev, next } = Astro.props as Props
 const data = projekt.data
+const hochformate = data.screenshots.filter((shot) => shot.image.height > shot.image.width)
 ---
 
-<ProjectPage projekt={projekt} prev={prev} next={next} articleClass="av-seite">
+<ProjectPage projekt={projekt} prev={prev} next={next} hide={['gallery']} articleClass="av-seite">
   <Fragment slot="hero">
     <ProjectNav prev={prev} next={next} />
 
@@ -34,6 +40,8 @@ const data = projekt.data
   </Fragment>
 
   <AvailablyScene slot="stage" />
+
+  <ScreenshotGallery slot="after-meta" shots={hochformate} title={data.title} />
 </ProjectPage>
 
 <style>
