@@ -574,6 +574,12 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Bleistiftgrau, Zeilenhöhe 1,2. Die Größe folgt der Satzlänge und der Kachelbreite (5 bis 8,5 `cqi`,
   Innenabstand 6 `cqi`), damit der Satz das Feld füllt, ohne überzulaufen. Unter dem Titel steht er
   dann nur für Screenreader.
+- **Kachelbild einer iPhone-App** (entschieden am 2026-09-30, Availably): Wo es keinen
+  Browser-Screenshot geben kann, zeigt die Kachel zwei iPhones nebeneinander auf Weiß, mit Schatten im
+  Bild. Die Bildschirme sind echte Aufnahmen aus dem Simulator, gezeichnet sind nur die Rahmen; die
+  Bildunterschrift sagt das. Der Schatten liegt im Bild, nicht im CSS: Die Regel „kein Schatten“ für
+  Komponenten bleibt. Auf der Projektseite zeigt die Galerie dieses Bild nicht, weil die Bühne
+  dasselbe bewegt zeigt.
 
 ### Lightbox (`ScreenshotGallery`)
 

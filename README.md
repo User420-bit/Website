@@ -123,6 +123,10 @@ Handaufnahmen, etwa aus dem Spiel heraus oder im Handyformat, liegen daneben als
 sie nicht an und fragt bei Projekten, die schon eigene Bilder eingetragen haben, nicht mehr nach
 dem Eintrag.
 
+Availably läuft nur auf dem iPhone. Sein Kachelbild (`availably.png`, beide iPhones auf Weiß) baut
+`node scripts/kachelbild-availably.mjs` aus den Simulator-Aufnahmen im Nachbar-Repo
+`../Availably/docs/vorschau/`.
+
 Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/`, in der Kachel auf der
 Startseite und über die volle Breite, wenn das Projekt dort oben groß steht. Ohne Bild zeigt die
 Kachel den ersten Satz der `summary`. Die Projektseite zeigt es oben über die volle Breite, die

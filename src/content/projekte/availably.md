@@ -8,6 +8,8 @@ status: Prototyp. Alle Muss-Funktionen sind gebaut und im Simulator mit lokalem 
 github: null
 order: 11
 screenshots:
+  - image: ../../assets/projekte/availably.png
+    caption: 'Availably auf zwei iPhones: Jonas hat „Fokus“ gesetzt, Lea sieht es. Aufnahmen aus dem Simulator in gezeichneten Rahmen'
   - image: ../../assets/projekte/availably-partner-fokus.png
     caption: 'Home bei Jonas: Lea ist im Fokus, noch 30 Minuten, darunter ihre Ortszeit'
   - image: ../../assets/projekte/availably-status-aendern.png
