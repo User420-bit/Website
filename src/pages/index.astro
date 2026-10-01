@@ -48,11 +48,6 @@ if (profile.social.github) {
   })
 }
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
-// Der erste Schritt ist die E-Mail; sein Zeitrahmen ist die Antwortzeit, die nur in
-// `responseTime` steht.
-const schritte = contact.steps.map((step, i) =>
-  i === 0 && !step.timeframe ? { ...step, timeframe: contact.responseTime } : step,
-)
 ---
 
 <BaseLayout title={`${company.name} – ${company.claim}`} description={description} isHome>
@@ -271,36 +266,27 @@ const schritte = contact.steps.map((step, i) =>
 
   {
     /*
-    05 Kontakt — ein Raster, keine Freischweber. Links die Handlung: die
-    Adresse gross und markierbar (wer am PC nur Webmail nutzt, klickt mit einem
-    mailto:-Knopf allein ins Leere), darunter Knopf und Erreichbarkeit. Rechts
-    der Ablauf. Beide Spalten oeffnen mit derselben Haarlinie und beginnen so
-    auf einer Hoehe.
+    05 Kontakt — nur die Handlung: die Adresse gross und markierbar (wer am PC
+    nur Webmail nutzt, klickt mit einem mailto:-Knopf allein ins Leere),
+    darunter Knopf und Erreichbarkeit.
   */
   }
   <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
-    <div class="grid grid-cols-1 gap-10 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12">
-      <div class="border-t border-border pt-6">
-        <CopyEmail email={company.email} />
-        <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
-          Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
-        </p>
-        <p class="mt-8 mb-0">
-          <Button href={anfrage}>E-Mail schreiben</Button>
-        </p>
-        <MetaList rows={erreichbarkeit} class="mt-10" />
-      </div>
-
-      <div class="border-t border-border pt-6">
-        <h3 class="m-0 text-sm font-medium text-fg-muted">So läuft eine Anfrage ab</h3>
-        <NumberedRows items={schritte} class="mt-3" />
-      </div>
+    <div class="border-t border-border pt-6">
+      <CopyEmail email={company.email} />
+      <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
+        Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
+      </p>
+      <p class="mt-8 mb-0">
+        <Button href={anfrage}>E-Mail schreiben</Button>
+      </p>
+      <MetaList rows={erreichbarkeit} class="mt-10" />
     </div>
 
     {
       /*
       Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer Land
-      vom Breitenstein aus. Unter dem Raster, damit die Adresse das eine grosse
+      vom Breitenstein aus. Unter dem Kontakt, damit die Adresse das eine grosse
       Element des Bereichs bleibt. Beleg für den Ort, keine Stimmungsfläche.
       Unter 640 px zeigt ein 4:3-Ausschnitt die Mitte grösser, sonst bliebe
       vom Land nur ein Strich; `sizes` rechnet den Zoom (Faktor 1,84) mit ein.

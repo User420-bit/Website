@@ -6,8 +6,8 @@ import { href, mailto } from '@/lib/site'
 /**
  * Ruhige Anfrage-Zeile: nach "Arbeiten" auf der Startseite und am Ende jeder
  * Projektseite. Wer gerade einen Beleg gelesen hat, soll nicht erst bis zum
- * Kontakt scrollen müssen. Der zweite Link führt zu Ablauf und Adresse, falls
- * sich kein Mailprogramm öffnet.
+ * Kontakt scrollen müssen. Der zweite Link führt zur Adresse, falls sich kein
+ * Mailprogramm öffnet.
  */
 interface Props {
   class?: string
@@ -36,7 +36,7 @@ const contact = (await getEntry('contact', 'main'))!.data
       class="py-2.5 text-sm text-fg-muted underline decoration-border underline-offset-4 transition-colors hover:text-fg hover:decoration-accent motion-reduce:transition-none"
       href={href('/#kontakt')}
     >
-      So läuft eine Anfrage ab
+      Adresse zum Kopieren
     </a>
   </div>
 </div>

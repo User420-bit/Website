@@ -4,22 +4,6 @@
     "description": "Anfragen zu kleinen Programmen, Websites und Web-Apps beantwortet Klartext per E-Mail.",
     "responseTime": "Antwort in der Regel innerhalb eines Werktags.",
     "subject": "Anfrage an Klartext",
-    "steps": [
-      {
-        "title": "Kurze E-Mail",
-        "description": "Was heute hakt, wer damit arbeitet und bis wann es fertig sein soll. Stichworte reichen."
-      },
-      {
-        "title": "Erstes Gespräch",
-        "description": "Per Telefon oder Video, oder vor Ort zwischen Rosenheim und München. Kostenlos und unverbindlich.",
-        "timeframe": "Etwa 30 Minuten, innerhalb einer Woche."
-      },
-      {
-        "title": "Einschätzung und Angebot",
-        "description": "Eine ehrliche Einschätzung zu Aufwand, Nutzen und Grenzen, auch wenn sie lautet: Ein fertiges Werkzeug reicht. Passt das Vorhaben, folgt ein schriftliches Angebot.",
-        "timeframe": "Innerhalb von drei Werktagen nach dem Gespräch."
-      }
-    ],
     "prompt": {
       "title": "Ein ähnliches Vorhaben?",
       "text": "Eine kurze E-Mail genügt, das erste Gespräch ist kostenlos und unverbindlich."
