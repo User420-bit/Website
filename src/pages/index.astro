@@ -266,44 +266,52 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
   {
     /*
-    05 Kontakt — nur die Handlung: die Adresse gross und markierbar (wer am PC
+    05 Kontakt — links die Handlung: die Adresse gross und markierbar (wer am PC
     nur Webmail nutzt, klickt mit einem mailto:-Knopf allein ins Leere),
-    darunter Knopf und Erreichbarkeit.
+    darunter Knopf und Erreichbarkeit. Ab 1024 px steht rechts daneben das Foto
+    und füllt die Höhe der Handlung, statt darunter eine leere Fläche
+    aufzumachen. Eine Haarlinie über beiden Spalten, so beginnen sie auf einer
+    Höhe; schmaler stapelt sich alles, die Handlung zuerst.
   */
   }
   <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
-    <div class="border-t border-border pt-6">
-      <CopyEmail email={company.email} />
-      <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
-        Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
-      </p>
-      <p class="mt-8 mb-0">
-        <Button href={anfrage}>E-Mail schreiben</Button>
-      </p>
-      <MetaList rows={erreichbarkeit} class="mt-10" />
-    </div>
+    <div
+      class="grid grid-cols-1 gap-12 border-t border-border pt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+    >
+      <div>
+        <CopyEmail email={company.email} />
+        <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
+          Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
+        </p>
+        <p class="mt-8 mb-0">
+          <Button href={anfrage}>E-Mail schreiben</Button>
+        </p>
+        <MetaList rows={erreichbarkeit} class="mt-10" />
+      </div>
 
-    {
-      /*
-      Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer Land
-      vom Breitenstein aus. Unter dem Kontakt, damit die Adresse das eine grosse
-      Element des Bereichs bleibt. Beleg für den Ort, keine Stimmungsfläche.
-      Unter 640 px zeigt ein 4:3-Ausschnitt die Mitte grösser, sonst bliebe
-      vom Land nur ein Strich; `sizes` rechnet den Zoom (Faktor 1,84) mit ein.
-    */
-    }
-    <figure class="m-0 mt-12">
-      <Image
-        class="block aspect-[4/3] h-auto w-full rounded-sm border border-border object-cover object-[60%_50%] sm:aspect-auto"
-        src={rosenheimerLand}
-        alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
-        widths={[640, 1024, 1600, 2048]}
-        sizes="(min-width: 1024px) 64rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
-        loading="lazy"
-      />
-      <figcaption class="mt-3 text-xs text-fg-muted">
-        Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
-      </figcaption>
-    </figure>
+      {
+        /*
+        Der Raum, von dem der Hero spricht, als eigenes Foto: das Rosenheimer
+        Land vom Breitenstein aus. Beleg für den Ort, keine Stimmungsfläche,
+        deshalb hinter der Handlung. Unter 640 px zeigt ein 4:3-Ausschnitt die
+        Mitte grösser, sonst bliebe vom Land nur ein Strich; ab 1024 px
+        schneidet die Spalte etwa 17:10 aus. `sizes` rechnet den Zoom jeweils mit
+        ein (Faktor 1,84 bzw. rund 1,45).
+      */
+      }
+      <figure class="m-0 lg:flex lg:flex-col">
+        <Image
+          class="block aspect-[4/3] h-auto w-full rounded-sm border border-border object-cover object-[60%_50%] sm:aspect-auto lg:h-0 lg:min-h-64 lg:flex-1"
+          src={rosenheimerLand}
+          alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
+          widths={[640, 1024, 1600, 2048]}
+          sizes="(min-width: 1024px) 44rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
+          loading="lazy"
+        />
+        <figcaption class="mt-3 text-xs text-fg-muted">
+          Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
+        </figcaption>
+      </figure>
+    </div>
   </Section>
 </BaseLayout>
