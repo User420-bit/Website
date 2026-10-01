@@ -691,17 +691,19 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Eine Spalte, nur die Handlung, oben eine Haarlinie: die Adresse (`CopyEmail`), der Webmail-Hinweis
-als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
-Profil, Code). Kein Ablauf mit Schritten: wer schreiben will, braucht die Adresse, keine
-Erklärung. Genau ein großes Element (die Adresse) und genau ein oranger Knopf.
+Eine Haarlinie, darunter zwei Spalten: links die Handlung, rechts das Foto. Die Handlung: die
+Adresse (`CopyEmail`), der Webmail-Hinweis als Caption, der einzige Primärbutton des Bereichs,
+darunter die Erreichbarkeit als Meta-Liste (Ort, Profil, Code). Kein Ablauf mit Schritten: wer
+schreiben will, braucht die Adresse, keine Erklärung. Genau ein großes Element (die Adresse) und
+genau ein oranger Knopf.
 
-Darunter, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
-Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`; unter 640 px als 4:3-Ausschnitt,
-der auf das Land zoomt), darunter die Bildunterschrift als
-Caption in Bleistiftgrau. Es belegt den Ort aus dem Hero („im Raum Rosenheim“) und steht deshalb
-hinter der Handlung, nie davor. Nur echte, eigene Aufnahmen aus der Region, ohne GPS- und
-EXIF-Daten im Repository.
+Rechts ein eigenes Foto des Rosenheimer Landes (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`),
+darunter die Bildunterschrift als Caption in Bleistiftgrau. Ab 1024 px stehen beide Spalten `1fr |
+1fr` mit 3rem Abstand nebeneinander, das Foto füllt die Höhe der Handlung als Ausschnitt; so bleibt
+neben dem kurzen Text keine leere Fläche. Darunter stapelt sich alles, die Handlung zuerst, das Foto
+über die volle Breite (unter 640 px als 4:3-Ausschnitt, der auf das Land zoomt). Es belegt den Ort
+aus dem Hero („im Raum Rosenheim“) und steht deshalb hinter der Handlung, nie davor. Nur echte,
+eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository.
 
 ### Containers
 
