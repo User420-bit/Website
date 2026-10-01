@@ -216,24 +216,10 @@ const contact = defineCollection({
   schema: z.object({
     heading: z.string(),
     description: z.string(),
-    /** Einzige Stelle mit der Antwortzeit; Hero und Kontakt lesen sie von hier. */
+    /** Einzige Stelle mit der Antwortzeit; der Hero liest sie von hier. */
     responseTime: z.string(),
     /** Betreff aller Anfrage-Links. Wird URL-kodiert, Umlaute sind erlaubt. */
     subject: z.string(),
-    /**
-     * Ablauf nach der Anfrage, in dieser Reihenfolge. `timeframe` sagt, wann der
-     * Schritt kommt oder wie lange er dauert. Der erste Schritt ist die E-Mail;
-     * sein Zeitrahmen ist `responseTime` und wird nicht noch einmal eingetragen.
-     */
-    steps: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          timeframe: z.string().nullable().default(null),
-        }),
-      )
-      .min(1),
     /** Ruhige Anfrage-Zeile nach "Arbeiten" und am Ende jeder Projektseite. */
     prompt: z.object({
       title: z.string(),

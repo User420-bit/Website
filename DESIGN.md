@@ -672,7 +672,7 @@ schmalere klebende Header (siehe Navigation):
 
 `InquiryPrompt`: ruhige Zeile nach „Arbeiten“, am Ende jeder Projektseite und unter `/projekte/`.
 Links ein Satz aus `contact.json` (Titel in Tinte, Rest in Bleistiftgrau), rechts „E-Mail schreiben“
-als Sekundärbutton und ein Textlink zum Ablauf im Kontaktbereich. Sekundär, weil die Hauptaktion des
+als Sekundärbutton und der Textlink „Adresse zum Kopieren“ in den Kontaktbereich. Sekundär, weil die Hauptaktion des
 Bereichs schon vergeben ist.
 
 ### Disclosure
@@ -691,16 +691,12 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Ein Raster, keine Freischweber: ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, beide öffnen mit
-derselben Haarlinie und beginnen so auf einer Höhe. Links die Handlung: die Adresse (`CopyEmail`),
-der Webmail-Hinweis
+Eine Spalte, nur die Handlung, oben eine Haarlinie: die Adresse (`CopyEmail`), der Webmail-Hinweis
 als Caption, der einzige Primärbutton des Bereichs, darunter die Erreichbarkeit als Meta-Liste (Ort,
-Profil, Code). Rechts der Ablauf: Zwischenüberschrift „So läuft eine Anfrage ab“ und drei
-Nummernzeilen, jede mit einer Zeile „Zeitrahmen:“ unter der Erklärung (Label in Tinte wie „Stand:“,
-Text in Bleistiftgrau). Unter 640 px stapelt sich alles in dieser Reihenfolge. Genau ein großes Element (die
-Adresse) und genau ein oranger Knopf.
+Profil, Code). Kein Ablauf mit Schritten: wer schreiben will, braucht die Adresse, keine
+Erklärung. Genau ein großes Element (die Adresse) und genau ein oranger Knopf.
 
-Unter dem Raster, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
+Darunter, 3rem Abstand, steht ein eigenes Foto des Rosenheimer Landes über die volle
 Spaltenbreite (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`; unter 640 px als 4:3-Ausschnitt,
 der auf das Land zoomt), darunter die Bildunterschrift als
 Caption in Bleistiftgrau. Es belegt den Ort aus dem Hero („im Raum Rosenheim“) und steht deshalb

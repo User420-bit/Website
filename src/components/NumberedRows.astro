@@ -1,19 +1,16 @@
 ---
 /**
  * Nummerierte Zeilen: Ziffer, Titel, Erklärung, Haarlinie darunter. Dasselbe
- * Muster trägt die Werte in „Arbeitsweise“ und die Schritte im Kontakt. Die
+ * Muster trägt die Werte in „Arbeitsweise“. Die
  * Ziffer ist Ordnung fürs Auge, keine Information — die Reihenfolge steht
  * ohnehin im `<ol>`, deshalb `aria-hidden`.
  *
  * `titleColumn`: ab `sm` bekommt der Titel eine eigene Spalte, die Erklärung
  * steht daneben (Arbeitsweise: kurze Namen). Ohne steht die Erklärung unter
- * dem Titel (Kontakt: längere Schritte in einer schmalen Spalte).
- *
- * `timeframe` steht als eigene Zeile unter der Erklärung, mit dem Label
- * "Zeitrahmen:" wie "Stand:" in der Feature-Zeile.
+ * dem Titel.
  */
 interface Props {
-  items: readonly { title: string; description: string; timeframe?: string | null }[]
+  items: readonly { title: string; description: string }[]
   titleColumn?: boolean
   class?: string
 }
@@ -42,16 +39,6 @@ const { items, titleColumn = false, class: className = '' } = Astro.props
         >
           {item.description}
         </span>
-        {item.timeframe && (
-          <span
-            class:list={[
-              'prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted',
-              titleColumn && 'sm:col-start-3',
-            ]}
-          >
-            <span class="font-medium text-fg">Zeitrahmen:</span> {item.timeframe}
-          </span>
-        )}
       </li>
     ))
   }
