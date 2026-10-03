@@ -5,6 +5,12 @@ import Arrow from '@/components/Arrow.astro'
 import { href } from '@/lib/site'
 
 const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.data.order)
+
+/*
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): Kopf und Einleitung stehen sofort. Je
+ * Gruppe zieht beim Hereinscrollen die Haarlinie von links auf, der Kopf der
+ * Gruppe zieht mit ihr ein, danach die Zeilen, 40 ms gestaffelt.
+ */
 ---
 
 <BaseLayout
@@ -27,14 +33,18 @@ const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.d
 
     {
       skills.map((group) => (
-        <section class="mt-12 border-t border-border pt-6">
-          <div>
+        <section class="mit-linie relative mt-12 border-t border-border pt-6" data-gruppe>
+          <span class="haarlinie" aria-hidden="true" data-bewegt="werkzeuge" />
+          <div data-bewegt="werkzeuge">
             <h2 class="m-0 text-xl font-semibold tracking-tight">{group.data.title}</h2>
             <p class="prose-flow mt-1 mb-0 text-sm text-fg-muted">{group.data.description}</p>
           </div>
           <dl class="mt-6 mb-0">
             {group.data.items.map((item) => (
-              <div class="grid gap-x-6 border-b border-border py-3 sm:grid-cols-[11rem_minmax(0,1fr)]">
+              <div
+                class="grid gap-x-6 border-b border-border py-3 sm:grid-cols-[11rem_minmax(0,1fr)]"
+                data-bewegt="werkzeuge"
+              >
                 <dt class="text-sm font-medium">{item.name}</dt>
                 <dd class="prose-flow m-0 text-sm text-fg-muted">{item.note}</dd>
               </div>
@@ -45,3 +55,88 @@ const skills = (await getCollection('skills')).sort((a, b) => a.data.order - b.d
     }
   </article>
 </BaseLayout>
+
+<style>
+  /* Anfangszustände nur mit Skript und erlaubter Bewegung, nie im Ausdruck. */
+  @media screen {
+    :global(html[data-bewegung]) [data-bewegt='werkzeuge'] {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    /* Solange die Haarlinie aufzieht, zeichnet sie die Linie, nicht der Rand. */
+    :global(html[data-bewegung]) .mit-linie:has(> .haarlinie) {
+      border-top-color: transparent;
+    }
+    :global(html[data-bewegung]) .haarlinie {
+      display: block;
+    }
+    :global(html[data-bewegung]) .haarlinie[data-bewegt='werkzeuge'] {
+      opacity: 1;
+      transform: scaleX(0);
+    }
+  }
+  .haarlinie {
+    display: none;
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: var(--color-border);
+    transform-origin: left;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, WEG_TEXT, alle, animate, inView, stagger, wennBewegt } from '@/lib/motion'
+
+  // Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt; dann nicht noch einmal verstecken.
+  const ZU_SPAET = 1800
+
+  /**
+   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
+   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
+   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
+   * im nächsten Bild.
+   */
+  const aufraeumen = (teile: HTMLElement[]) =>
+    requestAnimationFrame(() => {
+      for (const teil of teile) {
+        teil.removeAttribute('data-bewegt')
+        teil.style.removeProperty('opacity')
+        teil.style.removeProperty('transform')
+        teil.style.removeProperty('animation')
+      }
+    })
+
+  wennBewegt(() => {
+    if (performance.now() > ZU_SPAET) return
+    for (const gruppe of alle('[data-gruppe]')) {
+      const linie = gruppe.querySelector<HTMLElement>('.haarlinie')
+      const zeilen = alle('[data-bewegt="werkzeuge"]:not(.haarlinie)', gruppe)
+      // Das Modul läuft: Das Netz würde Gruppen unter dem Fenster nach 2 s
+      // aufdecken und beim Hereinscrollen noch einmal einziehen lassen.
+      for (const teil of [linie, ...zeilen]) teil?.style.setProperty('animation', 'none')
+      inView(
+        gruppe,
+        () => {
+          // Ist die Linie aufgezogen, übernimmt wieder der Rand der Gruppe.
+          if (linie) {
+            animate(
+              linie,
+              { transform: ['scaleX(0)', 'none'] },
+              { duration: DAUER.szene, ease: KURVE },
+            ).then(() => linie.remove())
+          }
+          animate(
+            zeilen,
+            { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(0.04) },
+          ).then(() => aufraeumen(zeilen))
+        },
+        { margin: '0px 0px -15% 0px' },
+      )
+    }
+  })
+</script>

@@ -7,6 +7,14 @@
  * der Stand: Kunden fragen, ob es laeuft, nicht womit.
  * Der Screenshot wächst beim Klick in das erste Bild der Projektseite
  * (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): Beim Hereinscrollen ziehen die Texte
+ * der Zeile 8 px ein, Zeile um Zeile. Das Bildfeld zieht nicht mit: Es ist
+ * Ausgangs- und Zielpunkt des Übergangs und darf nie verschoben oder
+ * unsichtbar sein, wenn der Browser es abfotografiert. Bei Hover und Fokus
+ * wächst das Bild in seinem Rahmen auf 1,02; der Rahmen (`data-uebergang`)
+ * selbst bleibt untransformiert. Das gewachsene Bild läge über dem gestreckten
+ * Titel-Link und finge den Klick ab, deshalb lässt es Zeiger durch.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -25,14 +33,15 @@ const screenshot = leitbild(screenshots)
 ---
 
 <article
+  data-arbeit
   class="group relative grid gap-x-8 gap-y-3 border-b border-border py-6 sm:grid-cols-[9rem_minmax(0,1fr)]"
 >
-  <p class="m-0 flex gap-3 text-sm sm:flex-col sm:gap-1">
+  <p class="m-0 flex gap-3 text-sm sm:flex-col sm:gap-1" data-bewegt="arbeiten">
     <KindLabel kind={kind} />
     <span class="text-fg-muted tabular-nums">{period}</span>
   </p>
   <div>
-    <h3 class="display m-0 text-xl font-semibold">
+    <h3 class="display m-0 text-xl font-semibold" data-bewegt="arbeiten">
       {/* Stretched Link: die ganze Zeile ist klickbar, der Fokus bleibt am Text. */}
       <a
         class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"
@@ -41,29 +50,38 @@ const screenshot = leitbild(screenshots)
         {title}
       </a>
     </h3>
-    <p class="prose-flow mt-3 mb-0 max-w-[60ch] leading-relaxed text-fg-muted">{summary}</p>
+    <p
+      class="prose-flow mt-3 mb-0 max-w-[60ch] leading-relaxed text-fg-muted"
+      data-bewegt="arbeiten"
+    >
+      {summary}
+    </p>
     {
       status && (
-        <p class="prose-flow mt-3 mb-0 max-w-[60ch] text-sm text-fg-muted">
+        <p class="prose-flow mt-3 mb-0 max-w-[60ch] text-sm text-fg-muted" data-bewegt="arbeiten">
           <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
         </p>
       )
     }
     {
       screenshot && (
-        <Image
-          class="mt-6 aspect-video w-full max-w-xl rounded-sm border border-border object-cover object-top"
-          src={screenshot.image}
-          alt={screenshot.caption}
-          widths={[480, 960]}
-          sizes="(min-width: 1024px) 36rem, 92vw"
-          loading="lazy"
+        <div
+          class="mt-6 aspect-video w-full max-w-xl overflow-hidden rounded-sm border border-border"
           data-uebergang
           style={uebergang(projekt.id)}
-        />
+        >
+          <Image
+            class="pointer-events-none size-full object-cover object-top motion-safe:transition-transform motion-safe:duration-320 motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
+            src={screenshot.image}
+            alt={screenshot.caption}
+            widths={[480, 960]}
+            sizes="(min-width: 1024px) 36rem, 92vw"
+            loading="lazy"
+          />
+        </div>
       )
     }
-    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2" data-bewegt="arbeiten">
       <p class="m-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
         Zur Referenz
         <Arrow
@@ -96,3 +114,65 @@ const screenshot = leitbild(screenshots)
     </div>
   </div>
 </article>
+
+<style>
+  /* Anfangszustand nur mit Skript und erlaubter Bewegung, nie im Ausdruck. */
+  @media screen {
+    :global(html[data-bewegung]) [data-bewegt='arbeiten'] {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, inView, wennBewegt } from '@/lib/motion'
+
+  // Wie in ProjectPage: Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt.
+  const ZU_SPAET = 1800
+
+  /**
+   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
+   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
+   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
+   * im nächsten Bild.
+   */
+  const aufraeumen = (teile: HTMLElement[]) =>
+    requestAnimationFrame(() => {
+      for (const teil of teile) {
+        teil.removeAttribute('data-bewegt')
+        teil.style.removeProperty('opacity')
+        teil.style.removeProperty('transform')
+        teil.style.removeProperty('animation')
+      }
+    })
+
+  wennBewegt(() => {
+    if (performance.now() > ZU_SPAET) return
+    const zeilen = alle('[data-arbeit]')
+    const teile = new Map(zeilen.map((zeile) => [zeile, alle('[data-bewegt="arbeiten"]', zeile)]))
+    for (const liste of teile.values()) for (const teil of liste) teil.style.animation = 'none'
+
+    // Zeilen, die im selben Moment ins Fenster kommen (beim Laden mehrere),
+    // ziehen nacheinander ein, 60 ms Abstand; einzeln beim Scrollen sofort.
+    let reihe: HTMLElement[][] = []
+    const abspielen = () => {
+      reihe.forEach((liste, i) =>
+        animate(
+          liste,
+          { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+          { duration: DAUER.langsam, ease: KURVE, delay: i * STAFFEL },
+        ).then(() => aufraeumen(liste)),
+      )
+      reihe = []
+    }
+    inView(
+      zeilen,
+      (zeile) => {
+        if (reihe.length === 0) requestAnimationFrame(abspielen)
+        reihe.push(teile.get(zeile as HTMLElement) ?? [])
+      },
+      { margin: '0px 0px -15% 0px' },
+    )
+  })
+</script>

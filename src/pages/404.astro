@@ -2,6 +2,11 @@
 import Button from '@/components/Button.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { href } from '@/lib/site'
+
+/*
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): Nummer und H1 stehen sofort, Satz und
+ * Knopf ziehen beim Laden 8 px ein, 60 ms nacheinander.
+ */
 ---
 
 <BaseLayout
@@ -14,11 +19,53 @@ import { href } from '@/lib/site'
     <h1 class="display mt-2 mb-0 text-4xl font-semibold text-balance sm:text-5xl">
       Seite nicht gefunden
     </h1>
-    <p class="mt-5 max-w-[50ch] text-lg text-fg-muted">
+    <p class="mt-5 max-w-[50ch] text-lg text-fg-muted" data-bewegt="fehlerseite">
       Diese Adresse führt ins Leere. Möglicherweise ist der Link veraltet.
     </p>
-    <p class="mt-8 mb-0">
+    <p class="mt-8 mb-0" data-bewegt="fehlerseite">
       <Button href={href('/')}>Zur Startseite</Button>
     </p>
   </section>
 </BaseLayout>
+
+<style>
+  @media screen {
+    :global(html[data-bewegung]) [data-bewegt='fehlerseite'] {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, stagger, wennBewegt } from '@/lib/motion'
+
+  // Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt; dann nicht noch einmal verstecken.
+  const ZU_SPAET = 1800
+
+  /**
+   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
+   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
+   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
+   * im nächsten Bild.
+   */
+  const aufraeumen = (teile: HTMLElement[]) =>
+    requestAnimationFrame(() => {
+      for (const teil of teile) {
+        teil.removeAttribute('data-bewegt')
+        teil.style.removeProperty('opacity')
+        teil.style.removeProperty('transform')
+        teil.style.removeProperty('animation')
+      }
+    })
+
+  wennBewegt(() => {
+    if (performance.now() > ZU_SPAET) return
+    const teile = alle('[data-bewegt="fehlerseite"]')
+    animate(
+      teile,
+      { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+      { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+    ).then(() => aufraeumen(teile))
+  })
+</script>
