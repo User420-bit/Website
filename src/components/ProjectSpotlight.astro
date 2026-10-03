@@ -13,6 +13,11 @@
  *
  * Beim Klick wächst der Screenshot, ohne ihn die große summary, in das erste
  * Bild der Projektseite (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, C): Im Bildfeld wandert der Screenshot beim
+ * Scrollen leicht (`data-parallaxe`, gesteuert von `ProjectShowcase`), bei
+ * Hover und Fokus wächst er auf 1,02. Beides geschieht innen; das Bildfeld
+ * selbst trägt nie einen Transform, sonst bräche der Übergang.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -58,14 +63,16 @@ const bild = leitbild(screenshots)
         data-uebergang
         style={uebergang(projekt.id)}
       >
-        <Image
-          class="h-full w-full object-cover object-top"
-          src={bild.image}
-          alt={bild.caption}
-          widths={[640, 960, 1280, 1600]}
-          sizes="(min-width: 1024px) 62rem, 92vw"
-          loading="lazy"
-        />
+        <div class="h-full" data-parallaxe>
+          <Image
+            class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
+            src={bild.image}
+            alt={bild.caption}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(min-width: 1024px) 62rem, 92vw"
+            loading="lazy"
+          />
+        </div>
       </div>
     ) : (
       <p

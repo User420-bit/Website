@@ -16,6 +16,12 @@
  * die Auswahl blendet CSS über `:has()` um. Die Bühne zeigt dann das erste
  * Projekt nach `order`, das Raster die übrigen, Blättern entfällt. Kann ein
  * Browser kein `:has()`, stehen beide Auswahlen untereinander.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, C), nur mit Skript und erlaubter Bewegung:
+ * Beim Umschalten blendet die alte Auswahl aus und die neue zieht ein, beim
+ * Blättern schiebt die Bühne in Blätterrichtung, die Kacheln kommen einmal
+ * gestaffelt, das Bild der Bühne wandert beim Scrollen im Rahmen. Ohne das
+ * alles bleibt es beim harten Wechsel von oben.
  */
 import type { CollectionEntry } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
@@ -57,7 +63,29 @@ const blaetternKnopf =
   'inline-flex size-11 cursor-pointer items-center justify-center rounded-sm border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
 ---
 
-<div class="showcase">
+<div class="showcase" data-showcase>
+  {
+    /*
+     * Kommt der Besucher mit dem Übergang zurück (Projektseite → Startseite),
+     * ist eine Kachel das Ziel, in das das Bild zurückwächst. Sie muss dann
+     * schon stehen; versteckt wäre sie ein Loch. `pagereveal` feuert vor dem
+     * ersten Bild der Seite, also vor dem gebündelten Skript, darum inline und
+     * hier, wo `.showcase` schon steht. `data-ruhig` hebt den Anfangszustand
+     * der Kacheln auf.
+     */
+  }
+  <script is:inline>
+    ;(() => {
+      const showcase = document.currentScript.parentElement
+      addEventListener(
+        'pagereveal',
+        (event) => {
+          if (event.viewTransition) showcase.dataset.ruhig = ''
+        },
+        { once: true },
+      )
+    })()
+  </script>
   {
     gruppen.length > 1 && (
       <fieldset class="m-0 min-w-0 border-0 p-0">
@@ -92,7 +120,7 @@ const blaetternKnopf =
       const blaettern = gruppe.projekte.length > 1
       return (
         <div class="mt-8" data-gruppe={gruppe.id}>
-          <div class="relative">
+          <div class="relative" data-buehnenfeld>
             {gruppe.projekte.map((projekt, i) => (
               <ProjectSpotlight projekt={projekt} blaettern={blaettern} hidden={i > 0} />
             ))}
@@ -118,7 +146,10 @@ const blaetternKnopf =
           {blaettern && (
             <>
               <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">{gruppe.rasterTitel}</h3>
-              <ul class="mt-3 grid list-none grid-cols-1 gap-x-6 gap-y-10 border-t border-border p-0 pt-6 sm:grid-cols-2 lg:grid-cols-3">
+              <ul
+                data-raster
+                class="mt-3 grid list-none grid-cols-1 gap-x-6 gap-y-10 border-t border-border p-0 pt-6 sm:grid-cols-2 lg:grid-cols-3"
+              >
                 {gruppe.projekte.map((projekt, i) => (
                   <ProjectTile projekt={projekt} hidden={i === 0} />
                 ))}
@@ -137,43 +168,296 @@ const blaetternKnopf =
   .showcase:has(input[value='eigene']:checked) [data-gruppe='kunden'] {
     display: none;
   }
+
+  /*
+   * Anfangszustand der Kacheln, bis sie gestaffelt einziehen. Nur mit Skript
+   * und erlaubter Bewegung (`data-bewegung`), und nicht nach einem Übergang
+   * (`data-ruhig`, siehe oben). Das Skript übernimmt die Kacheln vom
+   * Sicherheitsnetz in global.css, weil das Raster oft erst nach Sekunden ins
+   * Fenster kommt.
+   */
+  :global(html[data-bewegung] [data-showcase]:not([data-ruhig]) [data-kachel][data-bewegt]) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
 </style>
 
 <script>
-  // Je Auswahl: beim Aufruf ein zufälliges Projekt auf die Bühne, danach nur
-  // noch auf Knopfdruck. Kein Timer, kein automatischer Wechsel. Bühnen und
-  // Kacheln stehen in derselben Reihenfolge; was auf der Bühne steht, fehlt im
-  // Raster.
-  for (const gruppe of document.querySelectorAll<HTMLElement>('[data-gruppe]')) {
-    const buehnen = [...gruppe.querySelectorAll<HTMLElement>('[data-buehne]')]
-    const kacheln = [...gruppe.querySelectorAll<HTMLElement>('[data-kachel]')]
+  import {
+    alle,
+    animate,
+    bewegt,
+    DAUER,
+    inView,
+    KURVE,
+    scroll,
+    stagger,
+    STAFFEL,
+    WEG_TEXT,
+  } from '@/lib/motion'
+
+  /** Wie weit die Bühne beim Blättern schiebt; sie ist ein Beleg, kein Text. */
+  const WEG_BUEHNE = 24
+  /** Wie weit eine Kachel einzieht. */
+  const WEG_KACHEL = 16
+  /** Wie weit das Bild im Rahmen wandert, in Prozent, je Richtung. */
+  const WEG_BILD = 2.5
+  /** So groß steht das Bild im Rahmen, damit beim Wandern kein Rand entsteht. */
+  const BILD_GROESSE = 1.06
+
+  type Lauf = { stop: () => void; complete: () => void; finished: Promise<unknown> }
+
+  /**
+   * Motion schreibt die Endwerte im nächsten Bild noch einmal; wer danach
+   * seine Inline-Stile wegräumt, wartet darum zwei Bilder.
+   */
+  const danach = (aufraeumen: () => void) =>
+    requestAnimationFrame(() => requestAnimationFrame(aufraeumen))
+
+  const showcase = document.querySelector<HTMLElement>('[data-showcase]')
+  if (showcase) richteEin(showcase)
+
+  function richteEin(showcase: HTMLElement) {
+    // Lief der Übergang schon, bevor das Inline-Skript oben `pagereveal` sah
+    // (langsame Verbindung), stehen die Kacheln trotzdem. Ältere Browser kennen
+    // den Selektor nicht und werfen.
+    try {
+      if (document.documentElement.matches(':active-view-transition')) showcase.dataset.ruhig = ''
+    } catch {
+      // Kein Übergang möglich, also auch keiner aktiv.
+    }
+    const kachelnVersteckt =
+      document.documentElement.hasAttribute('data-bewegung') && !('ruhig' in showcase.dataset)
+
+    for (const gruppe of alle('[data-gruppe]', showcase)) richteGruppeEin(gruppe, kachelnVersteckt)
+    richteUmschalterEin(showcase)
+  }
+
+  function richteGruppeEin(gruppe: HTMLElement, kachelnVersteckt: boolean) {
+    const buehnen = alle('[data-buehne]', gruppe)
+    const kacheln = alle('[data-kachel]', gruppe)
+    const feld = gruppe.querySelector<HTMLElement>('[data-buehnenfeld]')
+    const raster = gruppe.querySelector<HTMLElement>('[data-raster]')
     const pager = gruppe.querySelector<HTMLElement>('[data-pager]')
     const zaehler = gruppe.querySelector<HTMLElement>('[data-zaehler]')
     const ansage = gruppe.querySelector<HTMLElement>('[data-ansage]')
-    if (buehnen.length < 2 || !pager) continue
+
+    // Kacheln: einmal gestaffelt, wenn das Raster ins Fenster kommt. Das
+    // Sicherheitsnetz in global.css würde sie sonst nach 2 s zeigen, und sie
+    // zögen danach ein zweites Mal ein; darum übernimmt das Skript sie hier.
+    if (raster && kachelnVersteckt) {
+      for (const kachel of kacheln) kachel.style.animation = 'none'
+      inView(
+        raster,
+        () => {
+          raster.dataset.gezeigt = ''
+          // Die Kachel, deren Projekt auf der Bühne steht, ist versteckt und
+          // zieht nicht mit ein; sie steht fertig da, wenn sie zurückkommt.
+          for (const kachel of kacheln.filter((k) => k.hidden)) {
+            kachel.style.opacity = '1'
+            kachel.style.transform = 'none'
+          }
+          animate(
+            kacheln.filter((k) => !k.hidden),
+            { opacity: [0, 1], y: [WEG_KACHEL, 0] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+          )
+        },
+        { amount: 0.2 },
+      )
+    } else if (raster) {
+      raster.dataset.gezeigt = ''
+    }
+
+    // Bild der Bühne: wandert beim Scrollen leicht im Rahmen. Gemessen wird das
+    // Bühnenfeld, nicht das Bild: Es steht immer da, auch wenn geblättert wird.
+    const rahmen = alle('[data-parallaxe]', gruppe)
+    if (feld && rahmen.length > 0 && bewegt()) {
+      scroll(() => {
+        const ort = feld.getBoundingClientRect()
+        if (ort.height === 0) return // Die Auswahl ist gerade nicht gewählt.
+        const weg = (innerHeight - ort.top) / (innerHeight + ort.height)
+        const y = (Math.min(Math.max(weg, 0), 1) - 0.5) * 2 * WEG_BILD
+        for (const bild of rahmen) {
+          bild.style.transform = `translateY(${y.toFixed(2)}%) scale(${BILD_GROESSE})`
+        }
+      })
+    }
+
+    // Je Auswahl: beim Aufruf ein zufälliges Projekt auf die Bühne, danach nur
+    // noch auf Knopfdruck. Kein Timer, kein automatischer Wechsel. Bühnen und
+    // Kacheln stehen in derselben Reihenfolge; was auf der Bühne steht, fehlt im
+    // Raster.
+    if (buehnen.length < 2 || !pager) return
 
     let aktuell = 0
+    /** Beendet einen laufenden Wechsel sofort im Endzustand. */
+    let beende: (() => void) | undefined
+
     /** Projekt `i` auf die Bühne (`oben`) oder zurück ins Raster. */
     const setze = (i: number, oben: boolean) => {
       buehnen[i]!.hidden = !oben
       const kachel = kacheln[i]
       if (kachel) kachel.hidden = oben
     }
-    const zeige = (index: number) => {
-      setze(aktuell, false)
+    const zeige = (index: number, richtung = 0) => {
+      beende?.()
+      const vorher = aktuell
+      const hoeheVorher = feld?.offsetHeight ?? 0
+      setze(vorher, false)
       aktuell = (index + buehnen.length) % buehnen.length
       setze(aktuell, true)
       if (zaehler) zaehler.textContent = `${aktuell + 1} von ${buehnen.length}`
+      if (richtung !== 0 && feld && bewegt()) {
+        beende = blaettere(vorher, aktuell, richtung, hoeheVorher, feld)
+      } else {
+        buehnen[aktuell]!.removeAttribute('style')
+      }
     }
+
+    /**
+     * Die Bühne schiebt in Blätterrichtung: Die alte geht 24 px gegen die
+     * Richtung und blendet aus, die neue kommt aus der Richtung. Die alte liegt
+     * dabei über der neuen, damit nichts doppelt hoch steht, und das Feld
+     * wechselt seine Höhe mit, statt zu springen. Zusammen 320 ms.
+     */
+    const blaettere = (
+      vorher: number,
+      jetzt: number,
+      richtung: number,
+      hoeheVorher: number,
+      feld: HTMLElement,
+    ) => {
+      const alt = buehnen[vorher]!
+      const neu = buehnen[jetzt]!
+      const zurueck = kacheln[vorher]
+
+      alt.hidden = false
+      alt.inert = true
+      Object.assign(alt.style, { position: 'absolute', top: '0', left: '0', right: '0' })
+      neu.style.opacity = '0'
+      const hoeheJetzt = feld.offsetHeight
+      Object.assign(feld.style, {
+        height: `${hoeheVorher}px`,
+        overflow: 'clip',
+        overflowClipMargin: '0.5rem',
+      })
+
+      const laeufe: Lauf[] = [
+        animate(
+          alt,
+          { opacity: 0, x: -WEG_BUEHNE * richtung },
+          { duration: DAUER.schnell, ease: KURVE },
+        ),
+        animate(
+          neu,
+          { opacity: [0, 1], x: [WEG_BUEHNE * richtung, 0] },
+          { duration: DAUER.basis, delay: DAUER.schnell, ease: KURVE },
+        ),
+        animate(
+          feld,
+          { height: [hoeheVorher, hoeheJetzt] },
+          { duration: DAUER.langsam, ease: KURVE },
+        ),
+      ]
+      if (zaehler) {
+        laeufe.push(
+          animate(
+            zaehler,
+            { opacity: [0, 1], x: [WEG_TEXT * richtung, 0] },
+            { duration: DAUER.basis, delay: DAUER.schnell, ease: KURVE },
+          ),
+        )
+      }
+      // Die Kachel, die ins Raster zurückkehrt, blendet ein, statt aufzutauchen.
+      // Steht das Raster noch aus, zieht sie später mit den anderen ein.
+      if (zurueck && 'gezeigt' in (raster?.dataset ?? {})) {
+        laeufe.push(animate(zurueck, { opacity: [0, 1] }, { duration: DAUER.basis, ease: KURVE }))
+      }
+
+      let fertig = false
+      const raeumeAuf = () => {
+        if (fertig) return
+        fertig = true
+        alt.hidden = true
+        alt.inert = false
+        alt.removeAttribute('style')
+        neu.removeAttribute('style')
+        zaehler?.removeAttribute('style')
+        feld.removeAttribute('style')
+        // Wurde schnell weitergeblättert, hat Motion abgebrochenen Bühnen ihre
+        // Endwerte nachgeschrieben; versteckt stehen sie wieder in Ruhe.
+        for (const buehne of buehnen) if (buehne.hidden) buehne.removeAttribute('style')
+      }
+      void Promise.all(laeufe.map((lauf) => lauf.finished)).then(() => danach(raeumeAuf))
+      return () => {
+        for (const lauf of laeufe) lauf.complete()
+        raeumeAuf()
+      }
+    }
+
     zeige(Math.floor(Math.random() * buehnen.length))
     pager.hidden = false
 
     for (const knopf of pager.querySelectorAll<HTMLButtonElement>('[data-richtung]')) {
       knopf.addEventListener('click', () => {
-        zeige(aktuell + Number(knopf.dataset.richtung))
+        const richtung = Number(knopf.dataset.richtung)
+        zeige(aktuell + richtung, richtung)
         if (ansage) {
           ansage.textContent = `${buehnen[aktuell]!.dataset.titel}, ${aktuell + 1} von ${buehnen.length}`
         }
+      })
+    }
+  }
+
+  /**
+   * Kunden ↔ Eigene Projekte: Ohne Skript schaltet CSS über `:has()` hart um.
+   * Mit Bewegung hält das Skript die alte Auswahl kurz fest, blendet sie in
+   * 120 ms aus und lässt die neue in 200 ms 8 px einziehen. Die Radio-Buttons
+   * und ihr Zustand bleiben, wie sie sind; das Skript ändert nur, was man sieht.
+   */
+  function richteUmschalterEin(showcase: HTMLElement) {
+    const knoepfe = alle<HTMLInputElement>('input[name="arbeiten-auswahl"]', showcase)
+    const gruppen = alle('[data-gruppe]', showcase)
+    let gewaehlt = knoepfe.find((knopf) => knopf.checked)?.value
+    let zug = 0
+    let laeufe: Lauf[] = []
+
+    for (const knopf of knoepfe) {
+      knopf.addEventListener('change', async () => {
+        const vorher = gewaehlt
+        gewaehlt = knopf.value
+        const meiner = ++zug
+        // Ein laufender Wechsel weicht sofort, dann gilt wieder allein das CSS.
+        for (const lauf of laeufe) lauf.stop()
+        laeufe = []
+        for (const gruppe of gruppen) gruppe.removeAttribute('style')
+
+        const alt = gruppen.find((g) => g.dataset.gruppe === vorher)
+        const neu = gruppen.find((g) => g.dataset.gruppe === knopf.value)
+        if (!alt || !neu || alt === neu || !bewegt()) return
+
+        alt.style.display = 'block'
+        neu.style.display = 'none'
+        const aus = animate(alt, { opacity: [1, 0] }, { duration: DAUER.schnell, ease: KURVE })
+        laeufe = [aus]
+        await aus.finished
+        if (meiner !== zug) return
+
+        alt.style.display = ''
+        neu.style.display = ''
+        const ein = animate(
+          neu,
+          { opacity: [0, 1], y: [WEG_TEXT, 0] },
+          { duration: DAUER.basis, ease: KURVE },
+        )
+        laeufe = [ein]
+        await ein.finished
+        danach(() => {
+          if (meiner !== zug) return
+          alt.removeAttribute('style')
+          neu.removeAttribute('style')
+        })
       })
     }
   }
