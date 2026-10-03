@@ -259,7 +259,8 @@ Systemeinstellung des Besuchers.
 - Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
-- Bewegung aus einer geschlossenen Liste, nur bei `prefers-reduced-motion: no-preference`
+- Bewegung über die ganze Seite, mit festen Grenzen (eine Kurve, vier Dauern, Text 8 px), nur bei
+  `prefers-reduced-motion: no-preference`; ohne Skript steht der Endzustand
 - Eine Ausnahme mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung
   und Illustration tragen darf (Bühnenlizenz), sonst nirgends
 
@@ -563,8 +564,9 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Blättern:** oben rechts neben dem Titel, damit die Knöpfe beim Wechsel zwischen Bild und Satz
   nicht wandern. Zwei quadratische Knöpfe (2,75rem, 4 px, Rand `fg/25`, Hover orange) mit Pfeil,
   dazwischen „2 von 8“ in Tabellenziffern. Nur mit JavaScript sichtbar; ein unsichtbarer
-  `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Der Wechsel ist sofort, ohne
-  Übergang.
+  `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Die Bühne schiebt in
+  Blätterrichtung (24 px, 320 ms), der Umschalter blendet die Auswahl über (120 / 200 ms); ohne Skript
+  und ohne Bewegung wechselt beides sofort.
 - **Kachel** (`ProjectTile`): Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
   Werkbankschwarz), darunter Titel in Title Small, der erste Satz der summary in Body Small und Art ·
   Zeitraum. Kein Kasten um die Kachel. Der Titel-Link ist auf die ganze Kachel gestreckt; bei Hover
@@ -748,39 +750,57 @@ als Name ohne Link in Bleistiftgrau, weil es keine Seite hat, auf die er zeigen 
 
 ### Bewegung (Signature Motion)
 
-Eine Kurve, drei Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 / 320 ms, Standard
-200 ms. Erlaubt ist nur diese geschlossene Liste:
+Eine Kurve, vier Dauern: `--ease-quiet` `cubic-bezier(0.2, 0, 0, 1)`, 120 / 200 / 320 ms für
+Zustände und Text, 600 ms nur für Linien und Bilder. Seit dem 2026-10-03 bewegt sich die ganze Seite
+(Entscheidung in [`docs/BEWEGUNG_PLAN.md`](docs/BEWEGUNG_PLAN.md)); Werkzeug ist Motion
+(`motion`, Vanilla-API), gebündelt aus dem Repository und überall nur über `src/lib/motion.ts`
+importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
 
-- **Zeile bei Hover/Fokus:** Titel rückt 4 px, Unterstrich zieht über `background-size` auf, Pfeil
-  rückt 2 px.
-- **Aufklapper:** Höhe über `interpolate-size` und `::details-content` (320 ms, hinter `@supports`);
-  Plus wird Minus.
-- **Header-Haarlinie:** erscheint scrollgesteuert zwischen 0 und 4rem.
+- **Endzustand ohne Skript.** Einen Anfangszustand (Deckkraft 0, verschoben, beschnitten) setzt nur
+  CSS unter `html[data-bewegung]`; das Attribut vergibt `MotionReady` im `<head>` nur mit Skript und
+  bei `prefers-reduced-motion: no-preference`. Jedes so versteckte Element trägt `data-bewegt`, und
+  `global.css` hebt den Anfangszustand nach 2 s von selbst auf, falls das Modul nicht läuft.
+- **Die H1 bewegt sich nie,** auf keiner Seite. Sie ist das Erste, was gemalt wird (LCP).
+- **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
+  Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
+- **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
+  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`), Kacheln kommen bis 16 px weit.
+- **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Linie, 2 px Pfeil, Bild 1,02).
+  Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
+- **Nichts bleibt transformiert:** nach jeder Bewegung `transform: none`, `opacity: 1`. Elemente mit
+  `data-uebergang` tragen zu Beginn einer Navigation keinen Transform, sonst bricht der Übergang.
+- **Kein Layout-Sprung:** Bewegung läuft über `transform`, `opacity` und `clip-path`; eine Höhe animiert
+  nur der Aufklapper.
+- **Schleifen** nur in den Bühnen der Projektseiten. Nichts läuft von selbst länger als 5 s; was es
+  täte, bekäme eine Pause-Taste (WCAG 2.2.2).
+
+Was die Seite außerdem kann und behält:
+
 - **Seitenwechsel:** native View Transition zwischen Dokumenten (`@view-transition { navigation: auto }`,
   200 ms); der Header trägt einen eigenen `view-transition-name` und bleibt stehen. Dazu wächst das
   Bildfeld der Kachel, der Bühne oben oder der Zeile unter `/projekte/` in 320 ms in das erste große
   Bild der Projektseite und beim Zurück wieder hinein (`data-uebergang`, Name `projekt-<slug>`). Der
-  Rahmen schneidet zu (`overflow: clip`), statt zu verzerren; das alte Bild blendet in 120 ms aus,
-  damit es nicht vergrößert über dem neuen steht. Namen gelten nur während des Übergangs und nur für
-  Elemente im Fenster (`ProjectTransition`); ohne Gegenstück im Fenster blendet die Seite nur über.
-- **Kopier-Rückmeldung:** der Statustext erscheint und verschwindet.
-- **Umschalter:** der orange Strich unter dem gewählten Reiter zieht von links auf. Bühne und Raster
-  wechseln ohne Übergang.
+  Rahmen schneidet zu (`overflow: clip`), statt zu verzerren; das alte Bild blendet in 120 ms aus.
+  Namen gelten nur während des Übergangs und nur für Elemente im Fenster (`ProjectTransition`).
+- **Header-Haarlinie:** erscheint scrollgesteuert zwischen 0 und 4rem.
 - **Ankersprünge:** `scroll-behavior: smooth`.
 - **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
-  der Bühnenlizenz (siehe Components). Außerhalb der Bühne gilt die Liste oben unverändert.
+  der Bühnenlizenz (siehe Components), weiterhin ohne Motion.
 
-Keine Hero-Animation, kein Einblenden beim Scrollen: Die H1 ist das Erste, was gemalt wird, und steht
-sofort. Alles liegt hinter `prefers-reduced-motion`; ohne Bewegung ist jeder Inhalt sofort sichtbar.
+Was jede Sektion im Einzelnen tut, steht in `docs/BEWEGUNG_PLAN.md`, Abschnitt 3, und in den
+Kommentaren ihrer Komponente.
 
 ### Skripte
 
-Kein externes Skript. Drei winzige Inline-Skripte (`NavHighlight`, `CopyEmail`, `ProjectShowcase`),
-jeweils ohne Import und unter 4 KB, damit Astro sie inline ausliefert. Dazu `ProjectTransition` als
-`is:inline` im `<head>`, weil `pagereveal` vor dem ersten Bild der neuen Seite feuert: Es nimmt
-Elementen außerhalb des Fensters den Übergangsnamen. Alles andere funktioniert ohne JavaScript; ohne
-Skript zeigt die Bühne das erste Projekt der Auswahl, Blättern entfällt, und jedes Übergangspaar
-morpht, auch von außerhalb des Fensters.
+Kein Skript von fremden Servern; `scripts/verify-build.mjs` lehnt jedes `<script src>` ab, das nicht
+aus dem eigenen Build (`/_astro/`) kommt, und begrenzt JavaScript auf 90 KB je Seite (unkomprimiert).
+Motion und die Bewegung der Sektionen liegen in gebündelten Modulen je Komponente (`<script>` in der
+`.astro`-Datei), Motion selbst in einem gemeinsamen Chunk. Daneben bleiben die winzigen Inline-Skripte:
+`MotionReady` und `ProjectTransition` als `is:inline` im `<head>` (das eine vergibt `data-bewegung`,
+das andere nimmt Elementen außerhalb des Fensters den Übergangsnamen), `NavHighlight`, `CopyEmail`,
+`ProjectShowcase` und die Abspiel-Skripte der Bühnen. Ohne Skript funktioniert alles: Inhalte stehen
+sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Aufklapper öffnen ohne
+Übergang.
 
 ## Do's and Don'ts
 
@@ -821,8 +841,10 @@ morpht, auch von außerhalb des Fensters.
 - **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
-- **Don't** Inhalte beim Scrollen einblenden oder den Hero animieren. Die Bühne der Projektseite ist
-  die eine Ausnahme, und auch dort steht ohne Bewegung der Endzustand.
+- **Don't** die H1 bewegen, Text weiter als 8 px oder länger als 320 ms einziehen lassen, oder einen
+  Anfangszustand außerhalb von `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung
+  steht der Endzustand, überall.
+- **Don't** Motion direkt importieren; Kurve, Dauern und Prüfungen kommen aus `src/lib/motion.ts`.
 - **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Kachel der
   Startseite oder die Zeile unter `/projekte/`. Dort ist Gleichheit die Aussage.
 - **Don't** eine Szene als Screenshot ausgeben oder eine Bildunterschrift ohne „Kein Screenshot“

@@ -5,7 +5,9 @@ kleine Programme, Websites und Web-Apps aus Bruckmühl. Die Person hinter Klarte
 Startseite nur in der Sektion "Über Klartext" genannt und im Impressum, wo § 5 DDG den Namen
 verlangt.
 
-- **Kein JavaScript** auf den Unterseiten, drei kleine Inline-Scripts auf der Startseite
+- **JavaScript nur aus dem eigenen Build:** Motion für die Bewegung der Sektionen, gebündelt aus dem
+  Repository, dazu winzige Inline-Skripte; alles funktioniert auch ohne Skript (siehe
+  [`docs/BEWEGUNG_PLAN.md`](docs/BEWEGUNG_PLAN.md))
 - **Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser
 - Jede Seite ist echtes HTML mit eigener URL, eigenem Title und eigenen Meta-Tags
 
