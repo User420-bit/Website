@@ -276,9 +276,12 @@
  * hebt diese Animation jeden Anfangszustand nach 2 s auf; sobald
  * `src/lib/motion.ts` läuft, setzt es das Attribut auf `laeuft`, die Regel
  * greift nicht mehr, und die Sektionen bestimmen selbst, wann etwas kommt.
- * Komponenten hängen dafür `data-bewegt` an das Element, das sie verstecken.
+ * Komponenten hängen dafür `data-bewegt` an das Element, das sie verstecken,
+ * oder `data-bewegt-kinder` an einen Behälter, dessen Kinder aus Markdown
+ * kommen und selbst kein Attribut tragen können.
  */
-html[data-bewegung=''] [data-bewegt] {
+html[data-bewegung=''] [data-bewegt],
+html[data-bewegung=''] [data-bewegt-kinder] > * {
   animation: bewegt-sichtbar 0s 2s both;
 }
 @keyframes bewegt-sichtbar {
