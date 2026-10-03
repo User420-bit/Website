@@ -5,6 +5,11 @@
  * darunter Knopf und Erreichbarkeit. Ab 1024 px steht rechts daneben das Foto
  * und füllt die Höhe der Handlung. Eine Haarlinie über beiden Spalten, so
  * beginnen sie auf einer Höhe; schmaler stapelt sich alles, die Handlung zuerst.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, G): Adresse und Erreichbarkeit bewegen
+ * sich in ihren Komponenten. Hier nur das Foto: Sein Rahmen zieht sich beim
+ * Hereinscrollen von oben nach unten auf, die Bildunterschrift zieht nach,
+ * und beim Scrollen wandert das Bild leicht im Rahmen.
  */
 import { getEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -54,7 +59,7 @@ if (profile.social.github) {
       <p class="mt-8 mb-0">
         <Button href={anfrage}>E-Mail schreiben</Button>
       </p>
-      <MetaList rows={erreichbarkeit} class="mt-10" />
+      <MetaList rows={erreichbarkeit} einziehen class="mt-10" />
     </div>
 
     {
@@ -65,20 +70,143 @@ if (profile.social.github) {
       Mitte größer, sonst bliebe vom Land nur ein Strich; ab 1024 px
       schneidet die Spalte etwa 17:10 aus. `sizes` rechnet den Zoom jeweils mit
       ein (Faktor 1,84 bzw. rund 1,45).
+
+      Rahmen und Maß trägt der Behälter, nicht das Bild: Er schneidet zu
+      (`overflow: hidden`), und das Bild darin darf beim Scrollen wandern,
+      ohne dass Rand oder Spaltenhöhe sich ändern. Unter 640 px und ab
+      1024 px gibt der Behälter das Maß vor und das Bild füllt ihn; dazwischen
+      steht das Bild im eigenen Seitenverhältnis und gibt die Höhe vor.
     */
     }
     <figure class="m-0 lg:flex lg:flex-col">
-      <Image
-        class="block aspect-[4/3] h-auto w-full rounded-sm border border-border object-cover object-[60%_50%] sm:aspect-auto lg:h-0 lg:min-h-64 lg:flex-1"
-        src={rosenheimerLand}
-        alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
-        widths={[640, 1024, 1600, 2048]}
-        sizes="(min-width: 1024px) 44rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
-        loading="lazy"
-      />
-      <figcaption class="mt-3 text-xs text-fg-muted">
+      <div
+        class="relative aspect-[4/3] overflow-hidden rounded-sm border border-border sm:aspect-auto lg:h-0 lg:min-h-64 lg:flex-1"
+        data-foto-rahmen
+        data-bewegt
+      >
+        <Image
+          class="foto-bild absolute inset-0 block h-full w-full object-cover object-[60%_50%] sm:static sm:h-auto lg:absolute lg:h-full"
+          src={rosenheimerLand}
+          alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
+          widths={[640, 1024, 1600, 2048]}
+          sizes="(min-width: 1024px) 44rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
+          loading="lazy"
+          data-foto-bild
+        />
+      </div>
+      <figcaption class="mt-3 text-xs text-fg-muted" data-foto-text data-bewegt>
         Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
       </figcaption>
     </figure>
   </div>
 </Section>
+
+<style>
+  /*
+   * Anfangszustände nur mit Skript und erlaubter Bewegung: Der Rahmen ist von
+   * unten ganz zugezogen, die Unterschrift steht 8 px tiefer und unsichtbar.
+   * Das Bild ist um 6 % größer, damit es beim Wandern nie einen Rand zeigt;
+   * das steht schon vor dem Skript, sonst spränge es beim Laden.
+   */
+  html[data-bewegung] [data-foto-rahmen][data-bewegt] {
+    clip-path: inset(0 0 100% 0);
+  }
+  html[data-bewegung] [data-foto-text][data-bewegt] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  html[data-bewegung] .foto-bild {
+    transform: translateY(-2.5%) scale(1.06);
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, WEG_TEXT, animate, bewegt, inView, scroll } from '@/lib/motion'
+
+  /**
+   * Wie weit das Bild beim Scrollen wandert, in Prozent seiner Höhe, je
+   * Richtung. Bei 1,06 Größe ragt es 3 % über jede Kante; 2,5 % lässt einen
+   * halben Prozentpunkt Luft gegen Rundung. Zusammen 5 %, unter den 6 % des
+   * Plans.
+   */
+  const WANDERN = 2.5
+  const GROESSE = 1.06
+
+  /**
+   * Räumt erst im nächsten Bild auf: Motion schreibt die Endwerte selbst noch
+   * als Inline-Stil, nachdem `then` gelaufen ist.
+   */
+  const danach = (aufraeumen: () => void) => requestAnimationFrame(() => aufraeumen())
+
+  /** Endzustand: Anfangszustand und eigene Inline-Werte weg. */
+  function inRuhe(el: HTMLElement) {
+    el.removeAttribute('data-bewegt')
+    for (const p of ['clip-path', 'opacity', 'transform']) el.style.removeProperty(p)
+  }
+
+  /**
+   * Hält das Sicherheitsnetz aus global.css an, solange es noch nicht
+   * gegriffen hat. Falsch, wenn es schon gegriffen hat (Skript kam spät);
+   * dann steht alles und soll nicht noch einmal verschwinden.
+   */
+  function netzAnhalten(els: Element[]): boolean {
+    const netz = els.flatMap((el) => el.getAnimations().filter((a) => a instanceof CSSAnimation))
+    if (netz.some((a) => a.playState === 'finished')) return false
+    for (const a of netz) a.cancel()
+    return true
+  }
+
+  const rahmen = document.querySelector<HTMLElement>('[data-foto-rahmen]')
+  const figur = rahmen?.closest('figure')
+  const bild = document.querySelector<HTMLElement>('[data-foto-bild]')
+  const text = document.querySelector<HTMLElement>('[data-foto-text]')
+
+  if (figur && rahmen && bild && text) {
+    const versteckt = [rahmen, text]
+    if (!bewegt()) {
+      versteckt.forEach(inRuhe)
+    } else {
+      if (netzAnhalten(versteckt)) {
+        // Einmal, wenn ein knappes Drittel des Fotos im Fenster steht.
+        // Beobachtet wird die Figur: Den zugezogenen Rahmen selbst sähe der
+        // Beobachter nie, weil sein `clip-path` ihn auf null Fläche schneidet.
+        inView(
+          figur,
+          () => {
+            animate(
+              rahmen,
+              { clipPath: ['inset(0% 0% 100% 0%)', 'inset(0% 0% 0% 0%)'] },
+              { duration: DAUER.szene, ease: KURVE },
+            ).then(() => danach(() => inRuhe(rahmen)))
+            // Die Unterschrift folgt, wenn der Rahmen halb offen ist.
+            animate(
+              text,
+              { opacity: [0, 1], y: [WEG_TEXT, 0] },
+              { duration: DAUER.langsam, ease: KURVE, delay: DAUER.szene / 2 },
+            ).then(() => danach(() => inRuhe(text)))
+          },
+          { amount: 0.3 },
+        )
+      } else {
+        versteckt.forEach(inRuhe)
+      }
+
+      // Parallaxe an den Scroll gebunden, vor und zurück: vom Eintreten des
+      // Rahmens unten bis zum Verlassen oben wandert das Bild nach unten,
+      // also langsamer als die Seite.
+      scroll(
+        animate(
+          bild,
+          {
+            transform: [
+              `translateY(-${WANDERN}%) scale(${GROESSE})`,
+              `translateY(${WANDERN}%) scale(${GROESSE})`,
+            ],
+          },
+          { ease: 'linear' },
+        ),
+        { target: rahmen, offset: ['start end', 'end start'] },
+      )
+    }
+  }
+</script>

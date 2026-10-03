@@ -6,6 +6,13 @@
  * anbietet; ohne JavaScript bleibt die Adresse einfach lesbar. Gespeichert
  * wird nichts. Mehrfach auf einer Seite nutzbar: Knopf und Rückmeldung teilen
  * sich ein Elternelement, darüber findet das Script die richtige Zeile.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, G): Der Unterstrich der Adresse zieht von
+ * links auf, sobald sie ins Fenster kommt. Er ist deshalb kein
+ * `text-decoration`, sondern ein Hintergrund wie bei `.row-title`, und liegt
+ * auf einem inneren `<span>`, damit eine umbrochene Adresse (schmale
+ * Bildschirme) unter jeder Zeile ihre Linie behält. „Adresse kopieren“ gibt
+ * bei Druck nach, „Kopiert.“ zieht ein und blendet nach 2 s aus.
  */
 interface Props {
   email: string
@@ -17,10 +24,10 @@ const { email, class: className = '' } = Astro.props
 
 <div class:list={['flex flex-col items-start gap-3', className]}>
   <a
-    class="display text-2xl font-semibold wrap-anywhere text-fg underline decoration-border underline-offset-8 transition-colors hover:decoration-accent motion-reduce:transition-none sm:text-3xl"
+    class="adresse display text-2xl font-semibold wrap-anywhere text-fg no-underline sm:text-3xl"
     href={`mailto:${email}`}
   >
-    {email}
+    <span class="adresse-linie" data-adresse-linie data-bewegt>{email}</span>
   </a>
   <span class="flex flex-wrap items-center gap-x-4 gap-y-2">
     <button
@@ -35,22 +42,175 @@ const { email, class: className = '' } = Astro.props
   </span>
 </div>
 
+<style>
+  /*
+   * Farbe der Linie als eigene Eigenschaft, damit sie bei Hover wie vorher in
+   * 200 ms nach Orange wechselt: Einen Verlauf kann der Browser nicht
+   * überblenden, eine registrierte Farbe schon.
+   */
+  @property --adresse-linie {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+  }
+
+  .adresse {
+    --adresse-linie: var(--color-border);
+    transition: --adresse-linie var(--duration-base) var(--ease-quiet);
+  }
+  .adresse:hover,
+  .adresse:focus-visible {
+    --adresse-linie: var(--color-accent);
+  }
+
+  /*
+   * 1 px Linie unter jeder Zeile. Das Polster unten setzt sie dorthin, wo
+   * `underline-offset-8` sie vorher hatte; senkrechtes Polster an einem
+   * Inline-Element ändert die Zeilenhöhe nicht.
+   */
+  .adresse-linie {
+    padding-bottom: 0.05em;
+    background-image: linear-gradient(var(--adresse-linie), var(--adresse-linie));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /*
+   * Anfangszustand nur mit Skript und erlaubter Bewegung. `background-size`
+   * deckt das gemeinsame Sicherheitsnetz aus global.css nicht ab, deshalb
+   * läuft hier daneben ein eigenes, das nach 2 s dasselbe tut.
+   */
+  html[data-bewegung] .adresse-linie[data-bewegt] {
+    background-size: 0% 1px;
+    animation:
+      bewegt-sichtbar 0s 2s both,
+      adresse-linie-sichtbar 0s 2s both;
+  }
+  @keyframes adresse-linie-sichtbar {
+    to {
+      background-size: 100% 1px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .adresse {
+      transition: none;
+    }
+  }
+</style>
+
 <script>
+  import { DAUER, KURVE, WEG_TEXT, animate, bewegt, inView, press } from '@/lib/motion'
+
+  /**
+   * Hält das Sicherheitsnetz (CSS-Animation nach 2 s) an, solange es noch
+   * nicht gegriffen hat: Ab jetzt zeigt das Skript das Element. Falsch, wenn
+   * das Netz schon gegriffen hat (Skript kam spät); dann ist das Element
+   * sichtbar und soll nicht noch einmal verschwinden.
+   */
+  function netzAnhalten(el: Element): boolean {
+    const netz = el.getAnimations().filter((a) => a instanceof CSSAnimation)
+    if (netz.some((a) => a.playState === 'finished')) return false
+    for (const a of netz) a.cancel()
+    return true
+  }
+
+  /**
+   * Räumt erst im nächsten Bild auf: Motion schreibt die Endwerte selbst noch
+   * als Inline-Stil, nachdem `then` gelaufen ist.
+   */
+  const danach = (aufraeumen: () => void) => requestAnimationFrame(() => aufraeumen())
+
+  /** Endzustand der Linie: Anfangszustand weg, eigene Inline-Werte weg. */
+  function linieInRuhe(el: HTMLElement) {
+    el.removeAttribute('data-bewegt')
+    el.style.removeProperty('background-size')
+  }
+
+  const mitBewegung = bewegt()
+
+  for (const linie of document.querySelectorAll<HTMLElement>('[data-adresse-linie]')) {
+    if (!mitBewegung || !netzAnhalten(linie)) {
+      linieInRuhe(linie)
+      continue
+    }
+    // Einmal, sobald die Adresse im Fenster steht, ohne Rückweg.
+    inView(
+      linie,
+      () => {
+        animate(
+          linie,
+          { backgroundSize: ['0% 1px', '100% 1px'] },
+          { duration: DAUER.szene, ease: KURVE },
+        ).then(() => danach(() => linieInRuhe(linie)))
+      },
+      { amount: 0.2 },
+    )
+  }
+
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
     const status = button.parentElement?.querySelector<HTMLElement>('[data-copy-status]')
     if (!status || !navigator.clipboard) continue
 
     button.hidden = false
     let timer: number | undefined
+    // Zählt die Klicks, damit ein spätes Ausblenden keine neue Rückmeldung löscht.
+    let runde = 0
+
+    if (mitBewegung) {
+      // Der Knopf gibt bei Druck nach und kommt zurück; danach steht kein Transform.
+      press(button, () => {
+        animate(button, { scale: 0.98 }, { duration: DAUER.schnell, ease: KURVE })
+        return () => {
+          animate(button, { scale: 1 }, { duration: DAUER.schnell, ease: KURVE }).then(() =>
+            danach(() => button.style.removeProperty('transform')),
+          )
+        }
+      })
+    }
+
+    /** Leert die Rückmeldung; mit Bewegung blendet sie vorher aus. */
+    const leeren = (meine: number) => {
+      if (!mitBewegung) {
+        status.textContent = ''
+        return
+      }
+      animate(status, { opacity: 0 }, { duration: DAUER.basis, ease: KURVE }).then(() =>
+        danach(() => {
+          if (meine !== runde) return
+          status.textContent = ''
+          status.style.removeProperty('opacity')
+        }),
+      )
+    }
+
     button.addEventListener('click', async () => {
+      const meine = ++runde
       try {
         await navigator.clipboard.writeText(button.dataset.copy ?? '')
         status.textContent = 'Kopiert.'
       } catch {
         status.textContent = 'Bitte die Adresse markieren und kopieren.'
       }
+      if (mitBewegung) {
+        // Die Rückmeldung zieht ein wie Text sonst auch: 8 px, 320 ms.
+        animate(
+          status,
+          { opacity: [0, 1], y: [WEG_TEXT, 0] },
+          { duration: DAUER.langsam, ease: KURVE },
+        ).then(() =>
+          danach(() => {
+            if (meine !== runde) return
+            status.style.removeProperty('opacity')
+            status.style.removeProperty('transform')
+          }),
+        )
+      }
       window.clearTimeout(timer)
-      timer = window.setTimeout(() => (status.textContent = ''), 2000)
+      timer = window.setTimeout(() => leeren(meine), 2000)
     })
   }
 </script>
