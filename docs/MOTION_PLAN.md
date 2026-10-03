@@ -1,5 +1,8 @@
 # Plan: Mehr Bewegung – die Arbeiten bewegen sich, der Text steht
 
+> **Abgelöst am 2026-10-03** durch [`BEWEGUNG_PLAN.md`](BEWEGUNG_PLAN.md): Bewegung mit Motion über
+> die ganze Seite. Punkt 1 (Kachel wächst in die Projektseite) bleibt gültig und in Kraft.
+
 Stand: 2026-09-26 · Basis: Commit `01a7eda` auf `main` · Status: Punkt 1 umgesetzt auf
 `feat/bewegung-kachel-uebergang`, alle anderen Punkte offen · Autor: erstellt per Claude Code Session,
 Review durch Pharrel ausstehend

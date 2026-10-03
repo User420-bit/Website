@@ -2,6 +2,7 @@
 import BaseHead from '@/components/BaseHead.astro'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
+import MotionReady from '@/components/MotionReady.astro'
 import ProjectTransition from '@/components/ProjectTransition.astro'
 import { getEntry } from 'astro:content'
 import '@/styles/global.css'
@@ -23,6 +24,7 @@ if (!company) throw new Error('src/content/company.json: Eintrag "main" fehlt.')
   <head>
     <BaseHead title={title} description={description} noindex={noindex} />
     <ProjectTransition />
+    <MotionReady />
   </head>
   <body class="flex min-h-dvh flex-col">
     <Header isHome={isHome} name={company.data.name} />

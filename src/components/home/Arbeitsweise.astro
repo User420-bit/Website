@@ -1,0 +1,35 @@
+---
+/**
+ * 03 Arbeitsweise: die vier Werte aus about.md, dahinter das, was in den
+ * Commit-Historien nachlesbar ist.
+ */
+import { getEntry } from 'astro:content'
+import Disclosure from '@/components/Disclosure.astro'
+import NumberedRows from '@/components/NumberedRows.astro'
+import Section from '@/components/Section.astro'
+
+const about = (await getEntry('about', 'about'))!.data
+const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
+---
+
+<Section id="arbeitsweise" index="03" title="Erst klären, was geht, dann bauen">
+  <NumberedRows items={about.values} titleColumn />
+
+  <div class="mt-8 border-t border-border">
+    <Disclosure title="Wie gearbeitet wird" meta={punkte(about.workflow.length)}>
+      <p class="mt-0 max-w-[65ch] text-sm text-fg-muted">
+        Nachlesbar in der Änderungsgeschichte jedes Projekts, nicht in einem Leitbild.
+      </p>
+      <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
+        {
+          about.workflow.map((item) => (
+            <li>
+              <span class="block text-sm font-medium">{item.title}</span>
+              <span class="prose-flow mt-1 block text-sm text-fg-muted">{item.description}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </Disclosure>
+  </div>
+</Section>

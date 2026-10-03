@@ -1,0 +1,45 @@
+---
+/**
+ * Hero der Startseite: das Unternehmen, nicht die Person. So hoch wie sein
+ * Inhalt. Die H1 ist das Erste, was gemalt wird, und steht sofort; sie bewegt
+ * sich nie (LCP). „Für wen“ steht direkt unter dem Claim, damit die H1 das
+ * Erste bleibt, was man liest.
+ */
+import { getEntry } from 'astro:content'
+import Button from '@/components/Button.astro'
+import { href, mailto } from '@/lib/site'
+
+const company = (await getEntry('company', 'main'))!.data
+const contact = (await getEntry('contact', 'main'))!.data
+const anfrage = mailto(company.email, contact.subject)
+---
+
+<section class="pt-16 pb-16 sm:pt-24 sm:pb-24">
+  <h1
+    class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
+  >
+    {company.claim}
+  </h1>
+  <p
+    class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
+  >
+    {company.audience}
+  </p>
+  <p class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted">
+    {company.intro}
+  </p>
+
+  <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+    <Button href={anfrage}>E-Mail schreiben</Button>
+    <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
+  </div>
+
+  {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
+  <p class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
+    <span>{company.location}</span>
+    <span aria-hidden="true">·</span>
+    <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>
+    <span aria-hidden="true">·</span>
+    <span>{contact.responseTime}</span>
+  </p>
+</section>
