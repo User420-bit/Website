@@ -1,8 +1,13 @@
 ---
 /**
  * Aufklapper auf nativem <details>: funktioniert ohne JavaScript, per Tastatur
- * und mit der Seitensuche des Browsers. Die Hoehe animiert nur dort, wo der
- * Browser es von sich aus kann (siehe global.css).
+ * und mit der Seitensuche des Browsers. Ohne Skript öffnet er sofort (oder mit
+ * `interpolate-size`, wo der Browser es kann, siehe global.css).
+ *
+ * Mit Skript animiert die Höhe in jedem Browser: Das Skript misst den Inhalt
+ * und zieht `.disclosure-inhalt` von 0 auf das Maß (und zurück). Der Inhalt
+ * steckt dafür in zwei Hüllen: Die äußere wird in der Höhe animiert und hat
+ * keinen Innenabstand, sonst bliebe sie bei Höhe 0 so hoch wie ihr Padding.
  */
 interface Props {
   title: string
@@ -21,7 +26,161 @@ const { title, meta } = Astro.props
     {meta && <span class="text-sm text-fg-muted tabular-nums">{meta}</span>}
     <span aria-hidden="true" class="disclosure-mark relative h-3 w-3 shrink-0 self-center"></span>
   </summary>
-  <div class="pt-1 pb-6">
-    <slot />
+  <div class="disclosure-inhalt">
+    <div class="pt-1 pb-6">
+      <slot />
+    </div>
   </div>
 </details>
+
+<style>
+  /*
+   * `data-hoehe` setzt das Skript, sobald es die Höhe übernimmt. Dann schaltet
+   * es den CSS-Übergang über `::details-content` ab (global.css, nur mit
+   * `interpolate-size`), damit nicht zwei Animationen an derselben Höhe ziehen.
+   * Ohne Skript fehlt das Attribut, und der CSS-Weg bleibt, wie er war.
+   */
+  .disclosure[data-hoehe]::details-content {
+    transition: none;
+  }
+
+  /*
+   * Beim Schließen bleibt `open` stehen, bis die Höhe bei 0 ist, sonst wäre
+   * der Inhalt sofort weg. Die Marke soll aber gleich wieder Plus zeigen.
+   */
+  .disclosure[data-schliesst] .disclosure-mark::after {
+    transform: rotate(90deg);
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, WEG_TEXT, alle, animate, bewegt } from '@/lib/motion'
+
+  type Lauf = ReturnType<typeof animate>
+
+  /** Abstand der Punkte beim Öffnen; enger als `STAFFEL`, weil es viele sein können. */
+  const PUNKTE_STAFFEL = 0.04
+  /** Länger als das dauert das Einziehen aller Punkte nie, egal wie viele es sind. */
+  const PUNKTE_GESAMT = 0.3
+
+  for (const details of alle<HTMLDetailsElement>('details.disclosure')) {
+    const summary = details.querySelector<HTMLElement>(':scope > summary')
+    const inhalt = details.querySelector<HTMLElement>(':scope > .disclosure-inhalt')
+    if (!summary || !inhalt) continue
+
+    details.dataset.hoehe = ''
+    /** Zählt jeden Start; ein Lauf räumt nur auf, wenn kein neuerer begonnen hat. */
+    let nummer = 0
+    let hoehe: Lauf | undefined
+    let punkte: Lauf | undefined
+    /** Der Zustand, den das Skript selbst gerade setzt; jedes andere `toggle` kam von außen. */
+    let erwartet: 'open' | 'closed' | undefined
+
+    const punkteRuhe = () => {
+      punkte?.stop()
+      punkte = undefined
+      for (const li of alle('li', inhalt)) {
+        li.style.removeProperty('opacity')
+        li.style.removeProperty('transform')
+      }
+    }
+
+    const ruhe = () => {
+      hoehe?.stop()
+      hoehe = undefined
+      punkteRuhe()
+      inhalt.style.removeProperty('height')
+      inhalt.style.removeProperty('overflow')
+      delete details.dataset.schliesst
+    }
+
+    const oeffnen = () => {
+      // Läuft gerade das Schließen, geht es von der aktuellen Höhe zurück.
+      const vonZu = !details.open
+      const von = vonZu ? 0 : inhalt.getBoundingClientRect().height
+      hoehe?.stop()
+      delete details.dataset.schliesst
+      inhalt.style.overflow = 'hidden'
+      inhalt.style.height = `${von}px`
+      if (vonZu) {
+        erwartet = 'open'
+        details.open = true
+      }
+      const ziel = inhalt.scrollHeight
+      const nr = ++nummer
+      hoehe = animate(inhalt, { height: [von, ziel] }, { duration: DAUER.langsam, ease: KURVE })
+      hoehe.finished.then(() => {
+        if (nr !== nummer) return
+        // Danach wieder `height: auto`: Der Inhalt darf umbrechen, wenn das Fenster sich ändert.
+        hoehe = undefined
+        inhalt.style.removeProperty('height')
+        inhalt.style.removeProperty('overflow')
+      })
+
+      // Punkte ziehen nur ein, wenn wirklich von zu geöffnet wird; beim
+      // Umkehren eines Schließens stehen sie schon.
+      if (!vonZu) return
+      const liste = alle('li', inhalt)
+      if (liste.length === 0) return
+      punkte?.stop()
+      const dauer = DAUER.basis
+      const abstand =
+        liste.length > 1
+          ? Math.min(PUNKTE_STAFFEL, (PUNKTE_GESAMT - dauer) / (liste.length - 1))
+          : 0
+      punkte = animate(
+        liste,
+        { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+        { duration: dauer, ease: KURVE, delay: (i: number) => i * abstand },
+      )
+      // Motion schreibt die Endwerte erst nach `finished` als Inline-Style;
+      // ein Bild später räumen, damit wirklich nichts transformiert bleibt.
+      punkte.finished.then(() =>
+        requestAnimationFrame(() => {
+          if (nr === nummer) punkteRuhe()
+        }),
+      )
+    }
+
+    const schliessen = () => {
+      const von = inhalt.getBoundingClientRect().height
+      hoehe?.stop()
+      punkteRuhe()
+      details.dataset.schliesst = ''
+      inhalt.style.overflow = 'hidden'
+      inhalt.style.height = `${von}px`
+      const nr = ++nummer
+      hoehe = animate(inhalt, { height: [von, 0] }, { duration: DAUER.langsam, ease: KURVE })
+      hoehe.finished.then(() => {
+        if (nr !== nummer) return
+        // Erst jetzt `open` entfernen: Vorher wäre der Inhalt schlagartig weg.
+        erwartet = 'closed'
+        details.open = false
+        ruhe()
+      })
+    }
+
+    // Enter und Leertaste auf <summary> lösen ebenfalls `click` aus, die
+    // Tastatur geht also denselben Weg. Bei reduzierter Bewegung bleibt der
+    // Klick beim Browser, der sofort umschaltet.
+    summary.addEventListener('click', (event) => {
+      if (!bewegt()) return
+      event.preventDefault()
+      if (details.open && !('schliesst' in details.dataset)) schliessen()
+      else oeffnen()
+    })
+
+    // Öffnet der Browser selbst (Seitensuche, Sprung zu einem Anker im
+    // Inhalt), gibt es nichts zu animieren: Laufendes abbrechen, Ruhe herstellen.
+    details.addEventListener('toggle', (event) => {
+      const neu = (event as ToggleEvent).newState as 'open' | 'closed'
+      if (neu === erwartet) {
+        erwartet = undefined
+        return
+      }
+      erwartet = undefined
+      nummer++
+      ruhe()
+    })
+  }
+</script>
