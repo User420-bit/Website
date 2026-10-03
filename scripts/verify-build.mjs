@@ -130,12 +130,45 @@ for (const [route, html] of pages) {
   }
 }
 
-// Nichts darf mehr JavaScript nachladen: Ziel aus Plan 2.2 ist 0 KB.
+// JavaScript nur vom eigenen Server, gebuendelt aus dem Repository (Motion fuer
+// die Bewegung, docs/MOTION_PLAN.md). Nichts von fremden Hosts, und ein Budget
+// je Seite, damit die Bewegung nicht zur Ladezeit wird: 90 KB unkomprimiert
+// entsprechen etwa 30 KB ueber die Leitung.
+const JS_BUDGET = 90 * 1024
+const jsJeRoute = new Map()
 for (const [route, html] of pages) {
-  const external = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])
-  if (external.length > 0) {
-    fail(`/${route}: laedt externes JavaScript (${external.join(', ')})`)
+  const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])
+  // Gezaehlt werden die Einstiege und alles, was sie importieren (der
+  // Motion-Chunk haengt an jedem Einstieg), jede Datei einmal.
+  let bytes = 0
+  const gesehen = new Set()
+  const zaehle = (src) => {
+    if (gesehen.has(src)) return
+    gesehen.add(src)
+    const file = join(DIST, src.slice(BASE.length))
+    if (!existsSync(file)) {
+      fail(`/${route}: Skript ${src} wurde nicht gebaut`)
+      return
+    }
+    const code = readFileSync(file, 'utf8')
+    bytes += Buffer.byteLength(code)
+    for (const [, pfad] of code
+      .matchAll(/\bfrom\s*"(\.[^"]+\.js)"|\bimport\s*"(\.[^"]+\.js)"/g)
+      .map((m) => [m[0], m[1] ?? m[2]])) {
+      zaehle(new URL(pfad, `https://x${src}`).pathname)
+    }
   }
+  for (const src of scripts) {
+    if (!src.startsWith(`${BASE}_astro/`)) {
+      fail(`/${route}: laedt JavaScript von ausserhalb des Builds (${src})`)
+      continue
+    }
+    zaehle(src)
+  }
+  if (bytes > JS_BUDGET) {
+    fail(`/${route}: ${Math.round(bytes / 1024)} KB JavaScript, Budget sind ${JS_BUDGET / 1024} KB`)
+  }
+  jsJeRoute.set(route, bytes)
 }
 
 // Schriften und Styles kommen vom eigenen Server: Das sagt die
@@ -156,4 +189,7 @@ if (errors.length > 0) {
   process.exit(1)
 }
 
-console.log(`Build-Pruefung bestanden: ${pages.size} Routen, keine toten internen Links.`)
+const maxJs = Math.max(...jsJeRoute.values())
+console.log(
+  `Build-Pruefung bestanden: ${pages.size} Routen, keine toten internen Links, hoechstens ${Math.round(maxJs / 1024)} KB JavaScript je Seite.`,
+)

@@ -1,0 +1,15 @@
+---
+/**
+ * Markiert `<html>` mit `data-bewegung`, sobald klar ist, dass ein Skript
+ * läuft und der Besucher Bewegung zulässt. Nur dann darf CSS einen
+ * Anfangszustand setzen (Deckkraft 0, verschoben); ohne das Attribut steht
+ * jeder Inhalt sofort. `is:inline` im `<head>`, damit das Attribut vor dem
+ * ersten Bild steht und nichts aufblitzt. Siehe `src/lib/motion.ts`.
+ */
+---
+
+<script is:inline>
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    document.documentElement.dataset.bewegung = ''
+  }
+</script>

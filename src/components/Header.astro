@@ -5,6 +5,11 @@
  * außerhalb des `<header>` und scrollt mit der Seite weg, damit der klebende
  * Kopf beim Lesen 58 statt 90 bis 121 px des Bildschirms belegt. Beide
  * Navigationen kommen aus derselben Liste, sichtbar ist immer nur eine.
+ *
+ * Auf der Startseite trägt jede Navigation einen eigenen orangen Strich, der
+ * mit Bewegung vom alten zum neuen aktiven Anker gleitet (`NavHighlight`,
+ * docs/BEWEGUNG_PLAN.md, A). Er liegt absolut in der Navigation und rührt
+ * nicht an ihrer Höhe. Hover zieht weiter am einzelnen Link von links auf.
  */
 import Button from '@/components/Button.astro'
 import NavHighlight from '@/components/NavHighlight.astro'
@@ -39,7 +44,7 @@ const linkClass =
     >
       {name}
     </a>
-    <nav aria-label="Hauptnavigation" class="hidden sm:block">
+    <nav aria-label="Hauptnavigation" class="relative hidden sm:block">
       <ul class="-mx-1 flex list-none flex-wrap justify-end gap-x-3 gap-y-1 p-0 text-sm">
         {
           NAV_ITEMS.map((item) => (
@@ -51,6 +56,7 @@ const linkClass =
           ))
         }
       </ul>
+      {isHome && <span aria-hidden="true" class="nav-strich" data-nav-strich />}
     </nav>
     <div>
       <Button href={href('/#kontakt')} size="sm">Anfrage</Button>
@@ -61,7 +67,7 @@ const linkClass =
 {
   /* Handy: dieselben Anker unter dem Kopf, nicht klebend. Verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen. */
 }
-<nav aria-label="Hauptnavigation" class="mx-auto w-full max-w-5xl px-4 pb-2 sm:hidden">
+<nav aria-label="Hauptnavigation" class="relative mx-auto w-full max-w-5xl px-4 pb-2 sm:hidden">
   <ul class="-mx-1 flex list-none flex-wrap justify-between gap-y-1 p-0 text-sm">
     {
       NAV_ITEMS.map((item) => (
@@ -73,6 +79,44 @@ const linkClass =
       ))
     }
   </ul>
+  {isHome && <span aria-hidden="true" class="nav-strich" data-nav-strich />}
 </nav>
 
 {isHome && <NavHighlight />}
+
+<style>
+  /*
+   * Aktiver Anker ohne gleitenden Strich (kein Skript für Bewegung, reduzierte
+   * Bewegung): der eigene Unterstrich steht. Tailwind 4 skaliert über `scale`,
+   * nicht über `transform`, und `text-fg-muted` liegt in einer späteren Ebene
+   * als die Regel in global.css; deshalb beides hier, ungeschichtet.
+   */
+  .nav-link[aria-current='true'] {
+    color: var(--color-fg);
+  }
+  .nav-link[aria-current='true']::after {
+    scale: 1;
+  }
+
+  /* Gleitet der Strich, übernimmt er; der eigene Unterstrich bleibt Hover. */
+  nav[data-gleitet] .nav-link[aria-current='true']::after {
+    scale: 0 1;
+  }
+
+  /*
+   * 1 px breit an den Nullpunkt der Navigation gelegt; `NavHighlight` setzt
+   * Lage und Breite als `translate() scaleX()`. Ohne Skript bleibt er
+   * unsichtbar.
+   */
+  .nav-strich {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    background-color: var(--color-accent);
+    transform-origin: 0 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>

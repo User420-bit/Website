@@ -9,6 +9,9 @@
  * Rand hält die Zeile so hoch wie den Link allein. Fehlt ein Nachbar (erste
  * oder letzte Arbeit), steht der Knopf blass und ohne Link da, damit der
  * andere nicht springt.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): Die Knöpfe geben bei Druck auf 0,98
+ * nach und federn in 120 ms zurück. Der blasse Knopf ohne Link bleibt still.
  */
 import type { Projekt } from '@/components/ProjectPage.astro'
 import Arrow from '@/components/Arrow.astro'
@@ -99,3 +102,18 @@ const knoepfe = [
     }
   }
 </style>
+
+<script>
+  import { DAUER, KURVE, animate, press, wennBewegt } from '@/lib/motion'
+
+  wennBewegt(() => {
+    const takt = { duration: DAUER.schnell, ease: KURVE }
+    // Motion schließt Tastatur ein: Enter drückt den Knopf wie ein Finger.
+    // `scale` statt eines Transform-Strings: Bei 1 schreibt Motion
+    // `transform: none`, es bleibt also nichts am Knopf stehen.
+    press('a.blaettern', (knopf) => {
+      animate(knopf, { scale: 0.98 }, takt)
+      return () => animate(knopf, { scale: 1 }, takt)
+    })
+  })
+</script>

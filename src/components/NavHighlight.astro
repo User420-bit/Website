@@ -3,17 +3,106 @@
   Markiert den Anker, dessen Abschnitt gerade im Viewport steht. Wird nur auf
   der Startseite eingebunden — die Unterseiten haben keine Abschnitte.
 
-  Das ist die einzige Stelle mit JavaScript (Plan 4.3). Ohne JS funktioniert die
-  Navigation unverändert, nur ohne aktiven Zustand.
+  Ohne JS funktioniert die Navigation unverändert, nur ohne aktiven Zustand.
+  Mit erlaubter Bewegung gleitet je Navigation ein oranger Strich (aus
+  Header.astro) zum neuen aktiven Anker, statt dass der Unterstrich springt
+  (docs/BEWEGUNG_PLAN.md, A). Das erste Setzen geschieht ohne Bewegung: Wer
+  die Seite mitten in einem Abschnitt öffnet, sieht den Strich schon dort.
 */
 }
 <script>
+  import { animate, bewegt, DAUER, KURVE } from '@/lib/motion'
+
   const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-target]')
   // Je Anker mehrere Links: Der Header hat eine Navigation für breit und eine für das Handy.
   const byId = new Map<string, HTMLAnchorElement[]>()
   for (const link of links) {
     const id = link.dataset.navTarget
     if (id) byId.set(id, [...(byId.get(id) ?? []), link])
+  }
+
+  /** Ein Strich je Navigation und der Anker, unter dem er gerade steht. */
+  interface Strich {
+    el: HTMLElement
+    nav: HTMLElement
+    ziel: HTMLAnchorElement | null
+    /** Steht er schon einmal sichtbar? Erst dann gleitet er. */
+    gesetzt: boolean
+    lauf?: { stop: () => void }
+  }
+
+  const striche: Strich[] = bewegt()
+    ? [...document.querySelectorAll<HTMLElement>('[data-nav-strich]')].flatMap((el) => {
+        const nav = el.closest('nav')
+        return nav ? [{ el, nav, ziel: null, gesetzt: false }] : []
+      })
+    : []
+
+  /**
+   * Lage und Breite des Unterstrichs, den der Link selbst bei Hover zeigt
+   * (`::after`), damit Strich und Hover-Linie deckungsgleich sind. Null, wenn
+   * die Navigation gerade verborgen ist (die andere Breite ist aktiv).
+   */
+  const lage = (link: HTMLAnchorElement): string | null => {
+    if (link.offsetWidth === 0) return null
+    const linie = getComputedStyle(link, '::after')
+    const x = link.offsetLeft + parseFloat(linie.left)
+    const y = link.offsetTop + parseFloat(linie.top)
+    const breite = parseFloat(linie.width)
+    if (![x, y, breite].every(Number.isFinite)) return null
+    return `translate(${x}px, ${y}px) scaleX(${breite})`
+  }
+
+  /** Setzt den Strich ohne Bewegung an seinen Anker (erstes Setzen, Größenwechsel). */
+  const stelle = (strich: Strich) => {
+    if (!strich.ziel) return
+    const transform = lage(strich.ziel)
+    if (!transform) return
+    strich.lauf?.stop()
+    strich.el.style.transform = transform
+    strich.el.style.opacity = '1'
+    strich.gesetzt = true
+  }
+
+  const ziehe = (strich: Strich, ziel: HTMLAnchorElement | null) => {
+    if (ziel === strich.ziel) return
+    const vorher = strich.ziel
+    strich.ziel = ziel
+    const art = { ease: KURVE }
+
+    if (!ziel) {
+      // Kein Abschnitt im Band (oben im Hero): Der Strich blendet aus und bleibt stehen.
+      strich.lauf?.stop()
+      strich.lauf = animate(strich.el, { opacity: 0 }, { ...art, duration: DAUER.schnell })
+      return
+    }
+    const transform = lage(ziel)
+    if (!transform) return
+    if (!strich.gesetzt) {
+      stelle(strich)
+      return
+    }
+    strich.lauf?.stop()
+    if (vorher) {
+      strich.lauf = animate(strich.el, { transform, opacity: 1 }, { ...art, duration: DAUER.basis })
+    } else {
+      // Wieder da nach einer Pause im Hero: an Ort und Stelle einblenden, nicht von weit her gleiten.
+      strich.el.style.transform = transform
+      strich.lauf = animate(strich.el, { opacity: 1 }, { ...art, duration: DAUER.schnell })
+    }
+  }
+
+  if (striche.length > 0) {
+    for (const strich of striche) strich.nav.dataset.gleitet = ''
+    // Breite, Schrift, Zeilenumbruch: Ändert sich die Navigation, steht der Strich sofort neu.
+    const beobachter = new ResizeObserver((eintraege) => {
+      for (const eintrag of eintraege) {
+        const strich = striche.find((s) => s.nav === eintrag.target)
+        if (strich) stelle(strich)
+      }
+    })
+    for (const strich of striche) beobachter.observe(strich.nav)
+    void document.fonts.ready.then(() => striche.forEach(stelle))
   }
 
   const sections = [...byId.keys()]
@@ -39,6 +128,12 @@
           if (id === current) link.setAttribute('aria-current', 'true')
           else link.removeAttribute('aria-current')
         }
+      }
+      for (const strich of striche) {
+        const ziel = current
+          ? strich.nav.querySelector<HTMLAnchorElement>(`[data-nav-target="${current}"]`)
+          : null
+        ziehe(strich, ziel)
       }
     }
 

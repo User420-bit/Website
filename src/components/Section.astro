@@ -7,6 +7,13 @@
  * unter dem Kopf über die volle Spaltenbreite, alles an derselben linken
  * Kante. Die Nummer ist Ordnung fürs Auge, keine Information — deshalb
  * `aria-hidden`.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, A): Kommt der Kopf ins Fenster, zieht die
+ * Tintenlinie von links auf, Nummer und H2 ziehen mit ihr 8 px ein, das Intro
+ * einen Takt später. Die Linie bleibt `border-top`, damit ohne Skript alles
+ * wie immer steht; mit Bewegung wird die Kante durchsichtig und ein eigener
+ * Strich genau darüber übernimmt, damit nichts an der Höhe rührt. Den Inhalt
+ * im Slot bewegt jede Sektion selbst.
  */
 interface Props {
   id: string
@@ -19,26 +26,133 @@ interface Props {
 const { id, title, index, intro, class: className = '' } = Astro.props
 ---
 
-<section id={id} class:list={['border-t border-fg py-16 sm:py-24', className]}>
-  <div>
+<section
+  id={id}
+  class:list={['kapitel relative border-t border-fg py-16 sm:py-24', className]}
+  data-kapitel
+>
+  <span aria-hidden="true" class="kapitel-linie" data-kapitel-linie data-bewegt></span>
+  <div data-kapitel-kopf>
     {
       index && (
-        <span aria-hidden="true" class="block text-sm text-fg-muted tabular-nums">
+        <span
+          aria-hidden="true"
+          class="kapitel-text block text-sm text-fg-muted tabular-nums"
+          data-kapitel-text
+          data-bewegt
+        >
           {index}
         </span>
       )
     }
     <h2
       class:list={[
-        'm-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl',
+        'kapitel-text m-0 text-3xl font-semibold tracking-tight text-balance sm:text-4xl',
         index && 'mt-1',
       ]}
+      data-kapitel-text
+      data-bewegt
     >
       {title}
     </h2>
-    {intro && <p class="prose-flow mt-4 mb-0 max-w-[65ch] text-fg-muted">{intro}</p>}
+    {
+      intro && (
+        <p
+          class="kapitel-text prose-flow mt-4 mb-0 max-w-[65ch] text-fg-muted"
+          data-kapitel-intro
+          data-bewegt
+        >
+          {intro}
+        </p>
+      )
+    }
   </div>
   <div class="mt-10 sm:mt-12">
     <slot />
   </div>
 </section>
+
+<style>
+  /* Ohne Skript gibt es den Strich nicht; die Kante der Sektion ist die Linie. */
+  .kapitel-linie {
+    display: none;
+  }
+
+  /*
+   * Anfangszustand nur mit Skript und erlaubter Bewegung. Der Strich liegt
+   * genau auf der (jetzt durchsichtigen) Kante: absolut, 1 px, von links.
+   */
+  :global(html[data-bewegung]) .kapitel {
+    border-top-color: transparent;
+  }
+  :global(html[data-bewegung]) .kapitel-linie {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 1px;
+    background-color: var(--color-fg);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  :global(html[data-bewegung]) .kapitel-text {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+</style>
+
+<script>
+  import { alle, animate, DAUER, inView, KURVE, STAFFEL, WEG_TEXT, wennBewegt } from '@/lib/motion'
+
+  /**
+   * Löst das Sicherheitsnetz aus global.css ab: Das Skript läuft, also zeigt
+   * es das Element selbst, wenn es ins Fenster kommt, statt nach 2 s
+   * ungesehen. Hat das Netz schon gegriffen (Modul kam spät), bleibt das
+   * Element stehen, damit nichts Sichtbares wieder verschwindet.
+   */
+  function uebernehmen(el: Element): boolean {
+    const netz = el
+      .getAnimations()
+      .find((a) => a instanceof CSSAnimation && a.animationName === 'bewegt-sichtbar')
+    if (netz?.playState === 'finished') return false
+    netz?.cancel()
+    return true
+  }
+
+  wennBewegt(() => {
+    for (const kapitel of alle('[data-kapitel]')) {
+      const kopf = kapitel.querySelector<HTMLElement>('[data-kapitel-kopf]')
+      const linie = kapitel.querySelector<HTMLElement>('[data-kapitel-linie]')
+      if (!kopf || !linie) continue
+      const text = alle('[data-kapitel-text]', kopf)
+      const intro = alle('[data-kapitel-intro]', kopf)
+      // Was das Sicherheitsnetz schon gezeigt hat, bleibt stehen.
+      const bewegen = [linie, ...text, ...intro].filter(uebernehmen)
+      if (bewegen.length === 0) continue
+
+      // Beobachtet wird der Kopf, nicht die Sektion: Eine lange Sektion
+      // erreicht auf dem Handy nie 20 % sichtbare Fläche.
+      const stopp = inView(
+        kopf,
+        () => {
+          stopp()
+          const art = { ease: KURVE }
+          if (bewegen.includes(linie)) {
+            animate(linie, { scaleX: [0, 1] }, { ...art, duration: DAUER.szene })
+          }
+          const einzug = {
+            opacity: [0, 1],
+            y: [WEG_TEXT, 0],
+          }
+          const zeilen = text.filter((el) => bewegen.includes(el))
+          if (zeilen.length) animate(zeilen, einzug, { ...art, duration: DAUER.langsam })
+          const satz = intro.filter((el) => bewegen.includes(el))
+          if (satz.length) {
+            animate(satz, einzug, { ...art, duration: DAUER.langsam, delay: STAFFEL })
+          }
+        },
+        { amount: 0.2 },
+      )
+    }
+  })
+</script>

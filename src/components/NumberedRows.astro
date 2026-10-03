@@ -8,6 +8,14 @@
  * `titleColumn`: ab `sm` bekommt der Titel eine eigene Spalte, die Erklärung
  * steht daneben (Arbeitsweise: kurze Namen). Ohne steht die Erklärung unter
  * dem Titel.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, E): Kommt die Liste ins Fenster, baut sie
+ * sich Zeile um Zeile von oben auf. Die Haarlinie unter der Zeile zieht von
+ * links auf, Titel und Erklärung ziehen 8 px ein, die Ziffer rastet als
+ * Letztes ein (nur Deckkraft, kein Zählen). Damit die Linie aufziehen kann,
+ * ist sie kein `border-bottom`, sondern ein eigenes Element am unteren Rand;
+ * das Pixel, das der Rand belegte, hält `pb-[calc(1rem+1px)]` frei. Ohne
+ * Skript sieht die Liste darum genauso aus wie vorher.
  */
 interface Props {
   items: readonly { title: string; description: string }[]
@@ -18,28 +26,145 @@ interface Props {
 const { items, titleColumn = false, class: className = '' } = Astro.props
 ---
 
-<ol class:list={['m-0 list-none border-t border-border p-0', className]}>
+<ol data-zeilen class:list={['m-0 list-none border-t border-border p-0', className]}>
   {
     items.map((item, i) => (
       <li
         class:list={[
-          'grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-4',
+          'relative grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 pt-4 pb-[calc(1rem+1px)]',
           titleColumn && 'sm:grid-cols-[2rem_10rem_minmax(0,1fr)]',
         ]}
       >
-        <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+        <span
+          aria-hidden="true"
+          data-bewegt
+          data-zeile-ziffer
+          class="zeile-ziffer text-sm text-fg-muted tabular-nums"
+        >
           {i + 1}
         </span>
-        <span class="font-medium">{item.title}</span>
+        <span data-bewegt data-zeile-text class="zeile-text font-medium">
+          {item.title}
+        </span>
         <span
+          data-bewegt
+          data-zeile-text
           class:list={[
-            'prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted',
+            'zeile-text prose-flow col-start-2 mt-1 max-w-[55ch] text-sm text-fg-muted',
             titleColumn && 'sm:col-start-3 sm:mt-0',
           ]}
         >
           {item.description}
         </span>
+        <span
+          aria-hidden="true"
+          data-bewegt
+          data-zeile-linie
+          class="zeile-linie absolute inset-x-0 bottom-0 h-px bg-border"
+        />
       </li>
     ))
   }
 </ol>
+
+<style>
+  /*
+   * Anfangszustände nur mit Skript und erlaubter Bewegung (`data-bewegung`
+   * setzt MotionReady). Ohne das Attribut steht alles sofort.
+   */
+  :global(html[data-bewegung]) .zeile-linie {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  :global(html[data-bewegung]) .zeile-text {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  :global(html[data-bewegung]) .zeile-ziffer {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, inView, wennBewegt } from '@/lib/motion'
+
+  /*
+   * Abstand zwischen zwei Zeilen. Der Plan sieht hier 80 ms vor, etwas mehr als
+   * `STAFFEL`: Innerhalb einer Zeile staffeln Titel und Erklärung schon um
+   * `STAFFEL`, die Zeilen selbst sollen sich davon sichtbar absetzen.
+   */
+  const STAFFEL_ZEILE = 0.08
+
+  /** Der Endzustand, wie ohne Skript. Inline, damit er über dem Anfangszustand aus CSS steht. */
+  function ruhe(el: HTMLElement) {
+    el.style.opacity = '1'
+    el.style.transform = 'none'
+  }
+
+  /*
+   * Das Sicherheitsnetz in global.css zeigt jedes `data-bewegt` nach 2 s, falls
+   * das Modul nicht läuft. Hier läuft es; die Liste soll aber erst erscheinen,
+   * wenn sie ins Fenster kommt, und das kann viel später sein. Darum nimmt jedes
+   * Element das Netz ab, solange es noch nicht gegriffen hat. Hat es schon
+   * gegriffen (Modul kam spät), steht die Liste bereits und bleibt so: lieber
+   * keine Bewegung als ein Aufblitzen.
+   */
+  function netzAbnehmen(teile: HTMLElement[]): boolean {
+    const gegriffen = teile.some((el) =>
+      el
+        .getAnimations()
+        .some(
+          (a) =>
+            a instanceof CSSAnimation &&
+            a.animationName === 'bewegt-sichtbar' &&
+            a.playState === 'finished',
+        ),
+    )
+    if (gegriffen) return false
+    for (const el of teile) el.style.animation = 'none'
+    return true
+  }
+
+  function zeilen(liste: HTMLElement) {
+    const reihen = alle('li', liste)
+    if (!netzAbnehmen(alle('[data-bewegt]', liste))) return
+
+    inView(
+      liste,
+      () => {
+        reihen.forEach((reihe, i) => {
+          const start = i * STAFFEL_ZEILE
+          const linie = reihe.querySelector<HTMLElement>('[data-zeile-linie]')
+          const ziffer = reihe.querySelector<HTMLElement>('[data-zeile-ziffer]')
+
+          if (linie) {
+            animate(
+              linie,
+              { transform: ['scaleX(0)', 'none'] },
+              { duration: DAUER.szene, ease: KURVE, delay: start },
+            ).then(() => ruhe(linie))
+          }
+          alle('[data-zeile-text]', reihe).forEach((text, j) => {
+            animate(
+              text,
+              { opacity: [0, 1], y: [WEG_TEXT, 0] },
+              { duration: DAUER.langsam, ease: KURVE, delay: start + j * STAFFEL },
+            ).then(() => ruhe(text))
+          })
+          // Die Ziffer rastet ein, wenn der Titel angekommen ist: kurz, nur Deckkraft.
+          if (ziffer) {
+            animate(
+              ziffer,
+              { opacity: [0, 1] },
+              { duration: DAUER.schnell, ease: KURVE, delay: start + DAUER.langsam },
+            ).then(() => ruhe(ziffer))
+          }
+        })
+        // Keine Rückgabe, also kein Rückweg: Was da ist, bleibt da.
+      },
+      { amount: 0.2 },
+    )
+  }
+
+  wennBewegt(() => alle('[data-zeilen]').forEach(zeilen))
+</script>

@@ -1,0 +1,225 @@
+---
+/**
+ * 02 Leistungen: erst die drei Arten Software, dann die Einzelpunkte zum
+ * Aufklappen. Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne Beleg
+ * kein Eintrag, sonst wäre es eine Wunschliste.
+ *
+ * Bewegung: Kommen die drei Arten ins Fenster, zieht die Haarlinie über jeder
+ * Spalte von links auf, Titel und Text ziehen 8 px ein, Spalte um Spalte. Die
+ * Aufklapper bewegt `Disclosure.astro` selbst.
+ */
+import { getCollection, getEntry } from 'astro:content'
+import Disclosure from '@/components/Disclosure.astro'
+import Section from '@/components/Section.astro'
+import { href } from '@/lib/site'
+
+const company = (await getEntry('company', 'main'))!.data
+const projekte = await getCollection('projekte')
+const projektTitel = new Map(projekte.map((p) => [p.id, p.data.title]))
+/** Unveröffentlichte Projekte haben keine Seite; ein Beleg nennt sie ohne Link. */
+const ohneSeite = new Set(projekte.filter((p) => !p.data.published).map((p) => p.id))
+const leistungen = (await getCollection('leistungen')).sort((a, b) => a.data.order - b.data.order)
+const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
+---
+
+<Section
+  id="leistungen"
+  index="02"
+  title="Angeboten wird nur, was schon gebaut wurde"
+  intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
+>
+  <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3" data-leistungen>
+    {
+      company.services.map((service) => (
+        <div class="leistung relative border-t border-border pt-4 pb-8" data-leistung>
+          <dt class="text-lg font-semibold tracking-tight">
+            <span aria-hidden="true" class="leistung-linie" data-bewegt />
+            <span class="leistung-text block" data-bewegt>
+              {service.title}
+            </span>
+          </dt>
+          <dd
+            class="leistung-text prose-flow mt-2 ml-0 text-sm leading-relaxed text-fg-muted"
+            data-bewegt
+          >
+            {service.description}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
+  <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
+    Hinter jedem Punkt steht das Projekt, das ihn belegt.
+  </p>
+  <div class="mt-3 border-t border-border">
+    {
+      leistungen.map((group) => (
+        <Disclosure title={group.data.title} meta={punkte(group.data.items.length)}>
+          <p class="prose-flow mt-0 max-w-[65ch] text-sm text-fg-muted">{group.data.description}</p>
+          <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
+            {group.data.items.map((item) => (
+              <li>
+                <span class="block text-sm font-medium">{item.title}</span>
+                <span class="prose-flow block text-sm text-fg-muted">{item.description}</span>
+                {item.evidence.length > 0 && (
+                  <span class="mt-1 block text-xs text-fg-muted">
+                    Beleg:{' '}
+                    {item.evidence.map((slug, i) => (
+                      <>
+                        {i > 0 && ', '}
+                        {ohneSeite.has(slug) ? (
+                          projektTitel.get(slug)
+                        ) : (
+                          <a
+                            class="text-accent underline-offset-4"
+                            href={href(`/projekte/${slug}`)}
+                          >
+                            {projektTitel.get(slug) ?? slug}
+                          </a>
+                        )}
+                      </>
+                    ))}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Disclosure>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  /*
+   * Die Haarlinie bleibt als `border-top`, damit das Layout mit und ohne
+   * Skript gleich hoch ist. Mit Bewegung wird die Kante durchsichtig, und an
+   * ihrer Stelle liegt ein eigenes Element, das von links aufziehen kann.
+   * Den Anfangszustand trägt nur, was noch `data-bewegt` hat; das Skript
+   * nimmt es nach dem Einziehen ab.
+   */
+  .leistung-linie {
+    display: none;
+  }
+  html[data-bewegung] .leistung {
+    border-top-color: transparent;
+  }
+  html[data-bewegung] .leistung-linie {
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    display: block;
+    height: 1px;
+    background-color: var(--color-border);
+    transform-origin: left;
+  }
+  html[data-bewegung] .leistung-linie[data-bewegt] {
+    transform: scaleX(0);
+  }
+  html[data-bewegung] .leistung-text[data-bewegt] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  /*
+   * Läuft das Skript, wartet es selbst, bis die Spalten im Fenster sind. Das
+   * Sicherheitsnetz aus global.css (sichtbar nach 2 s) würde sonst Spalten
+   * weiter unten vorher aufdecken, und beim Hereinscrollen sprängen sie auf
+   * unsichtbar zurück, um einzuziehen.
+   */
+  html[data-bewegung] [data-leistungen][data-bereit] [data-bewegt] {
+    animation: none;
+  }
+
+  /* Gedruckt wird der Endzustand, auch was nie ins Fenster kam. */
+  @media print {
+    html[data-bewegung] .leistung {
+      border-top-color: var(--color-border);
+    }
+    html[data-bewegung] .leistung-linie {
+      display: none;
+    }
+    html[data-bewegung] .leistung-text[data-bewegt] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, inView, wennBewegt } from '@/lib/motion'
+
+  const liste = document.querySelector<HTMLElement>('[data-leistungen]')
+
+  /** Endzustand ohne Bewegung: Anfangszustand abnehmen, eigene Inline-Styles räumen. */
+  const ruhe = (spalte: HTMLElement) => {
+    for (const el of alle('[data-bewegt]', spalte)) {
+      el.removeAttribute('data-bewegt')
+      el.style.removeProperty('opacity')
+      el.style.removeProperty('transform')
+    }
+  }
+
+  const einziehen = (spalte: HTMLElement, verzug: number) => {
+    const linie = spalte.querySelector<HTMLElement>('.leistung-linie')
+    const texte = alle('.leistung-text', spalte)
+    const laeufe = [
+      animate(
+        texte,
+        { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+        {
+          duration: DAUER.langsam,
+          ease: KURVE,
+          delay: verzug,
+        },
+      ),
+    ]
+    if (linie) {
+      laeufe.push(
+        animate(
+          linie,
+          { transform: ['scaleX(0)', 'scaleX(1)'] },
+          {
+            duration: DAUER.szene,
+            ease: KURVE,
+            delay: verzug,
+          },
+        ),
+      )
+    }
+    // Motion schreibt die Endwerte erst nach `finished` als Inline-Style; ein
+    // Bild später räumen, damit `transform: none` und `opacity: 1` aus CSS gelten.
+    Promise.all(laeufe.map((lauf) => lauf.finished)).then(() =>
+      requestAnimationFrame(() => ruhe(spalte)),
+    )
+  }
+
+  // Nur wenn MotionReady einen Anfangszustand erlaubt hat, gibt es etwas zu tun.
+  if (liste && document.documentElement.hasAttribute('data-bewegung')) {
+    const spalten = alle('[data-leistung]', liste)
+    wennBewegt(
+      () => {
+        liste.dataset.bereit = ''
+        // Was im selben Augenblick ins Fenster kommt (am Desktop alle drei),
+        // zieht gestaffelt ein; am Handy kommt jede Spalte für sich.
+        let warteschlange: HTMLElement[] = []
+        inView(
+          spalten,
+          (spalte) => {
+            warteschlange.push(spalte as HTMLElement)
+            if (warteschlange.length > 1) return
+            requestAnimationFrame(() => {
+              const jetzt = warteschlange.sort((a, b) => spalten.indexOf(a) - spalten.indexOf(b))
+              warteschlange = []
+              jetzt.forEach((s, i) => einziehen(s, i * STAFFEL))
+            })
+          },
+          { amount: 0.2 },
+        )
+      },
+      () => spalten.forEach(ruhe),
+    )
+  }
+</script>

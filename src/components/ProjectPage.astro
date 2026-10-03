@@ -24,6 +24,13 @@
  * Dorthin wächst das Bildfeld der Kachel. Welches es ist, entscheidet die
  * Seiten- oder Szenenkomponente; `scripts/verify-build.mjs` prüft, dass es
  * genau eins gibt.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): H1 und Summary stehen sofort, die
+ * Slots gehören ihren Seiten und Bühnen. Was dieser Körper selbst zeigt,
+ * zieht beim Hereinscrollen einmal ein: Meta-Liste, Links, und je Textblock
+ * die Haarlinie (zieht von links auf), die Überschrift und der Inhalt,
+ * Listenpunkte gestaffelt. Jede Gruppe trägt `data-einzug`, jedes versteckte
+ * Element `data-bewegt="projektseite"`; das Skript unten bewegt nur diese.
  */
 import ProjectNav from '@/components/ProjectNav.astro'
 import type { CollectionEntry } from 'astro:content'
@@ -64,7 +71,8 @@ const data = projekt.data
 const zeigt = (teil: Teil) => !hide.includes(teil)
 
 // Wie auf der Startseite: Überschrift über dem Inhalt, Haarlinie oben.
-const block = 'mt-12 border-t border-border pt-6'
+// `relative` und `mit-linie` tragen die Haarlinie, die beim Hereinscrollen aufzieht.
+const block = 'mit-linie relative mt-12 border-t border-border pt-6'
 const blockTitle = 'm-0 text-xl font-semibold tracking-tight'
 const list = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0 text-fg-muted'
 const lists = [
@@ -97,7 +105,7 @@ const lists = [
 
     {
       zeigt('meta') && (
-        <div class="mt-8">
+        <div class="mt-8" data-einzug data-bewegt="projektseite">
           <MetaList
             rows={[
               { label: 'Art', value: data.kind, variant: 'kind' },
@@ -112,7 +120,7 @@ const lists = [
 
     {
       zeigt('links') && (data.live || data.github) && (
-        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0" data-einzug data-bewegt="projektseite">
           {data.live && (
             <li>
               <Button href={data.live} external>
@@ -140,9 +148,15 @@ const lists = [
 
     {
       zeigt('text') && (
-        <section class={block}>
-          <h2 class={blockTitle}>Worum es geht</h2>
-          <div class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4">
+        <section class={block} data-einzug>
+          <span class="haarlinie" aria-hidden="true" data-bewegt="projektseite" />
+          <h2 class={blockTitle} data-bewegt="projektseite">
+            Worum es geht
+          </h2>
+          <div
+            data-bewegt="projektseite"
+            class="prose-flow mt-4 max-w-[65ch] space-y-4 leading-relaxed text-fg-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4"
+          >
             <Content />
           </div>
         </section>
@@ -154,11 +168,16 @@ const lists = [
         ({ teil, title, items }) =>
           zeigt(teil) &&
           items.length > 0 && (
-            <section class={block}>
-              <h2 class={blockTitle}>{title}</h2>
+            <section class={block} data-einzug="liste">
+              <span class="haarlinie" aria-hidden="true" data-bewegt="projektseite" />
+              <h2 class={blockTitle} data-bewegt="projektseite">
+                {title}
+              </h2>
               <ul class:list={[list, 'mt-4']}>
                 {items.map((item) => (
-                  <li class="border-b border-border pb-3">{item}</li>
+                  <li class="border-b border-border pb-3" data-bewegt="projektseite">
+                    {item}
+                  </li>
                 ))}
               </ul>
             </section>
@@ -168,9 +187,12 @@ const lists = [
 
     {
       zeigt('code') && data.codeExample && (
-        <section class={block}>
-          <h2 class={blockTitle}>Code</h2>
-          <div class="mt-4 min-w-0">
+        <section class={block} data-einzug>
+          <span class="haarlinie" aria-hidden="true" data-bewegt="projektseite" />
+          <h2 class={blockTitle} data-bewegt="projektseite">
+            Code
+          </h2>
+          <div class="mt-4 min-w-0" data-bewegt="projektseite">
             <CodeBlock language={data.codeExample.language} snippet={data.codeExample.snippet} />
           </div>
         </section>
@@ -185,11 +207,16 @@ const lists = [
     }
     {
       zeigt('learnings') && data.learnings.length > 0 && (
-        <section class={block}>
-          <h2 class={blockTitle}>Erkenntnisse</h2>
+        <section class={block} data-einzug="liste">
+          <span class="haarlinie" aria-hidden="true" data-bewegt="projektseite" />
+          <h2 class={blockTitle} data-bewegt="projektseite">
+            Erkenntnisse
+          </h2>
           <ul class="prose-flow m-0 mt-4 max-w-[65ch] list-none space-y-3 p-0 text-fg">
             {data.learnings.map((learning) => (
-              <li class="border-b border-border pb-3">{learning}</li>
+              <li class="border-b border-border pb-3" data-bewegt="projektseite">
+                {learning}
+              </li>
             ))}
           </ul>
         </section>
@@ -241,3 +268,115 @@ const lists = [
     {zeigt('inquiry') && <InquiryPrompt class="mt-10" />}
   </article>
 </BaseLayout>
+
+<style>
+  /*
+   * Anfangszustände nur mit Skript und erlaubter Bewegung (MotionReady) und
+   * nur auf dem Bildschirm: Ein Ausdruck zeigt jeden Block, auch einen, der
+   * noch nicht ins Fenster gescrollt wurde.
+   */
+  @media screen {
+    :global(html[data-bewegung]) [data-bewegt='projektseite'] {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    /* Solange die Haarlinie aufzieht, zeichnet sie die Linie, nicht der Rand. */
+    :global(html[data-bewegung]) .mit-linie:has(> .haarlinie) {
+      border-top-color: transparent;
+    }
+    :global(html[data-bewegung]) .haarlinie {
+      display: block;
+    }
+    :global(html[data-bewegung]) .haarlinie[data-bewegt='projektseite'] {
+      opacity: 1;
+      transform: scaleX(0);
+    }
+  }
+  /* Liegt genau auf dem Rand des Blocks; ohne Bewegung gibt es sie nicht. */
+  .haarlinie {
+    display: none;
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: var(--color-border);
+    transform-origin: left;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import {
+    DAUER,
+    KURVE,
+    STAFFEL,
+    WEG_TEXT,
+    alle,
+    animate,
+    inView,
+    stagger,
+    wennBewegt,
+  } from '@/lib/motion'
+
+  /*
+   * Das Sicherheitsnetz in global.css deckt nach 2 s auf. Kommt dieses Modul
+   * später an, steht womöglich schon alles; es noch einmal zu verstecken,
+   * hieße flackern. Dann bleibt es beim Netz.
+   */
+  const ZU_SPAET = 1800
+
+  /**
+   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
+   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
+   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
+   * im nächsten Bild.
+   */
+  const aufraeumen = (teile: HTMLElement[]) =>
+    requestAnimationFrame(() => {
+      for (const teil of teile) {
+        teil.removeAttribute('data-bewegt')
+        teil.style.removeProperty('opacity')
+        teil.style.removeProperty('transform')
+        teil.style.removeProperty('animation')
+      }
+    })
+
+  wennBewegt(() => {
+    if (performance.now() > ZU_SPAET) return
+    for (const gruppe of alle('[data-einzug]')) {
+      const teile = alle('[data-bewegt="projektseite"]', gruppe)
+      if (gruppe.dataset.bewegt === 'projektseite') teile.unshift(gruppe)
+      // Das Modul läuft: Das Netz würde Blöcke unter dem Fenster nach 2 s
+      // aufdecken und beim Hereinscrollen noch einmal einziehen lassen.
+      for (const teil of teile) teil.style.animation = 'none'
+      const linien = teile.filter((teil) => teil.classList.contains('haarlinie'))
+      const text = teile.filter((teil) => !linien.includes(teil))
+      // Blöcke können höher sein als das Fenster; ein Anteil wie 0,2 würde
+      // dann nie erreicht. Gezählt wird ab dem Moment, in dem die Oberkante
+      // ein Stück ins Fenster gerückt ist.
+      inView(
+        gruppe,
+        () => {
+          for (const linie of linien) {
+            animate(
+              linie,
+              { transform: ['scaleX(0)', 'none'] },
+              { duration: DAUER.szene, ease: KURVE },
+            ).then(() => linie.remove())
+          }
+          animate(
+            text,
+            { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+            {
+              duration: DAUER.langsam,
+              ease: KURVE,
+              delay: stagger(gruppe.dataset.einzug === 'liste' ? 0.04 : STAFFEL),
+            },
+          ).then(() => aufraeumen(text))
+        },
+        { margin: '0px 0px -15% 0px' },
+      )
+    }
+  })
+</script>

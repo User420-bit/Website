@@ -135,13 +135,7 @@
     }
   }
 
-  /* Aktiver Navigationszustand, gesetzt vom IntersectionObserver im Header. */
-  .nav-link[aria-current='true'] {
-    color: var(--color-fg);
-  }
-  .nav-link[aria-current='true']::after {
-    transform: scaleX(1);
-  }
+  /* Aktiver Navigationszustand: siehe Header.astro (Farbe und gleitender Strich). */
 
   /*
    * Zeilen-Link: Der Unterstrich zieht von links auf. Ausgeloest vom Hover der
@@ -265,5 +259,29 @@
   ::view-transition-old(.projektbild):only-child,
   ::view-transition-new(.projektbild):only-child {
     animation-duration: var(--duration-base);
+  }
+}
+
+/*
+ * Bewegung mit Motion (src/lib/motion.ts): Einen Anfangszustand (Deckkraft 0,
+ * verschoben) darf CSS nur unter `html[data-bewegung]` setzen, das
+ * `MotionReady` im <head> nur mit Skript und erlaubter Bewegung vergibt.
+ * Sicherheitsnetz: Solange das Modul nicht geladen ist (Attribut noch leer),
+ * hebt diese Animation jeden Anfangszustand nach 2 s auf; sobald
+ * `src/lib/motion.ts` läuft, setzt es das Attribut auf `laeuft`, die Regel
+ * greift nicht mehr, und die Sektionen bestimmen selbst, wann etwas kommt.
+ * Komponenten hängen dafür `data-bewegt` an das Element, das sie verstecken,
+ * oder `data-bewegt-kinder` an einen Behälter, dessen Kinder aus Markdown
+ * kommen und selbst kein Attribut tragen können.
+ */
+html[data-bewegung=''] [data-bewegt],
+html[data-bewegung=''] [data-bewegt-kinder] > * {
+  animation: bewegt-sichtbar 0s 2s both;
+}
+@keyframes bewegt-sichtbar {
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
   }
 }

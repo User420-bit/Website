@@ -10,6 +10,12 @@
  * springt der Fokus auf "Schließen", beim Schließen zurück auf das Bild.
  * Blättern in der Lightbox gibt es bewusst nicht, dafür bräuchte es ein
  * Script; geblättert wird im Kontaktabzug.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, H): Das Leitbild steht still, es ist das
+ * Ziel des Übergangs von der Kachel und darf in keinem Moment verschoben sein.
+ * Der Kontaktabzug kommt beim Hereinscrollen Bild um Bild (16 px, 60 ms
+ * Staffel). Die Lightbox blendet beim Öffnen in 200 ms auf, das Bild wächst
+ * von 0,98; reines CSS (`@starting-style`), Schließen geht sofort.
  */
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
@@ -75,9 +81,9 @@ const knopf =
       )}
 
       {weitere.length > 0 && (
-        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
+        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0" data-kontaktabzug>
           {weitere.map((shot) => (
-            <li>
+            <li data-bewegt="galerie">
               <button
                 type="button"
                 class={knopf}
@@ -160,9 +166,84 @@ const knopf =
   )
 }
 
+<style>
+  /* Anfangszustand nur mit Skript und erlaubter Bewegung, nie im Ausdruck. */
+  @media screen {
+    :global(html[data-bewegung]) [data-bewegt='galerie'] {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+</style>
+
 <style is:global>
   /* Hinter der offenen Lightbox scrollt die Seite nicht mit. */
   html:has(.lightbox:popover-open) {
     overflow: hidden;
   }
+
+  /*
+   * Öffnen: Deckkraft und Bild kommen in 200 ms. Der Übergang hängt nur am
+   * offenen Zustand, deshalb schließt die Lightbox ohne Nachlauf, sofort.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox:popover-open {
+      transition: opacity var(--duration-base) var(--ease-quiet);
+    }
+    .lightbox:popover-open figure img {
+      transition: transform var(--duration-base) var(--ease-quiet);
+    }
+    @starting-style {
+      .lightbox:popover-open {
+        opacity: 0;
+      }
+      .lightbox:popover-open figure img {
+        transform: scale(0.98);
+      }
+    }
+  }
 </style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, alle, animate, inView, stagger, wennBewegt } from '@/lib/motion'
+
+  // Wie in ProjectPage: Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt.
+  const ZU_SPAET = 1800
+
+  /**
+   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
+   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
+   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
+   * im nächsten Bild.
+   */
+  const aufraeumen = (teile: HTMLElement[]) =>
+    requestAnimationFrame(() => {
+      for (const teil of teile) {
+        teil.removeAttribute('data-bewegt')
+        teil.style.removeProperty('opacity')
+        teil.style.removeProperty('transform')
+        teil.style.removeProperty('animation')
+      }
+    })
+
+  wennBewegt(() => {
+    if (performance.now() > ZU_SPAET) return
+    for (const abzug of alle('[data-kontaktabzug]')) {
+      const bilder = alle('[data-bewegt="galerie"]', abzug)
+      // Das Modul läuft, das Netz wird nicht gebraucht: Es deckte sonst nach
+      // 2 s auf, und beim Hereinscrollen zögen die Bilder ein zweites Mal ein.
+      for (const bild of bilder) bild.style.animation = 'none'
+      inView(
+        abzug,
+        () => {
+          animate(
+            bilder,
+            { opacity: [0, 1], transform: ['translateY(16px)', 'none'] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+          ).then(() => aufraeumen(bilder))
+        },
+        { amount: 0.3 },
+      )
+    }
+  })
+</script>
