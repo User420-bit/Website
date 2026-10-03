@@ -4,6 +4,12 @@
  * Inhalt. Die H1 ist das Erste, was gemalt wird, und steht sofort; sie bewegt
  * sich nie (LCP). „Für wen“ steht direkt unter dem Claim, damit die H1 das
  * Erste bleibt, was man liest.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, B): Unter der stehenden H1 ziehen „Für
+ * wen“, Intro, Knöpfe und Adresszeile nacheinander 8 px ein, gleich nach dem
+ * Laden. Die H1 trägt dafür weder Attribut noch Stil. Dazu genau eine
+ * Signatur: Unter der Adresse zieht ein Strich in Liniengrau von links auf.
+ * Die Begründung steht im Skript unten.
  */
 import { getEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
@@ -21,25 +27,110 @@ const anfrage = mailto(company.email, contact.subject)
     {company.claim}
   </h1>
   <p
+    data-bewegt
+    data-hero-einzug
     class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
   >
     {company.audience}
   </p>
-  <p class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted">
+  <p
+    data-bewegt
+    data-hero-einzug
+    class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted"
+  >
     {company.intro}
   </p>
 
-  <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+  <div data-bewegt data-hero-einzug class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
     <Button href={anfrage}>E-Mail schreiben</Button>
     <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
   </div>
 
   {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
-  <p class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
+  <p
+    data-bewegt
+    data-hero-einzug
+    class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted"
+  >
     <span>{company.location}</span>
     <span aria-hidden="true">·</span>
-    <span class="font-medium wrap-anywhere text-fg select-all">{company.email}</span>
+    <span class="relative font-medium wrap-anywhere text-fg select-all"
+      >{company.email}<span
+        aria-hidden="true"
+        data-bewegt
+        data-hero-strich
+        class="pointer-events-none absolute inset-x-0 -bottom-0.5 h-px origin-left bg-border"
+      ></span></span
+    >
     <span aria-hidden="true">·</span>
     <span>{contact.responseTime}</span>
   </p>
 </section>
+
+<style is:global>
+  /*
+   * Anfangszustand nur mit Skript und erlaubter Bewegung (`MotionReady`);
+   * ohne das Attribut steht alles sofort, der Strich eingeschlossen. Nur
+   * transform und opacity, der Strich liegt absolut: Die Höhe des Hero ist
+   * vom ersten Bild an dieselbe. `is:global`, weil ein gekapselter Stil jedem
+   * Element des Hero ein `data-astro-cid-…` anhängte, auch der H1; sie soll
+   * nichts tragen, was von der Bewegung kommt. Die Datenattribute grenzen
+   * die Regeln ohnehin auf den Hero ein.
+   */
+  html[data-bewegung] [data-hero-einzug] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  html[data-bewegung] [data-hero-strich] {
+    transform: scaleX(0);
+  }
+</style>
+
+<script>
+  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, stagger, wennBewegt } from '@/lib/motion'
+
+  /*
+   * Einzug sofort nach dem Laden, kein `inView`: Der Hero steht immer im
+   * ersten Fenster, und wer auf ein Ereignis wartet, lässt den Platz unter der
+   * H1 nur länger leer. Die H1 ist nicht dabei; sie ist der größte Inhalt
+   * (LCP) und steht vom ersten Bild an.
+   *
+   * Signatur, genau eine: der Strich unter der Adresse. Er gehört dem Hero
+   * und berührt die H1 nicht. Eine Tintenlinie unter der ganzen Adresszeile
+   * (die andere Möglichkeit im Plan) stünde knapp über der Kapitel-Linie von
+   * 01 und doppelte sie; die Tinte bleibt den Kapiteln (The Chapter Rule).
+   * Der Strich unter der Adresse dagegen zeigt auf das, was man aus dem Hero
+   * mitnehmen soll, und reimt sich auf den Kontakt (05), wo dieselbe Adresse
+   * ihren Unterstrich in Liniengrau trägt. Er startet erst, wenn die
+   * Adresszeile angekommen ist: erst Text, dann Linie.
+   *
+   * Das Zurücktreten beim Scrollen (im Plan erlaubt, nicht verlangt) bleibt
+   * bewusst weg: Es nähme auch der H1 Deckkraft, und eine zweite Bewegung
+   * neben dem Strich wäre keine Signatur mehr.
+   */
+  wennBewegt(() => {
+    const zeilen = alle('[data-hero-einzug]')
+    const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
+    if (zeilen.length === 0) return
+
+    animate(
+      zeilen,
+      { opacity: [0, 1], y: [WEG_TEXT, 0] },
+      { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+    ).then(() => {
+      // Nichts bleibt transformiert, auch kein `translateY(0px)` als Rest.
+      for (const zeile of zeilen) zeile.style.transform = 'none'
+    })
+
+    if (strich) {
+      const ankunft = (zeilen.length - 1) * STAFFEL + DAUER.langsam
+      animate(
+        strich,
+        { scaleX: [0, 1] },
+        { duration: DAUER.szene, ease: KURVE, delay: ankunft },
+      ).then(() => {
+        strich.style.transform = 'none'
+      })
+    }
+  })
+</script>
