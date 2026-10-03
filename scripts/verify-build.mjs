@@ -8,7 +8,7 @@
  * genau eine H1 mit dem erwarteten Text, hat Title/Description/Canonical, und
  * kein interner Link zeigt ins Leere.
  */
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 const DIST = 'dist'
@@ -135,24 +135,40 @@ for (const [route, html] of pages) {
 // je Seite, damit die Bewegung nicht zur Ladezeit wird: 90 KB unkomprimiert
 // entsprechen etwa 30 KB ueber die Leitung.
 const JS_BUDGET = 90 * 1024
+const jsJeRoute = new Map()
 for (const [route, html] of pages) {
   const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])
+  // Gezaehlt werden die Einstiege und alles, was sie importieren (der
+  // Motion-Chunk haengt an jedem Einstieg), jede Datei einmal.
   let bytes = 0
+  const gesehen = new Set()
+  const zaehle = (src) => {
+    if (gesehen.has(src)) return
+    gesehen.add(src)
+    const file = join(DIST, src.slice(BASE.length))
+    if (!existsSync(file)) {
+      fail(`/${route}: Skript ${src} wurde nicht gebaut`)
+      return
+    }
+    const code = readFileSync(file, 'utf8')
+    bytes += Buffer.byteLength(code)
+    for (const [, pfad] of code
+      .matchAll(/\bfrom\s*"(\.[^"]+\.js)"|\bimport\s*"(\.[^"]+\.js)"/g)
+      .map((m) => [m[0], m[1] ?? m[2]])) {
+      zaehle(new URL(pfad, `https://x${src}`).pathname)
+    }
+  }
   for (const src of scripts) {
     if (!src.startsWith(`${BASE}_astro/`)) {
       fail(`/${route}: laedt JavaScript von ausserhalb des Builds (${src})`)
       continue
     }
-    const file = join(DIST, src.slice(BASE.length))
-    if (!existsSync(file)) {
-      fail(`/${route}: Skript ${src} wurde nicht gebaut`)
-      continue
-    }
-    bytes += statSync(file).size
+    zaehle(src)
   }
   if (bytes > JS_BUDGET) {
     fail(`/${route}: ${Math.round(bytes / 1024)} KB JavaScript, Budget sind ${JS_BUDGET / 1024} KB`)
   }
+  jsJeRoute.set(route, bytes)
 }
 
 // Schriften und Styles kommen vom eigenen Server: Das sagt die
@@ -173,4 +189,7 @@ if (errors.length > 0) {
   process.exit(1)
 }
 
-console.log(`Build-Pruefung bestanden: ${pages.size} Routen, keine toten internen Links.`)
+const maxJs = Math.max(...jsJeRoute.values())
+console.log(
+  `Build-Pruefung bestanden: ${pages.size} Routen, keine toten internen Links, hoechstens ${Math.round(maxJs / 1024)} KB JavaScript je Seite.`,
+)
