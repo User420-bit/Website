@@ -135,13 +135,7 @@
     }
   }
 
-  /* Aktiver Navigationszustand, gesetzt vom IntersectionObserver im Header. */
-  .nav-link[aria-current='true'] {
-    color: var(--color-fg);
-  }
-  .nav-link[aria-current='true']::after {
-    transform: scaleX(1);
-  }
+  /* Aktiver Navigationszustand: siehe Header.astro (Farbe und gleitender Strich). */
 
   /*
    * Zeilen-Link: Der Unterstrich zieht von links auf. Ausgeloest vom Hover der
