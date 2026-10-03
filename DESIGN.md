@@ -681,12 +681,15 @@ Bereichs schon vergeben ist.
 
 Natives `<details>`: funktioniert ohne JavaScript, per Tastatur und mit der Seitensuche. Zeile mit
 Titel (500), optionaler Zählung rechts („4 Punkte“, Tabellenziffern) und Plus/Minus-Marke; Haarlinie
-unten, Hover färbt die Zeile orange. Die Höhe animiert nur, wo der Browser `interpolate-size` und
-`::details-content` kennt.
+unten, Hover färbt die Zeile orange. Die Höhe animiert ein kleines Skript in jedem Browser (320 ms,
+`scrollHeight` messen, danach `auto`; die Punkte ziehen beim Öffnen gestaffelt ein); ohne Skript
+animiert sie nur, wo der Browser `interpolate-size` und `::details-content` kennt, sonst öffnet
+`<details>` sofort.
 
 ### CopyEmail
 
-Die Adresse als markierbarer Link in Title Large (Unterstrich mit 8 px Abstand), darunter — nicht
+Die Adresse als markierbarer Link in Title Large (1-px-Unterstrich als Hintergrund, der beim
+Hereinscrollen von links aufzieht und bei Hover orange wird), darunter — nicht
 daneben — „Adresse kopieren“ im Stil des Sekundärbuttons. Der Knopf erscheint erst, wenn der Browser die Zwischenablage anbietet; die
 Rückmeldung („Kopiert.“) steht in einem `role="status"`-Element neben dem Knopf und verschwindet
 nach zwei Sekunden. Gespeichert wird nichts.

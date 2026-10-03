@@ -10,7 +10,10 @@ const { name } = Astro.props
 const year = new Date().getFullYear()
 ---
 
-<footer class="fuss relative mt-16 border-t border-border sm:mt-24" data-fuss>
+{
+  /* `overflow-clip`: Die um 8 px verschobene Zeile darf die Seite vor dem Einzug nicht länger machen. */
+}
+<footer class="fuss relative mt-16 overflow-clip border-t border-border sm:mt-24" data-fuss>
   <span aria-hidden="true" class="fuss-linie" data-fuss-linie data-bewegt></span>
   <div
     data-fuss-zeile
