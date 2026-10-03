@@ -2,6 +2,14 @@
 /**
  * Genau eine Hauptaktion pro Bereich (`primary`). `secondary` ist der
  * umrandete Begleiter, `text` ein Link mit Pfeil fuer den leiseren zweiten Weg.
+ *
+ * Der Link selbst ist nur der Rahmen fürs Klicken; Fläche, Kante und
+ * Unterstrich trägt der innere `<span>`. Beim Drücken gibt nur dieser nach
+ * (0,98, 120 ms, docs/BEWEGUNG_PLAN.md, A), der Link behält seine Größe: Wer
+ * am Rand drückt und loslässt, trifft weiter den Link, und eine Bewegung, die
+ * eine Sektion dem Link selbst gibt, kommt der Druck-Rückmeldung nicht in die
+ * Quere. Fokus und Hover sehen gleich aus. Die Gruppe hat einen Namen
+ * (`knopf`), damit ein Knopf in einer Kachel nicht mit ihr aufleuchtet.
  */
 import Arrow from '@/components/Arrow.astro'
 
@@ -18,18 +26,36 @@ const base =
   'inline-flex items-center gap-2 text-sm font-medium no-underline motion-reduce:transition-none'
 const box = size === 'sm' ? 'rounded-sm px-3 py-1.5' : 'rounded-sm px-4 py-2.5'
 const variants = {
-  primary: `${box} bg-accent text-accent-fg transition-opacity hover:opacity-90`,
-  secondary: `${box} border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent`,
-  text: 'group py-2.5 text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent',
+  primary: `${box} bg-accent text-accent-fg transition-opacity group-hover/knopf:opacity-90 group-focus-visible/knopf:opacity-90`,
+  secondary: `${box} border border-fg/25 text-fg transition-colors group-hover/knopf:border-accent group-hover/knopf:text-accent group-focus-visible/knopf:border-accent group-focus-visible/knopf:text-accent`,
+  text: 'py-2.5 text-fg underline decoration-border underline-offset-4 transition-colors group-hover/knopf:decoration-accent group-focus-visible/knopf:decoration-accent',
 }
 const externalAttrs = external ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 ---
 
-<a class:list={[base, variants[variant]]} href={href} {...externalAttrs}>
-  <slot />
-  {
-    variant === 'text' && (
-      <Arrow class="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
-    )
-  }
+<a class="group/knopf inline-flex no-underline" href={href} data-knopf {...externalAttrs}>
+  <span class:list={[base, variants[variant]]} data-knopf-flaeche>
+    <slot />
+    {
+      variant === 'text' && (
+        <Arrow class="transition-transform group-hover/knopf:translate-x-0.5 group-focus-visible/knopf:translate-x-0.5 motion-reduce:transition-none" />
+      )
+    }
+  </span>
 </a>
+
+<script>
+  import { alle, animate, DAUER, KURVE, press, wennBewegt } from '@/lib/motion'
+
+  // Nur mit Skript und erlaubter Bewegung; ohne bleibt der Knopf, wie er ist.
+  wennBewegt(() => {
+    const art = { duration: DAUER.schnell, ease: KURVE }
+    press(alle('[data-knopf]'), (knopf) => {
+      const flaeche = knopf.querySelector<HTMLElement>('[data-knopf-flaeche]')
+      if (!flaeche) return
+      animate(flaeche, { scale: 0.98 }, art)
+      // Zurück auf 1: Motion schreibt dann `transform: none`, nichts bleibt transformiert.
+      return () => animate(flaeche, { scale: 1 }, art)
+    })
+  })
+</script>

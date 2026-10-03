@@ -10,9 +10,12 @@ const { name } = Astro.props
 const year = new Date().getFullYear()
 ---
 
-<footer class="mt-16 border-t border-border sm:mt-24">
+<footer class="fuss relative mt-16 border-t border-border sm:mt-24" data-fuss>
+  <span aria-hidden="true" class="fuss-linie" data-fuss-linie data-bewegt></span>
   <div
-    class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between"
+    data-fuss-zeile
+    data-bewegt
+    class="fuss-zeile mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between"
   >
     <p class="m-0">&copy; {year} {name}</p>
     <nav aria-label="Weitere Seiten">
@@ -36,3 +39,74 @@ const year = new Date().getFullYear()
     </nav>
   </div>
 </footer>
+
+<style>
+  /* Ohne Skript ist die Kante des Fußes die Haarlinie, der Strich fehlt. */
+  .fuss-linie {
+    display: none;
+  }
+
+  /*
+   * Mit Bewegung zieht die Haarlinie von links auf und die Zeile 8 px ein
+   * (docs/BEWEGUNG_PLAN.md, A). Der Strich liegt genau auf der durchsichtigen
+   * Kante, damit die Höhe bleibt.
+   */
+  :global(html[data-bewegung]) .fuss {
+    border-top-color: transparent;
+  }
+  :global(html[data-bewegung]) .fuss-linie {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 1px;
+    background-color: var(--color-border);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  :global(html[data-bewegung]) .fuss-zeile {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+</style>
+
+<script>
+  import { animate, DAUER, inView, KURVE, WEG_TEXT, wennBewegt } from '@/lib/motion'
+
+  /** Wie in Section.astro: das Sicherheitsnetz ablösen, solange es nicht gegriffen hat. */
+  function uebernehmen(el: Element): boolean {
+    const netz = el
+      .getAnimations()
+      .find((a) => a instanceof CSSAnimation && a.animationName === 'bewegt-sichtbar')
+    if (netz?.playState === 'finished') return false
+    netz?.cancel()
+    return true
+  }
+
+  wennBewegt(() => {
+    const fuss = document.querySelector<HTMLElement>('[data-fuss]')
+    const linie = fuss?.querySelector<HTMLElement>('[data-fuss-linie]')
+    const zeile = fuss?.querySelector<HTMLElement>('[data-fuss-zeile]')
+    if (!fuss || !linie || !zeile) return
+    const bewegen = [linie, zeile].filter(uebernehmen)
+    if (bewegen.length === 0) return
+
+    const stopp = inView(
+      fuss,
+      () => {
+        stopp()
+        if (bewegen.includes(linie)) {
+          animate(linie, { scaleX: [0, 1] }, { duration: DAUER.szene, ease: KURVE })
+        }
+        if (bewegen.includes(zeile)) {
+          animate(
+            zeile,
+            { opacity: [0, 1], y: [WEG_TEXT, 0] },
+            { duration: DAUER.langsam, ease: KURVE },
+          )
+        }
+      },
+      { amount: 0.2 },
+    )
+  })
+</script>

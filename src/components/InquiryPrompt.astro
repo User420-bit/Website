@@ -8,6 +8,9 @@ import { href, mailto } from '@/lib/site'
  * Projektseite. Wer gerade einen Beleg gelesen hat, soll nicht erst bis zum
  * Kontakt scrollen müssen. Der zweite Link führt zur Adresse, falls sich kein
  * Mailprogramm öffnet.
+ *
+ * Bewegung (docs/BEWEGUNG_PLAN.md, A): Kommt die Zeile ins Fenster, ziehen
+ * Satz und Knöpfe nacheinander 8 px ein. Einmal, danach steht sie.
  */
 interface Props {
   class?: string
@@ -23,12 +26,17 @@ const contact = (await getEntry('contact', 'main'))!.data
     'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8',
     className,
   ]}
+  data-anfrage
 >
-  <p class="prose-flow m-0 max-w-[55ch] text-fg-muted">
+  <p data-anfrage-teil data-bewegt class="anfrage-teil prose-flow m-0 max-w-[55ch] text-fg-muted">
     <span class="font-medium text-fg">{contact.prompt.title}</span>{' '}
     {contact.prompt.text}
   </p>
-  <div class="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2">
+  <div
+    data-anfrage-teil
+    data-bewegt
+    class="anfrage-teil flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2"
+  >
     <Button href={mailto(company.email, contact.subject)} variant="secondary">
       E-Mail schreiben
     </Button>
@@ -40,3 +48,54 @@ const contact = (await getEntry('contact', 'main'))!.data
     </a>
   </div>
 </div>
+
+<style>
+  /* Anfangszustand nur mit Skript und erlaubter Bewegung (MotionReady). */
+  :global(html[data-bewegung]) .anfrage-teil {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+</style>
+
+<script>
+  import {
+    alle,
+    animate,
+    DAUER,
+    inView,
+    KURVE,
+    stagger,
+    STAFFEL,
+    WEG_TEXT,
+    wennBewegt,
+  } from '@/lib/motion'
+
+  /** Wie in Section.astro: das Sicherheitsnetz ablösen, solange es nicht gegriffen hat. */
+  function uebernehmen(el: Element): boolean {
+    const netz = el
+      .getAnimations()
+      .find((a) => a instanceof CSSAnimation && a.animationName === 'bewegt-sichtbar')
+    if (netz?.playState === 'finished') return false
+    netz?.cancel()
+    return true
+  }
+
+  wennBewegt(() => {
+    for (const zeile of alle('[data-anfrage]')) {
+      const teile = alle('[data-anfrage-teil]', zeile).filter(uebernehmen)
+      if (teile.length === 0) continue
+      const stopp = inView(
+        zeile,
+        () => {
+          stopp()
+          animate(
+            teile,
+            { opacity: [0, 1], y: [WEG_TEXT, 0] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+          )
+        },
+        { amount: 0.2 },
+      )
+    }
+  })
+</script>
