@@ -480,9 +480,11 @@ Wiederkehrende Linien-Motive:
   Vor-/Zurück-Navigation der Projektseiten.
 - **Randnotiz:** Label über dem Text, Haarlinie oben. Für „Erkenntnisse“ läuft der Text in voller
   Tinte statt in Bleistiftgrau. Kein farbiger Seitenstreifen.
-- **Unterstrich:** Links im Fließtext und im Footer mit 4 px Abstand zur Grundlinie. Text-Button und
-  E-Mail-Adresse tragen einen Unterstrich in Liniengrau, der bei Hover orange wird. In der Navigation
-  und bei Zeilentiteln wird ein 1-px-Strich von links aufgezogen.
+- **Unterstrich:** Links im Fließtext mit 4 px Abstand zur Grundlinie. Die E-Mail-Adresse trägt einen
+  Unterstrich in Liniengrau, der bei Hover orange wird. In Navigation, Zeilentiteln, Footer und
+  Text-Button zieht ein 1-px-Strich bei Hover und Fokus von links auf und läuft beim Verlassen nach
+  rechts ab (Underline wipe, 200 ms); Footer und Text-Button behalten darunter den ruhenden Strich in
+  Liniengrau.
 - **Plus/Minus:** Marke des Aufklappers aus zwei 1-px-Linien (0,75rem), die senkrechte dreht sich beim
   Öffnen in die waagerechte.
 - **Pfeil:** Inline-SVG, 0,85em, Strichstärke 1,5, `currentColor`, rein dekorativ (`aria-hidden`).
@@ -515,7 +517,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Secondary:** transparent mit 1 px Rand in `fg/25` und Tintenschwarz; bei Hover werden Rand und
   Schrift orange („GitHub“, „Code auf GitHub“).
 - **Text:** unterstrichener Link in Tinte mit Pfeil für den leiseren zweiten Weg („Arbeiten ansehen“,
-  „Womit gearbeitet wird“). Unterstrich Liniengrau, bei Hover orange; der Pfeil rückt 2 px.
+  „Womit gearbeitet wird“). Unterstrich Liniengrau, bei Hover zieht Orange durch; der Pfeil rückt 2 px.
 - **Header-CTA:** kleiner Primary „Anfrage“ im Header, führt zu `/#kontakt`.
 - **Focus:** überall 2 px Outline in Orange mit 2 px Abstand.
 
@@ -735,7 +737,7 @@ rahmen nur ihr Bildfeld.
   Preis: Wer weit unten ist, erreicht die Anker über die Wortmarke oder nach oben scrollend
   (entschieden am 2026-09-25).
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
-  unterstrichen, Hover Tintenschwarz.
+  unterstrichen in Liniengrau, Hover Tintenschwarz mit durchlaufendem Strich.
 - **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 4-px-Feld oben links.
 - **Zurück-Link:** Pfeil nach links und Text in Body Small, Bleistiftgrau, Hover orange. Auf
   Projektseiten Teil der Kopfzeile (`ProjectNav`): rechts daneben zwei 2-rem-Knöpfe zur vorherigen
