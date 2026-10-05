@@ -29,10 +29,53 @@ const projekte = (await getCollection('projekte', ({ data }) => data.published))
       Bei jeder Referenz steht, um welche Art Projekt es geht und wie weit es ist.
     </p>
 
-    <div class="mt-10 border-t border-border">
+    <div class="mt-10 border-t border-border" data-arbeiten-liste>
       {projekte.map((projekt) => <ProjectFeature projekt={projekt} />)}
     </div>
 
     <InquiryPrompt class="mt-10" />
   </section>
 </BaseLayout>
+
+<style is:global>
+  /*
+   * Fokus in der Liste (Hover und Tastaturfokus gleich): Zeigt man auf eine
+   * Zeile, treten die übrigen zurück. Ihr Titel wechselt auf Bleistiftgrau,
+   * ihr Screenshot auf 60 % Deckkraft. Text wird nie über Deckkraft gedimmt,
+   * damit jeder Kontrast über 4,5 : 1 bleibt. Hover nur bei echten Zeigern,
+   * sonst bliebe nach einem Tipp auf dem Handy die Liste gedimmt.
+   * Global, weil Astro `:global()` innerhalb von `:has()` nicht auflöst; das
+   * Attribut `data-arbeiten-liste` gibt es nur auf dieser Seite.
+   */
+  [data-arbeiten-liste] [data-arbeit] .row-title,
+  [data-arbeiten-liste] [data-arbeit] [data-uebergang] {
+    transition:
+      color var(--duration-base) var(--ease-quiet),
+      opacity var(--duration-base) var(--ease-quiet),
+      background-size var(--duration-base) var(--ease-quiet);
+  }
+  [data-arbeiten-liste]:has([data-arbeit]:focus-within)
+    [data-arbeit]:not(:focus-within)
+    .row-title {
+    color: var(--color-fg-muted);
+  }
+  [data-arbeiten-liste]:has([data-arbeit]:focus-within)
+    [data-arbeit]:not(:focus-within)
+    [data-uebergang] {
+    opacity: 0.6;
+  }
+  @media (hover: hover) {
+    [data-arbeiten-liste]:has([data-arbeit]:hover) [data-arbeit]:not(:hover) .row-title {
+      color: var(--color-fg-muted);
+    }
+    [data-arbeiten-liste]:has([data-arbeit]:hover) [data-arbeit]:not(:hover) [data-uebergang] {
+      opacity: 0.6;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-arbeiten-liste] [data-arbeit] .row-title,
+    [data-arbeiten-liste] [data-arbeit] [data-uebergang] {
+      transition: none;
+    }
+  }
+</style>

@@ -535,7 +535,9 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Liniengrau), dann „Zur Referenz“ mit Pfeil in Orange und, falls vorhanden, „Live ansehen“ als
   eigener Link über dem gestreckten Titel-Link. 1,5rem Innenabstand oben und unten. Keine
   Technik-Namen. Der Titel-Link ist auf die ganze Zeile gestreckt, der Fokus bleibt am Titel. Bei
-  Hover oder Fokus zieht der Unterstrich des Titels von links auf und der Pfeil rückt 2 px.
+  Hover oder Fokus zieht der Unterstrich des Titels von links auf und der Pfeil rückt 2 px. Die übrigen
+  Zeilen treten dabei zurück: Ihr Titel wechselt auf Bleistiftgrau, ihr Screenshot auf 60 % Deckkraft
+  (200 ms). Hover nur bei echten Zeigern (`hover: hover`), Fokus überall.
 - **Meta-Liste** (`MetaList`): `dl` mit Haarlinien, Spalten `6rem | 1fr`, Body Small; die Seite gibt
   die Zeilen als `rows` vor. Projektseiten: Art, Zeitraum, Stand, Technik — „Technik“ steht in Mono,
   Bleistiftgrau, verbunden mit „ · “, und nur dort. Kontakt: Ort, Profil, Code; Werte mit `href` sind
@@ -771,7 +773,9 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
 - **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
   wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`), Kacheln kommen bis 16 px weit.
 - **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Linie, 2 px Pfeil, Bild 1,02).
-  Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
+  Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover. Einzige Ausnahme ist die Liste
+  unter `/projekte/`: Dort treten die übrigen Zeilen zurück (siehe Feature-Zeile). Text wird dabei nie
+  über Deckkraft gedimmt, nur über Farbe, damit jeder Kontrast über 4,5 : 1 bleibt.
 - **Nichts bleibt transformiert:** nach jeder Bewegung `transform: none`, `opacity: 1`. Elemente mit
   `data-uebergang` tragen zu Beginn einer Navigation keinen Transform, sonst bricht der Übergang.
 - **Kein Layout-Sprung:** Bewegung läuft über `transform`, `opacity` und `clip-path`; eine Höhe animiert
