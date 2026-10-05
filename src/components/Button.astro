@@ -28,14 +28,22 @@ const box = size === 'sm' ? 'rounded-sm px-3 py-1.5' : 'rounded-sm px-4 py-2.5'
 const variants = {
   primary: `${box} bg-accent text-accent-fg transition-opacity group-hover/knopf:opacity-90 group-focus-visible/knopf:opacity-90`,
   secondary: `${box} border border-fg/25 text-fg transition-colors group-hover/knopf:border-accent group-hover/knopf:text-accent group-focus-visible/knopf:border-accent group-focus-visible/knopf:text-accent`,
-  text: 'py-2.5 text-fg underline decoration-border underline-offset-4 transition-colors group-hover/knopf:decoration-accent group-focus-visible/knopf:decoration-accent',
+  text: 'py-2.5 text-fg',
 }
 const externalAttrs = external ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 ---
 
 <a class="group/knopf inline-flex no-underline" href={href} data-knopf {...externalAttrs}>
   <span class:list={[base, variants[variant]]} data-knopf-flaeche>
-    <slot />
+    {
+      variant === 'text' ? (
+        <span class="knopf-strich">
+          <slot />
+        </span>
+      ) : (
+        <slot />
+      )
+    }
     {
       variant === 'text' && (
         <Arrow class="transition-transform group-hover/knopf:translate-x-0.5 group-focus-visible/knopf:translate-x-0.5 motion-reduce:transition-none" />

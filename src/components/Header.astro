@@ -24,7 +24,7 @@ interface Props {
 const { isHome = false, name } = Astro.props
 
 const linkClass =
-  'nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:after:scale-x-100 motion-reduce:after:transition-none'
+  'nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-accent after:transition-transform hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none'
 ---
 
 <header class="site-header sticky top-0 z-50 bg-bg">

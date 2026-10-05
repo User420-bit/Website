@@ -138,19 +138,84 @@
   /* Aktiver Navigationszustand: siehe Header.astro (Farbe und gleitender Strich). */
 
   /*
-   * Zeilen-Link: Der Unterstrich zieht von links auf. Ausgeloest vom Hover der
-   * ganzen Zeile und vom Tastaturfokus, damit beide dasselbe sehen.
+   * Zeilen-Link: Der Unterstrich zieht von links auf und läuft rechts ab.
+   * In Ruhe liegt der Anker rechts, bei Hover links; so wächst der Strich
+   * nach rechts und schrumpft beim Verlassen zur rechten Kante hin.
+   * Ausgeloest vom Hover der ganzen Zeile und vom Tastaturfokus, damit beide
+   * dasselbe sehen.
    */
   .row-title {
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;
-    background-position: 0 100%;
+    background-position: 100% 100%;
     background-size: 0 1px;
     transition: background-size var(--duration-base) var(--ease-quiet);
   }
   .group:hover .row-title,
   .group:focus-within .row-title {
+    background-position: 0 100%;
     background-size: 100% 1px;
+  }
+
+  /*
+   * Fußlink: ruhender Unterstrich in Liniengrau, darüber zieht bei Hover und
+   * Fokus ein Strich in Textfarbe von links auf und läuft rechts ab, wie beim
+   * Zeilen-Link.
+   */
+  .link-wipe {
+    text-decoration: none;
+    padding-bottom: 2px;
+    background-image:
+      linear-gradient(currentColor, currentColor),
+      linear-gradient(var(--color-border), var(--color-border));
+    background-repeat: no-repeat;
+    background-position:
+      100% 100%,
+      0 100%;
+    background-size:
+      0 1px,
+      100% 1px;
+    transition:
+      background-size var(--duration-base) var(--ease-quiet),
+      color var(--duration-base) var(--ease-quiet);
+  }
+  .link-wipe:hover,
+  .link-wipe:focus-visible {
+    background-position:
+      0 100%,
+      0 100%;
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
+
+  /*
+   * Text-Button: ruhender Unterstrich in Liniengrau, bei Hover und Fokus des
+   * Knopfs zieht Orange von links auf und läuft rechts ab. Nur unter dem Text,
+   * nicht unter dem Pfeil.
+   */
+  .knopf-strich {
+    padding-bottom: 3px;
+    background-image:
+      linear-gradient(var(--color-accent), var(--color-accent)),
+      linear-gradient(var(--color-border), var(--color-border));
+    background-repeat: no-repeat;
+    background-position:
+      100% 100%,
+      0 100%;
+    background-size:
+      0 1px,
+      100% 1px;
+    transition: background-size var(--duration-base) var(--ease-quiet);
+  }
+  .group\/knopf:hover .knopf-strich,
+  .group\/knopf:focus-visible .knopf-strich {
+    background-position:
+      0 100%,
+      0 100%;
+    background-size:
+      100% 1px,
+      100% 1px;
   }
 
   /* Aufklapper: Plus wird Minus. */
@@ -209,6 +274,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .row-title,
+    .link-wipe,
+    .knopf-strich,
     .disclosure-mark::before,
     .disclosure-mark::after {
       transition: none;
