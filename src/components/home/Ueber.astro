@@ -3,16 +3,25 @@
  * 04 Über Klartext: die einzige Stelle auf der Startseite, an der die Person
  * genannt wird. Zweispaltig erst, wenn ein Portrait hinterlegt ist.
  *
+ * Darunter das Foto des Rosenheimer Landes über die volle Spalte: der Raum,
+ * von dem der Text spricht (Bruckmühl, TH Rosenheim, Raum Rosenheim). Es
+ * stand bis zum 2026-10-07 im Kontakt und hatte dort neben der Adresse mehr
+ * Gewicht als sie. Hier steht es unter dem Text, nicht daneben: Der Platz
+ * neben dem Text bleibt dem Portrait, und das Panorama bleibt breit.
+ *
  * Bewegung (docs/BEWEGUNG_PLAN.md, 3 F): Die Absätze ziehen gestaffelt ein,
  * wenn die Spalte ins Fenster kommt. Ein Portrait, falls hinterlegt, zieht
  * sich von oben nach unten auf und steht danach still. Ohne Portrait gibt es
- * kein Element und damit nichts zu bewegen.
+ * kein Element und damit nichts zu bewegen. Beim Foto zieht sich der Rahmen
+ * von oben nach unten auf, die Bildunterschrift zieht nach, und beim Scrollen
+ * wandert das Bild leicht im Rahmen.
  */
 import { getEntry, render } from 'astro:content'
 import { Image } from 'astro:assets'
 import Button from '@/components/Button.astro'
 import Section from '@/components/Section.astro'
 import { href } from '@/lib/site'
+import rosenheimerLand from '@/assets/ueber/rosenheimer-land.jpg'
 
 const profile = (await getEntry('profile', 'main'))!.data
 const aboutEntry = (await getEntry('about', 'about'))!
@@ -69,6 +78,41 @@ const { Content: AboutBody } = await render(aboutEntry)
       )
     }
   </div>
+
+  {
+    /*
+      Eigenes Foto, das Rosenheimer Land vom Breitenstein aus. Beleg für den
+      Ort, keine Stimmungsfläche, deshalb nach dem Text. Das Original ist ein
+      Panorama (rund 2,45 : 1). Ab 640 px schneidet der Rahmen 3 : 1 aus und
+      nimmt dabei mehr vom Himmel als vom Wald, damit das Land die Mitte hält.
+      Unter 640 px zeigt ein 4:3-Ausschnitt die Mitte größer, sonst bliebe vom
+      Land nur ein Strich; `sizes` rechnet diesen Zoom ein (Faktor 1,84).
+
+      Rahmen und Maß trägt der Behälter, nicht das Bild: Er schneidet zu
+      (`overflow: hidden`), und das Bild darin darf beim Scrollen wandern,
+      ohne dass Rand oder Höhe sich ändern.
+    */
+  }
+  <figure class="m-0 mt-10 sm:mt-12" data-ueber-foto>
+    <div
+      class="relative aspect-[4/3] overflow-hidden rounded-sm border border-border sm:aspect-[3/1]"
+      data-ueber-foto-rahmen
+      data-bewegt
+    >
+      <Image
+        class="foto-bild absolute inset-0 block h-full w-full object-cover object-[60%_50%] sm:object-[50%_64%]"
+        src={rosenheimerLand}
+        alt="Blick vom Breitenstein über das Rosenheimer Land: bewaldete Hänge im Vordergrund, dahinter Felder, Moore, Ortschaften und Seen bis zum Horizont."
+        widths={[640, 1024, 1600, 2048]}
+        sizes="(min-width: 1024px) 62rem, (min-width: 640px) calc(100vw - 2rem), calc((100vw - 2rem) * 1.84)"
+        loading="lazy"
+        data-ueber-foto-bild
+      />
+    </div>
+    <figcaption class="mt-3 text-xs text-fg-muted" data-bewegt data-ueber-foto-text>
+      Das Rosenheimer Land, vom Breitenstein aus gesehen. Eigenes Foto.
+    </figcaption>
+  </figure>
 </Section>
 
 <style>
@@ -80,7 +124,8 @@ const { Content: AboutBody } = await render(aboutEntry)
    * ohne laufendes Modul stehen.
    */
   :global(html[data-bewegung]) [data-ueber-absaetze] > :global(*),
-  :global(html[data-bewegung]) [data-ueber-zeile] {
+  :global(html[data-bewegung]) [data-ueber-zeile],
+  :global(html[data-bewegung]) [data-ueber-foto-text][data-bewegt] {
     opacity: 0;
     transform: translateY(8px);
   }
@@ -88,8 +133,16 @@ const { Content: AboutBody } = await render(aboutEntry)
     animation: bewegt-sichtbar 0s 2s both;
   }
   /* Der Rahmen ist zu Beginn von unten her ganz zugezogen; die Höhe bleibt. */
-  :global(html[data-bewegung]) [data-ueber-portrait] {
+  :global(html[data-bewegung]) [data-ueber-portrait],
+  :global(html[data-bewegung]) [data-ueber-foto-rahmen][data-bewegt] {
     clip-path: inset(0 0 100% 0);
+  }
+  /*
+   * Das Foto ist um 6 % größer, damit es beim Wandern nie einen Rand zeigt;
+   * das steht schon vor dem Skript, sonst spränge es beim Laden.
+   */
+  :global(html[data-bewegung]) .foto-bild {
+    transform: translateY(-2.5%) scale(1.06);
   }
 </style>
 
@@ -102,12 +155,26 @@ const { Content: AboutBody } = await render(aboutEntry)
     alle,
     animate,
     inView,
+    scroll,
     stagger,
     wennBewegt,
   } from '@/lib/motion'
 
+  /**
+   * Wie weit das Foto beim Scrollen wandert, in Prozent seiner Höhe, je
+   * Richtung. Bei 1,06 Größe ragt es 3 % über jede Kante; 2,5 % lässt einen
+   * halben Prozentpunkt Luft gegen Rundung. Zusammen 5 %, unter den 6 % des
+   * Plans.
+   */
+  const WANDERN = 2.5
+  const GROESSE = 1.06
+
   const spalte = document.querySelector<HTMLElement>('[data-ueber-spalte]')
   const portrait = document.querySelector<HTMLElement>('[data-ueber-portrait]')
+  const foto = document.querySelector<HTMLElement>('[data-ueber-foto]')
+  const fotoRahmen = foto?.querySelector<HTMLElement>('[data-ueber-foto-rahmen]')
+  const fotoBild = foto?.querySelector<HTMLElement>('[data-ueber-foto-bild]')
+  const fotoText = foto?.querySelector<HTMLElement>('[data-ueber-foto-text]')
 
   /*
    * Das Modul läuft, also übernimmt es: Das Sicherheitsnetz (Aufdecken nach
@@ -116,6 +183,20 @@ const { Content: AboutBody } = await render(aboutEntry)
    */
   function uebernehmen(elemente: HTMLElement[]) {
     for (const el of elemente) el.style.animation = 'none'
+  }
+
+  /**
+   * Endzustand nach dem Einziehen: Anfangszustand und eigene Inline-Werte
+   * weg. Ein Bild später, weil Motion seine Endwerte erst nach dem Auflösen
+   * als Inline-Style festschreibt.
+   */
+  function inRuhe(el: HTMLElement) {
+    requestAnimationFrame(() => {
+      el.removeAttribute('data-bewegt')
+      for (const p of ['animation', 'clip-path', 'opacity', 'transform']) {
+        el.style.removeProperty(p)
+      }
+    })
   }
 
   wennBewegt(() => {
@@ -165,6 +246,47 @@ const { Content: AboutBody } = await render(aboutEntry)
           })
         },
         { amount: 0.3 },
+      )
+    }
+
+    if (foto && fotoRahmen && fotoBild && fotoText) {
+      uebernehmen([fotoRahmen, fotoText])
+      // Einmal, wenn ein knappes Drittel des Fotos im Fenster steht.
+      // Beobachtet wird die Figur, aus demselben Grund wie beim Portrait.
+      const halt = inView(
+        foto,
+        () => {
+          halt()
+          animate(
+            fotoRahmen,
+            { clipPath: ['inset(0% 0% 100% 0%)', 'inset(0% 0% 0% 0%)'] },
+            { duration: DAUER.szene, ease: KURVE },
+          ).then(() => inRuhe(fotoRahmen))
+          // Die Unterschrift folgt, wenn der Rahmen halb offen ist.
+          animate(
+            fotoText,
+            { opacity: [0, 1], y: [WEG_TEXT, 0] },
+            { duration: DAUER.langsam, ease: KURVE, delay: DAUER.szene / 2 },
+          ).then(() => inRuhe(fotoText))
+        },
+        { amount: 0.3 },
+      )
+
+      // Parallaxe an den Scroll gebunden, vor und zurück: vom Eintreten des
+      // Rahmens unten bis zum Verlassen oben wandert das Bild nach unten,
+      // also langsamer als die Seite.
+      scroll(
+        animate(
+          fotoBild,
+          {
+            transform: [
+              `translateY(-${WANDERN}%) scale(${GROESSE})`,
+              `translateY(${WANDERN}%) scale(${GROESSE})`,
+            ],
+          },
+          { ease: 'linear' },
+        ),
+        { target: fotoRahmen, offset: ['start end', 'end start'] },
       )
     }
   })

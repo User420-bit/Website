@@ -148,6 +148,9 @@ Tailwind-Klassen, immer unter `html[data-bewegung]`.
 - Portrait, wenn vorhanden: Rahmen zieht sich auf (`clip-path: inset(0 0 100% 0)` → `inset(0)`,
   600 ms), danach steht das Bild still. Ohne Portrait nichts weiter.
 - Textlink „Womit gearbeitet wird“: Pfeil wie heute.
+- **Foto** (seit 2026-10-07 hier statt in G): zieht sich wie das Portrait auf (600 ms) und wandert
+  beim Scrollen leicht im Rahmen (höchstens 6 %, `overflow: hidden`, Bild 1,06 groß, damit kein Rand
+  entsteht). Bildunterschrift zieht nach.
 
 ### G · 05 Kontakt
 
@@ -156,9 +159,8 @@ Tailwind-Klassen, immer unter `html[data-bewegung]`.
   `.row-title`. „Adresse kopieren“ gibt bei Druck nach; „Kopiert.“ zieht 8 px ein und blendet nach 2 s
   aus.
 - **Erreichbarkeit** (`MetaList.astro`): Zeilen gestaffelt wie in E.
-- **Foto:** zieht sich wie das Portrait auf (600 ms) und wandert beim Scrollen leicht im Rahmen
-  (höchstens 6 %, `overflow: hidden`, Bild 1,06 groß, damit kein Rand entsteht). Bildunterschrift zieht
-  nach.
+- **Haarlinie über der Adresse** (seit 2026-10-07, als das Foto nach F ging): zieht von links auf
+  (600 ms), zur selben Zeit wie die Linien der Erreichbarkeit daneben.
 
 ### H · Unterseiten
 

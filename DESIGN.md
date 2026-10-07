@@ -405,9 +405,10 @@ Arbeiten der Startseite, vom Inhaber am 2026-09-23 so entschieden: Umschalter �
 Projekte“, darunter die Bühne mit einem Projekt, darunter die übrigen Arbeiten der Auswahl als Raster
 gleich großer Kacheln (1 Spalte, ab 640 px 2, ab 1024 px 3; 1,5rem Spalten-, 2,5rem Zeilenabstand)
 unter einer Haarlinie. Jede Arbeit steht genau einmal da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
-Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Kontakt:
-ab 640 px zwei Spalten `3fr | 2fr` mit 3rem Abstand, die auf derselben Haarlinie beginnen — links
-Adresse, Knopf und Erreichbarkeit (Meta-Liste), rechts die Schritte als Nummernzeilen (`2rem | 1fr`).
+Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
+Klartext: der Text in einer Spalte (65ch), darunter das Foto über die volle Spaltenbreite. Kontakt:
+ab 1024 px zwei Spalten `1fr | 1fr` mit 3rem Abstand unter je einer Haarlinie — links Adresse und
+Knopf, rechts die Erreichbarkeit (Meta-Liste); schmaler gestapelt, die Adresse zuerst.
 Inhalte in Aufklappern laufen 1 → 2 Spalten ab 640 px mit 2rem Spaltenabstand.
 
 **Unterseiten:** Projektseiten und `/werkzeuge/` stapeln ihre Blöcke wie die Startseite: Haarlinie
@@ -704,19 +705,27 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Eine Haarlinie, darunter zwei Spalten: links die Handlung, rechts das Foto. Die Handlung: die
-Adresse (`CopyEmail`), der Webmail-Hinweis als Caption, der einzige Primärbutton des Bereichs,
-darunter die Erreichbarkeit als Meta-Liste (Ort, Profil, Code). Kein Ablauf mit Schritten: wer
-schreiben will, braucht die Adresse, keine Erklärung. Genau ein großes Element (die Adresse) und
-genau ein oranger Knopf.
+Nur die Handlung, kein Bild. Links unter einer Haarlinie die Adresse (`CopyEmail`), der
+Webmail-Hinweis als Caption und der einzige Primärbutton des Bereichs; rechts die Erreichbarkeit als
+Meta-Liste (Ort, Profil, Code), deren erste Zeile ihre eigene Haarlinie mitbringt. Ab 1024 px stehen
+beide Spalten `1fr | 1fr` mit 3rem Abstand nebeneinander, beide Linien auf einer Höhe, wie die drei
+Arten in „Leistungen“. Darunter stapeln sie sich, die Adresse zuerst, 2,5rem Abstand. Kein Ablauf
+mit Schritten: wer schreiben will, braucht die Adresse, keine Erklärung. Genau ein großes Element
+(die Adresse) und genau ein oranger Knopf.
 
-Rechts ein eigenes Foto des Rosenheimer Landes (Rahmen 4 px, 1 px Liniengrau, `loading="lazy"`),
-darunter die Bildunterschrift als Caption in Bleistiftgrau. Ab 1024 px stehen beide Spalten `1fr |
-1fr` mit 3rem Abstand nebeneinander, das Foto füllt die Höhe der Handlung als Ausschnitt; so bleibt
-neben dem kurzen Text keine leere Fläche. Darunter stapelt sich alles, die Handlung zuerst, das Foto
-über die volle Breite (unter 640 px als 4:3-Ausschnitt, der auf das Land zoomt). Es belegt den Ort
-aus dem Hero („im Raum Rosenheim“) und steht deshalb hinter der Handlung, nie davor. Nur echte,
-eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository.
+Das Foto des Rosenheimer Landes stand bis zum 2026-10-07 rechts neben der Adresse und war dort das
+größte Element des Bereichs. Es steht jetzt in „Über Klartext“ (siehe dort).
+
+### Foto in „Über Klartext“
+
+Unter dem Text, über die volle Spaltenbreite: ein eigenes Foto des Rosenheimer Landes (Rahmen 4 px,
+1 px Liniengrau, `loading="lazy"`), darunter die Bildunterschrift als Caption in Bleistiftgrau. Es
+belegt den Raum, von dem der Text spricht (Bruckmühl, TH Rosenheim, Raum Rosenheim), und steht
+deshalb nach dem Text, nie davor. Ab 640 px schneidet der Rahmen 3 : 1 aus dem Panorama, mit mehr
+Himmel als Wald weggenommen, damit das Land die Mitte hält; unter 640 px ein 4:3-Ausschnitt, der auf
+das Land zoomt. Der Platz rechts neben dem Text bleibt dem Portrait, sobald eines hinterlegt ist. Nur
+echte, eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository; die
+Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 
 ### Containers
 
