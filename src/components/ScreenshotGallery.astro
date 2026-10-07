@@ -8,8 +8,15 @@
  * Die Lightbox ist ein natives Popover (`popover`, `popovertarget`) und braucht
  * kein JavaScript: Esc und ein Klick neben das Bild schließen sie, beim Öffnen
  * springt der Fokus auf "Schließen", beim Schließen zurück auf das Bild.
- * Blättern in der Lightbox gibt es bewusst nicht, dafür bräuchte es ein
- * Script; geblättert wird im Kontaktabzug.
+ *
+ * Geblättert wird in der Lightbox selbst (entschieden am 2026-10-07, vorher
+ * nur im Kontaktabzug): "Zurück" und "Weiter" zeigen per `popovertarget` auf
+ * die Nachbar-Lightbox, im Kreis. Das Script unten schließt vor dem Blättern
+ * die offene Lightbox (sonst stapelt der Browser die nächste als Kind
+ * darüber), und ergänzt, was HTML nicht kann: Pfeiltasten, Wischen am Handy,
+ * und dass der Fokus nach dem Blättern auf demselben Knopf bleibt, statt auf
+ * "Schließen" zu springen. Ohne Script bleibt Blättern bedienbar, nur Esc
+ * braucht dann einen Druck je geblättertem Bild.
  *
  * Bewegung (docs/BEWEGUNG_PLAN.md, H): Das Leitbild steht still, es ist das
  * Ziel des Übergangs von der Kachel und darf in keinem Moment verschoben sein.
@@ -19,6 +26,7 @@
  */
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
+import Arrow from '@/components/Arrow.astro'
 
 interface Shot {
   image: ImageMetadata
@@ -49,6 +57,12 @@ const id = (shot: Shot) => `bild-${bilder.indexOf(shot) + 1}`
 
 const knopf =
   'block cursor-zoom-in overflow-hidden rounded-sm border border-border p-0 transition-colors hover:border-fg/40 focus-visible:border-fg/40 motion-reduce:transition-none'
+/** Knöpfe in der Kopfzeile der Lightbox, Blättern und Schließen im selben Stil. */
+const kopfKnopf =
+  'inline-flex h-9 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-sm border border-fg/25 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
+/** Nachbar im Kreis: nach dem letzten Bild kommt das erste. */
+const nachbar = (i: number, schritt: number) =>
+  bilder[(i + schritt + bilder.length) % bilder.length]!
 ---
 
 {
@@ -119,31 +133,55 @@ const knopf =
             <p class="m-0 text-sm text-fg-muted tabular-nums">
               {title} · Bild {i + 1} von {bilder.length}
             </p>
-            {/*
-              autofocus ist hier Absicht: Ein Popover setzt den Fokus beim Öffnen auf dieses
-              Element, sonst bliebe er hinter der Lightbox auf dem Vorschaubild stehen.
-            */}
-            {/* eslint-disable astro/jsx-a11y/no-autofocus */}
-            <button
-              type="button"
-              class="inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-sm border border-fg/25 px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none"
-              popovertarget={id(shot)}
-              popovertargetaction="hide"
-              autofocus
-            >
-              Schließen
-              <svg
-                aria-hidden="true"
-                class="size-3.5"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
+            <div class="flex items-center gap-2">
+              {bilder.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    class:list={[kopfKnopf, 'w-9']}
+                    popovertarget={id(nachbar(i, -1))}
+                    data-blaettern="-1"
+                  >
+                    <Arrow direction="left" />
+                    <span class="sr-only">Vorheriges Bild</span>
+                  </button>
+                  <button
+                    type="button"
+                    class:list={[kopfKnopf, 'w-9']}
+                    popovertarget={id(nachbar(i, 1))}
+                    data-blaettern="1"
+                  >
+                    <Arrow />
+                    <span class="sr-only">Nächstes Bild</span>
+                  </button>
+                </>
+              )}
+              {/*
+                autofocus ist hier Absicht: Ein Popover setzt den Fokus beim Öffnen auf dieses
+                Element, sonst bliebe er hinter der Lightbox auf dem Vorschaubild stehen.
+              */}
+              {/* eslint-disable astro/jsx-a11y/no-autofocus */}
+              <button
+                type="button"
+                class:list={[kopfKnopf, 'px-3']}
+                popovertarget={id(shot)}
+                popovertargetaction="hide"
+                autofocus
               >
-                <path d="M4 4l8 8M12 4l-8 8" />
-              </svg>
-            </button>
-            {/* eslint-enable astro/jsx-a11y/no-autofocus */}
+                Schließen
+                <svg
+                  aria-hidden="true"
+                  class="size-3.5"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M4 4l8 8M12 4l-8 8" />
+                </svg>
+              </button>
+              {/* eslint-enable astro/jsx-a11y/no-autofocus */}
+            </div>
           </div>
           {/* Die Bildunterschrift beschreibt das Bild; ein gleichlautendes alt würde doppelt gelesen. */}
           <figure class="m-0 mt-4">
@@ -206,6 +244,59 @@ const knopf =
 
 <script>
   import { DAUER, KURVE, STAFFEL, alle, animate, inView, stagger, wennBewegt } from '@/lib/motion'
+
+  /*
+   * Blättern in der Lightbox: Die Knöpfe tun ihre Arbeit ohne Script. Hier
+   * kommt dazu, was HTML nicht kann. Pfeiltasten und Wischen drücken den
+   * passenden Knopf; nach jedem Blättern wandert der Fokus auf denselben Knopf
+   * der neuen Lightbox, sonst stünde er nach `autofocus` auf "Schließen", und
+   * wer mit Enter weiterblättert, schlösse beim zweiten Druck.
+   */
+  const offene = () => document.querySelector<HTMLElement>('.lightbox:popover-open')
+  const blaettere = (richtung: '-1' | '1') => {
+    const knopf = offene()?.querySelector<HTMLButtonElement>(`[data-blaettern="${richtung}"]`)
+    knopf?.click()
+  }
+  document.addEventListener('click', (event) => {
+    const knopf = (event.target as Element).closest<HTMLElement>('[data-blaettern]')
+    if (!knopf) return
+    const richtung = knopf.dataset.blaettern
+    // Erst die offene Lightbox schließen, dann öffnet `popovertarget` die
+    // nächste. Bliebe die offene stehen, läge die nächste als Kind darüber:
+    // Esc schlösse dann nur die oberste, und bei jedem Blättern käme eine
+    // Schicht dazu. Ohne Script passiert genau das; es bleibt bedienbar, nur
+    // Esc braucht dann einen Druck je geblättertem Bild.
+    knopf.closest<HTMLElement>('.lightbox')?.hidePopover()
+    // Das neue Popover setzt beim Öffnen seinen `autofocus`; erst danach den
+    // Fokus auf den Blätterknopf.
+    requestAnimationFrame(() => {
+      offene()?.querySelector<HTMLElement>(`[data-blaettern="${richtung}"]`)?.focus()
+    })
+  })
+  document.addEventListener('keydown', (event) => {
+    if (!offene()) return
+    if (event.key === 'ArrowLeft') blaettere('-1')
+    if (event.key === 'ArrowRight') blaettere('1')
+  })
+  let wischStart: number | undefined
+  document.addEventListener(
+    'touchstart',
+    (event) => {
+      wischStart = offene() ? event.changedTouches[0]?.clientX : undefined
+    },
+    { passive: true },
+  )
+  document.addEventListener(
+    'touchend',
+    (event) => {
+      if (wischStart === undefined) return
+      const weg = (event.changedTouches[0]?.clientX ?? wischStart) - wischStart
+      wischStart = undefined
+      if (Math.abs(weg) < 48) return
+      blaettere(weg < 0 ? '1' : '-1')
+    },
+    { passive: true },
+  )
 
   // Wie in ProjectPage: Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt.
   const ZU_SPAET = 1800
