@@ -47,7 +47,13 @@ if (profile.social.github) {
 }
 ---
 
-<Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
+{/* Die Antwortzeit steht hier, bei der Adresse, und nicht mehr im Hero. */}
+<Section
+  id="kontakt"
+  index="05"
+  title={contact.heading}
+  intro={`${contact.description} ${contact.responseTime}`}
+>
   <div
     class="grid grid-cols-1 gap-12 border-t border-border pt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
   >

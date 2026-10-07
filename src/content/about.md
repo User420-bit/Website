@@ -22,14 +22,6 @@ workflow:
 ---
 
 Klartext ist ein kleines Softwareunternehmen aus Bruckmühl. Der Name ist das Programm: Anfragen
-werden in verständlicher Sprache beantwortet, Aufwände ehrlich geschätzt, und wo ein Werkzeug von
-der Stange reicht, wird das gesagt, statt etwas Neues zu bauen.
-
-Unter „Arbeiten“ stehen spielbare Browser-Spiele, eine Buchhaltungs-Übersicht, ein gemeinsames
-Erinnerungsbuch für Paare und weitere eigene Produkte und Prototypen. Was sich bewährt hat, steht
-unter „Leistungen“, jeweils mit dem Projekt, das es belegt.
-Was nicht funktioniert hat, steht auf den Referenzseiten unter „Erkenntnisse“.
+werden in verständlicher Sprache beantwortet.
 
 Hinter Klartext steht Pharrel Sandjo Djomou, Wirtschaftsinformatik-Student an der TH Rosenheim.
-KI-Werkzeuge kommen bewusst zum Einsatz und werden einmal offen genannt, unter „Arbeitsweise“, statt
-bei jedem einzelnen Projekt.

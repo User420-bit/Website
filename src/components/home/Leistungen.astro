@@ -1,8 +1,10 @@
 ---
 /**
- * 02 Leistungen: erst die drei Arten Software, dann die Einzelpunkte zum
- * Aufklappen. Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne Beleg
- * kein Eintrag, sonst wäre es eine Wunschliste.
+ * 02 Leistungen: erst die drei Arten Software, dann je Art ein Aufklapper mit
+ * den Einzelpunkten. Eine Gliederung, nicht zwei: Die Aufklapper tragen die
+ * Titel der Spalten (entschieden am 2026-10-07, vorher vier eigene Gruppen).
+ * Jeder Einzelpunkt nennt das Projekt, das ihn belegt: ohne Beleg kein
+ * Eintrag, sonst wäre es eine Wunschliste.
  *
  * Bewegung: Kommen die drei Arten ins Fenster, zieht die Haarlinie über jeder
  * Spalte von links auf, Titel und Text ziehen 8 px ein, Spalte um Spalte. Die
@@ -51,14 +53,13 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 
   <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">Im Einzelnen</h3>
   <p class="mt-1 max-w-[65ch] text-sm text-fg-muted">
-    Hinter jedem Punkt steht das Projekt, das ihn belegt.
+    Zu jeder der drei Arten die Punkte, die ein Projekt belegt.
   </p>
   <div class="mt-3 border-t border-border">
     {
       leistungen.map((group) => (
         <Disclosure title={group.data.title} meta={punkte(group.data.items.length)}>
-          <p class="prose-flow mt-0 max-w-[65ch] text-sm text-fg-muted">{group.data.description}</p>
-          <ul class="mt-5 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
+          <ul class="mt-0 grid list-none grid-cols-1 gap-x-8 gap-y-5 p-0 sm:grid-cols-2">
             {group.data.items.map((item) => (
               <li>
                 <span class="block text-sm font-medium">{item.title}</span>
