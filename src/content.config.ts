@@ -159,8 +159,8 @@ const skills = defineCollection({
 
 /**
  * Leistungen: was aus den gelieferten Projekten ableitbar ist. Die Gruppen
- * sind die drei Arten Software aus `company.services`, in derselben
- * Reihenfolge und mit denselben Titeln; die Spalte darüber beschreibt die
+ * sind die drei Arten Software aus `company.services` und heißen genau so;
+ * über den Titel findet die Spalte ihre Punkte. Die Spalte beschreibt die
  * Gruppe, darum trägt sie hier keine eigene Beschreibung. Jeder Punkt nennt
  * in `evidence` die Projekte, die den Anspruch belegen — ohne Beleg kein
  * Eintrag.
