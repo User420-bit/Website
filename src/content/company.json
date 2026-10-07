@@ -9,7 +9,7 @@
     "services": [
       {
         "title": "Kleine Programme",
-        "description": "Für einen Ablauf, der bisher von Hand lief: eine Bestandsliste, eine Terminübersicht, ein Export für die Steuerberatung. Klein genug, um in Wochen fertig zu sein, nicht in Monaten."
+        "description": "Für einen Ablauf, der bisher von Hand lief: Bestandsliste, Terminübersicht, Export für die Steuerberatung. Fertig in Wochen, nicht in Monaten."
       },
       {
         "title": "Websites",
@@ -17,7 +17,7 @@
       },
       {
         "title": "Web-Apps",
-        "description": "Anwendungen im Browser, wenn die Tabelle nicht mehr reicht. Die Daten sind sauber geordnet, die Abläufe nachvollziehbar, und alles ist so beschrieben, dass sich auch in zwei Jahren noch jemand zurechtfindet."
+        "description": "Anwendungen im Browser, wenn die Tabelle nicht mehr reicht. Daten sauber geordnet, Abläufe nachvollziehbar, auch für die, die später weiterarbeiten."
       }
     ]
   }
