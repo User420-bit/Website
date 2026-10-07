@@ -158,16 +158,18 @@ const skills = defineCollection({
 })
 
 /**
- * Leistungen: was aus den gelieferten Projekten ableitbar ist. Jede Gruppe
- * nennt in `evidence` die Projekte, die den Anspruch belegen — ohne Beleg
- * kein Eintrag.
+ * Leistungen: was aus den gelieferten Projekten ableitbar ist. Die Gruppen
+ * sind die drei Arten Software aus `company.services` und heißen genau so;
+ * über den Titel findet die Spalte ihre Punkte. Die Spalte beschreibt die
+ * Gruppe, darum trägt sie hier keine eigene Beschreibung. Jeder Punkt nennt
+ * in `evidence` die Projekte, die den Anspruch belegen — ohne Beleg kein
+ * Eintrag.
  */
 const leistungen = defineCollection({
   loader: file('src/content/leistungen.json'),
   schema: z.object({
     order: z.number().int(),
     title: z.string(),
-    description: z.string(),
     items: z
       .array(
         z.object({

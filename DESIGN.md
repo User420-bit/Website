@@ -587,15 +587,21 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 
 ### Lightbox (`ScreenshotGallery`)
 
-Natives Popover (`popover`, `popovertarget`), kein JavaScript. Die Fläche dahinter (`::backdrop`) ist
-deckendes Papierweiß bzw. Werkbankschwarz, keine Transluzenz. Darauf, ohne eigenen Kasten: eine
-Kopfzeile mit „Projekt · Bild 2 von 6“ (Body Small, Bleistiftgrau, Tabellenziffern) und rechts
-„Schließen“ mit Kreuz im Stil des Sekundärbuttons, darunter das Bild so groß, wie das Fenster erlaubt
-(höchstens 1600 px breit, Rahmen 4 px, 1 px Liniengrau), darunter die Bildunterschrift. Beim Öffnen
-liegt der Fokus auf „Schließen“ (`autofocus`), Esc und ein Klick neben das Bild schließen, danach steht
-der Fokus wieder auf dem Vorschaubild. Solange sie offen ist, scrollt die Seite dahinter nicht.
-Blättern in der Lightbox gibt es bewusst nicht, das bräuchte ein Script; geblättert wird im
-Kontaktabzug.
+Natives Popover (`popover`, `popovertarget`), ohne JavaScript bedienbar. Die Fläche dahinter
+(`::backdrop`) ist deckendes Papierweiß bzw. Werkbankschwarz, keine Transluzenz. Darauf, ohne eigenen
+Kasten: eine Kopfzeile mit „Projekt · Bild 2 von 6“ (Body Small, Bleistiftgrau, Tabellenziffern) und
+rechts drei Knöpfe im Stil des Sekundärbuttons, 36 px hoch: Zurück und Weiter als quadratische
+Pfeilknöpfe, dann „Schließen“ mit Kreuz. Darunter das Bild so groß, wie das Fenster erlaubt (höchstens
+1600 px breit, Rahmen 4 px, 1 px Liniengrau), darunter die Bildunterschrift. Beim Öffnen liegt der
+Fokus auf „Schließen“ (`autofocus`), Esc und ein Klick neben das Bild schließen, danach steht der
+Fokus wieder auf dem Vorschaubild. Solange sie offen ist, scrollt die Seite dahinter nicht.
+
+Geblättert wird in der Lightbox, im Kreis (entschieden am 2026-10-07): Zurück und Weiter zeigen per
+`popovertarget` auf die Nachbar-Lightbox. Ein kleines Script schließt vor dem Blättern die offene
+Lightbox (sonst stapelte der Browser die nächste als Kind darüber), ergänzt Pfeiltasten links/rechts
+und Wischen am Handy (ab 48 px) und hält den Fokus nach dem Blättern auf demselben Knopf. Ohne Script
+bleibt Blättern bedienbar, Esc braucht dann einen Druck je geblättertem Bild. Bei nur einem Bild
+fehlen die Pfeilknöpfe.
 
 ### Bühne der Projektseite (`ProjectScene`)
 

@@ -93,8 +93,9 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
   (`published: false`, am 2026-09-24 vom Inhaber entschieden): Ohne Screenshot und Live-Link gibt es
   dort noch nichts zu zeigen. Bis dahin steht „Kunden“ auf der Startseite ausgegraut, und die Belege
   in „Leistungen“ nennen beide ohne Link.
-- Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: Websites, Web-Apps und kleine
-  Programme, Browser-Spiele und Interaktives, KI und Konzept.
+- Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: dieselben drei wie die
+  Spalten in `company.json` (Kleine Programme, Websites, Web-Apps). Spiele und KI stehen als Punkte
+  darin, nicht als eigene Gruppen.
 - Kontakt: E-Mail `info@web-klartext.de`, LinkedIn. Antwort in der Regel innerhalb eines Werktags.
 - **Nicht vorhanden, nicht erfinden:** Kundenstimmen, Kundenlogos, Bewertungen, Kennzahlen über die
   Projektdateien hinaus, Portrait, Logo, GitHub-Profil-Link.
