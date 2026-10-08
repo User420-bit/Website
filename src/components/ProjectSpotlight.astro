@@ -20,9 +20,9 @@
  * Bewegung (docs/ARBEITEN_PLAN.md, 2.4): Beim Hereinscrollen zieht sich das
  * Bild von links auf (`data-bewegt="bild"`, innen, nie am Bildfeld selbst),
  * Titel und Text ziehen 8 px ein (`data-bewegt="text"`); beides steuert
- * `ProjectShowcase`. Im Bildfeld wandert der Screenshot beim Scrollen leicht
- * (`data-parallaxe`), bei Hover und Fokus wächst er auf 1,02. Das Bildfeld
- * trägt nie einen Transform, sonst bräche der Übergang.
+ * `ProjectShowcase`. Der Screenshot steht ganz im Rahmen, ohne Parallaxe (seit
+ * 2026-10-08: Ein Beleg wird nicht beschnitten); bei Hover und Fokus wächst er
+ * auf 1,02. Das Bildfeld trägt nie einen Transform, sonst bräche der Übergang.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -72,21 +72,19 @@ const bild = leitbild(screenshots)
     {
       bild ? (
         <div
-          class="aspect-video overflow-hidden rounded-sm border border-border transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
+          class="aspect-video overflow-hidden rounded-sm border border-border bg-surface transition-colors group-focus-within:border-border-strong group-hover:border-border-strong motion-reduce:transition-none"
           data-uebergang
           style={uebergang(projekt.id)}
         >
           <div class="h-full" data-bewegt="bild">
-            <div class="h-full" data-parallaxe>
-              <Image
-                class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
-                src={bild.image}
-                alt={bild.caption}
-                widths={[640, 960, 1280]}
-                sizes="(min-width: 1024px) 36rem, 92vw"
-                loading="lazy"
-              />
-            </div>
+            <Image
+              class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
+              src={bild.image}
+              alt={bild.caption}
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 36rem, 92vw"
+              loading="lazy"
+            />
           </div>
         </div>
       ) : (

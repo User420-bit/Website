@@ -74,14 +74,16 @@ const knoepfe = [
     place-items: center;
     width: 2rem;
     height: 2rem;
-    border: 1px solid color-mix(in oklch, currentColor 30%, transparent);
-    border-radius: var(--radius-sm);
-    color: var(--color-fg-muted);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg);
     font-size: 0.875rem;
     text-decoration: none;
     transition:
       color var(--duration-base) var(--ease-quiet),
-      border-color var(--duration-base) var(--ease-quiet);
+      border-color var(--duration-base) var(--ease-quiet),
+      background-color var(--duration-base) var(--ease-quiet);
   }
   /* Trefferfläche 44 px, ohne dass der Knopf größer aussieht. */
   .blaettern::before {
@@ -92,6 +94,7 @@ const knoepfe = [
   a.blaettern:hover {
     color: var(--color-accent);
     border-color: var(--color-accent);
+    background-color: var(--color-accent-soft);
   }
   .blaettern-leer {
     opacity: 0.35;

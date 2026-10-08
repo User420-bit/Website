@@ -39,7 +39,7 @@ const bild = leitbild(screenshots)
     aria-current={aktiv ? 'true' : undefined}
   >
     <span
-      class="thumb-rahmen @container block aspect-video overflow-hidden rounded-sm border border-border bg-bg-elevated transition-colors motion-reduce:transition-none"
+      class="thumb-rahmen @container block aspect-video overflow-hidden rounded-sm border border-border bg-surface transition-colors motion-reduce:transition-none"
     >
       {
         bild ? (
@@ -78,7 +78,7 @@ const bild = leitbild(screenshots)
    */
   .thumb:hover .thumb-rahmen,
   .thumb:focus-visible .thumb-rahmen {
-    border-color: color-mix(in oklch, var(--color-fg) 40%, transparent);
+    border-color: var(--color-border-strong);
   }
   .thumb:hover .thumb-titel,
   .thumb:focus-visible .thumb-titel,

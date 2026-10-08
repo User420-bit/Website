@@ -4,18 +4,26 @@ description: Ruhig, sachlich, warm – ein Werkstattbuch mit einem einzigen oran
 colors:
   bg: 'oklch(0.99 0.002 80)'
   bg-elevated: 'oklch(1 0 0)'
-  fg: 'oklch(0.18 0.005 80)'
-  fg-muted: 'oklch(0.43 0.008 80)'
-  accent: 'oklch(0.52 0.16 50)'
+  surface: 'oklch(0.965 0.004 80)'
+  fg: 'oklch(0.17 0.006 80)'
+  fg-muted: 'oklch(0.4 0.01 80)'
+  accent: 'oklch(0.5 0.17 50)'
+  accent-strong: 'oklch(0.43 0.16 48)'
+  accent-soft: 'oklch(0.95 0.035 65)'
   accent-fg: 'oklch(0.99 0 0)'
-  border: 'oklch(0.89 0.004 80)'
+  border: 'oklch(0.87 0.005 80)'
+  border-strong: 'oklch(0.66 0.01 80)'
   bg-dark: 'oklch(0.17 0.004 80)'
   bg-elevated-dark: 'oklch(0.22 0.005 80)'
+  surface-dark: 'oklch(0.21 0.005 80)'
   fg-dark: 'oklch(0.96 0.003 80)'
-  fg-muted-dark: 'oklch(0.74 0.008 80)'
-  accent-dark: 'oklch(0.78 0.15 60)'
+  fg-muted-dark: 'oklch(0.77 0.008 80)'
+  accent-dark: 'oklch(0.79 0.15 62)'
+  accent-strong-dark: 'oklch(0.85 0.14 68)'
+  accent-soft-dark: 'oklch(0.27 0.04 60)'
   accent-fg-dark: 'oklch(0.17 0.02 60)'
-  border-dark: 'oklch(0.38 0.006 80)'
+  border-dark: 'oklch(0.4 0.006 80)'
+  border-strong-dark: 'oklch(0.58 0.01 80)'
 typography:
   display:
     fontFamily: "'Instrument Sans', ui-sans-serif, system-ui, Arial, sans-serif"
@@ -272,39 +280,60 @@ nutzen die Tailwind-Utilities dieser Tokens (`bg-bg`, `text-fg-muted`, `border-b
 
 ### Primary
 
-- **Werkstatt-Orange** (`accent`, hell #ad4400): Primärbutton und Header-Anfrage, Belege und Links im
-  Text, das Wort „Kundenprojekt“, „Zur Referenz“, Hover-Farbe von Sekundärbutton, Aufklapper und
-  Zurück-Link, Unterstrich der aktiven Navigation, Fokus-Outline und Textauswahl. Im Hellmodus bewusst dunkel gehalten, damit Orange als
-  Textfarbe 5,7 : 1 auf Papierweiß hält.
-- **Werkstatt-Orange, Nacht** (`accent-dark`, #fc9e47): dieselbe Rolle im Dunkelmodus, heller und
-  gelber (Farbton 60), 9,2 : 1 auf Nachtpapier.
-- **Schrift auf Orange** (`accent-fg` #fcfcfc hell, `accent-fg-dark` #160d07 dunkel): Text auf
-  orangen Flächen, also Primärbutton, Skip-Link und Auswahl.
+Ein Farbton, drei Stufen (seit 2026-10-08; vorher eine Stufe, und alles Bedienbare lag in
+Deckkraft-Grau):
 
-Abgeleitete Tönungen entstehen nur über Tailwind-Deckkraft, nie als eigene Farbe: `accent/10` und
-`accent/50` (Fläche und Rand des Hinweiskastens), `fg/25` (Rand von Sekundärbutton und
-„Adresse kopieren“), `fg-muted/60` (ausgegrauter Reiter im Umschalter, 2,9 : 1 hell, 3,7 : 1
-dunkel; als nicht bedienbares Element von WCAG 1.4.3 ausgenommen).
+- **Werkstatt-Orange** (`accent`, hell #ab3a00): Primärbutton und Header-Anfrage, Text-Button,
+  Belege und Links im Text, das Wort „Kundenprojekt“, „Zur Referenz“, aktiver Anker der Navigation
+  und gewählter Reiter des Umschalters samt Strich, Hover-Farbe von Sekundärbutton, Aufklapper und
+  Zurück-Link, Fokus-Outline und Textauswahl. Im Hellmodus bewusst dunkel gehalten, damit Orange als
+  Textfarbe 6,2 : 1 auf Papierweiß hält.
+- **Werkstatt-Orange, gedrückt** (`accent-strong`, hell #912300): nur der Hover des Primärbuttons.
+  Dunkler statt durchsichtiger; Deckkraft ließ den Knopf blass wirken.
+- **Werkstatt-Orange, verdünnt** (`accent-soft`, hell #ffead7): die Fläche hinter einem Anker der
+  Navigation und einem Sekundärknopf bei Hover und Fokus. Nie für Text (1,1 : 1 auf Papier), nie als
+  Sektionsfläche; sie sagt „hier liegt der Zeiger“, sonst nichts.
+- **Werkstatt-Orange, Nacht** (`accent-dark`, #fea247): dieselbe Rolle im Dunkelmodus, heller und
+  gelber (Farbton 62), 9,6 : 1 auf Nachtpapier. Gedrückt wird es dort heller (`accent-strong-dark`,
+  #ffbb60), verdünnt ein dunkles Braun (`accent-soft-dark`, #352211).
+- **Schrift auf Orange** (`accent-fg` #fcfcfc hell, `accent-fg-dark` #160d07 dunkel): Text auf
+  orangen Flächen, also Primärbutton, Skip-Link und Auswahl. 6,2 : 1 hell, 9,6 : 1 dunkel, auf
+  „gedrückt“ 8,4 : 1 und 11,5 : 1.
+
+Deckkraft-Tönungen gibt es noch für den Hinweiskasten (`accent/10` Fläche, `accent/50` Rand) und
+den ausgegrauten Reiter des Umschalters (`fg-muted/70`, als nicht bedienbares Element von WCAG 1.4.3
+ausgenommen). Ränder und Flächen des Bedienbaren sind seit dem 2026-10-08 eigene Tokens (unten),
+damit sie in hell und dunkel geprüft sind statt errechnet.
 
 ### Neutral
 
 - **Papierweiß** (`bg`, #fcfcfa) / **Nachtpapier** (`bg-dark`, #100f0d): Seitengrund.
 - **Karteikartenweiß** (`bg-elevated`, #ffffff) / **Werkbankschwarz** (`bg-elevated-dark`, #1c1a18):
   nur noch der Codeblock. Hebt sich minimal vom Grund ab; die Linie macht die Kante.
-- **Tintenschwarz** (`fg`, #13110f) / **Kreideweiß** (`fg-dark`, #f3f1ef): Überschriften, Titel,
-  Namen von Einträgen, aktive Navigation. 18,3 : 1 hell, 17,0 : 1 dunkel.
-- **Bleistiftgrau** (`fg-muted`, #524f4b) / **Staubgrau** (`fg-muted-dark`, #adaaa5): alles
-  Erklärende. Intro, Beschreibungen, Fließtext, Metadaten, Footer, inaktive Navigation. 7,9 : 1 hell,
-  8,3 : 1 dunkel.
-- **Liniengrau** (`border`, #dcdad8) / **Nachtlinie** (`border-dark`, #44423f): Haarlinien über
-  Sektionen und zwischen Zeilen, Header- und Footer-Trennlinie, Bildränder, ruhender Link-Unterstrich.
-  Mit 1,35 : 1 bzw. 1,91 : 1 rein strukturell; eine Linie trägt nie allein Bedeutung.
+- **Werkbank** (`surface`, #f5f3f0) / **Werkbank, Nacht** (`surface-dark`, #191816): eine Stufe
+  unter Papier (1,08 : 1), die Fläche von Sekundärknöpfen, Blättern-Knöpfen und den Bildfeldern der
+  Arbeiten, bevor ein Bild geladen ist. Seit 2026-10-08: Ein Knopf, der nur aus Rand bestand, war
+  von einer Textzeile kaum zu unterscheiden.
+- **Tintenschwarz** (`fg`, #110f0d) / **Kreideweiß** (`fg-dark`, #f3f1ef): Überschriften, Titel,
+  Namen von Einträgen, die Anker der Navigation, Reiter des Umschalters. 18,6 : 1 hell, 17,0 : 1
+  dunkel.
+- **Bleistiftgrau** (`fg-muted`, #4b4742) / **Staubgrau** (`fg-muted-dark`, #b7b4af): alles
+  Erklärende. Intro, Beschreibungen, Fließtext, Metadaten, Footer. 9,0 : 1 hell, 9,2 : 1 dunkel
+  (vorher 7,9 und 8,3).
+- **Liniengrau** (`border`, #d6d4d1) / **Nachtlinie** (`border-dark`, #494744): Haarlinien über
+  Sektionen und zwischen Zeilen, Header- und Footer-Trennlinie, Bildränder. Mit 1,44 : 1 bzw.
+  2,08 : 1 rein strukturell; eine Linie trägt nie allein Bedeutung.
+- **Kantengrau** (`border-strong`, #95928b) / **Kantengrau, Nacht** (`border-strong-dark`, #7d7a74):
+  der Rand von allem, was man drücken kann (Sekundärbutton, „Adresse kopieren“, Blättern-Knöpfe,
+  Lightbox-Knöpfe), und der Hover-Rand von Bildfeldern. 3,0 : 1 hell, 4,5 : 1 dunkel, damit ein
+  Knopf ohne Hover als Knopf lesbar ist (WCAG 1.4.11).
 
 ### Named Rules
 
-**The One Signal Rule.** Werkstatt-Orange ist die einzige bunte Farbe im System. Es markiert Handlung,
-Beleg, Einordnung und Fokus, nie Sektionsflächen, Illustrationen oder Dekoration. Auf einem
-Bildschirm bleibt es eine Minderheit. Einzige Ausnahme ist die Bühne der Projektseite (Bühnenlizenz
+**The One Signal Rule.** Werkstatt-Orange ist die einzige bunte Farbe im System, in drei Stufen
+(voll, gedrückt, verdünnt), die alle denselben Farbton tragen. Es markiert Handlung, Beleg,
+Einordnung und Fokus, nie Sektionsflächen, Illustrationen oder Dekoration. Auf einem Bildschirm bleibt
+es eine Minderheit. Einzige Ausnahme ist die Bühne der Projektseite (Bühnenlizenz
 unter Components): Dort darf ein Projekt eigene Farben tragen, aber nur innerhalb seiner Fläche und
 nur als `--szene-*`-Variablen der Szene, nie als Token des Systems.
 
@@ -425,13 +454,15 @@ erst der Beleg, dann die Beschreibung (`ScreenshotGallery`, entschieden am 2026-
 Querformat ist das Leitbild über die volle Breite, darunter seine Unterschrift in Body Small,
 Bleistiftgrau. Die übrigen Bilder folgen als Kontaktabzug: alle gleich hoch (5rem, ab 640 px 7rem),
 jedes im eigenen Seitenverhältnis, Querformate vor Hochformaten, 0,75rem Abstand, umbrechend. Rahmen
-4 px mit 1 px Liniengrau, bei Hover und Fokus `fg/40`, Mauszeiger „Vergrößern“. Jedes Bild öffnet die
+4 px mit 1 px Liniengrau, bei Hover und Fokus Kantengrau, Mauszeiger „Vergrößern“. Jedes Bild öffnet die
 Lightbox.
 Rechtstexte sitzen in einer eigenen 68ch-Spalte mit 3–4rem Innenabstand.
 
 **Header und Scrollen:** Der Header klebt oben. Er trägt Wortmarke, Navigation (Arbeiten, Leistungen,
 Arbeitsweise, Über) und die kleine Anfrage-Schaltfläche. Ab 640 px eine Zeile (65 px hoch), darunter
 zwei: Wortmarke und Anfrage oben, Linkzeile unten (89 px bei 375 px Breite).
+Die Anker stehen in Tinte, Gewicht 500, mit 0,625rem Innenabstand (am Handy 0,25rem, damit vier
+Anker ab 360 px in eine Zeile passen).
 `scroll-padding-top: 6rem` auf `:root` ist der einzige Scroll-Versatz; Sektionen tragen kein eigenes
 `scroll-margin`. Der Footer beginnt 4rem (ab 640 px 6rem) unter dem Inhalt und führt zu Werkzeuge, Impressum und
 Datenschutz.
@@ -469,10 +500,12 @@ Tiefe entsteht dort aus Perspektive und Farbe, nie aus Schatten.
 
 ## Shapes
 
-Kantig mit kaum merklicher Rundung. 4 px (`sm`) für alles Bedienbare und Abgebildete: Buttons,
-Header-Anfrage, „Adresse kopieren“, Skip-Link, Fokusring, Bilder und Screenshots. 12 px (`lg`) nur für
-echte Behälter: Codeblock und Hinweiskasten. 8 px (`md`) bleibt als Token definiert, gehört aber
-keinem Baustein des Systems. Pillen gibt es nicht.
+Kantig mit merklicher Rundung am Bedienbaren. 8 px (`md`) für alles, was man drückt: Buttons,
+Header-Anfrage, „Adresse kopieren“, Blättern-Knöpfe, Lightbox-Knöpfe, Skip-Link, Fokusring und die
+Hover-Fläche der Navigation (seit 2026-10-08; vorher 4 px, und die Knöpfe sahen aus wie Kästchen).
+4 px (`sm`) für Abgebildetes: Bilder, Screenshots, Bildfelder. 12 px (`lg`) nur für echte Behälter:
+Codeblock und Hinweiskasten. Pillen gibt es nicht; die Hover-Fläche eines Ankers ist ein Zustand,
+keine Form.
 
 Wiederkehrende Linien-Motive:
 
@@ -512,14 +545,16 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 
 `Button.astro` mit drei Varianten und zwei Größen.
 
-- **Shape:** 4 px, Innenabstand 0,625rem × 1rem (`sm`: 0,375rem × 0,75rem), Label-Schrift (500,
-  0,875rem).
+- **Shape:** 8 px, Innenabstand 0,75rem × 1,25rem (`sm`: 0,5rem × 0,875rem), Label-Schrift (500,
+  0,875rem). Seit 2026-10-08 (vorher 4 px und 0,625rem × 1rem).
 - **Primary:** Fläche Werkstatt-Orange, Schrift auf Orange. Genau eine Hauptaktion pro Bereich
-  („E-Mail schreiben“, „Live ansehen“). Hover auf 90 % Deckkraft.
-- **Secondary:** transparent mit 1 px Rand in `fg/25` und Tintenschwarz; bei Hover werden Rand und
-  Schrift orange („GitHub“, „Code auf GitHub“).
-- **Text:** unterstrichener Link in Tinte mit Pfeil für den leiseren zweiten Weg („Arbeiten ansehen“,
-  „Womit gearbeitet wird“). Unterstrich Liniengrau, bei Hover zieht Orange durch; der Pfeil rückt 2 px.
+  („E-Mail schreiben“, „Live ansehen“). Hover und Fokus: Fläche „gedrückt“ (`accent-strong`).
+- **Secondary:** Werkbankfläche mit 1 px Rand in Kantengrau und Tintenschwarz; bei Hover und Fokus
+  Fläche verdünntes Orange, Rand und Schrift orange („E-Mail schreiben“ in der Anfrage-Zeile,
+  „GitHub“, „Code auf GitHub“).
+- **Text:** oranger Link mit Pfeil für den leiseren zweiten Weg („Arbeiten ansehen“, „Alle Arbeiten
+  ansehen“, „Womit gearbeitet wird“). Ruhender Unterstrich in halbem Orange, bei Hover zieht volles
+  Orange von links durch; der Pfeil rückt 2 px.
 - **Header-CTA:** kleiner Primary „Anfrage“ im Header, führt zu `/#kontakt`.
 - **Focus:** überall 2 px Outline in Orange mit 2 px Abstand.
 
@@ -551,12 +586,11 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 ### Arbeiten der Startseite (`ProjectShowcase`)
 
 - **Umschalter:** zwei Radio-Buttons als Textreiter, „Kunden“ und „Eigene Projekte“, je mit der
-  Anzahl in Tabellenziffern; beim Öffnen steht „Kunden“. Label in Bleistiftgrau, gewählt und bei
-  Hover Tintenschwarz; der gewählte Reiter trägt einen 2-px-Strich in Orange auf der Haarlinie
-  darunter. Ohne JavaScript schaltet CSS über `:has()` um; ohne `:has()` stehen beide Auswahlen
+  Anzahl in Tabellenziffern; beim Öffnen steht „Kunden“. Label in Tinte, gewählt und bei Hover
+  orange; der gewählte Reiter trägt einen 2-px-Strich in Orange auf der Haarlinie darunter. Ohne JavaScript schaltet CSS über `:has()` um; ohne `:has()` stehen beide Auswahlen
   untereinander. Gespeichert wird die Wahl nicht.
 - **Ausgegrauter Reiter:** Sind alle Arbeiten einer Auswahl unveröffentlicht (`published: false`),
-  bleibt ihr Reiter stehen, aber in `fg-muted/60`, mit „folgt“ statt der Anzahl, ohne Hover, mit
+  bleibt ihr Reiter stehen, aber in `fg-muted/70`, mit „folgt“ statt der Anzahl, ohne Hover, mit
   Cursor `not-allowed` und `disabled`, also weder per Klick noch per Pfeiltaste wählbar. Bühne und
   Kontaktabzug der Auswahl fehlen, beim Öffnen steht die nächste. So steht „Kunden“ seit dem
   2026-09-24, bis PointCare oder JustBeauty freigeschaltet sind.
@@ -566,11 +600,14 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   640 px darunter). Darunter ab 1024 px nebeneinander, schmaler untereinander: der Screenshot (16:9,
   4 px, 1 px Liniengrau) und summary, „Stand: …“ und die Links wie in der Feature-Zeile. Ohne
   Screenshot steht an der Stelle des Bildes die summary in Title Large, 500, Bleistiftgrau, max. 36ch,
-  ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter. Alle Bühnen einer Auswahl liegen in derselben
+  ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter. Der Screenshot steht ganz im Rahmen, ohne
+  Parallaxe (seit 2026-10-08; die Parallaxe brauchte 6 % Überstand und schnitt 3 % je Kante ab, bei
+  Kleinkram die Symbolspalte): Ein Beleg wird nicht beschnitten. Alle Bühnen einer Auswahl liegen in derselben
   Zelle übereinander, die nicht gewählten unsichtbar (`visibility: hidden`): Das Feld ist so hoch wie
   die höchste Bühne, und beim Blättern rutscht nichts darunter.
 - **Blättern:** oben rechts neben dem Titel, damit die Knöpfe beim Wechsel zwischen Bild und Satz
-  nicht wandern. Zwei quadratische Knöpfe (2,75rem, 4 px, Rand `fg/25`, Hover orange) mit Pfeil,
+  nicht wandern. Zwei quadratische Knöpfe (2,75rem, 8 px, Werkbankfläche, Rand Kantengrau, Hover
+  orange auf verdünntem Orange) mit Pfeil,
   dazwischen „2 von 8“ in Tabellenziffern. Nur mit JavaScript sichtbar; ein unsichtbarer
   `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Pfeiltasten links/rechts blättern,
   solange der Fokus in der Galerie steht, Wischen auf der Bühne ab 48 px ebenso. Die Bühne schiebt in
@@ -581,7 +618,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Werkbankschwarz), darunter der Titel in Label Small, Bleistiftgrau, einzeilig mit Auslassung. Das
   Feld der Arbeit auf der Bühne trägt `aria-current`: Rahmen und Titel in Tinte, darunter ein
   2-px-Strich in Orange, der beim Blättern von links aufzieht (200 ms), wie unter dem gewählten
-  Reiter. Hover und Fokus dunkeln den Rahmen auf `fg/40`, das Bild wächst auf 1,02. Passt die Reihe
+  Reiter. Hover und Fokus setzen den Rahmen auf Kantengrau, das Bild wächst auf 1,02. Passt die Reihe
   nicht in die Spalte (am Handy ab vier Arbeiten), scrollt sie waagerecht mit `scroll-snap`, ohne
   Scrollleiste; das angeschnittene letzte Feld zeigt, dass es weitergeht. Ohne Skript ist jedes Feld
   ein Link auf die Projektseite, mit Skript ein Knopf, der die Arbeit auf die Bühne holt. Ohne
@@ -601,7 +638,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 Natives Popover (`popover`, `popovertarget`), ohne JavaScript bedienbar. Die Fläche dahinter
 (`::backdrop`) ist deckendes Papierweiß bzw. Werkbankschwarz, keine Transluzenz. Darauf, ohne eigenen
 Kasten: eine Kopfzeile mit „Projekt · Bild 2 von 6“ (Body Small, Bleistiftgrau, Tabellenziffern) und
-rechts drei Knöpfe im Stil des Sekundärbuttons, 36 px hoch: Zurück und Weiter als quadratische
+rechts drei Knöpfe im Stil des Sekundärbuttons (8 px, Werkbank, Kantengrau), 36 px hoch: Zurück und Weiter als quadratische
 Pfeilknöpfe, dann „Schließen“ mit Kreuz. Darunter das Bild so groß, wie das Fenster erlaubt (höchstens
 1600 px breit, Rahmen 4 px, 1 px Liniengrau), darunter die Bildunterschrift. Beim Öffnen liegt der
 Fokus auf „Schließen“ (`autofocus`), Esc und ein Klick neben das Bild schließen, danach steht der
@@ -750,11 +787,12 @@ Startseite rahmen nur ihre Bildfelder.
 
 ### Navigation
 
-- **Header:** deckend, Wortmarke als Text links, Ankerlinks in Body Small und Bleistiftgrau, rechts
-  der Header-CTA.
-- **Zustände:** Hover und aktiver Anker wechseln auf Tintenschwarz und ziehen einen 1-px-Strich in Orange
-  von links auf. Den aktiven Anker setzt auf der Startseite ein IntersectionObserver
-  (`aria-current="true"`).
+- **Header:** deckend, Wortmarke als Text links, Ankerlinks in Tinte, Gewicht 500, 0,9375rem (am
+  Handy Body Small), rechts der Header-CTA. Seit 2026-10-08; vorher Body Small in Bleistiftgrau, und
+  die Anker sahen aus wie der Fuß.
+- **Zustände:** Hover und Fokus legen verdünntes Orange (8 px) hinter den Anker, färben ihn orange
+  und ziehen einen 2-px-Strich in Orange von links auf. Der aktive Anker steht in Orange mit Strich.
+  Den aktiven Anker setzt auf der Startseite ein IntersectionObserver (`aria-current="true"`).
 - **Mobil (unter 640 px):** Nur die Zeile mit Wortmarke und Anfrage klebt (53 px). Die Linkzeile steht
   darunter außerhalb des Headers und scrollt mit der Seite weg; ihre Links sind über die Breite
   verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen (erst bei 320 px brechen
@@ -763,10 +801,11 @@ Startseite rahmen nur ihre Bildfelder.
   (entschieden am 2026-09-25).
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
   unterstrichen in Liniengrau, Hover Tintenschwarz mit durchlaufendem Strich.
-- **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 4-px-Feld oben links.
+- **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 8-px-Feld oben links.
 - **Zurück-Link:** Pfeil nach links und Text in Body Small, Bleistiftgrau, Hover orange. Auf
   Projektseiten Teil der Kopfzeile (`ProjectNav`): rechts daneben zwei 2-rem-Knöpfe zur vorherigen
-  und nächsten Arbeit (1 px Rand in Bleistiftgrau, Hover orange, Trefferfläche 44 px), damit man
+  und nächsten Arbeit (8 px, Werkbank, 1 px Rand in Kantengrau, Hover orange auf verdünntem Orange,
+  Trefferfläche 44 px), damit man
   gleich am Anfang weiterblättert. Fehlt ein Nachbar, steht der Knopf blass ohne Link. Vor/Zurück
   mit Titeln steht zusätzlich am Seitenende, auch auf dem Handy nebeneinander (entschieden am
   2026-09-25).
@@ -794,10 +833,11 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
 - **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
   Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
 - **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
-  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`), Felder eines Kontaktabzugs
-  kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
+  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`; nur das Foto in Über Klartext,
+  nie ein Screenshot, der wird nicht beschnitten), Felder eines Kontaktabzugs kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
   (`clip-path`); das Bildfeld darum bleibt unberührt, es ist Ziel des Übergangs.
-- **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Linie, 2 px Pfeil, Bild 1,02).
+- **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Fläche, Linie, 2 px Pfeil,
+  Bild 1,02).
   Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
 - **Nichts bleibt transformiert:** nach jeder Bewegung `transform: none`, `opacity: 1`. Elemente mit
   `data-uebergang` tragen zu Beginn einer Navigation keinen Transform, sonst bricht der Übergang.
@@ -865,7 +905,8 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Don't** eine Theme-Auswahl, Test-Themes oder einen Farbmodus-Umschalter für Besucher einbauen. Hell
   und dunkel folgen der Systemeinstellung.
 - **Don't** Schatten, Glow, Anheben, Unschärfe oder Transluzenz für Tiefe oder Hover verwenden.
-- **Don't** eine zweite Akzentfarbe oder farbige Flächen einführen.
+- **Don't** eine zweite Akzentfarbe oder farbige Sektionsflächen einführen. Verdünntes Orange liegt
+  nur hinter einem Anker oder Knopf unter dem Zeiger, nie hinter Inhalt.
 - **Don't** Rohfarbwerte in Komponenten schreiben; sie brechen den Dunkelmodus.
 - **Don't** Fließtext breiter als 65ch laufen lassen.
 - **Don't** Listen als Kartenraster bauen, auch nicht die Arbeiten der Startseite (seit 2026-10-08
