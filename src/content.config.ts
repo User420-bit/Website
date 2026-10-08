@@ -128,7 +128,7 @@ const projekte = defineCollection({
         })
         .nullable()
         .default(null),
-      /** Sortierung, kleiner zuerst. Gilt für das Raster der Startseite und für /projekte/. */
+      /** Sortierung, kleiner zuerst. Gilt für Bühne und Kontaktabzug der Startseite und für /projekte/. */
       order: z.number().int(),
       /**
        * false: Die Datei bleibt, aber es gibt keine Projektseite, /projekte/ lässt das Projekt

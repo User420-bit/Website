@@ -1,7 +1,50 @@
 # Plan: 01 Arbeiten als Galerie, die eine Arbeit zeigt
 
-Stand: 2026-10-08 · Basis: `main` nach PR #60, Branch `claude/clever-wright-yagl2p` · Status: Plan,
-nicht umgesetzt · Autor: Claude Code Session, Entscheidung und Review durch Pharrel
+Stand: 2026-10-08 · Basis: `main` nach PR #60, Branch `claude/clever-wright-yagl2p` · Status:
+umgesetzt am 2026-10-08 · Autor: Claude Code Session, Entscheidung und Review durch Pharrel
+
+> **Umgesetzt am 2026-10-08**, alle vier Entscheidungen aus Abschnitt 5 wie vorgeschlagen („go, alles
+> wie vorgeschlagen“, Pharrel). Abweichungen vom Plan, alle bewusst:
+>
+> - **Der Titel steht über beiden Spalten,** nicht in der rechten. Rechts stehen summary, Stand und
+>   Links. So bleiben die Blättern-Knöpfe, wo sie waren (oben rechts neben dem Titel), und der Titel
+>   bricht in der schmalen Textspalte nicht um.
+> - **Höhe ohne Messen.** Statt die höchste Bühne per Skript zu messen, liegen alle Bühnen einer
+>   Auswahl per CSS-Grid in derselben Zelle, die nicht gewählten mit `visibility: hidden`. Das Feld ist
+>   damit von selbst so hoch wie die höchste, auch ohne Skript und nach jedem `resize`.
+>   `ProjectTransition` übergeht dafür unsichtbare Elemente (`checkVisibility`).
+> - **Felder 6 bis 8 rem breit** statt fest 7 / 5,5 rem: Sie teilen sich die Breite. Bei 5,5 rem war
+>   das vierte Feld am Handy nur um wenige Pixel angeschnitten und las sich wie ein Ende; bei 6 rem
+>   steht es knapp zur Hälfte im Bild.
+> - **Satz im kleinen Feld** in 0,625rem, höchstens vier Zeilen, statt 4 cqi (das wären 4 px). Zeigt
+>   heute keine veröffentlichte Arbeit; alle haben ein Bild.
+> - **Alle Bühnenbilder `lazy`,** keins `eager`: Die Sektion beginnt unter dem Hero. Chromium lädt die
+>   Bilder unsichtbarer Bühnen erst, wenn sie dran sind; darum laden die beiden Nachbarn vor, sobald
+>   die Galerie im Fenster steht, und die Arbeit eines Felds bei Zeiger oder Fokus darauf.
+> - **Feld ins Bild holen ohne `scrollIntoView`:** Das scrollte auch die Seite, wenn man oben blättert
+>   und der Kontaktabzug unter dem Fenster liegt. Gescrollt wird nur die Reihe.
+> - **Knöpfe heißen wie ihre Arbeit,** ohne „auf die Bühne“ (Fachwort der Seite, nicht der Besucher);
+>   die Liste heißt „Eigene Projekte: Arbeit wählen“.
+> - **Neu: Zurück von einer Projektseite steht deren Arbeit auf der Bühne.** Ohne den Zufall stünde
+>   sonst immer die erste da, und das Bild hätte kein Ziel, in das es zurückwachsen kann. Ein
+>   Inline-Skript liest `navigation.activation` beim Laden, vor dem ersten Bild.
+>
+> Gemessen (Chromium, Build, 2026-10-08):
+>
+> | Maß                                | Vorher             | Nachher            |
+> | ---------------------------------- | ------------------ | ------------------ |
+> | Höhe der Sektion bei 1280 px       | 2 443 px           | 1 109 px           |
+> | Höhe der Sektion bei 390 px        | 3 679 px           | 1 325 px           |
+> | Bilder bis Ende 01, 1280 px, DPR 1 | 11 Dateien, 80 KB  | 10 Dateien, 76 KB  |
+> | Bilder bis Ende 01, 390 px, DPR 3  | 10 Dateien, 397 KB | 10 Dateien, 239 KB |
+>
+> Geprüft: `npm run verify` grün. Hell und dunkel bei 1280 × 800 und 390 × 844, kein waagerechter
+> Überlauf. Blättern per Feld, Knopf und Pfeiltaste (Fokus wandert mit), im Kreis, Zähler und
+> `aria-live`-Ansage. Zurück von `/projekte/memorytree/` steht MemoryTree auf der Bühne, das Feld ist
+> markiert, nur die sichtbare Bühne ist Übergangsziel. Mit `prefers-reduced-motion: reduce` steht alles
+> sofort, ohne Skript sind die Felder Links und die erste Arbeit steht. Keine Konsolenfehler. Offen für
+> Pharrel: Safari auf dem iPhone (Wischen, Anschnitt der Reihe, Übergang zurück); Playwright hat hier
+> kein WebKit.
 
 Konfidenz-Tags wie in [`REWORK_PLAN.md`](REWORK_PLAN.md): **[Sicher]** = im Code oder im Screenshot
 des Builds belegt (Chromium, 1280 px und 390 px) · **[Wahrscheinlich]** = starke Schlussfolgerung ·
@@ -224,6 +267,8 @@ die anderen `hidden`. Drei Änderungen:
 ---
 
 ## 5. Entscheidungen für Pharrel
+
+Am 2026-10-08 entschieden: alle vier wie vorgeschlagen.
 
 1. **Autoplay?** Plan: nein. Begründung in 0.3 und 2.4. Wenn ja: 6 s, mit Pause-Taste und allen
    Stopps aus 2.4.

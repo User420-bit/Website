@@ -112,6 +112,9 @@ Tailwind-Klassen, immer unter `html[data-bewegung]`.
 
 ### C · 01 Arbeiten
 
+> Seit 2026-10-08 überholt: Statt Raster unter der Bühne ein Kontaktabzug, Bewegung dazu in
+> [`ARBEITEN_PLAN.md`](ARBEITEN_PLAN.md), 2.4. Der Text unten ist Geschichte.
+
 - **Umschalter:** Beim Wechsel Kunden ↔ Eigene Projekte blendet die alte Auswahl in 120 ms aus, die
   neue zieht in 200 ms mit 8 px ein. Heute wechselt CSS über `:has()` hart; das Skript darf den
   Wechsel übernehmen, aber ohne Skript muss `:has()` weiter greifen.

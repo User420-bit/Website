@@ -53,8 +53,8 @@ export function leitbild<T extends { image: { width: number; height: number } }>
 }
 
 /**
- * Name für den Übergang von der Kachel zur Projektseite (DESIGN.md, Bewegung),
- * als Inline-Style. Kachel, Bühne und Zeile setzen ihn auf ihr Bildfeld, die
+ * Name für den Übergang von der Startseite zur Projektseite (DESIGN.md, Bewegung),
+ * als Inline-Style. Bühne und Zeile setzen ihn auf ihr Bildfeld, die
  * Projektseite auf ihren `<article>`. Wirksam wird er nur an einem Element mit
  * `data-uebergang`, davon trägt jede Seite je Projekt höchstens eins.
  */
