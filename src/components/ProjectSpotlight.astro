@@ -76,7 +76,8 @@ const bild = leitbild(screenshots)
           data-uebergang
           style={uebergang(projekt.id)}
         >
-          <div class="h-full" data-bewegt="bild">
+          {/* Bild und Aufzieh-Hülle lassen Zeiger durch: Transformiert (Hover 1,02) oder beschnitten (Einzug) lägen sie über dem gestreckten Titel-Link und fingen den Klick ab. */}
+          <div class="pointer-events-none h-full" data-bewegt="bild">
             <Image
               class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
               src={bild.image}
