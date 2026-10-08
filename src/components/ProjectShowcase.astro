@@ -1,11 +1,13 @@
 ---
 /**
- * Die Arbeiten der Startseite, so entschieden am 2026-09-23: ein Umschalter
- * "Kunden" / "Eigene Projekte", beim Öffnen steht "Kunden". Je Auswahl oben
- * ein Projekt groß, bei jedem Aufruf zufällig gewählt und ohne automatischen
- * Wechsel; wer mehr sehen will, blättert selbst. Darunter die übrigen Arbeiten
- * der Auswahl gleich groß im Raster. Jede Arbeit steht genau einmal da: Was
- * auf der Bühne steht, fehlt im Raster, bis weitergeblättert wird.
+ * Die Arbeiten der Startseite als Galerie, die eine Arbeit zeigt (entschieden
+ * am 2026-10-08, docs/ARBEITEN_PLAN.md; vorher Bühne und darunter dieselben
+ * Arbeiten noch einmal als Raster). Ein Umschalter "Kunden" / "Eigene
+ * Projekte" wie seit dem 2026-09-23. Je Auswahl oben die Bühne mit einer
+ * Arbeit, darunter alle Arbeiten der Auswahl als Kontaktabzug, das gewählte
+ * Feld markiert, wie auf den Projektseiten. Darunter der Weg zu allen
+ * Arbeiten auf einer Seite (`/projekte/`). Beim Öffnen steht die erste Arbeit
+ * nach `order`; geblättert wird nur von Hand, kein Timer.
  *
  * Unveröffentlichte Arbeiten (`published: false`) fehlen hier ganz. Bleibt
  * einer Auswahl keine, steht nur ihr Reiter da, ausgegraut, mit "folgt" statt
@@ -13,20 +15,28 @@
  * So ist es seit dem 2026-09-24 mit "Kunden".
  *
  * Ohne JavaScript bleibt alles bedienbar: Der Umschalter sind Radio-Buttons,
- * die Auswahl blendet CSS über `:has()` um. Die Bühne zeigt dann das erste
- * Projekt nach `order`, das Raster die übrigen, Blättern entfällt. Kann ein
+ * die Auswahl blendet CSS über `:has()` um. Die Bühne zeigt die erste Arbeit,
+ * die Felder des Kontaktabzugs sind Links auf die Projektseiten. Kann ein
  * Browser kein `:has()`, stehen beide Auswahlen untereinander.
  *
- * Bewegung (docs/BEWEGUNG_PLAN.md, C), nur mit Skript und erlaubter Bewegung:
- * Beim Umschalten blendet die alte Auswahl aus und die neue zieht ein, beim
- * Blättern schiebt die Bühne in Blätterrichtung, die Kacheln kommen einmal
- * gestaffelt, das Bild der Bühne wandert beim Scrollen im Rahmen. Ohne das
- * alles bleibt es beim harten Wechsel von oben.
+ * Mit Skript holt ein Feld seine Arbeit auf die Bühne, dazu Blättern-Knöpfe,
+ * Pfeiltasten und Wischen. Kommt der Besucher von einer Projektseite zurück,
+ * steht deren Arbeit auf der Bühne, damit ihr Bild zurückwachsen kann.
+ *
+ * Bewegung (docs/ARBEITEN_PLAN.md, 2.4), nur mit Skript und erlaubter
+ * Bewegung: Beim Hereinscrollen zieht sich das Bild der Bühne von links auf,
+ * Titel und Text ziehen ein, die Felder des Kontaktabzugs kommen gestaffelt.
+ * Beim Blättern schiebt die Bühne in Blätterrichtung und der Strich wandert
+ * zum neuen Feld, beim Umschalten blendet die Auswahl über, das Bild der
+ * Bühne wandert beim Scrollen im Rahmen. Ohne das alles bleibt es beim harten
+ * Wechsel.
  */
 import type { CollectionEntry } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
+import Button from '@/components/Button.astro'
 import ProjectSpotlight from '@/components/ProjectSpotlight.astro'
-import ProjectTile from '@/components/ProjectTile.astro'
+import ProjectThumb from '@/components/ProjectThumb.astro'
+import { href } from '@/lib/site'
 
 interface Props {
   /** Alle Arbeiten, schon nach `order` sortiert, auch die unveröffentlichten. */
@@ -40,13 +50,11 @@ const gruppen = [
   {
     id: 'kunden',
     label: 'Kunden',
-    rasterTitel: 'Weitere Kundenprojekte',
     alle: projekte.filter((p) => p.data.kind === 'kundenprojekt'),
   },
   {
     id: 'eigene',
     label: 'Eigene Projekte',
-    rasterTitel: 'Weitere eigene Projekte',
     alle: projekte.filter((p) => p.data.kind !== 'kundenprojekt'),
   },
 ]
@@ -67,11 +75,11 @@ const blaetternKnopf =
   {
     /*
      * Kommt der Besucher mit dem Übergang zurück (Projektseite → Startseite),
-     * ist eine Kachel das Ziel, in das das Bild zurückwächst. Sie muss dann
-     * schon stehen; versteckt wäre sie ein Loch. `pagereveal` feuert vor dem
-     * ersten Bild der Seite, also vor dem gebündelten Skript, darum inline und
-     * hier, wo `.showcase` schon steht. `data-ruhig` hebt den Anfangszustand
-     * der Kacheln auf.
+     * ist die Bühne das Ziel, in das das Bild zurückwächst. Sie muss dann
+     * schon stehen; versteckt oder beschnitten wäre sie ein Loch. `pagereveal`
+     * feuert vor dem ersten Bild der Seite, also vor dem gebündelten Skript,
+     * darum inline und hier, wo `.showcase` schon steht. `data-ruhig` hebt die
+     * Anfangszustände der Bewegung auf.
      */
   }
   <script is:inline>
@@ -120,13 +128,18 @@ const blaetternKnopf =
       const blaettern = gruppe.projekte.length > 1
       return (
         <div class="mt-8" data-gruppe={gruppe.id}>
-          <div class="relative" data-buehnenfeld>
+          <div class="buehnenfeld relative" data-buehnenfeld>
             {gruppe.projekte.map((projekt, i) => (
               <ProjectSpotlight projekt={projekt} blaettern={blaettern} hidden={i > 0} />
             ))}
             {/* Oben rechts neben dem Titel, damit die Knöpfe beim Blättern nicht wandern. */}
             {blaettern && (
-              <div class="absolute top-0 right-0 z-10 flex items-center gap-2" data-pager hidden>
+              <div
+                class="absolute top-0 right-0 z-10 flex items-center gap-2"
+                data-pager
+                data-bewegt="text"
+                hidden
+              >
                 <button type="button" class={blaetternKnopf} data-richtung="-1">
                   <Arrow direction="left" />
                   <span class="sr-only">Vorherige Arbeit</span>
@@ -144,22 +157,59 @@ const blaetternKnopf =
           <p class="sr-only" aria-live="polite" data-ansage />
 
           {blaettern && (
-            <>
-              <h3 class="mt-12 mb-0 text-sm font-medium text-fg-muted">{gruppe.rasterTitel}</h3>
-              <ul
-                data-raster
-                class="mt-3 grid list-none grid-cols-1 gap-x-6 gap-y-10 border-t border-border p-0 pt-6 sm:grid-cols-2 lg:grid-cols-3"
-              >
-                {gruppe.projekte.map((projekt, i) => (
-                  <ProjectTile projekt={projekt} hidden={i === 0} />
-                ))}
-              </ul>
-            </>
+            <ul
+              class="kontaktabzug mt-8 list-none"
+              aria-label={`${gruppe.label}: Arbeit wählen`}
+              data-abzug
+            >
+              {gruppe.projekte.map((projekt, i) => (
+                <ProjectThumb projekt={projekt} index={i} aktiv={i === 0} />
+              ))}
+            </ul>
           )}
         </div>
       )
     })
   }
+
+  {
+    /*
+     * Kommt der Besucher von einer Projektseite zurück, holt dieses Skript
+     * deren Arbeit auf die Bühne, bevor das erste Bild gemalt wird: Nur eine
+     * sichtbare Bühne kann Ziel des Übergangs sein (ProjectTransition prüft
+     * das bei `pagereveal`). Es läuft beim Lesen der Seite, gleich nach den
+     * Bühnen; `navigation.activation` nennt die Seite, von der er kommt.
+     * Browser ohne Navigation API zeigen die erste Arbeit, wie ohne Skript.
+     */
+  }
+  <script is:inline>
+    ;(() => {
+      const von = window.navigation?.activation?.from?.url
+      const slug = von && new URL(von).pathname.match(/\/projekte\/([^/]+)\/?$/)?.[1]
+      if (!slug) return
+      const showcase = document.currentScript.parentElement
+      const ziel = showcase.querySelector(`[data-buehne][data-slug="${CSS.escape(slug)}"]`)
+      const gruppe = ziel?.closest('[data-gruppe]')
+      if (!ziel || !gruppe) return
+      const buehnen = [...gruppe.querySelectorAll('[data-buehne]')]
+      const index = buehnen.indexOf(ziel)
+      buehnen.forEach((buehne, i) => (buehne.hidden = i !== index))
+      gruppe.querySelectorAll('[data-ziel]').forEach((feld, i) => {
+        if (i === index) feld.setAttribute('aria-current', 'true')
+        else feld.removeAttribute('aria-current')
+      })
+      const zaehler = gruppe.querySelector('[data-zaehler]')
+      if (zaehler) zaehler.textContent = `${index + 1} von ${buehnen.length}`
+      const knopf = showcase.querySelector(
+        `input[name="arbeiten-auswahl"][value="${gruppe.dataset.gruppe}"]`,
+      )
+      if (knopf) knopf.checked = true
+    })()
+  </script>
+
+  <div class="mt-6" data-bewegt="text" data-alle>
+    <Button href={href('/projekte/')} variant="text">Alle Arbeiten ansehen</Button>
+  </div>
 </div>
 
 <style>
@@ -170,15 +220,70 @@ const blaetternKnopf =
   }
 
   /*
-   * Anfangszustand der Kacheln, bis sie gestaffelt einziehen. Nur mit Skript
-   * und erlaubter Bewegung (`data-bewegung`), und nicht nach einem Übergang
-   * (`data-ruhig`, siehe oben). Das Skript übernimmt die Kacheln vom
-   * Sicherheitsnetz in global.css, weil das Raster oft erst nach Sekunden ins
-   * Fenster kommt.
+   * Alle Bühnen einer Auswahl liegen in derselben Zelle übereinander. Die
+   * nicht gewählten sind unsichtbar, halten aber ihren Platz: Das Feld steht
+   * so hoch wie die höchste Bühne, und beim Blättern rutscht nichts darunter.
+   * `visibility` nimmt sie zugleich aus Tab-Reihenfolge, Suche und
+   * Vorleseansicht.
    */
-  :global(html[data-bewegung] [data-showcase]:not([data-ruhig]) [data-kachel][data-bewegt]) {
-    opacity: 0;
-    transform: translateY(16px);
+  .buehnenfeld {
+    display: grid;
+  }
+  .buehnenfeld > :global([data-buehne]) {
+    grid-area: 1 / 1;
+  }
+  .buehnenfeld > :global([data-buehne][hidden]) {
+    display: block;
+    visibility: hidden;
+  }
+
+  /*
+   * Kontaktabzug: eine Reihe, die nicht umbricht. Die Felder teilen sich die
+   * Breite, jedes zwischen 6 und 8 rem; passt die Reihe nicht (am Handy ab
+   * vier Arbeiten), scrollt sie waagerecht, und das letzte Feld steht
+   * angeschnitten am Rand: der Hinweis, dass es weitergeht. Der Innenabstand
+   * hält Platz für den Fokusring, der negative Rand gleicht ihn aus.
+   */
+  .kontaktabzug {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(6rem, 8rem);
+    justify-content: start;
+    gap: 0.75rem;
+    margin-inline: -0.25rem;
+    margin-bottom: -0.25rem;
+    padding: 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 0.25rem;
+    scrollbar-width: none;
+  }
+  .kontaktabzug::-webkit-scrollbar {
+    display: none;
+  }
+  .kontaktabzug > :global(li) {
+    scroll-snap-align: start;
+  }
+
+  /*
+   * Anfangszustände, bis das Skript sie einziehen lässt. Nur mit Skript und
+   * erlaubter Bewegung (`data-bewegung`), nicht nach einem Übergang
+   * (`data-ruhig`, siehe oben) und nie im Ausdruck. Das Bild zieht sich innen
+   * auf; das Bildfeld darum ist Ziel des Übergangs und bleibt unberührt.
+   */
+  @media screen {
+    :global(html[data-bewegung]) [data-showcase]:not([data-ruhig]) :global([data-bewegt='text']) {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    :global(html[data-bewegung]) [data-showcase]:not([data-ruhig]) :global([data-bewegt='bild']) {
+      clip-path: inset(0 100% 0 0);
+    }
+    :global(html[data-bewegung]) [data-showcase]:not([data-ruhig]) :global([data-bewegt='feld']) {
+      opacity: 0;
+      transform: translateY(16px);
+    }
   }
 </style>
 
@@ -198,12 +303,14 @@ const blaetternKnopf =
 
   /** Wie weit die Bühne beim Blättern schiebt; sie ist ein Beleg, kein Text. */
   const WEG_BUEHNE = 24
-  /** Wie weit eine Kachel einzieht. */
-  const WEG_KACHEL = 16
+  /** Wie weit ein Feld des Kontaktabzugs einzieht. */
+  const WEG_FELD = 16
   /** Wie weit das Bild im Rahmen wandert, in Prozent, je Richtung. */
   const WEG_BILD = 2.5
   /** So groß steht das Bild im Rahmen, damit beim Wandern kein Rand entsteht. */
   const BILD_GROESSE = 1.06
+  /** Ab so vielen Pixeln waagerecht gilt eine Berührung als Wischen, wie in der Lightbox. */
+  const WISCHEN = 48
 
   type Lauf = { stop: () => void; complete: () => void; finished: Promise<unknown> }
 
@@ -214,65 +321,88 @@ const blaetternKnopf =
   const danach = (aufraeumen: () => void) =>
     requestAnimationFrame(() => requestAnimationFrame(aufraeumen))
 
+  /** Endzustand: Anfangszustand abnehmen, eigene Inline-Stile räumen. */
+  const inRuhe = (teile: HTMLElement[]) => {
+    for (const teil of teile) {
+      teil.removeAttribute('data-bewegt')
+      for (const p of ['animation', 'clip-path', 'opacity', 'transform']) {
+        teil.style.removeProperty(p)
+      }
+    }
+  }
+
   const showcase = document.querySelector<HTMLElement>('[data-showcase]')
   if (showcase) richteEin(showcase)
 
   function richteEin(showcase: HTMLElement) {
     // Lief der Übergang schon, bevor das Inline-Skript oben `pagereveal` sah
-    // (langsame Verbindung), stehen die Kacheln trotzdem. Ältere Browser kennen
-    // den Selektor nicht und werfen.
+    // (langsame Verbindung), steht alles sofort. Ältere Browser kennen den
+    // Selektor nicht und werfen.
     try {
       if (document.documentElement.matches(':active-view-transition')) showcase.dataset.ruhig = ''
     } catch {
       // Kein Übergang möglich, also auch keiner aktiv.
     }
-    const kachelnVersteckt =
+    const mitEinzug =
       document.documentElement.hasAttribute('data-bewegung') && !('ruhig' in showcase.dataset)
 
-    for (const gruppe of alle('[data-gruppe]', showcase)) richteGruppeEin(gruppe, kachelnVersteckt)
+    for (const gruppe of alle('[data-gruppe]', showcase)) richteGruppeEin(gruppe, mitEinzug)
     richteUmschalterEin(showcase)
+
+    const alleArbeiten = showcase.querySelector<HTMLElement>('[data-alle]')
+    if (alleArbeiten && mitEinzug) {
+      alleArbeiten.style.animation = 'none'
+      const halt = inView(
+        alleArbeiten,
+        () => {
+          halt()
+          animate(
+            alleArbeiten,
+            { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+            { duration: DAUER.langsam, ease: KURVE },
+          ).then(() => danach(() => inRuhe([alleArbeiten])))
+        },
+        { amount: 0.5 },
+      )
+    }
   }
 
-  function richteGruppeEin(gruppe: HTMLElement, kachelnVersteckt: boolean) {
+  function richteGruppeEin(gruppe: HTMLElement, mitEinzug: boolean) {
     const buehnen = alle('[data-buehne]', gruppe)
-    const kacheln = alle('[data-kachel]', gruppe)
     const feld = gruppe.querySelector<HTMLElement>('[data-buehnenfeld]')
-    const raster = gruppe.querySelector<HTMLElement>('[data-raster]')
+    const abzug = gruppe.querySelector<HTMLElement>('[data-abzug]')
     const pager = gruppe.querySelector<HTMLElement>('[data-pager]')
     const zaehler = gruppe.querySelector<HTMLElement>('[data-zaehler]')
     const ansage = gruppe.querySelector<HTMLElement>('[data-ansage]')
+    if (!feld) return
 
-    // Kacheln: einmal gestaffelt, wenn das Raster ins Fenster kommt. Das
-    // Sicherheitsnetz in global.css würde sie sonst nach 2 s zeigen, und sie
-    // zögen danach ein zweites Mal ein; darum übernimmt das Skript sie hier.
-    if (raster && kachelnVersteckt) {
-      for (const kachel of kacheln) kachel.style.animation = 'none'
-      inView(
-        raster,
-        () => {
-          raster.dataset.gezeigt = ''
-          // Die Kachel, deren Projekt auf der Bühne steht, ist versteckt und
-          // zieht nicht mit ein; sie steht fertig da, wenn sie zurückkommt.
-          for (const kachel of kacheln.filter((k) => k.hidden)) {
-            kachel.style.opacity = '1'
-            kachel.style.transform = 'none'
-          }
-          animate(
-            kacheln.filter((k) => !k.hidden),
-            { opacity: [0, 1], y: [WEG_KACHEL, 0] },
-            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
-          )
-        },
-        { amount: 0.2 },
-      )
-    } else if (raster) {
-      raster.dataset.gezeigt = ''
-    }
+    // Die Felder werden Knöpfe: Mit Skript holen sie ihre Arbeit auf die
+    // Bühne, statt wegzunavigieren. Alle Attribute ziehen mit um, auch das des
+    // gekapselten Stils, nur `href` nicht.
+    const felder = alle<HTMLAnchorElement>('a[data-ziel]', gruppe).map((link) => {
+      const knopf = document.createElement('button')
+      knopf.type = 'button'
+      for (const { name, value } of link.attributes) {
+        if (name !== 'href') knopf.setAttribute(name, value)
+      }
+      knopf.append(...link.childNodes)
+      link.replaceWith(knopf)
+      return knopf
+    })
+
+    // Welche Arbeit steht? Meist die erste; nach dem Zurückkommen von einer
+    // Projektseite die, die das Inline-Skript gesetzt hat.
+    let aktuell = Math.max(
+      buehnen.findIndex((b) => !b.hidden),
+      0,
+    )
+
+    if (mitEinzug) richteEinzugEin(gruppe, feld, abzug, () => buehnen[aktuell]!)
 
     // Bild der Bühne: wandert beim Scrollen leicht im Rahmen. Gemessen wird das
     // Bühnenfeld, nicht das Bild: Es steht immer da, auch wenn geblättert wird.
     const rahmen = alle('[data-parallaxe]', gruppe)
-    if (feld && rahmen.length > 0 && bewegt()) {
+    if (rahmen.length > 0 && bewegt()) {
       scroll(() => {
         const ort = feld.getBoundingClientRect()
         if (ort.height === 0) return // Die Auswahl ist gerade nicht gewählt.
@@ -284,64 +414,81 @@ const blaetternKnopf =
       })
     }
 
-    // Je Auswahl: beim Aufruf ein zufälliges Projekt auf die Bühne, danach nur
-    // noch auf Knopfdruck. Kein Timer, kein automatischer Wechsel. Bühnen und
-    // Kacheln stehen in derselben Reihenfolge; was auf der Bühne steht, fehlt im
-    // Raster.
     if (buehnen.length < 2 || !pager) return
 
-    let aktuell = 0
     /** Beendet einen laufenden Wechsel sofort im Endzustand. */
     let beende: (() => void) | undefined
 
-    /** Projekt `i` auf die Bühne (`oben`) oder zurück ins Raster. */
-    const setze = (i: number, oben: boolean) => {
-      buehnen[i]!.hidden = !oben
-      const kachel = kacheln[i]
-      if (kachel) kachel.hidden = oben
+    /**
+     * Die Bilder der Bühnen, die nicht dran sind, lädt der Browser erst, wenn
+     * sie sichtbar werden; das Bildfeld stünde beim Blättern kurz leer. Darum
+     * laden die Nachbarn vor, sobald die Galerie im Fenster steht, und die
+     * Arbeit eines Felds, sobald der Zeiger oder der Fokus darauf kommt.
+     */
+    const ladeVor = (...stellen: number[]) => {
+      for (const i of stellen) {
+        const bild = buehnen[(i + buehnen.length) % buehnen.length]?.querySelector('img')
+        if (bild?.loading === 'lazy') bild.loading = 'eager'
+      }
     }
+    const haltVorladen = inView(feld, () => {
+      haltVorladen()
+      ladeVor(aktuell - 1, aktuell + 1)
+    })
+
+    /** Holt das Feld `i` in der Reihe ins Bild, ohne die Seite zu scrollen. */
+    const holeFeld = (i: number) => {
+      const knopf = felder[i]
+      if (!abzug || !knopf) return
+      const sicht = abzug.scrollLeft
+      const links = knopf.getBoundingClientRect().left - abzug.getBoundingClientRect().left + sicht
+      const rechts = links + knopf.offsetWidth
+      const ziel =
+        links < sicht
+          ? links - 4
+          : rechts > sicht + abzug.clientWidth
+            ? rechts - abzug.clientWidth + 4
+            : sicht
+      if (ziel !== sicht) {
+        abzug.scrollTo({ left: ziel, behavior: bewegt() ? 'smooth' : 'auto' })
+      }
+    }
+
     const zeige = (index: number, richtung = 0) => {
       beende?.()
       const vorher = aktuell
-      const hoeheVorher = feld?.offsetHeight ?? 0
-      setze(vorher, false)
       aktuell = (index + buehnen.length) % buehnen.length
-      setze(aktuell, true)
+      if (aktuell === vorher) return
+      // Wer blättert, bevor die Bühne eingezogen ist, sieht sie im Endzustand.
+      inRuhe(alle('[data-bewegt]', feld))
+      buehnen[vorher]!.hidden = true
+      buehnen[aktuell]!.hidden = false
+      felder.forEach((knopf, i) => {
+        if (i === aktuell) knopf.setAttribute('aria-current', 'true')
+        else knopf.removeAttribute('aria-current')
+      })
+      holeFeld(aktuell)
+      ladeVor(aktuell - 1, aktuell + 1)
       if (zaehler) zaehler.textContent = `${aktuell + 1} von ${buehnen.length}`
-      if (richtung !== 0 && feld && bewegt()) {
-        beende = blaettere(vorher, aktuell, richtung, hoeheVorher, feld)
-      } else {
-        buehnen[aktuell]!.removeAttribute('style')
+      if (ansage) {
+        ansage.textContent = `${buehnen[aktuell]!.dataset.titel}, ${aktuell + 1} von ${buehnen.length}`
       }
+      if (richtung !== 0 && bewegt()) beende = blaettere(vorher, aktuell, richtung, feld)
     }
 
     /**
      * Die Bühne schiebt in Blätterrichtung: Die alte geht 24 px gegen die
-     * Richtung und blendet aus, die neue kommt aus der Richtung. Die alte liegt
-     * dabei über der neuen, damit nichts doppelt hoch steht, und das Feld
-     * wechselt seine Höhe mit, statt zu springen. Zusammen 320 ms.
+     * Richtung und blendet aus, die neue kommt aus der Richtung. Beide liegen
+     * in derselben Zelle, das Feld behält seine Höhe. Zusammen 320 ms.
      */
-    const blaettere = (
-      vorher: number,
-      jetzt: number,
-      richtung: number,
-      hoeheVorher: number,
-      feld: HTMLElement,
-    ) => {
+    const blaettere = (vorher: number, jetzt: number, richtung: number, feld: HTMLElement) => {
       const alt = buehnen[vorher]!
       const neu = buehnen[jetzt]!
-      const zurueck = kacheln[vorher]
 
-      alt.hidden = false
+      alt.style.visibility = 'visible'
       alt.inert = true
-      Object.assign(alt.style, { position: 'absolute', top: '0', left: '0', right: '0' })
       neu.style.opacity = '0'
-      const hoeheJetzt = feld.offsetHeight
-      Object.assign(feld.style, {
-        height: `${hoeheVorher}px`,
-        overflow: 'clip',
-        overflowClipMargin: '0.5rem',
-      })
+      Object.assign(feld.style, { overflow: 'clip', overflowClipMargin: '0.5rem' })
 
       const laeufe: Lauf[] = [
         animate(
@@ -354,11 +501,6 @@ const blaetternKnopf =
           { opacity: [0, 1], x: [WEG_BUEHNE * richtung, 0] },
           { duration: DAUER.basis, delay: DAUER.schnell, ease: KURVE },
         ),
-        animate(
-          feld,
-          { height: [hoeheVorher, hoeheJetzt] },
-          { duration: DAUER.langsam, ease: KURVE },
-        ),
       ]
       if (zaehler) {
         laeufe.push(
@@ -369,25 +511,15 @@ const blaetternKnopf =
           ),
         )
       }
-      // Die Kachel, die ins Raster zurückkehrt, blendet ein, statt aufzutauchen.
-      // Steht das Raster noch aus, zieht sie später mit den anderen ein.
-      if (zurueck && 'gezeigt' in (raster?.dataset ?? {})) {
-        laeufe.push(animate(zurueck, { opacity: [0, 1] }, { duration: DAUER.basis, ease: KURVE }))
-      }
 
       let fertig = false
       const raeumeAuf = () => {
         if (fertig) return
         fertig = true
-        alt.hidden = true
         alt.inert = false
-        alt.removeAttribute('style')
-        neu.removeAttribute('style')
+        for (const buehne of buehnen) buehne.removeAttribute('style')
         zaehler?.removeAttribute('style')
         feld.removeAttribute('style')
-        // Wurde schnell weitergeblättert, hat Motion abgebrochenen Bühnen ihre
-        // Endwerte nachgeschrieben; versteckt stehen sie wieder in Ruhe.
-        for (const buehne of buehnen) if (buehne.hidden) buehne.removeAttribute('style')
       }
       void Promise.all(laeufe.map((lauf) => lauf.finished)).then(() => danach(raeumeAuf))
       return () => {
@@ -396,17 +528,138 @@ const blaetternKnopf =
       }
     }
 
-    zeige(Math.floor(Math.random() * buehnen.length))
     pager.hidden = false
 
     for (const knopf of pager.querySelectorAll<HTMLButtonElement>('[data-richtung]')) {
       knopf.addEventListener('click', () => {
         const richtung = Number(knopf.dataset.richtung)
         zeige(aktuell + richtung, richtung)
-        if (ansage) {
-          ansage.textContent = `${buehnen[aktuell]!.dataset.titel}, ${aktuell + 1} von ${buehnen.length}`
-        }
       })
+    }
+
+    felder.forEach((knopf, i) => {
+      knopf.addEventListener('click', () => zeige(i, Math.sign(i - aktuell)))
+      knopf.addEventListener('pointerenter', () => ladeVor(i), { once: true })
+      knopf.addEventListener('focus', () => ladeVor(i), { once: true })
+    })
+
+    // Pfeiltasten, solange der Fokus in der Galerie steht. Stand er auf der
+    // alten Bühne, wandert er auf die neue, sonst fiele er ins Leere.
+    gruppe.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+      event.preventDefault()
+      const richtung = event.key === 'ArrowLeft' ? -1 : 1
+      const vorher = aktuell
+      const fokus = document.activeElement
+      zeige(aktuell + richtung, richtung)
+      if (buehnen[vorher]!.contains(fokus)) {
+        buehnen[aktuell]!.querySelector<HTMLElement>('[data-buehne-link]')?.focus()
+      } else if (felder.includes(fokus as HTMLButtonElement)) {
+        felder[aktuell]?.focus({ preventScroll: true })
+      }
+    })
+
+    // Wischen am Handy, auf der Bühne. Senkrechtes Scrollen bleibt, wie es ist.
+    let start: { x: number; y: number } | undefined
+    feld.addEventListener(
+      'touchstart',
+      (event) => {
+        const punkt = event.changedTouches[0]
+        start = punkt && { x: punkt.clientX, y: punkt.clientY }
+      },
+      { passive: true },
+    )
+    feld.addEventListener(
+      'touchend',
+      (event) => {
+        const punkt = event.changedTouches[0]
+        if (!start || !punkt) return
+        const dx = punkt.clientX - start.x
+        const dy = punkt.clientY - start.y
+        start = undefined
+        if (Math.abs(dx) < WISCHEN || Math.abs(dx) < Math.abs(dy)) return
+        const richtung = dx < 0 ? 1 : -1
+        zeige(aktuell + richtung, richtung)
+      },
+      { passive: true },
+    )
+  }
+
+  /**
+   * Einzug beim Hereinscrollen, einmal. Die Bühne: Bild zieht sich von links
+   * auf (600 ms), Titel und Text ziehen 8 px ein, gestaffelt. Der
+   * Kontaktabzug: Feld um Feld, 16 px von unten, sobald er selbst im Fenster
+   * steht. Die Bühnen, die gerade nicht dran sind, nehmen danach still den
+   * Endzustand an. Das Sicherheitsnetz in global.css würde sonst nach 2 s
+   * aufdecken, und beim Hereinscrollen zöge alles ein zweites Mal ein; darum
+   * übernimmt das Skript hier.
+   */
+  function richteEinzugEin(
+    gruppe: HTMLElement,
+    feld: HTMLElement,
+    abzug: HTMLElement | null,
+    aktiveBuehne: () => HTMLElement,
+  ) {
+    const buehnenTeile = alle('[data-buehnenfeld] [data-bewegt]', gruppe)
+    const felder = abzug ? alle('[data-bewegt]', abzug) : []
+    for (const teil of [...buehnenTeile, ...felder]) teil.style.animation = 'none'
+
+    /*
+     * Beobachtet wird das Feld, nicht das Bild: Chromium rechnet den
+     * `clip-path` des Ziels in die Sichtbarkeit ein, ein ganz zugezogenes
+     * Bild käme also nie ins Fenster.
+     */
+    const haltBuehne = inView(
+      feld,
+      () => {
+        haltBuehne()
+        const buehne = aktiveBuehne()
+        const pager = gruppe.querySelector<HTMLElement>('[data-pager]')
+        const texte = [
+          ...alle('[data-bewegt="text"]', buehne),
+          ...(pager && !pager.hidden ? [pager] : []),
+        ]
+        const bilder = alle('[data-bewegt="bild"]', buehne)
+        const laeufe = [
+          animate(
+            texte,
+            { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+          ),
+          ...bilder.map((bild) =>
+            animate(
+              bild,
+              { clipPath: ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'] },
+              { duration: DAUER.szene, ease: KURVE },
+            ),
+          ),
+        ]
+        void Promise.all(laeufe.map((lauf) => lauf.finished)).then(() =>
+          danach(() => inRuhe(buehnenTeile)),
+        )
+        // Wer blättert, bevor der Einzug fertig ist, sieht die nächste Bühne
+        // sofort im Endzustand.
+        for (const buehne of alle('[data-buehne]', gruppe)) {
+          if (buehne.hidden) inRuhe(alle('[data-bewegt]', buehne))
+        }
+      },
+      { amount: 0.3 },
+    )
+
+    if (abzug) {
+      const haltAbzug = inView(
+        abzug,
+        () => {
+          haltAbzug()
+          animate(
+            felder,
+            { opacity: [0, 1], transform: [`translateY(${WEG_FELD}px)`, 'none'] },
+            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
+          ).then(() => danach(() => inRuhe(felder)))
+        },
+        { amount: 0.5 },
+      )
     }
   }
 

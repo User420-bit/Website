@@ -1,23 +1,28 @@
 ---
 /**
- * Die Bühne über dem Raster: ein Projekt groß. Oben Titel, Art und Zeitraum,
- * darunter der Screenshot über die volle Breite, dann summary, Stand und die
- * Links. Ohne Screenshot steht an der Stelle des Bildes die summary in großer
+ * Die Bühne der Arbeiten: ein Projekt groß. Oben Titel, Art und Zeitraum,
+ * darunter Screenshot und Text, ab 1024 px nebeneinander (Bild 7, Text 5
+ * Teile), schmaler untereinander. Der Text sind summary, Stand und die Links.
+ * Ohne Screenshot steht an der Stelle des Bildes die summary in großer
  * Schrift, ohne Kasten: ein leerer Rahmen wäre ein Platzhalter. Screenreader
  * lesen die summary in beiden Fällen nach dem Titel.
  *
- * `ProjectShowcase` rendert eine Bühne je Projekt einer Auswahl. Sichtbar ist
- * immer genau eine, die übrigen tragen `hidden`. Die Blättern-Knöpfe gehören
- * der Auswahl, nicht der Bühne, und stehen oben rechts neben dem Titel;
- * `blaettern` hält ihnen dort Platz frei.
+ * `ProjectShowcase` rendert eine Bühne je Projekt einer Auswahl, alle in
+ * derselben Zelle übereinander, damit das Feld so hoch steht wie die höchste
+ * und beim Blättern nichts darunter rutscht. Sichtbar ist immer genau eine,
+ * die übrigen tragen `hidden` (dort: unsichtbar, aber mit Platz). Die
+ * Blättern-Knöpfe gehören der Auswahl, nicht der Bühne, und stehen oben
+ * rechts neben dem Titel; `blaettern` hält ihnen dort Platz frei.
  *
  * Beim Klick wächst der Screenshot, ohne ihn die große summary, in das erste
  * Bild der Projektseite (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
  *
- * Bewegung (docs/BEWEGUNG_PLAN.md, C): Im Bildfeld wandert der Screenshot beim
- * Scrollen leicht (`data-parallaxe`, gesteuert von `ProjectShowcase`), bei
- * Hover und Fokus wächst er auf 1,02. Beides geschieht innen; das Bildfeld
- * selbst trägt nie einen Transform, sonst bräche der Übergang.
+ * Bewegung (docs/ARBEITEN_PLAN.md, 2.4): Beim Hereinscrollen zieht sich das
+ * Bild von links auf (`data-bewegt="bild"`, innen, nie am Bildfeld selbst),
+ * Titel und Text ziehen 8 px ein (`data-bewegt="text"`); beides steuert
+ * `ProjectShowcase`. Im Bildfeld wandert der Screenshot beim Scrollen leicht
+ * (`data-parallaxe`), bei Hover und Fokus wächst er auf 1,02. Das Bildfeld
+ * trägt nie einen Transform, sonst bräche der Übergang.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -37,14 +42,21 @@ const { title, summary, kind, period, status, live, screenshots } = projekt.data
 const bild = leitbild(screenshots)
 ---
 
-<article class="group relative" data-buehne data-titel={title} hidden={hidden}>
-  <div class:list={['flex min-h-11 items-center', blaettern && 'pr-44']}>
+<article
+  class="group relative"
+  data-buehne
+  data-titel={title}
+  data-slug={projekt.id}
+  hidden={hidden}
+>
+  <div class:list={['flex min-h-11 items-center', blaettern && 'pr-44']} data-bewegt="text">
     <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
       <h3 class="display m-0 text-xl font-semibold sm:text-2xl">
         {/* Stretched Link: die ganze Bühne ist klickbar, der Fokus bleibt am Text. */}
         <a
           class="row-title text-fg no-underline after:absolute after:inset-0 after:content-['']"
           href={href(`/projekte/${projekt.id}`)}
+          data-buehne-link
         >
           {title}
         </a>
@@ -56,84 +68,94 @@ const bild = leitbild(screenshots)
     </div>
   </div>
 
-  {
-    bild ? (
-      <div
-        class="mt-4 aspect-video overflow-hidden rounded-sm border border-border transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
-        data-uebergang
-        style={uebergang(projekt.id)}
-      >
-        <div class="h-full" data-parallaxe>
-          <Image
-            class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
-            src={bild.image}
-            alt={bild.caption}
-            widths={[640, 960, 1280, 1600]}
-            sizes="(min-width: 1024px) 62rem, 92vw"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    ) : (
-      <p
-        aria-hidden="true"
-        class="mt-6 mb-0 max-w-[36ch] text-2xl leading-[1.25] font-medium tracking-tight text-balance text-fg-muted sm:text-3xl"
-        data-uebergang
-        style={uebergang(projekt.id)}
-      >
-        {summary}
-      </p>
-    )
-  }
-
-  <div class:list={[bild ? 'mt-5' : 'mt-6']}>
-    <p
-      class:list={['prose-flow m-0 max-w-[60ch] leading-relaxed text-fg-muted', !bild && 'sr-only']}
-    >
-      {summary}
-    </p>
+  <div class="mt-4 lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-x-12">
     {
-      status && (
-        <p
-          class:list={[
-            'prose-flow mb-0 max-w-[60ch] text-sm text-fg-muted',
-            bild ? 'mt-3' : 'mt-0',
-          ]}
+      bild ? (
+        <div
+          class="aspect-video overflow-hidden rounded-sm border border-border transition-colors group-focus-within:border-fg/40 group-hover:border-fg/40 motion-reduce:transition-none"
+          data-uebergang
+          style={uebergang(projekt.id)}
         >
-          <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
+          <div class="h-full" data-bewegt="bild">
+            <div class="h-full" data-parallaxe>
+              <Image
+                class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
+                src={bild.image}
+                alt={bild.caption}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 36rem, 92vw"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p
+          aria-hidden="true"
+          class="m-0 max-w-[36ch] text-2xl leading-[1.25] font-medium tracking-tight text-balance text-fg-muted sm:text-3xl"
+          data-uebergang
+          data-bewegt="text"
+          style={uebergang(projekt.id)}
+        >
+          {summary}
         </p>
       )
     }
-    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-      <p class="m-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
-        Zur Referenz
-        <Arrow
-          class="transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
-        />
+
+    <div class:list={[bild ? 'mt-5 lg:mt-0' : 'mt-6 lg:mt-0']}>
+      <p
+        class:list={[
+          'prose-flow m-0 max-w-[60ch] leading-relaxed text-fg-muted',
+          !bild && 'sr-only',
+        ]}
+        data-bewegt="text"
+      >
+        {summary}
       </p>
       {
-        /* Liegt über dem gestreckten Titel-Link, sonst wäre er weder klick- noch fokussierbar. */
-        live && (
-          <a
-            class="relative z-10 -my-2 inline-flex items-center gap-1 py-2 text-sm font-medium text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent motion-reduce:transition-none"
-            href={live}
-            rel="noopener noreferrer"
-            target="_blank"
+        status && (
+          <p
+            class:list={[
+              'prose-flow mb-0 max-w-[60ch] text-sm text-fg-muted',
+              bild ? 'mt-3' : 'mt-0',
+            ]}
+            data-bewegt="text"
           >
-            Live ansehen<span class="sr-only"> (öffnet in neuem Tab)</span>
-            <svg
-              aria-hidden="true"
-              class="size-3.5"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M5.5 10.5l5-5M6.5 5.5h4v4" />
-            </svg>
-          </a>
+            <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
+          </p>
         )
       }
+      <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2" data-bewegt="text">
+        <p class="m-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
+          Zur Referenz
+          <Arrow
+            class="transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
+          />
+        </p>
+        {
+          /* Liegt über dem gestreckten Titel-Link, sonst wäre er weder klick- noch fokussierbar. */
+          live && (
+            <a
+              class="relative z-10 -my-2 inline-flex items-center gap-1 py-2 text-sm font-medium text-fg underline decoration-border underline-offset-4 transition-colors hover:decoration-accent motion-reduce:transition-none"
+              href={live}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Live ansehen<span class="sr-only"> (öffnet in neuem Tab)</span>
+              <svg
+                aria-hidden="true"
+                class="size-3.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M5.5 10.5l5-5M6.5 5.5h4v4" />
+              </svg>
+            </a>
+          )
+        }
+      </div>
     </div>
   </div>
 </article>
