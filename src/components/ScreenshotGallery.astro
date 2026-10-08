@@ -56,10 +56,10 @@ const weitere = leitbild ? bilder.slice(1) : bilder
 const id = (shot: Shot) => `bild-${bilder.indexOf(shot) + 1}`
 
 const knopf =
-  'block cursor-zoom-in overflow-hidden rounded-sm border border-border p-0 transition-colors hover:border-fg/40 focus-visible:border-fg/40 motion-reduce:transition-none'
+  'block cursor-zoom-in overflow-hidden rounded-sm border border-border p-0 transition-colors hover:border-border-strong focus-visible:border-border-strong motion-reduce:transition-none'
 /** Knöpfe in der Kopfzeile der Lightbox, Blättern und Schließen im selben Stil. */
 const kopfKnopf =
-  'inline-flex h-9 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-sm border border-fg/25 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
+  'inline-flex h-9 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md border border-border-strong bg-surface text-sm font-medium text-fg transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent motion-reduce:transition-none'
 /** Nachbar im Kreis: nach dem letzten Bild kommt das erste. */
 const nachbar = (i: number, schritt: number) =>
   bilder[(i + schritt + bilder.length) % bilder.length]!

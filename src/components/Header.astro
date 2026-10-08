@@ -23,14 +23,20 @@ interface Props {
 
 const { isHome = false, name } = Astro.props
 
+/*
+ * Die Anker stehen in Tinte und Gewicht 500, nicht mehr in Bleistiftgrau
+ * (seit 2026-10-08): Sie sind der Weg durch die Seite und sahen aus wie der
+ * Fuß. Hover legt verdünntes Orange hinter den Link, der aktive Anker steht
+ * in Orange mit Strich darunter.
+ */
 const linkClass =
-  'nav-link relative inline-block px-1 py-1 text-fg-muted no-underline transition-colors hover:text-fg after:absolute after:inset-x-1 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-accent after:transition-transform hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none'
+  'nav-link relative inline-block rounded-md px-1 py-1.5 text-sm font-medium text-fg no-underline transition-colors hover:bg-accent-soft hover:text-accent after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 sm:px-2.5 sm:text-[0.9375rem] sm:after:inset-x-2.5 after:origin-right after:scale-x-0 after:bg-accent after:transition-transform hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none'
 ---
 
 <header class="site-header sticky top-0 z-50 bg-bg">
   <a
     href="#inhalt"
-    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-fg"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-fg"
   >
     Zum Inhalt springen
   </a>
@@ -45,7 +51,7 @@ const linkClass =
       {name}
     </a>
     <nav aria-label="Hauptnavigation" class="relative hidden sm:block">
-      <ul class="-mx-1 flex list-none flex-wrap justify-end gap-x-3 gap-y-1 p-0 text-sm">
+      <ul class="-mx-2.5 flex list-none flex-wrap justify-end gap-x-1 gap-y-1 p-0">
         {
           NAV_ITEMS.map((item) => (
             <li>
@@ -68,7 +74,7 @@ const linkClass =
   /* Handy: dieselben Anker unter dem Kopf, nicht klebend. Verteilt statt mit festem Abstand, damit sie ab 360 px in eine Zeile passen. */
 }
 <nav aria-label="Hauptnavigation" class="relative mx-auto w-full max-w-5xl px-4 pb-2 sm:hidden">
-  <ul class="-mx-1 flex list-none flex-wrap justify-between gap-y-1 p-0 text-sm">
+  <ul class="-mx-1 flex list-none flex-wrap justify-between gap-y-1 p-0">
     {
       NAV_ITEMS.map((item) => (
         <li>
@@ -92,7 +98,7 @@ const linkClass =
    * als die Regel in global.css; deshalb beides hier, ungeschichtet.
    */
   .nav-link[aria-current='true'] {
-    color: var(--color-fg);
+    color: var(--color-accent);
   }
   .nav-link[aria-current='true']::after {
     scale: 1;
@@ -113,7 +119,7 @@ const linkClass =
     top: 0;
     left: 0;
     width: 1px;
-    height: 1px;
+    height: 2px;
     background-color: var(--color-accent);
     transform-origin: 0 0;
     opacity: 0;

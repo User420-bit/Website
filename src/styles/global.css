@@ -23,11 +23,19 @@
 
   --color-bg: oklch(0.99 0.002 80);
   --color-bg-elevated: oklch(1 0 0);
-  --color-fg: oklch(0.18 0.005 80);
-  --color-fg-muted: oklch(0.43 0.008 80);
-  --color-accent: oklch(0.52 0.16 50);
+  /* Werkbank: eine Stufe unter Papier, Fläche von Sekundärknöpfen und Vorschaufeldern. */
+  --color-surface: oklch(0.965 0.004 80);
+  --color-fg: oklch(0.17 0.006 80);
+  --color-fg-muted: oklch(0.4 0.01 80);
+  --color-accent: oklch(0.5 0.17 50);
+  /* Orange, gedrückt: Hover des Primärknopfs. */
+  --color-accent-strong: oklch(0.43 0.16 48);
+  /* Orange, verdünnt: Fläche hinter Hover und gewähltem Zustand, nie für Text. */
+  --color-accent-soft: oklch(0.95 0.035 65);
   --color-accent-fg: oklch(0.99 0 0);
-  --color-border: oklch(0.89 0.004 80);
+  --color-border: oklch(0.87 0.005 80);
+  /* Rand von allem, was man drücken kann: 3 : 1 auf Papier (WCAG 1.4.11). */
+  --color-border-strong: oklch(0.66 0.01 80);
 
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
@@ -47,22 +55,30 @@
     :root:not([data-theme='light']) {
       --color-bg: oklch(0.17 0.004 80);
       --color-bg-elevated: oklch(0.22 0.005 80);
+      --color-surface: oklch(0.21 0.005 80);
       --color-fg: oklch(0.96 0.003 80);
-      --color-fg-muted: oklch(0.74 0.008 80);
-      --color-accent: oklch(0.78 0.15 60);
+      --color-fg-muted: oklch(0.77 0.008 80);
+      --color-accent: oklch(0.79 0.15 62);
+      --color-accent-strong: oklch(0.85 0.14 68);
+      --color-accent-soft: oklch(0.27 0.04 60);
       --color-accent-fg: oklch(0.17 0.02 60);
-      --color-border: oklch(0.38 0.006 80);
+      --color-border: oklch(0.4 0.006 80);
+      --color-border-strong: oklch(0.58 0.01 80);
     }
   }
 
   :root[data-theme='dark'] {
     --color-bg: oklch(0.17 0.004 80);
     --color-bg-elevated: oklch(0.22 0.005 80);
+    --color-surface: oklch(0.21 0.005 80);
     --color-fg: oklch(0.96 0.003 80);
-    --color-fg-muted: oklch(0.74 0.008 80);
-    --color-accent: oklch(0.78 0.15 60);
+    --color-fg-muted: oklch(0.77 0.008 80);
+    --color-accent: oklch(0.79 0.15 62);
+    --color-accent-strong: oklch(0.85 0.14 68);
+    --color-accent-soft: oklch(0.27 0.04 60);
     --color-accent-fg: oklch(0.17 0.02 60);
-    --color-border: oklch(0.38 0.006 80);
+    --color-border: oklch(0.4 0.006 80);
+    --color-border-strong: oklch(0.58 0.01 80);
   }
 }
 
@@ -101,7 +117,7 @@
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 
   ::selection {

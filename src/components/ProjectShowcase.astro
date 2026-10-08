@@ -27,9 +27,10 @@
  * Bewegung: Beim Hereinscrollen zieht sich das Bild der Bühne von links auf,
  * Titel und Text ziehen ein, die Felder des Kontaktabzugs kommen gestaffelt.
  * Beim Blättern schiebt die Bühne in Blätterrichtung und der Strich wandert
- * zum neuen Feld, beim Umschalten blendet die Auswahl über, das Bild der
- * Bühne wandert beim Scrollen im Rahmen. Ohne das alles bleibt es beim harten
- * Wechsel.
+ * zum neuen Feld, beim Umschalten blendet die Auswahl über. Das Bild der
+ * Bühne steht still: Es ist ein Screenshot, also Beleg, und eine Parallaxe
+ * bräuchte Überstand, der die Ränder abschnitte (bis 2026-10-08 so, 3 % je
+ * Kante). Ohne das alles bleibt es beim harten Wechsel.
  */
 import type { CollectionEntry } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
@@ -64,11 +65,11 @@ const sichtbar = gruppen.filter((gruppe) => gruppe.projekte.length > 0)
 
 const reiter = 'relative inline-flex items-baseline gap-2 rounded-sm py-3 text-sm font-medium'
 const reiterWaehlbar =
-  'cursor-pointer text-fg-muted transition-colors after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:text-fg has-checked:text-fg has-checked:after:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:after:transition-none'
-const reiterAusgegraut = 'cursor-not-allowed text-fg-muted/60'
+  'cursor-pointer text-fg transition-colors after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:text-accent has-checked:text-accent has-checked:after:scale-x-100 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent motion-reduce:transition-none motion-reduce:after:transition-none'
+const reiterAusgegraut = 'cursor-not-allowed text-fg-muted/70'
 
 const blaetternKnopf =
-  'inline-flex size-11 cursor-pointer items-center justify-center rounded-sm border border-fg/25 text-fg transition-colors hover:border-accent hover:text-accent motion-reduce:transition-none'
+  'inline-flex size-11 cursor-pointer items-center justify-center rounded-md border border-border-strong bg-surface text-fg transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent motion-reduce:transition-none'
 ---
 
 <div class="showcase" data-showcase>
@@ -295,7 +296,6 @@ const blaetternKnopf =
     DAUER,
     inView,
     KURVE,
-    scroll,
     stagger,
     STAFFEL,
     WEG_TEXT,
@@ -305,10 +305,6 @@ const blaetternKnopf =
   const WEG_BUEHNE = 24
   /** Wie weit ein Feld des Kontaktabzugs einzieht. */
   const WEG_FELD = 16
-  /** Wie weit das Bild im Rahmen wandert, in Prozent, je Richtung. */
-  const WEG_BILD = 2.5
-  /** So groß steht das Bild im Rahmen, damit beim Wandern kein Rand entsteht. */
-  const BILD_GROESSE = 1.06
   /** Ab so vielen Pixeln waagerecht gilt eine Berührung als Wischen, wie in der Lightbox. */
   const WISCHEN = 48
 
@@ -398,21 +394,6 @@ const blaetternKnopf =
     )
 
     if (mitEinzug) richteEinzugEin(gruppe, feld, abzug, () => buehnen[aktuell]!)
-
-    // Bild der Bühne: wandert beim Scrollen leicht im Rahmen. Gemessen wird das
-    // Bühnenfeld, nicht das Bild: Es steht immer da, auch wenn geblättert wird.
-    const rahmen = alle('[data-parallaxe]', gruppe)
-    if (rahmen.length > 0 && bewegt()) {
-      scroll(() => {
-        const ort = feld.getBoundingClientRect()
-        if (ort.height === 0) return // Die Auswahl ist gerade nicht gewählt.
-        const weg = (innerHeight - ort.top) / (innerHeight + ort.height)
-        const y = (Math.min(Math.max(weg, 0), 1) - 0.5) * 2 * WEG_BILD
-        for (const bild of rahmen) {
-          bild.style.transform = `translateY(${y.toFixed(2)}%) scale(${BILD_GROESSE})`
-        }
-      })
-    }
 
     if (buehnen.length < 2 || !pager) return
 
