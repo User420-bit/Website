@@ -55,8 +55,8 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 - Seiten: Startseite (Arbeiten, Leistungen, Arbeitsweise, Über Klartext, Kontakt), eine Seite pro
   Projekt unter `/projekte/<slug>/`, alle Arbeiten unter `/projekte/`, Werkzeuge unter `/werkzeuge/`, Impressum, Datenschutz, 404.
 - Recht: Impressumspflicht nach § 5 DDG. `scripts/guard-legal.mjs` blockiert den Deploy, bis `street`
-  und `zipCity` in `src/content/legal.json` gesetzt sind. Beide sind noch `null`, die Seite ist also
-  nicht live.
+  und `zipCity` in `src/content/legal.json` gesetzt sind. Beide stehen seit dem 2026-09-16 drin
+  (Kirchdorfer Straße 1b, 83052 Bruckmühl; vom Inhaber am 2026-10-08 bestätigt), die Seite ist live.
 - Aktuelle Umsetzungsentscheidungen, vom Inhaber **nicht als verbindlich bestätigt**: kein Tracking,
   keine Cookies, keine Drittanbieter-Ressourcen, keine Speicherung im Browser, fast kein JavaScript,
   Hell-/Dunkelmodus nach Systemeinstellung. Die Datenschutzerklärung beschreibt diesen Zustand. Jede
