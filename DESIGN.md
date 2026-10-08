@@ -236,9 +236,9 @@ ein einziges Werkstatt-Orange, das dort auftaucht, wo gehandelt, belegt oder fok
 
 Die Ordnung kommt aus dem Buch selbst: Jedes Kapitel öffnet mit einer Tintenlinie, darunter Nummer,
 Überschrift und einleitender Satz, dann der Inhalt, gegliedert durch Haarlinien. Auf der Startseite
-stehen die Arbeiten als Raster gleich großer Kacheln, jede mit einem Bildfeld, aber ohne Kasten um die
-Kachel; unter `/projekte/` als linierte Zeilen wie in einem Hauptbuch. Ein Kasten entsteht nur dort, wo
-wirklich etwas ein Behälter ist.
+steht eine Arbeit groß auf der Bühne, darunter alle Arbeiten als Kontaktabzug kleiner Bildfelder, wie
+auf den Projektseiten; unter `/projekte/` stehen sie als linierte Zeilen wie in einem Hauptbuch. Ein
+Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
 
 Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen,
 begrenzte Zeilenbreite, flache Flächen ohne Schatten. Sachlich heißt: eine einzige, selbst gehostete
@@ -348,8 +348,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   Größe in 500, Bleistiftgrau und Zeilenhöhe 1,375 trägt die Unterzeile „Für wen“ direkt unter der
   H1.
 - **Title** (600, 1,25rem, 1,4, −0,025em): jede H2 auf Projekt-, Werkzeug- und Rechtsseiten.
-- **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten, einer Kachel und
-  die Wortmarke.
+- **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die
+  Wortmarke.
 - **Subhead** (500, 1rem, 1,5): Titel eines Aufklappers, Name eines Werts.
 - **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten. Auf
   Projektseiten unter 640 px 1rem, damit die Bühne früher beginnt (siehe Bühne der Projektseite).
@@ -358,9 +358,9 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Body Small** (400, 0,875rem, 1,429): Beschreibungen in Zeilen und Aufklappern, Zeiträume,
   Meta-Liste, Footer, Navigation.
 - **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen, die leisen
-  Zwischenüberschriften in Bleistiftgrau („Weitere Kundenprojekte“, „Im Einzelnen“) und die Einträge
-  des Umschalters.
-- **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel).
+  Zwischenüberschriften in Bleistiftgrau („Im Einzelnen“) und die Einträge des Umschalters.
+- **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel) und Titel unter den Feldern des
+  Kontaktabzugs der Arbeiten.
 - **Caption** (400, 0,75rem): Belegzeile und der Webmail-Hinweis im Kontakt.
 - **Mono** (400, 0,75rem, Zeilenhöhe 1,5rem) und **Code** (400, 0,875rem, 1,625): Zeile „Technik“ der
   Meta-Liste und Codeblöcke. Beides nur auf Projektseiten.
@@ -400,11 +400,12 @@ Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Sei
 ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
 ebenfalls die volle Spalte.
 
-**Zeilen statt Raster, bis auf die Arbeiten:** Listen sind linierte Zeilen. Die eine Ausnahme sind die
-Arbeiten der Startseite, vom Inhaber am 2026-09-23 so entschieden: Umschalter „Kunden · Eigene
-Projekte“, darunter die Bühne mit einem Projekt, darunter die übrigen Arbeiten der Auswahl als Raster
-gleich großer Kacheln (1 Spalte, ab 640 px 2, ab 1024 px 3; 1,5rem Spalten-, 2,5rem Zeilenabstand)
-unter einer Haarlinie. Jede Arbeit steht genau einmal da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
+**Zeilen statt Raster:** Listen sind linierte Zeilen. Die Arbeiten der Startseite (seit dem
+2026-10-08, vorher ein Raster unter der Bühne): Umschalter „Kunden · Eigene Projekte“, darunter die
+Bühne mit einer Arbeit, ab 1024 px zweispaltig (`7fr | 5fr`, 3rem Abstand, links das Bild, rechts der
+Text), darunter 2rem tiefer der Kontaktabzug als eine Reihe, die nicht umbricht (Felder 6 bis 8rem
+breit, 0,75rem Abstand; passt sie nicht, scrollt sie waagerecht), darunter 1,5rem tiefer „Alle
+Arbeiten ansehen“. Jede Arbeit steht genau einmal groß da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
 Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
 Klartext: der Text in einer Spalte (65ch), darunter das Foto über die volle Spaltenbreite. Kontakt:
 ab 1024 px zwei Spalten `1fr | 1fr` mit 3rem Abstand unter je einer Haarlinie — links Adresse und
@@ -557,30 +558,39 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Ausgegrauter Reiter:** Sind alle Arbeiten einer Auswahl unveröffentlicht (`published: false`),
   bleibt ihr Reiter stehen, aber in `fg-muted/60`, mit „folgt“ statt der Anzahl, ohne Hover, mit
   Cursor `not-allowed` und `disabled`, also weder per Klick noch per Pfeiltaste wählbar. Bühne und
-  Raster der Auswahl fehlen, beim Öffnen steht die nächste. So steht „Kunden“ seit dem
+  Kontaktabzug der Auswahl fehlen, beim Öffnen steht die nächste. So steht „Kunden“ seit dem
   2026-09-24, bis PointCare oder JustBeauty freigeschaltet sind.
-- **Bühne** (`ProjectSpotlight`): ein Projekt der Auswahl groß, beim Aufruf zufällig gewählt, ohne
-  automatischen Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter 640 px darunter),
-  dann der Screenshot über die volle Breite (16:9, 4 px, 1 px Liniengrau), dann summary, „Stand: …“
-  und die Links wie in der Feature-Zeile. Ohne Screenshot steht an der Stelle des Bildes die summary
-  in Title Large, 500, Bleistiftgrau, max. 36ch, ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter.
+- **Bühne** (`ProjectSpotlight`): eine Arbeit der Auswahl groß. Beim Öffnen steht die erste nach
+  `order` (bis 2026-10-08 zufällig); kommt der Besucher von einer Projektseite zurück, steht deren
+  Arbeit da. Kein automatischer Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter
+  640 px darunter). Darunter ab 1024 px nebeneinander, schmaler untereinander: der Screenshot (16:9,
+  4 px, 1 px Liniengrau) und summary, „Stand: …“ und die Links wie in der Feature-Zeile. Ohne
+  Screenshot steht an der Stelle des Bildes die summary in Title Large, 500, Bleistiftgrau, max. 36ch,
+  ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter. Alle Bühnen einer Auswahl liegen in derselben
+  Zelle übereinander, die nicht gewählten unsichtbar (`visibility: hidden`): Das Feld ist so hoch wie
+  die höchste Bühne, und beim Blättern rutscht nichts darunter.
 - **Blättern:** oben rechts neben dem Titel, damit die Knöpfe beim Wechsel zwischen Bild und Satz
   nicht wandern. Zwei quadratische Knöpfe (2,75rem, 4 px, Rand `fg/25`, Hover orange) mit Pfeil,
   dazwischen „2 von 8“ in Tabellenziffern. Nur mit JavaScript sichtbar; ein unsichtbarer
-  `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Die Bühne schiebt in
+  `aria-live`-Bereich sagt nach jedem Wechsel Titel und Stelle an. Pfeiltasten links/rechts blättern,
+  solange der Fokus in der Galerie steht, Wischen auf der Bühne ab 48 px ebenso. Die Bühne schiebt in
   Blätterrichtung (24 px, 320 ms), der Umschalter blendet die Auswahl über (120 / 200 ms); ohne Skript
   und ohne Bewegung wechselt beides sofort.
-- **Kachel** (`ProjectTile`): Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
-  Werkbankschwarz), darunter Titel in Title Small, der erste Satz der summary in Body Small und Art ·
-  Zeitraum. Kein Kasten um die Kachel. Der Titel-Link ist auf die ganze Kachel gestreckt; bei Hover
-  oder Fokus zieht der Unterstrich auf und der Rahmen des Bildfelds dunkelt auf `fg/40`. Beim Klick
-  wächst das Bildfeld in die Projektseite (Bewegung, Seitenwechsel).
-- **Satzkachel:** Ohne Screenshot steht der erste Satz der summary im Bildfeld, oben links, 500,
-  Bleistiftgrau, Zeilenhöhe 1,2. Die Größe folgt der Satzlänge und der Kachelbreite (5 bis 8,5 `cqi`,
-  Innenabstand 6 `cqi`), damit der Satz das Feld füllt, ohne überzulaufen. Unter dem Titel steht er
-  dann nur für Screenreader.
-- **Kachelbild einer iPhone-App** (entschieden am 2026-09-30, Availably): Wo es keinen
-  Browser-Screenshot geben kann, zeigt die Kachel zwei iPhones nebeneinander auf Weiß, mit Schatten im
+- **Kontaktabzug** (`ProjectThumb`, seit 2026-10-08 statt des Rasters): je Arbeit der Auswahl ein
+  Feld, in der Reihenfolge `order`. Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
+  Werkbankschwarz), darunter der Titel in Label Small, Bleistiftgrau, einzeilig mit Auslassung. Das
+  Feld der Arbeit auf der Bühne trägt `aria-current`: Rahmen und Titel in Tinte, darunter ein
+  2-px-Strich in Orange, der beim Blättern von links aufzieht (200 ms), wie unter dem gewählten
+  Reiter. Hover und Fokus dunkeln den Rahmen auf `fg/40`, das Bild wächst auf 1,02. Passt die Reihe
+  nicht in die Spalte (am Handy ab vier Arbeiten), scrollt sie waagerecht mit `scroll-snap`, ohne
+  Scrollleiste; das angeschnittene letzte Feld zeigt, dass es weitergeht. Ohne Skript ist jedes Feld
+  ein Link auf die Projektseite, mit Skript ein Knopf, der die Arbeit auf die Bühne holt. Ohne
+  Screenshot steht der erste Satz der summary klein im Bildfeld (0,625rem, vier Zeilen). Die Felder
+  tragen kein `data-uebergang`; Ziel des Übergangs ist allein die Bühne.
+- **Alle Arbeiten ansehen:** Text-Button unter dem Kontaktabzug, nach `/projekte/`. Die einzige
+  Stelle der Startseite, die zu allen Arbeiten auf einer Seite führt.
+- **Vorschaubild einer iPhone-App** (entschieden am 2026-09-30, Availably): Wo es keinen
+  Browser-Screenshot geben kann, zeigen Bühne und Kontaktabzug zwei iPhones nebeneinander auf Weiß, mit Schatten im
   Bild. Die Bildschirme sind echte Aufnahmen aus dem Simulator, gezeichnet sind nur die Rahmen; die
   Bildunterschrift sagt das. Der Schatten liegt im Bild, nicht im CSS: Die Regel „kein Schatten“ für
   Komponenten bleibt. Auf der Projektseite zeigt die Galerie dieses Bild nicht, weil die Bühne
@@ -729,8 +739,8 @@ Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 
 ### Containers
 
-Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle; auch die Kacheln der Startseite
-rahmen nur ihr Bildfeld.
+Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle; auch Bühne und Kontaktabzug der
+Startseite rahmen nur ihre Bildfelder.
 
 - **Codeblock:** 12 px, Karteikartenweiß bzw. Werkbankschwarz, 1 px Liniengrau, 1rem Innenabstand,
   Code-Schrift, horizontal scrollbar.
@@ -784,7 +794,9 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
 - **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
   Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
 - **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
-  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`), Kacheln kommen bis 16 px weit.
+  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`), Felder eines Kontaktabzugs
+  kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
+  (`clip-path`); das Bildfeld darum bleibt unberührt, es ist Ziel des Übergangs.
 - **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Linie, 2 px Pfeil, Bild 1,02).
   Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
 - **Nichts bleibt transformiert:** nach jeder Bewegung `transform: none`, `opacity: 1`. Elemente mit
@@ -798,10 +810,11 @@ Was die Seite außerdem kann und behält:
 
 - **Seitenwechsel:** native View Transition zwischen Dokumenten (`@view-transition { navigation: auto }`,
   200 ms); der Header trägt einen eigenen `view-transition-name` und bleibt stehen. Dazu wächst das
-  Bildfeld der Kachel, der Bühne oben oder der Zeile unter `/projekte/` in 320 ms in das erste große
-  Bild der Projektseite und beim Zurück wieder hinein (`data-uebergang`, Name `projekt-<slug>`). Der
-  Rahmen schneidet zu (`overflow: clip`), statt zu verzerren; das alte Bild blendet in 120 ms aus.
-  Namen gelten nur während des Übergangs und nur für Elemente im Fenster (`ProjectTransition`).
+  Bildfeld der Bühne der Startseite oder der Zeile unter `/projekte/` in 320 ms in das erste große
+  Bild der Projektseite und beim Zurück wieder hinein (`data-uebergang`, Name `projekt-<slug>`); damit
+  das geht, steht nach dem Zurück die Arbeit auf der Bühne, von der der Besucher kommt. Der Rahmen
+  schneidet zu (`overflow: clip`), statt zu verzerren; das alte Bild blendet in 120 ms aus. Namen
+  gelten nur während des Übergangs und nur für sichtbare Elemente im Fenster (`ProjectTransition`).
 - **Header-Haarlinie:** erscheint scrollgesteuert zwischen 0 und 4rem.
 - **Ankersprünge:** `scroll-behavior: smooth`.
 - **Bühne:** die Szene einer Projektseite darf sich beim Laden oder Scrollen bewegen, nach den Regeln
@@ -855,9 +868,10 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Don't** eine zweite Akzentfarbe oder farbige Flächen einführen.
 - **Don't** Rohfarbwerte in Komponenten schreiben; sie brechen den Dunkelmodus.
 - **Don't** Fließtext breiter als 65ch laufen lassen.
-- **Don't** Listen als Kartenraster bauen. Die Ausnahme sind die Arbeiten der Startseite (Entscheidung
-  vom 2026-09-23), und auch dort ohne Kasten um die Kachel. Ein Kasten nur, wo etwas wirklich ein
-  Behälter ist.
+- **Don't** Listen als Kartenraster bauen, auch nicht die Arbeiten der Startseite (seit 2026-10-08
+  Bühne und Kontaktabzug statt Raster). Ein Kasten nur, wo etwas wirklich ein Behälter ist.
+- **Don't** die Arbeiten von selbst wechseln lassen. Geblättert wird von Hand (Entscheidung vom
+  2026-10-08, docs/ARBEITEN_PLAN.md).
 - **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
@@ -865,7 +879,7 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
   Anfangszustand außerhalb von `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung
   steht der Endzustand, überall.
 - **Don't** Motion direkt importieren; Kurve, Dauern und Prüfungen kommen aus `src/lib/motion.ts`.
-- **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Kachel der
+- **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Arbeiten der
   Startseite oder die Zeile unter `/projekte/`. Dort ist Gleichheit die Aussage.
 - **Don't** eine Szene als Screenshot ausgeben oder eine Bildunterschrift ohne „Kein Screenshot“
   schreiben. Echte Aufnahmen beginnen mit „Aufnahme“ und sagen, was daran gezeichnet ist.

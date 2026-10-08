@@ -1,0 +1,122 @@
+---
+/**
+ * Ein Feld im Kontaktabzug unter der Bühne der Arbeiten: kleines Bildfeld
+ * 16:9, darunter der Titel. Das Feld der Arbeit, die gerade auf der Bühne
+ * steht, trägt `aria-current`: Rahmen und Titel in Tinte, darunter ein Strich
+ * in Orange wie unter dem gewählten Reiter des Umschalters.
+ *
+ * Ohne Skript ist das Feld ein Link auf die Projektseite, so erreicht man jede
+ * Arbeit mit einem Klick, auch wenn nicht geblättert werden kann.
+ * `ProjectShowcase` tauscht den Link gegen einen Knopf, der die Arbeit auf die
+ * Bühne holt (`data-ziel`); ein Link, der nicht navigiert, wäre für
+ * Screenreader eine falsche Ankündigung.
+ *
+ * Ohne Screenshot im Querformat steht der erste Satz der summary klein im
+ * Bildfeld, nur fürs Auge. Das Bild ist Vorschau, kein Inhalt: `alt=""`, der
+ * Titel benennt das Feld.
+ */
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import { firstSentence, href, leitbild } from '@/lib/site'
+
+interface Props {
+  projekt: CollectionEntry<'projekte'>
+  /** Stelle in der Auswahl, dieselbe wie die der Bühne. */
+  index: number
+  aktiv?: boolean
+}
+
+const { projekt, index, aktiv = false } = Astro.props
+const { title, summary, screenshots } = projekt.data
+const bild = leitbild(screenshots)
+---
+
+<li class="min-w-0" data-bewegt="feld">
+  <a
+    class="thumb group/thumb relative block pb-2.5 no-underline"
+    href={href(`/projekte/${projekt.id}`)}
+    data-ziel={index}
+    aria-current={aktiv ? 'true' : undefined}
+  >
+    <span
+      class="thumb-rahmen @container block aspect-video overflow-hidden rounded-sm border border-border bg-bg-elevated transition-colors motion-reduce:transition-none"
+    >
+      {
+        bild ? (
+          <Image
+            class="block h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-hover/thumb:scale-[1.02] motion-safe:group-focus-visible/thumb:scale-[1.02]"
+            src={bild.image}
+            alt=""
+            widths={[160, 320]}
+            sizes="(min-width: 640px) 128px, 96px"
+            loading="lazy"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            class="line-clamp-4 block p-[6cqi] text-[0.625rem] leading-tight font-medium text-fg-muted"
+          >
+            {firstSentence(summary)}
+          </span>
+        )
+      }
+    </span>
+    <span
+      class="thumb-titel mt-2 block truncate text-[0.8125rem] font-medium text-fg-muted transition-colors motion-reduce:transition-none"
+    >
+      {title}
+    </span>
+    <span aria-hidden="true" class="thumb-strich" data-thumb-strich></span>
+  </a>
+</li>
+
+<style>
+  /*
+   * Zustände am Feld selbst, damit Link und Knopf (nach dem Tausch) gleich
+   * aussehen: Hover und Tastaturfokus dunkeln den Rahmen, das gewählte Feld
+   * steht in Tinte.
+   */
+  .thumb:hover .thumb-rahmen,
+  .thumb:focus-visible .thumb-rahmen {
+    border-color: color-mix(in oklch, var(--color-fg) 40%, transparent);
+  }
+  .thumb:hover .thumb-titel,
+  .thumb:focus-visible .thumb-titel,
+  .thumb[aria-current='true'] .thumb-titel {
+    color: var(--color-fg);
+  }
+  .thumb[aria-current='true'] .thumb-rahmen {
+    border-color: var(--color-fg);
+  }
+
+  /* Der Strich unter dem gewählten Feld, wie unter dem gewählten Reiter. */
+  .thumb-strich {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .thumb[aria-current='true'] .thumb-strich {
+    transform: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .thumb-strich {
+      transition: transform var(--duration-base) var(--ease-quiet);
+    }
+  }
+
+  /* Der Knopf nach dem Tausch sieht aus wie der Link davor. */
+  button.thumb {
+    width: 100%;
+    padding-inline: 0;
+    padding-top: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+</style>

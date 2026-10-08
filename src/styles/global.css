@@ -291,8 +291,8 @@
 
 /*
  * Seitenwechsel: ein kurzes Ueberblenden, der Header bleibt stehen. Dazu
- * waechst das Bildfeld einer Kachel in das erste Bild der Projektseite und
- * beim Zurueck wieder in die Kachel: Beide tragen `data-uebergang`, der Name
+ * waechst das Bildfeld der Buehne in das erste Bild der Projektseite und
+ * beim Zurueck wieder in die Buehne: Beide tragen `data-uebergang`, der Name
  * `projekt-<slug>` kommt ueber `--uebergang` (`uebergang` in src/lib/site.ts).
  * Die Seitenverhaeltnisse unterscheiden sich; `overflow: clip` schneidet den
  * wachsenden Rahmen zu, statt die Bilder zu verzerren.
@@ -322,7 +322,7 @@
   ::view-transition-old(.projektbild) {
     animation-duration: var(--duration-fast);
   }
-  /* Ohne Gegenstueck (die uebrigen Kacheln) blendet ein Bild so schnell wie die Seite. */
+  /* Ohne Gegenstueck blendet ein Bild so schnell wie die Seite. */
   ::view-transition-old(.projektbild):only-child,
   ::view-transition-new(.projektbild):only-child {
     animation-duration: var(--duration-base);

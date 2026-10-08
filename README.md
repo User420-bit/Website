@@ -80,8 +80,9 @@ learnings:
 Der Fließtext hier erscheint als Überblick auf der Referenzseite.
 ```
 
-Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/`, die Kachel auf
-der Startseite (unter „Kunden“, wenn `kind` `kundenprojekt` ist, sonst unter „Eigene Projekte“) sowie
+Der Dateiname wird zur URL: `/projekte/mein-projekt/`. Die Zeile auf `/projekte/`, Bühne und Feld im
+Kontaktabzug der Startseite (unter „Kunden“, wenn `kind` `kundenprojekt` ist, sonst unter „Eigene
+Projekte“) sowie
 die Detailseite entstehen automatisch, und `npm run test:build` prüft die neue Route
 ohne weiteres Zutun. Ein Eintrag in `leistungen.json` kann das Projekt unter `evidence`
 als Beleg nennen – der Slug ist der Dateiname ohne `.md`.
@@ -125,13 +126,13 @@ Handaufnahmen, etwa aus dem Spiel heraus oder im Handyformat, liegen daneben als
 sie nicht an und fragt bei Projekten, die schon eigene Bilder eingetragen haben, nicht mehr nach
 dem Eintrag.
 
-Availably läuft nur auf dem iPhone. Sein Kachelbild (`availably.png`, beide iPhones auf Weiß) baut
+Availably läuft nur auf dem iPhone. Sein Vorschaubild (`availably.png`, beide iPhones auf Weiß) baut
 `node scripts/kachelbild-availably.mjs` aus den Simulator-Aufnahmen im Nachbar-Repo
 `../Availably/docs/vorschau/`.
 
-Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/`, in der Kachel auf der
-Startseite und über die volle Breite, wenn das Projekt dort oben groß steht. Ohne Bild zeigt die
-Kachel den ersten Satz der `summary`. Die Projektseite zeigt es oben über die volle Breite, die
+Das erste Bild im Querformat erscheint in der Zeile auf `/projekte/` und auf der Startseite groß auf
+der Bühne und klein im Kontaktabzug darunter. Ohne Bild zeigen beide die `summary` bzw. deren ersten
+Satz. Die Projektseite zeigt es oben über die volle Breite, die
 übrigen Bilder als Reihe kleiner Vorschaubilder darunter; jedes Bild vergrößert sich per Klick in einer
 Lightbox, ohne JavaScript. Nach einer sichtbaren Änderung am
 Projekt das Skript erneut laufen lassen und das Bild mit committen.
