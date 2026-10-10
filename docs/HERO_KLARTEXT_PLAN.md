@@ -85,9 +85,11 @@ eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
   des Geredes bei jedem Frame. Die Kopie wird mit der Display-Schriftart gerendert und von
   `scale(klein)` auf `scale(1)` gezogen. Instrument Sans, Gewicht 600, `letter-spacing -0.03em` auf
   der Kopie von Anfang an, damit der Umriss beim Andocken stimmt.
-- **Einmal pro Sitzung.** `sessionStorage['klartext-hero']` wird nach dem ersten Lauf gesetzt. Beim
-  Neuladen und beim Zurückkommen von einer Projektseite steht die H1 sofort. Ein neuer Tab oder ein
-  neuer Besuch spielt es wieder. Das ist, was du mit „frisch auf die Seite“ meintest.
+- **Von außen, nicht von innen.** Entscheidung über `document.referrer`: Kein Referrer, ein fremder
+  oder die Startseite selbst (Neuladen) spielt das Gerede. Wer von einer eigenen Unterseite
+  zurückkommt, sieht die H1 sofort. Kein Speicher. (Erst war es einmal pro Sitzung über
+  `sessionStorage`; das hieß einmal pro Tab, und Neuladen zeigte nichts mehr. Geändert am
+  2026-10-10 nach dem ersten Ausprobieren.)
 - **Fallbacks wie im System.** Ohne Skript: kein Gerede, H1 steht (`html:not([data-bewegung])`
   blendet das Gerede aus). Reduzierte Bewegung: dasselbe. Sicherheitsnetz in `global.css` nach 2 s
   gilt weiter. Schrift noch nicht geladen (`document.fonts.ready`): Skript wartet darauf, sonst
@@ -103,7 +105,8 @@ eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
    `accent-soft` bzw. `accent-soft-dark`. Keine Frage, nur zur Kenntnis.
 2. **1,5 s ab Skriptstart.** Gemessen ab Navigation (Modul laden, Schrift bereit) kommen die Wörter
    nach etwa 1,65 s an, die H1 steht nach etwa 1,85 s.
-3. **Rohtext freigegeben** wie oben. Einmal pro Sitzung freigegeben (`sessionStorage`).
+3. **Rohtext freigegeben** wie oben. Abspielen bei jedem Aufruf von außen, nicht beim Zurückkommen
+   von einer Unterseite (siehe Abschnitt 4).
 4. **Weitere Motion-Stellen** auf der Seite: zurückgestellt, bis du die Seite zu Hause durchgesehen
    hast.
 
@@ -111,5 +114,5 @@ eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
 
 `npm run verify` grün. Im Browser: hell und dunkel, 1280 × 800 und 390 × 844. Kein Layout-Sprung
 (CLS 0). Mit `prefers-reduced-motion: reduce` steht die H1 sofort und kein Gerede ist zu sehen. Mit
-blockiertem Skript dasselbe. Zweiter Aufruf in derselben Sitzung: keine Animation. Lighthouse LCP
+blockiertem Skript dasselbe. Neuladen: Animation. Zurück von einer Projektseite: keine Animation. Lighthouse LCP
 auf der Startseite unter 2,5 s auf gedrosseltem Netz (Mobil, Slow 4G).
