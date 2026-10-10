@@ -101,7 +101,9 @@ Tailwind-Klassen, immer unter `html[data-bewegung]`.
 
 ### B · Hero
 
-- Die H1 steht sofort, unbewegt, auch kein `data-bewegt` an ihr.
+- Die H1 steht sofort, unbewegt. Seit 2026-10-10 mit einer Ausnahme, beschrieben in
+  [`HERO_KLARTEXT_PLAN.md`](HERO_KLARTEXT_PLAN.md): Beim ersten Aufruf der Sitzung wird sie aus
+  Kundengerede herausgelöst und steht nach spätestens 1,5 s; dafür trägt sie `data-bewegt`.
 - „Für wen“, Intro, Knöpfe, Adresszeile ziehen nacheinander ein: 8 px von unten, 320 ms, 60 ms Staffel,
   Start sofort nach dem Laden (kein `inView`, der Hero ist immer im Fenster).
 - Eine Signatur, die dem Hero gehört und die H1 nicht berührt: zum Beispiel ein 1-px-Strich in Tinte,

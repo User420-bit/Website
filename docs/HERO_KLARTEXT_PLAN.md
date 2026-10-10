@@ -1,7 +1,7 @@
 # Plan: Hero „Aus Gerede wird Klartext“
 
 Stand: 2026-10-10 · Basis: `main` · Ergebnis eines Interviews zwischen Pharrel und Claude Code.
-Noch nicht gebaut. Ergänzt [`BEWEGUNG_PLAN.md`](BEWEGUNG_PLAN.md) um eine bewusste Ausnahme.
+Gebaut am 2026-10-10 (`src/components/home/Hero.astro`, Rohtext in `company.json` als `heroGerede`). Ergänzt [`BEWEGUNG_PLAN.md`](BEWEGUNG_PLAN.md) um eine bewusste Ausnahme.
 
 ---
 
@@ -60,14 +60,14 @@ vorkommt.
 
 Zeiten ab Skriptstart. Gesamt 1,5 s bis zur stehenden H1, danach der heutige Einzug.
 
-| Zeit | Was passiert | Werte |
-| --- | --- | --- |
-| 0 ms | Gerede steht sofort, ohne Bewegung. H1 ist im DOM, aber unsichtbar (`opacity: 0`, nur unter `html[data-bewegung]`). | – |
-| 250 ms | **Markieren.** Hinter „Ihre“ zieht eine Fläche in `accent-soft` von links auf, Schrift wird `fg`. Dann „Probleme“, „klar“, „gelöst“, je 90 ms versetzt. Das ist der Moment, in dem der Besucher mitliest. | `scaleX 0→1`, Ursprung links, `DAUER.basis` (200 ms), `STAFFEL` 90 ms |
-| 700 ms | **Herauslösen.** Die vier markierten Wörter (Kopien, absolut positioniert) wachsen von Kleinschrift auf Display-Größe und gleiten an die Stelle, an der das Wort in der echten H1 steht. Gleichzeitig verliert der Rest des Geredes Deckkraft auf 0 und zieht 8 px nach oben. | Position und `scale` je Wort aus `getBoundingClientRect`, `DAUER.szene` (600 ms), `KURVE`, Staffel 60 ms. Gerede: `opacity 1→0`, `y 0→-8`, `DAUER.langsam` |
-| 1 200 ms | **Ankommen.** Die Marker-Fläche läuft nach rechts aus dem Wort (`scaleX 1→0`, Ursprung rechts), Komma und Punkt blenden ein. | `DAUER.basis` |
-| 1 400 ms | **Umschalten.** Echte H1 auf `opacity: 1`, Kopien entfernt. Pixelgleich, der Wechsel ist unsichtbar. Alle Inline-Styles weg. | sofort |
-| 1 500 ms | **Heutiger Hero.** „Für wen“, Intro, Knöpfe, Adresse ziehen 8 px ein wie bisher, danach der Strich. Unverändert aus `Hero.astro`. | wie heute |
+| Zeit     | Was passiert                                                                                                                                                                                                                                                                  | Werte                                                                                                                                                      |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 ms     | Gerede steht sofort, ohne Bewegung. H1 ist im DOM, aber unsichtbar (`opacity: 0`, nur unter `html[data-bewegung]`).                                                                                                                                                           | –                                                                                                                                                          |
+| 250 ms   | **Markieren.** Hinter „Ihre“ zieht eine Fläche in `accent-soft` von links auf, Schrift wird `fg`. Dann „Probleme“, „klar“, „gelöst“, je 90 ms versetzt. Das ist der Moment, in dem der Besucher mitliest.                                                                     | `scaleX 0→1`, Ursprung links, `DAUER.basis` (200 ms), `STAFFEL` 90 ms                                                                                      |
+| 700 ms   | **Herauslösen.** Die vier markierten Wörter (Kopien, absolut positioniert) wachsen von Kleinschrift auf Display-Größe und gleiten an die Stelle, an der das Wort in der echten H1 steht. Gleichzeitig verliert der Rest des Geredes Deckkraft auf 0 und zieht 8 px nach oben. | Position und `scale` je Wort aus `getBoundingClientRect`, `DAUER.szene` (600 ms), `KURVE`, Staffel 60 ms. Gerede: `opacity 1→0`, `y 0→-8`, `DAUER.langsam` |
+| 1 200 ms | **Ankommen.** Die Marker-Fläche läuft nach rechts aus dem Wort (`scaleX 1→0`, Ursprung rechts), Komma und Punkt blenden ein.                                                                                                                                                  | `DAUER.basis`                                                                                                                                              |
+| 1 400 ms | **Umschalten.** Echte H1 auf `opacity: 1`, Kopien entfernt. Pixelgleich, der Wechsel ist unsichtbar. Alle Inline-Styles weg.                                                                                                                                                  | sofort                                                                                                                                                     |
+| 1 500 ms | **Heutiger Hero.** „Für wen“, Intro, Knöpfe, Adresse ziehen 8 px ein wie bisher, danach der Strich. Unverändert aus `Hero.astro`.                                                                                                                                             | wie heute                                                                                                                                                  |
 
 Orange bekommt genau eine Rolle: die Markerfläche in `accent-soft` hinter den vier Wörtern, für etwa
 eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
@@ -97,14 +97,13 @@ eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
 - **Budget.** Keine neue Abhängigkeit; `animate` und `stagger` aus `motion.ts` reichen. Schätzung
   für das Skript: 2 bis 3 KB.
 
-## 5. Offen, vor dem Bau zu entscheiden
+## 5. Entschieden am 2026-10-10
 
 1. **Gerede in Hell und Dunkel:** Bleistiftgrau auf Papier bzw. Nacht, dieselbe Rolle. Markerfläche
    `accent-soft` bzw. `accent-soft-dark`. Keine Frage, nur zur Kenntnis.
-2. **1,5 s oder 1,2 s?** Bei 1,2 s wird die Lesepause (Phase „Markieren“) knapp. Ich halte 1,5 s
-   für die Untergrenze, bei der man das Gerede noch als Gerede erkennt. Darüber hinaus nicht.
-3. **Rohtext freigeben.** Oben steht ein Vorschlag. Wenn du echte Formulierungen aus echten Anfragen
-   hast, gewinnt echt.
+2. **1,5 s ab Skriptstart.** Gemessen ab Navigation (Modul laden, Schrift bereit) kommen die Wörter
+   nach etwa 1,65 s an, die H1 steht nach etwa 1,85 s.
+3. **Rohtext freigegeben** wie oben. Einmal pro Sitzung freigegeben (`sessionStorage`).
 4. **Weitere Motion-Stellen** auf der Seite: zurückgestellt, bis du die Seite zu Hause durchgesehen
    hast.
 
