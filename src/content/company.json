@@ -2,6 +2,7 @@
   "main": {
     "name": "Klartext",
     "claim": "Ihre Probleme, klar gelöst.",
+    "heroGerede": "Ihre Seite hat mir ein Bekannter aus Rosenheim geschickt. Wir haben eine Baukasten-Website, die auf dem Handy komisch aussieht, und im Laden läuft alles über eine Excel-Tabelle: Bestand, Termine, Rechnungen. Jedes Jahr sucht die Steuerberatung die Belege zusammen. Eine Agentur wollte uns gleich ein ganzes System verkaufen, aber wir wollen kein System. Wir wollen, dass sich jemand unsere Probleme anschaut und ehrlich sagt, was Software braucht und was nicht. Es soll vorher klar sein, was es kostet und wie lange es dauert. Und wenn es fertig ist, soll es gelöst sein, nicht drei Monate lang nachgebessert.",
     "audience": "Für Selbstständige und kleine Betriebe im Raum Rosenheim",
     "intro": "Klartext baut kleine Programme, Websites und Web-Apps.",
     "location": "Bruckmühl, Bayern",

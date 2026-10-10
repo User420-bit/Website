@@ -26,6 +26,12 @@ const company = defineCollection({
     name: z.string(),
     /** Die H1 der Startseite. `scripts/verify-build.mjs` erwartet denselben Text. */
     claim: z.string(),
+    /**
+     * Kundengerede für den Hero (docs/HERO_KLARTEXT_PLAN.md): eine Anfrage, aus
+     * der die Wörter des Claims herausgelöst werden. Jedes Wort des Claims
+     * (ohne Satzzeichen) muss darin vorkommen, in Lesereihenfolge.
+     */
+    heroGerede: z.string(),
     /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
     audience: z.string(),
     intro: z.string(),

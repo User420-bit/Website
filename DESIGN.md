@@ -829,7 +829,11 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   CSS unter `html[data-bewegung]`; das Attribut vergibt `MotionReady` im `<head>` nur mit Skript und
   bei `prefers-reduced-motion: no-preference`. Jedes so versteckte Element trägt `data-bewegt`, und
   `global.css` hebt den Anfangszustand nach 2 s von selbst auf, falls das Modul nicht läuft.
-- **Die H1 bewegt sich nie,** auf keiner Seite. Sie ist das Erste, was gemalt wird (LCP).
+- **Die H1 bewegt sich nie,** auf keiner Seite. Sie ist das Erste, was gemalt wird (LCP). Eine
+  Ausnahme, seit 2026-10-10 (`docs/HERO_KLARTEXT_PLAN.md`): Beim ersten Aufruf der Startseite in einer
+  Sitzung liegt Kundengerede über dem Hero, dessen vier Claim-Wörter markiert werden, sich lösen und
+  zur H1 werden; sie steht nach spätestens 1,5 s. Ohne Skript, mit reduzierter Bewegung und ab dem
+  zweiten Aufruf steht sie sofort, und die Höhe des Hero ist vom ersten Bild an dieselbe.
 - **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
   Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
 - **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
@@ -916,8 +920,9 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
-- **Don't** die H1 bewegen, Text weiter als 8 px oder länger als 320 ms einziehen lassen, oder einen
-  Anfangszustand außerhalb von `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung
+- **Don't** die H1 bewegen (außer dem Gerede-Hero der Startseite, einmal pro Sitzung), Text weiter als
+  8 px oder länger als 320 ms einziehen lassen, oder einen Anfangszustand außerhalb von
+  `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung
   steht der Endzustand, überall.
 - **Don't** Motion direkt importieren; Kurve, Dauern und Prüfungen kommen aus `src/lib/motion.ts`.
 - **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Arbeiten der
