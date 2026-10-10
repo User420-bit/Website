@@ -4,13 +4,13 @@
  * Inhalt. „Für wen“ steht direkt unter dem Claim, damit die H1 das Erste
  * bleibt, was man liest.
  *
- * Bewegung, Teil 1 (docs/HERO_KLARTEXT_PLAN.md): Beim ersten Öffnen in einer
- * Sitzung liegt über dem Hero ein Brocken Kundengerede. Die vier Wörter des
- * Claims werden darin markiert, lösen sich und werden zur H1; der Rest
- * verschwindet. Das ist die eine bewusste Ausnahme von „Die H1 steht vom
+ * Bewegung, Teil 1 (docs/HERO_KLARTEXT_PLAN.md): Wer von außen auf die
+ * Startseite kommt, sieht über dem Hero einen Brocken Kundengerede. Die vier
+ * Wörter des Claims werden darin markiert, lösen sich und werden zur H1; der
+ * Rest verschwindet. Das ist die eine bewusste Ausnahme von „Die H1 steht vom
  * ersten Bild an“: Sie steht nach spätestens 1,5 s. Ohne Skript, mit
- * reduzierter Bewegung und ab dem zweiten Aufruf der Sitzung gibt es kein
- * Gerede, und die H1 steht sofort.
+ * reduzierter Bewegung und beim Zurückkommen von einer eigenen Unterseite
+ * gibt es kein Gerede, und die H1 steht sofort.
  *
  * Bewegung, Teil 2 (docs/BEWEGUNG_PLAN.md, B): Unter der H1 ziehen „Für wen“,
  * Intro, Knöpfe und Adresszeile nacheinander 8 px ein, dazu genau eine
@@ -68,20 +68,25 @@ geredeHtml += escape(rest)
   {
     /*
      * Entscheidet vor dem ersten Bild, ob das Gerede gespielt wird: nur mit
-     * erlaubter Bewegung (`MotionReady` hat `data-bewegung` gesetzt) und nur
-     * beim ersten Aufruf der Sitzung. Inline und parser-blockierend, damit
-     * nichts aufblitzt. `sessionStorage` kann in strengen Browsern werfen.
+     * erlaubter Bewegung (`MotionReady` hat `data-bewegung` gesetzt) und nur,
+     * wenn der Besucher von außen kommt. Von außen heißt: kein Referrer, ein
+     * fremder, oder die Startseite selbst (Neuladen). Wer von einer eigenen
+     * Unterseite zurückkommt, kennt den Claim schon und sieht ihn sofort.
+     * Kein Speicher, kein Zustand. Inline und parser-blockierend, damit
+     * nichts aufblitzt.
      */
   }
   <script is:inline>
-    try {
-      if (
-        document.documentElement.dataset.bewegung !== undefined &&
-        !sessionStorage.getItem('klartext-hero')
-      ) {
-        document.documentElement.dataset.hero = 'gerede'
+    if (document.documentElement.dataset.bewegung !== undefined) {
+      let vonInnen = false
+      try {
+        const von = new URL(document.referrer)
+        vonInnen = von.origin === location.origin && von.pathname !== location.pathname
+      } catch {
+        /* kein oder kein lesbarer Referrer: von außen */
       }
-    } catch {}
+      if (!vonInnen) document.documentElement.dataset.hero = 'gerede'
+    }
   </script>
 
   <h1
@@ -242,12 +247,6 @@ geredeHtml += escape(rest)
     const ziele = alle('[data-hero-wort]', h1 ?? undefined)
     const zeichen = alle('[data-hero-zeichen]', h1 ?? undefined)
     if (!h1 || !text || !flug || quellen.length !== ziele.length) return fertig()
-
-    try {
-      sessionStorage.setItem('klartext-hero', '1')
-    } catch {
-      /* ohne Speicher spielt es eben jedes Mal */
-    }
 
     // Erst messen, wenn die Schrift steht, sonst stimmen die Breiten nicht.
     await document.fonts.ready
