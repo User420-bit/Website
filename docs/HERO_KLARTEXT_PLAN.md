@@ -1,36 +1,39 @@
 # Plan: Hero „Aus Gerede wird Klartext“
 
-Stand: 2026-10-10 · Basis: `main` · Ergebnis eines Interviews zwischen Pharrel und Claude Code.
-Gebaut am 2026-10-10 (`src/components/home/Hero.astro`, Rohtext in `company.json` als `heroGerede`). Ergänzt [`BEWEGUNG_PLAN.md`](BEWEGUNG_PLAN.md) um eine bewusste Ausnahme.
+Stand: 2026-10-11 · Ergebnis eines Interviews zwischen Pharrel und Claude Code.
+Gebaut in `src/components/home/Hero.astro`, Rohtext in `company.json` als `heroGerede`.
+
+Version 2 vom 2026-10-11: Die Animation läuft nicht mehr nach Zeit, sondern mit dem Scrollen.
+Version 1 (1,5 s nach dem Laden) war vorbei, bevor man gemerkt hatte, dass sie anfängt. Die
+Regeln aus `DESIGN.md` zu Dauer und Weg gelten für diesen Hero ausdrücklich nicht (Entscheidung
+Pharrel: „Die Regeln sind unwichtig“).
 
 ---
 
 ## 0. Die Idee in einem Satz
 
-Beim ersten Öffnen der Startseite steht statt der H1 ein kurzer Brocken Kundengerede: eine Anfrage,
-wie sie Klartext bekommt. Vier Wörter darin werden markiert, lösen sich und werden zur H1
-„Ihre Probleme, klar gelöst.“ Der Rest verschwindet. Danach ist der Hero genau der von heute.
+Die Startseite öffnet mit Kundengerede und einem Hinweis zum Scrollen. Beim Scrollen werden vier
+Wörter darin markiert, steigen aus dem Text, fliegen über die Seite und landen als H1
+„Ihre Probleme, klar gelöst.“ Ist die H1 erreicht, gibt es kein Zurück mehr.
 
 Was die Animation sagt: Klartext hört zu, zieht aus viel Gerede das Wesentliche, und was bleibt,
 ist klar. Der Name wird vorgeführt, nicht behauptet.
 
-## 1. Was bleibt, was sich ändert
+## 1. Wann sie spielt
 
-**Bleibt.** Eine Kurve (`KURVE`), die Dauern aus `motion.ts`, ein einziges Orange, keine Schatten,
-keine Unschärfe. Ohne Skript und bei `prefers-reduced-motion: reduce` steht die H1 sofort, es gibt
-kein Gerede. Die Höhe des Hero ist vom ersten Bild an dieselbe (CLS 0). Alles nach der H1 („Für wen“,
-Intro, Knöpfe, Adresse, Strich) bewegt sich wie heute, nur später gestartet.
+| Aufruf                                       | Animation                         |
+| -------------------------------------------- | --------------------------------- |
+| Direkt, Lesezeichen, fremde Seite, neuer Tab | ja                                |
+| Neuladen (auch weit unten)                   | ja, die Seite beginnt wieder oben |
+| Zurück von einer eigenen Unterseite per Link | nein, H1 sofort                   |
+| Zurück-Knopf des Browsers                    | nein, alte Scrollposition         |
+| Adresse mit Sprungziel (`/#arbeiten`)        | nein, direkt zum Ziel             |
+| Ohne Skript, reduzierte Bewegung             | nein, H1 sofort                   |
 
-**Ändert sich, bewusst.** Die Regel „Die H1 steht vom ersten Bild an und bewegt sich nie“ bekommt auf
-der Startseite eine Ausnahme: Sie steht nach spätestens **1,5 s**. Der Largest Contentful Paint
-verschiebt sich um diese Zeit. Preis akzeptiert, Grenze fest. Die Regel „Text höchstens 8 px“ gilt
-nicht für die vier fliegenden Wörter; sie sind in dieser Phase Bild, nicht Text (wie Linien und
-Belege, `DAUER.szene`). Alle anderen Texte des Hero halten 8 px weiter ein.
+Der Hero füllt in jedem Fall das erste Fenster unter dem Header. So stimmt die Scrollposition
+beim Zurückblättern, egal ob vorher animiert wurde oder nicht.
 
-In `DESIGN.md` („Bewegung“) und `BEWEGUNG_PLAN.md` (Regel 3) ist die Ausnahme nachzutragen, wenn
-gebaut wird.
-
-## 2. Der Rohtext
+## 2. Der Rohtext (vorläufig)
 
 Eine Anfrage, nicht wörtlich, aber aus dem zusammengesetzt, was die Referenzseiten erzählen
 (Baukasten-Vorlage bei PointCare, Excel und Belege bei Kleinkram, Handy bei JustBeauty und
@@ -56,63 +59,56 @@ ein Zitat. Der Rohtext liegt in `src/content/company.json` neben dem Claim (`her
 Claim und Gerede zusammen gepflegt werden und ein Test prüfen kann, dass jedes Claim-Wort im Gerede
 vorkommt.
 
-## 3. Storyboard
+Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er so.
 
-Zeiten ab Skriptstart. Gesamt 1,5 s bis zur stehenden H1, danach der heutige Einzug.
+## 3. Ablauf über die Scroll-Strecke
 
-| Zeit     | Was passiert                                                                                                                                                                                                                                                                  | Werte                                                                                                                                                      |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0 ms     | Gerede steht sofort, ohne Bewegung. H1 ist im DOM, aber unsichtbar (`opacity: 0`, nur unter `html[data-bewegung]`).                                                                                                                                                           | –                                                                                                                                                          |
-| 250 ms   | **Markieren.** Hinter „Ihre“ zieht eine Fläche in `accent-soft` von links auf, Schrift wird `fg`. Dann „Probleme“, „klar“, „gelöst“, je 90 ms versetzt. Das ist der Moment, in dem der Besucher mitliest.                                                                     | `scaleX 0→1`, Ursprung links, `DAUER.basis` (200 ms), `STAFFEL` 90 ms                                                                                      |
-| 700 ms   | **Herauslösen.** Die vier markierten Wörter (Kopien, absolut positioniert) wachsen von Kleinschrift auf Display-Größe und gleiten an die Stelle, an der das Wort in der echten H1 steht. Gleichzeitig verliert der Rest des Geredes Deckkraft auf 0 und zieht 8 px nach oben. | Position und `scale` je Wort aus `getBoundingClientRect`, `DAUER.szene` (600 ms), `KURVE`, Staffel 60 ms. Gerede: `opacity 1→0`, `y 0→-8`, `DAUER.langsam` |
-| 1 200 ms | **Ankommen.** Die Marker-Fläche läuft nach rechts aus dem Wort (`scaleX 1→0`, Ursprung rechts), Komma und Punkt blenden ein.                                                                                                                                                  | `DAUER.basis`                                                                                                                                              |
-| 1 400 ms | **Umschalten.** Echte H1 auf `opacity: 1`, Kopien entfernt. Pixelgleich, der Wechsel ist unsichtbar. Alle Inline-Styles weg.                                                                                                                                                  | sofort                                                                                                                                                     |
-| 1 500 ms | **Heutiger Hero.** „Für wen“, Intro, Knöpfe, Adresse ziehen 8 px ein wie bisher, danach der Strich. Unverändert aus `Hero.astro`.                                                                                                                                             | wie heute                                                                                                                                                  |
+Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px, etwa 19 Rasten am Mausrad).
+Der Rahmen mit Gerede und H1 klebt währenddessen unter dem Header. Fortschritt p von 0 bis 1:
 
-Orange bekommt genau eine Rolle: die Markerfläche in `accent-soft` hinter den vier Wörtern, für etwa
-eine Sekunde. Die fertige H1 ist Tinte wie heute. So bleibt es bei einem Signal.
+| p         | Was passiert                                                                                |
+| --------- | ------------------------------------------------------------------------------------------- |
+| 0         | Gerede steht, unten „Scrollen“ mit wippendem Pfeil (erscheint nach 0,8 s)                   |
+| 0,00–0,13 | Marker in verdünntem Orange zieht hinter die vier Wörter, nacheinander                      |
+| 0,14–0,29 | Jedes Wort steigt senkrecht aus seiner Zeile und wächst um 60 %, die Lücke bleibt           |
+| 0,24–0,42 | Der Rest des Geredes verblasst                                                              |
+| 0,20–0,89 | Flug: jedes Wort über einen eigenen Wegpunkt quer über die Seite, leicht gedreht, in die H1 |
+| 0,88–0,95 | Marker laufen aus, Komma und Punkt erscheinen                                               |
+| 0,86–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich                            |
+| 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                               |
 
-## 4. Technik, ohne Überraschungen
+Bis p = 1 läuft alles mit dem Scrollen vor und zurück. Bei p = 1 wird die Strecke entfernt und
+um genau ihre Länge zurückgescrollt: Für das Auge ändert sich nichts, aber oberhalb der H1 ist
+keine Strecke mehr, in die man zurückscrollen könnte.
 
-- **Schicht statt Fluss.** Das Gerede liegt `absolute` über dem Hero-Inhalt, der Hero behält die Höhe
-  von heute (H1 + Zeilen + Knöpfe). Das Gerede ist auf jeder Breite kürzer als dieser Block
-  (Desktop ≈ 7 Zeilen gegen ≈ 450 px Hero, Mobil ≈ 13 Zeilen gegen ≈ 500 px). Nichts springt.
-- **Ziele messen, nicht raten.** Die echte H1 wird in vier `<span>` je Wort gesetzt (plus Komma und
-  Punkt als eigene Spans). Vor dem Flug misst das Skript jede Span mit `getBoundingClientRect`
-  und berechnet aus Quell- und Zielrechteck Translation und Skalierung je Kopie. Das überlebt jede
-  Breite, jeden Zeilenumbruch und `text-balance`.
-- **Schriftgröße per `scale`, nicht per `font-size`.** Ein `font-size`-Übergang bricht das Layout
-  des Geredes bei jedem Frame. Die Kopie wird mit der Display-Schriftart gerendert und von
-  `scale(klein)` auf `scale(1)` gezogen. Instrument Sans, Gewicht 600, `letter-spacing -0.03em` auf
-  der Kopie von Anfang an, damit der Umriss beim Andocken stimmt.
-- **Von außen, nicht von innen.** Entscheidung über `document.referrer`: Kein Referrer, ein fremder
-  oder die Startseite selbst (Neuladen) spielt das Gerede. Wer von einer eigenen Unterseite
-  zurückkommt, sieht die H1 sofort. Kein Speicher. (Erst war es einmal pro Sitzung über
-  `sessionStorage`; das hieß einmal pro Tab, und Neuladen zeigte nichts mehr. Geändert am
-  2026-10-10 nach dem ersten Ausprobieren.)
-- **Fallbacks wie im System.** Ohne Skript: kein Gerede, H1 steht (`html:not([data-bewegung])`
-  blendet das Gerede aus). Reduzierte Bewegung: dasselbe. Sicherheitsnetz in `global.css` nach 2 s
-  gilt weiter. Schrift noch nicht geladen (`document.fonts.ready`): Skript wartet darauf, sonst
-  misst es falsche Breiten.
-- **Zugänglichkeit.** Das Gerede trägt `aria-hidden="true"`; für Screenreader gibt es die H1 vom
-  ersten Moment an. Die Kopien ebenfalls `aria-hidden`.
-- **Budget.** Keine neue Abhängigkeit; `animate` und `stagger` aus `motion.ts` reichen. Schätzung
-  für das Skript: 2 bis 3 KB.
+## 4. Technik
 
-## 5. Entschieden am 2026-10-10
+- **Bühne und Rahmen.** `[data-hero-buehne]` ist Fensterhöhe plus Strecke hoch, `[data-hero-rahmen]`
+  klebt darin (`position: sticky`) unter dem Header. Die Header-Höhe setzt ein Inline-Skript als
+  `--hero-kopf`.
+- **Kopien statt echter Wörter.** Die vier fliegenden Wörter sind Kopien in Display-Schrift. Sie
+  liegen am Ziel (ihrem Wort in der H1) und werden per `transform` an Quelle, Wegpunkt und Ziel
+  gesetzt. Gemessen wird immer der Glyphenkasten des Textes (Range), nicht der Zeilenkasten. Ablösen
+  und Landung sitzen auf 0 px genau.
+- **Kein Zurück.** Abschluss bei p = 1: Kopien weg, H1 sichtbar, `data-hero="fertig"`, Strecke weg,
+  `scrollBy` um die verschwundene Strecke.
+- **Sprung während der Strecke.** Ein Klick auf einen Anker der Seite (Navigation, „Arbeiten
+  ansehen“) schließt die Animation vorher ab, damit der Browser das richtige Ziel berechnet.
+- **Neuladen.** `history.scrollRestoration = 'manual'`, solange die Animation läuft, danach wieder
+  `auto`.
+- **Sicherheitsnetz.** Läuft das Modul nach 2 s nicht, stellt CSS den fertigen Hero her und nimmt
+  die Strecke weg.
+- **Zugänglichkeit.** Gerede, Kopien und Hinweis tragen `aria-hidden`. Für Screenreader gibt es
+  die H1 vom ersten Moment an.
 
-1. **Gerede in Hell und Dunkel:** Bleistiftgrau auf Papier bzw. Nacht, dieselbe Rolle. Markerfläche
-   `accent-soft` bzw. `accent-soft-dark`. Keine Frage, nur zur Kenntnis.
-2. **1,5 s ab Skriptstart.** Gemessen ab Navigation (Modul laden, Schrift bereit) kommen die Wörter
-   nach etwa 1,65 s an, die H1 steht nach etwa 1,85 s.
-3. **Rohtext freigegeben** wie oben. Abspielen bei jedem Aufruf von außen, nicht beim Zurückkommen
-   von einer Unterseite (siehe Abschnitt 4).
-4. **Weitere Motion-Stellen** auf der Seite: zurückgestellt, bis du die Seite zu Hause durchgesehen
-   hast.
+## 5. Bekannte Kosten
 
-## 6. Prüfung, bevor es fertig heißt
+- Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
+- Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
+- Der wippende Pfeil läuft endlos, solange man nicht scrollt.
 
-`npm run verify` grün. Im Browser: hell und dunkel, 1280 × 800 und 390 × 844. Kein Layout-Sprung
-(CLS 0). Mit `prefers-reduced-motion: reduce` steht die H1 sofort und kein Gerede ist zu sehen. Mit
-blockiertem Skript dasselbe. Neuladen: Animation. Zurück von einer Projektseite: keine Animation. Lighthouse LCP
-auf der Startseite unter 2,5 s auf gedrosseltem Netz (Mobil, Slow 4G).
+## 6. Prüfung
+
+`npm run verify` grün. Im Browser, 1280 × 800 und 390 × 844, hell und dunkel: Ablösen und Landung
+pixelgenau, Abschluss ohne Sprung, Hochscrollen nach dem Abschluss bringt die Animation nicht
+zurück. Dazu alle Fälle aus Abschnitt 1 und ein ausgefallenes Modul.

@@ -4,19 +4,24 @@
  * Inhalt. „Für wen“ steht direkt unter dem Claim, damit die H1 das Erste
  * bleibt, was man liest.
  *
- * Bewegung, Teil 1 (docs/HERO_KLARTEXT_PLAN.md): Wer von außen auf die
- * Startseite kommt, sieht über dem Hero einen Brocken Kundengerede. Die vier
- * Wörter des Claims werden darin markiert, lösen sich und werden zur H1; der
- * Rest verschwindet. Das ist die eine bewusste Ausnahme von „Die H1 steht vom
- * ersten Bild an“: Sie steht nach spätestens 1,5 s. Ohne Skript, mit
- * reduzierter Bewegung und beim Zurückkommen von einer eigenen Unterseite
- * gibt es kein Gerede, und die H1 steht sofort.
+ * Bewegung, Teil 1 (docs/HERO_KLARTEXT_PLAN.md): Wer von außen kommt, sieht
+ * zuerst Kundengerede und einen Hinweis zum Scrollen. Beim Scrollen werden
+ * die vier Wörter des Claims markiert, lösen sich aus dem Text, fliegen über
+ * die Seite und landen in der H1. Das Scrollen treibt die Animation, vor und
+ * zurück, bis die H1 steht. Dann verschwindet die Scroll-Strecke, und es gibt
+ * nichts mehr rückgängig zu machen. Ohne Skript, mit reduzierter Bewegung,
+ * mit Sprungziel in der Adresse und beim Zurückkommen von einer Unterseite
+ * steht der fertige Hero sofort.
  *
- * Bewegung, Teil 2 (docs/BEWEGUNG_PLAN.md, B): Unter der H1 ziehen „Für wen“,
- * Intro, Knöpfe und Adresszeile nacheinander 8 px ein, dazu genau eine
- * Signatur: der Strich unter der Adresse. Die Begründung steht im Skript.
+ * Bewegung, Teil 2 (docs/BEWEGUNG_PLAN.md, B): Ohne Gerede ziehen „Für wen“,
+ * Intro, Knöpfe und Adresszeile nacheinander 8 px ein, dazu der Strich unter
+ * der Adresse. Mit Gerede kommen dieselben Zeilen am Ende der Scroll-Strecke.
+ *
+ * Der Hero füllt immer das erste Fenster unter dem Header, mit und ohne
+ * Animation. So stimmen Scroll-Positionen beim Zurückblättern überein.
  */
 import { getEntry } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import { href, mailto } from '@/lib/site'
 
@@ -64,20 +69,25 @@ woerter.forEach((wort, i) => {
 geredeHtml += escape(rest)
 ---
 
-<section class="relative pt-16 pb-16 sm:pt-24 sm:pb-24">
+<div data-hero-buehne>
   {
     /*
      * Entscheidet vor dem ersten Bild, ob das Gerede gespielt wird: nur mit
-     * erlaubter Bewegung (`MotionReady` hat `data-bewegung` gesetzt) und nur,
-     * wenn der Besucher von außen kommt. Von außen heißt: kein Referrer, ein
-     * fremder, oder die Startseite selbst (Neuladen). Wer von einer eigenen
-     * Unterseite zurückkommt, kennt den Claim schon und sieht ihn sofort.
-     * Kein Speicher, kein Zustand. Inline und parser-blockierend, damit
-     * nichts aufblitzt.
+     * erlaubter Bewegung (`MotionReady` hat `data-bewegung` gesetzt), nicht
+     * beim Zurückblättern, nicht mit Sprungziel (#arbeiten) und nur, wenn der
+     * Besucher von außen kommt oder neu lädt. Setzt außerdem die Höhe des
+     * klebenden Headers, damit der Hero genau das Fenster darunter füllt.
+     * Inline und parser-blockierend, damit nichts aufblitzt.
      */
   }
   <script is:inline>
-    if (document.documentElement.dataset.bewegung !== undefined) {
+    ;(() => {
+      const root = document.documentElement
+      const kopf = document.querySelector('.site-header')
+      if (kopf) root.style.setProperty('--hero-kopf', `${kopf.offsetHeight}px`)
+      if (root.dataset.bewegung === undefined || location.hash) return
+      const art = performance.getEntriesByType('navigation')[0]?.type
+      if (art === 'back_forward') return
       let vonInnen = false
       try {
         const von = new URL(document.referrer)
@@ -85,78 +95,93 @@ geredeHtml += escape(rest)
       } catch {
         /* kein oder kein lesbarer Referrer: von außen */
       }
-      if (!vonInnen) document.documentElement.dataset.hero = 'gerede'
-    }
+      if (vonInnen) return
+      root.dataset.hero = 'gerede'
+      // Neuladen heißt neu anfangen: oben, nicht an der alten Stelle.
+      history.scrollRestoration = 'manual'
+    })()
   </script>
 
-  <h1
-    data-bewegt
-    data-hero-h1
-    class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
-    set:html={claimHtml}
-  />
-  <p
-    data-bewegt
-    data-hero-einzug
-    class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
+  <section
+    data-hero-rahmen
+    class="relative flex min-h-[calc(100svh-var(--hero-kopf,4.5rem))] flex-col justify-center py-12 sm:py-16"
   >
-    {company.audience}
-  </p>
-  <p
-    data-bewegt
-    data-hero-einzug
-    class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted"
-  >
-    {company.intro}
-  </p>
-
-  <div data-bewegt data-hero-einzug class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-    <Button href={anfrage}>E-Mail schreiben</Button>
-    <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
-  </div>
-
-  {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
-  <p
-    data-bewegt
-    data-hero-einzug
-    class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted"
-  >
-    <span>{company.location}</span>
-    <span aria-hidden="true">·</span>
-    <span class="relative font-medium wrap-anywhere text-fg select-all"
-      >{company.email}<span
-        aria-hidden="true"
+    <div data-hero-inhalt class="relative">
+      <h1
+        data-hero-h1
+        class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
+        set:html={claimHtml}
+      />
+      <p
         data-bewegt
-        data-hero-strich
-        class="pointer-events-none absolute inset-x-0 -bottom-0.5 h-px origin-left bg-border"
-      ></span></span
-    >
-  </p>
+        data-hero-einzug
+        class="mt-5 mb-0 max-w-[60ch] text-xl leading-snug font-medium tracking-tight text-balance text-fg-muted sm:text-2xl"
+      >
+        {company.audience}
+      </p>
+      <p
+        data-bewegt
+        data-hero-einzug
+        class="prose-flow mt-6 max-w-[60ch] text-lg leading-relaxed text-fg-muted"
+      >
+        {company.intro}
+      </p>
 
-  {
-    /*
-     * Das Gerede liegt als Schicht über dem Hero, oben ausgerichtet an der H1,
-     * und ist auf jeder Breite kürzer als der Hero: Die Höhe der Sektion
-     * kommt vom Inhalt, nicht vom Gerede. Für Screenreader gibt es nur die H1.
-     */
-  }
+      <div data-bewegt data-hero-einzug class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <Button href={anfrage}>E-Mail schreiben</Button>
+        <Button href={href('/#arbeiten')} variant="text">Arbeiten ansehen</Button>
+      </div>
+
+      {/* Sichtbare Adresse: Ausweg, wenn der Klick kein Mailprogramm öffnet (Webmail). */}
+      <p
+        data-bewegt
+        data-hero-einzug
+        class="mt-10 mb-0 flex flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted"
+      >
+        <span>{company.location}</span>
+        <span aria-hidden="true">·</span>
+        <span class="relative font-medium wrap-anywhere text-fg select-all"
+          >{company.email}<span
+            aria-hidden="true"
+            data-bewegt
+            data-hero-strich
+            class="pointer-events-none absolute inset-x-0 -bottom-0.5 h-px origin-left bg-border"
+          ></span></span
+        >
+      </p>
+
+      {
+        /*
+         * Das Gerede liegt als Schicht über dem Inhalt, oben an der H1. Für
+         * Screenreader gibt es nur die H1.
+         */
+      }
+      <p
+        aria-hidden="true"
+        data-hero-gerede
+        class="pointer-events-none absolute inset-x-0 top-0 m-0 max-w-[60ch] text-base leading-relaxed text-fg-muted sm:text-xl sm:leading-relaxed"
+        set:html={geredeHtml}
+      />
+    </div>
+
+    {/* Hier fliegen die Kopien der vier Wörter. */}
+    <div aria-hidden="true" data-hero-flug class="pointer-events-none absolute inset-0"></div>
+  </section>
+
   <p
     aria-hidden="true"
-    data-hero-gerede
-    class="pointer-events-none absolute inset-x-0 top-16 m-0 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:top-24 sm:text-base"
-    set:html={geredeHtml}
-  />
-  <div aria-hidden="true" data-hero-flug class="pointer-events-none absolute inset-0"></div>
-</section>
+    data-hero-hinweis
+    class="pointer-events-none fixed inset-x-0 bottom-6 z-10 m-0 flex flex-col items-center gap-1 text-sm font-medium text-fg-muted"
+  >
+    <span>Scrollen</span>
+    <span data-hero-hinweis-pfeil><Arrow class="rotate-90" /></span>
+  </p>
+</div>
 
 <style is:global>
   /*
-   * Anfangszustand nur mit Skript und erlaubter Bewegung (`MotionReady`);
-   * ohne das Attribut steht alles sofort, der Strich eingeschlossen. Nur
-   * transform und opacity, der Strich liegt absolut: Die Höhe des Hero ist
-   * vom ersten Bild an dieselbe. `is:global`, weil ein gekapselter Stil jedem
-   * Element des Hero ein `data-astro-cid-…` anhängte. Die Datenattribute
-   * grenzen die Regeln auf den Hero ein.
+   * Ohne Gerede (kein Skript, reduzierte Bewegung, von innen): der gewohnte
+   * Einzug. Anfangszustand nur unter `html[data-bewegung]`.
    */
   html[data-bewegung] [data-hero-einzug] {
     opacity: 0;
@@ -166,40 +191,109 @@ geredeHtml += escape(rest)
     transform: scaleX(0);
   }
 
-  /*
-   * Gerede: nur sichtbar, wenn das Inline-Skript oben `data-hero="gerede"`
-   * vergeben hat. Dann ist die H1 unsichtbar (nicht `visibility`: Ihre
-   * Wörter werden gemessen). Sicherheitsnetz wie in global.css: Läuft das
-   * Modul nach 2 s nicht, verschwindet das Gerede, und `[data-bewegt]` auf
-   * der H1 holt sie zurück.
-   */
   [data-hero-gerede],
-  [data-hero-flug] {
+  [data-hero-flug],
+  [data-hero-hinweis] {
     display: none;
+  }
+
+  /*
+   * Mit Gerede: Die Bühne ist so hoch wie das Fenster plus die Scroll-Strecke,
+   * der Rahmen klebt darin unter dem Header. Wie weit man in der Strecke ist,
+   * bestimmt den Stand der Animation (Skript unten).
+   */
+  html[data-hero='gerede'] [data-hero-buehne] {
+    --hero-strecke: 240svh;
+    height: calc(100svh - var(--hero-kopf, 4.5rem) + var(--hero-strecke));
+  }
+  html[data-hero='gerede'] [data-hero-rahmen] {
+    position: sticky;
+    top: var(--hero-kopf, 4.5rem);
+    height: calc(100svh - var(--hero-kopf, 4.5rem));
+    min-height: 0;
   }
   html[data-hero='gerede'] [data-hero-gerede],
   html[data-hero='gerede'] [data-hero-flug] {
     display: block;
   }
-  html[data-hero='gerede'] [data-hero-h1] {
+  html[data-hero='gerede'] [data-hero-hinweis] {
+    display: flex;
+    animation: hero-hinweis-ein 0.6s 0.8s both cubic-bezier(0.2, 0, 0, 1);
+    transition: opacity 0.3s;
+  }
+  html[data-hero='gerede'] [data-hero-hinweis-pfeil] {
+    animation: hero-hinweis-wippen 1.6s 1.4s infinite ease-in-out;
+  }
+  html[data-hero='gerede'] [data-hero-wort] {
+    visibility: hidden;
+  }
+  html[data-hero='gerede'] [data-hero-zeichen] {
     opacity: 0;
   }
-  html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede] {
-    animation: hero-gerede-weg 0s 2s both;
+  @keyframes hero-hinweis-ein {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
   }
-  @keyframes hero-gerede-weg {
+  @keyframes hero-hinweis-wippen {
+    50% {
+      transform: translateY(4px);
+    }
+  }
+
+  /*
+   * Sicherheitsnetz: Läuft das Modul nach 2 s nicht (Attribut noch leer),
+   * steht der fertige Hero, und die Strecke fällt weg.
+   */
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-buehne] {
+    animation: hero-netz-buehne 0s 2s both;
+  }
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-rahmen] {
+    animation: hero-netz-rahmen 0s 2s both;
+  }
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede],
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-hinweis] {
+    animation: hero-netz-weg 0s 2s both;
+  }
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-wort] {
+    animation: hero-netz-da 0s 2s both;
+  }
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-zeichen] {
+    animation: hero-netz-da 0s 2s both;
+  }
+  @keyframes hero-netz-buehne {
+    to {
+      height: auto;
+    }
+  }
+  @keyframes hero-netz-rahmen {
+    to {
+      position: relative;
+      height: auto;
+      min-height: calc(100svh - var(--hero-kopf, 4.5rem));
+    }
+  }
+  @keyframes hero-netz-weg {
     to {
       visibility: hidden;
     }
   }
+  @keyframes hero-netz-da {
+    to {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 
-  /* Die vier Wörter im Gerede: fett von Anfang an, damit die Kopie beim Herauslösen denselben Umriss hat. */
+  /* Die vier Wörter im Gerede: fett und eng wie die H1, damit die Kopie denselben Umriss hat. */
   [data-hero-quelle] {
     position: relative;
     display: inline-block;
     color: inherit;
     background: none;
     font-weight: 600;
+    letter-spacing: -0.03em;
     isolation: isolate;
   }
   [data-hero-marker] {
@@ -216,6 +310,7 @@ geredeHtml += escape(rest)
     position: absolute;
     left: 0;
     top: 0;
+    isolation: isolate;
     white-space: nowrap;
     transform-origin: top left;
     will-change: transform;
@@ -229,121 +324,295 @@ geredeHtml += escape(rest)
 <script>
   import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, stagger, wennBewegt } from '@/lib/motion'
 
-  const html = document.documentElement
+  const root = document.documentElement
+
+  /* ---------- kleine Rechenhilfen ---------- */
+
+  const klemme = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x))
+  /** Anteil von p zwischen a und b, 0 bis 1. */
+  const abschnitt = (p: number, a: number, b: number) => klemme((p - a) / (b - a))
+  const ausrollen = (t: number) => 1 - (1 - t) ** 3
+  const weich = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2)
+  /** Quadratische Kurve von a über w (bei t = 0,5) nach b. */
+  const bogen = (a: number, w: number, b: number, t: number) => {
+    const c = 2 * w - (a + b) / 2
+    return (1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b
+  }
 
   /*
-   * Teil 1: Aus Gerede wird Klartext. Nur, wenn das Inline-Skript oben
-   * entschieden hat, dass gespielt wird. Zeiten siehe HERO_KLARTEXT_PLAN.md:
-   * 250 ms markieren, 700 ms herauslösen, 1 200 ms ankommen, 1 400 ms
-   * umschalten, dann Teil 2. Positionen werden gemessen, nicht geraten:
-   * Jede Kopie steht am Ziel (ihrem Wort in der H1) und startet per
-   * transform an der Quelle; Schriftgröße über `scale`, nie `font-size`.
+   * Wo jedes Wort auf halbem Weg ist: Anteil der Fensterbreite, Anteil der
+   * Rahmenhöhe, Größe relativ zur H1, Drehung in Grad. Die Wörter kreuzen
+   * sich absichtlich: Sie fliegen über die Seite, nicht auf geradem Weg.
    */
-  async function gerede(): Promise<void> {
+  const WEGPUNKTE = [
+    { x: 0.78, y: 0.12, s: 0.85, r: -7 },
+    { x: 0.04, y: 0.66, s: 0.8, r: 6 },
+    { x: 0.7, y: 0.8, s: 0.9, r: -5 },
+    { x: 0.3, y: 0.34, s: 0.95, r: 8 },
+  ]
+
+  /*
+   * Fahrplan über die Scroll-Strecke, p von 0 bis 1:
+   *   0,00–0,13  Marker ziehen hinter die vier Wörter
+   *   0,14–0,23  Wörter lösen sich (gestaffelt)
+   *   0,24–0,42  der Rest des Geredes verblasst
+   *   0,14–0,29  jedes Wort steigt erst aus der Zeile auf und wächst
+   *   0,20–0,89  Flug über die Seite in die H1 (je Wort versetzt)
+   *   0,88–0,95  Marker laufen aus, Komma und Punkt erscheinen
+   *   0,86–1,00  Für wen, Intro, Knöpfe, Adresse, dann der Strich
+   *   1,00       fertig: Strecke weg, kein Zurück
+   */
+  const MARKER_START = 0
+  const MARKER_VERSATZ = 0.025
+  const MARKER_DAUER = 0.06
+  const LOS = 0.14
+  const LOS_VERSATZ = 0.03
+  const LANDUNG = 0.8
+  /** Anteil der Strecke, in dem ein Wort aus der Zeile aufsteigt, bevor es fliegt. */
+  const AUFSTIEG = 0.06
+  /** Um wie viel es dabei wächst (0,6 = 60 %) und wie hoch es steigt (in eigenen Zeilenhöhen). */
+  const AUFSTIEG_GROESSE = 0.6
+  const AUFSTIEG_HOEHE = 1.4
+
+  function gerede(): void {
+    const buehne = document.querySelector<HTMLElement>('[data-hero-buehne]')
+    const rahmen = document.querySelector<HTMLElement>('[data-hero-rahmen]')
     const h1 = document.querySelector<HTMLElement>('[data-hero-h1]')
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
+    const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
+    const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
+    if (!buehne || !rahmen || !h1 || !text || !flug) return fertig()
+
     const quellen = alle('[data-hero-quelle]')
-    const ziele = alle('[data-hero-wort]', h1 ?? undefined)
-    const zeichen = alle('[data-hero-zeichen]', h1 ?? undefined)
-    if (!h1 || !text || !flug || quellen.length !== ziele.length) return fertig()
+    const ziele = alle('[data-hero-wort]', h1)
+    const zeichen = alle('[data-hero-zeichen]', h1)
+    const zeilen = alle('[data-hero-einzug]')
+    if (quellen.length === 0 || quellen.length !== ziele.length) return fertig()
+    const quellMarker = quellen.map((q) => q.querySelector<HTMLElement>('[data-hero-marker]')!)
 
-    // Erst messen, wenn die Schrift steht, sonst stimmen die Breiten nicht.
-    await document.fonts.ready
+    // Die Kopien: in Display-Schrift wie die H1, liegen am Ziel und werden per transform bewegt.
+    const kopien = ziele.map((ziel) => {
+      const kopie = document.createElement('span')
+      kopie.dataset.heroKopie = ''
+      kopie.className = h1.className.replace(/\b(m-0|max-w-\[[^\]]+\]|text-balance)\b/g, '')
+      kopie.innerHTML = `<span data-hero-marker></span>${ziel.textContent}`
+      kopie.style.visibility = 'hidden'
+      flug.append(kopie)
+      return {
+        el: kopie,
+        marker: kopie.querySelector<HTMLElement>('[data-hero-marker]')!,
+        dx: 0,
+        dy: 0,
+        s: 1,
+        zb: 0,
+        zh: 0,
+        wx: 0,
+        wy: 0,
+        ws: 1,
+      }
+    })
 
-    // Markieren: Fläche von links, Schrift wird Tinte.
-    const marker = quellen.map((q) => q.querySelector<HTMLElement>('[data-hero-marker]')!)
-    animate(
-      marker,
-      { scaleX: [0, 1] },
-      { duration: DAUER.basis, ease: KURVE, delay: stagger(0.09, { startDelay: 0.25 }) },
-    )
-    animate(
-      quellen,
-      { color: 'var(--color-fg)' },
-      { duration: DAUER.basis, ease: KURVE, delay: stagger(0.09, { startDelay: 0.25 }) },
-    )
-    // Herauslösen frühestens bei 700 ms, und nie, bevor der letzte Marker steht.
-    const nachMarkieren = 0.25 + 0.09 * (quellen.length - 1) + DAUER.basis
-    await new Promise((r) => setTimeout(r, Math.max(0.7, nachMarkieren) * 1000))
-
-    // Herauslösen: Kopien am Ziel bauen, an die Quelle setzen, fliegen lassen.
     const textKasten = (el: HTMLElement) => {
       const range = document.createRange()
       range.selectNodeContents(el.lastChild!)
       return range.getBoundingClientRect()
     }
-    const kopien = ziele.map((ziel, i) => {
-      const kopie = document.createElement('span')
-      kopie.dataset.heroKopie = ''
-      kopie.className = h1.className.replace(/\b(m-0|max-w-\[[^\]]+\]|text-balance)\b/g, '')
-      kopie.innerHTML = `<span data-hero-marker></span>${ziel.textContent}`
-      Object.assign(kopie.style, { position: 'absolute', isolation: 'isolate' })
-      flug.append(kopie)
-      // Am Ziel ausrichten: Glyphenkasten der Kopie auf den der H1-Span. Die
-      // Kopie selbst ist ein Block (Zeilenkasten), gemessen wird ihr Text.
-      const z = ziel.getBoundingClientRect()
-      const k = textKasten(kopie)
-      kopie.style.left = `${z.left - k.left}px`
-      kopie.style.top = `${z.top - k.top}px`
-      const q = quellen[i]!.getBoundingClientRect()
-      const s = q.height / z.height
-      return { kopie, dx: q.left - z.left, dy: q.top - z.top, s }
+
+    /* Alles messen: Quelle, Ziel, Wegpunkt je Wort. Bei jeder Größenänderung neu. */
+    function messen(): void {
+      const kopf = document.querySelector<HTMLElement>('.site-header')
+      if (kopf) root.style.setProperty('--hero-kopf', `${kopf.offsetHeight}px`)
+      const r = rahmen!.getBoundingClientRect()
+      const fensterB = document.documentElement.clientWidth
+      kopien.forEach((k, i) => {
+        // Gemessen wird immer der Glyphenkasten des Textes, nie der Zeilenkasten:
+        // Nur der ist proportional zur Schriftgröße.
+        const transform = k.el.style.transform
+        k.el.style.transform = 'none'
+        k.el.style.left = '0px'
+        k.el.style.top = '0px'
+        const e0 = k.el.getBoundingClientRect()
+        const k0 = textKasten(k.el)
+        const ox = k0.left - e0.left
+        const oy = k0.top - e0.top
+        const z = textKasten(ziele[i]!)
+        // Kopie so legen, dass ihr Text genau auf dem Text der H1 liegt.
+        const ex = z.left - ox
+        const ey = z.top - oy
+        k.el.style.left = `${ex - r.left}px`
+        k.el.style.top = `${ey - r.top}px`
+        k.el.style.transform = transform
+        const q = textKasten(quellen[i]!)
+        // Mit Ursprung oben links landet der Text bei e + d + s · o.
+        k.s = q.height / z.height
+        k.zb = z.width
+        k.zh = z.height
+        k.dx = q.left - ex - k.s * ox
+        k.dy = q.top - ey - k.s * oy
+        const w = WEGPUNKTE[i % WEGPUNKTE.length]!
+        k.ws = w.s
+        const links = 16 + w.x * Math.max(0, fensterB - 32 - z.width * w.s)
+        const oben = r.top + w.y * Math.max(0, r.height - z.height * w.s)
+        k.wx = links - ex - k.ws * ox
+        k.wy = oben - ey - k.ws * oy
+      })
+    }
+
+    /* Wie weit in der Strecke, 0 bis 1. */
+    function fortschritt(): number {
+      const kopf = parseFloat(getComputedStyle(root).getPropertyValue('--hero-kopf')) || 0
+      const strecke = buehne!.offsetHeight - rahmen!.offsetHeight
+      if (strecke <= 0) return 1
+      return klemme((kopf - buehne!.getBoundingClientRect().top) / strecke)
+    }
+
+    function zeichnen(p: number): void {
+      if (hinweis) hinweis.style.opacity = p > 0.005 ? '0' : ''
+
+      // Markieren
+      quellen.forEach((q, i) => {
+        const t = ausrollen(
+          abschnitt(
+            p,
+            MARKER_START + i * MARKER_VERSATZ,
+            MARKER_START + i * MARKER_VERSATZ + MARKER_DAUER,
+          ),
+        )
+        quellMarker[i]!.style.transform = `scaleX(${t})`
+        q.style.color = t > 0 ? 'var(--color-fg)' : ''
+      })
+
+      // Rest des Geredes verblasst
+      text!.style.opacity = String(1 - ausrollen(abschnitt(p, 0.24, 0.42)))
+
+      // Flug
+      kopien.forEach((k, i) => {
+        const los = LOS + i * LOS_VERSATZ
+        const an = LANDUNG + i * LOS_VERSATZ
+        const unterwegs = p >= los
+        quellen[i]!.style.visibility = unterwegs ? 'hidden' : ''
+        k.el.style.visibility = unterwegs ? 'visible' : 'hidden'
+        // Erst steigt das Wort senkrecht aus der Zeile und wächst (um seine Mitte),
+        // dann fliegt es über den Wegpunkt in die H1.
+        const u = ausrollen(abschnitt(p, los, los + AUFSTIEG))
+        const groesse = k.s * (1 + AUFSTIEG_GROESSE * u)
+        const hubX = k.dx - ((groesse - k.s) * k.zb) / 2
+        const hubY = k.dy - ((groesse - k.s) * k.zh) / 2 - u * AUFSTIEG_HOEHE * k.s * k.zh
+        const t = weich(abschnitt(p, los + AUFSTIEG, an))
+        const x = bogen(hubX, k.wx, 0, t)
+        const y = bogen(hubY, k.wy, 0, t)
+        const s = bogen(groesse, k.ws, 1, t)
+        const dreh = WEGPUNKTE[i % WEGPUNKTE.length]!.r * Math.sin(Math.PI * t)
+        k.el.style.transform = `translate(${x}px, ${y}px) scale(${s}) rotate(${dreh}deg)`
+        // Marker läuft nach der Landung nach rechts aus
+        const aus = ausrollen(abschnitt(p, 0.88, 0.95))
+        k.marker.style.transformOrigin = 'right'
+        k.marker.style.transform = `scaleX(${1 - aus})`
+      })
+
+      // Satzzeichen
+      const punkt = ausrollen(abschnitt(p, 0.88, 0.95))
+      for (const z of zeichen) z.style.opacity = String(punkt)
+
+      // Die Zeilen unter der H1, dann der Strich
+      zeilen.forEach((zeile, i) => {
+        const t = ausrollen(abschnitt(p, 0.86 + i * 0.03, 0.92 + i * 0.03))
+        zeile.style.opacity = String(t)
+        zeile.style.transform = `translateY(${(1 - t) * WEG_TEXT}px)`
+      })
+      if (strich) strich.style.transform = `scaleX(${ausrollen(abschnitt(p, 0.95, 1))})`
+    }
+
+    let wartet = false
+    let vorbei = false
+
+    function weiter(): void {
+      wartet = false
+      if (vorbei) return
+      const p = fortschritt()
+      zeichnen(p)
+      if (p >= 0.999) abschliessen(true)
+    }
+    function beimScrollen(): void {
+      if (!wartet) {
+        wartet = true
+        requestAnimationFrame(weiter)
+      }
+    }
+    function beiGroesse(): void {
+      if (vorbei) return
+      messen()
+      weiter()
+    }
+
+    /*
+     * Fertig: Strecke weg, Rahmen klebt nicht mehr, H1 steht. Damit nichts
+     * springt, wird um genau die Strecke zurückgescrollt, die verschwindet.
+     * Danach gibt es kein Zurück mehr in die Animation.
+     */
+    function abschliessen(lageHalten: boolean): void {
+      if (vorbei) return
+      vorbei = true
+      window.removeEventListener('scroll', beimScrollen)
+      window.removeEventListener('resize', beiGroesse)
+      document.removeEventListener('click', vorSprung, true)
+      rahmen!.removeEventListener('focusin', beiFokus)
+      const vorher = rahmen!.getBoundingClientRect().top
+      for (const k of kopien) k.el.remove()
+      for (const q of quellen) q.style.visibility = ''
+      for (const z of zeichen) z.style.opacity = ''
+      // Explizit sichtbar: Die Regel für den Einzug ohne Gerede würde sonst wieder greifen.
+      for (const zeile of zeilen) {
+        zeile.style.opacity = '1'
+        zeile.style.transform = 'none'
+      }
+      if (strich) strich.style.transform = 'none'
+      root.dataset.hero = 'fertig'
+      if (lageHalten) {
+        const nachher = rahmen!.getBoundingClientRect().top
+        window.scrollBy({ top: nachher - vorher, behavior: 'instant' })
+      }
+      history.scrollRestoration = 'auto'
+    }
+
+    /*
+     * Ein Sprung innerhalb der Seite (Navigation, „Arbeiten ansehen“) während
+     * der Strecke: erst abschließen, dann springt der Browser ans richtige Ziel.
+     */
+    function vorSprung(e: MouseEvent): void {
+      const a = (e.target as Element | null)?.closest?.('a[href*="#"]') as HTMLAnchorElement | null
+      if (a && a.pathname === location.pathname) abschliessen(false)
+    }
+
+    /* Tastatur: Kommt der Fokus auf einen noch unsichtbaren Knopf im Hero, ist die Animation vorbei. */
+    function beiFokus(): void {
+      abschliessen(false)
+    }
+    rahmen.addEventListener('focusin', beiFokus)
+
+    // Neu laden heißt oben anfangen.
+    if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' })
+
+    document.fonts.ready.then(() => {
+      if (vorbei) return
+      messen()
+      weiter()
+      window.addEventListener('scroll', beimScrollen, { passive: true })
+      window.addEventListener('resize', beiGroesse)
     })
-
-    // Marker der Kopie: anfangs gefüllt, sichtbar wie an der Quelle.
-    animate(
-      kopien.map((k) => k.kopie),
-      { opacity: [0, 1] },
-      { duration: 0.001 },
-    )
-    const fluege = kopien.map(({ kopie, dx, dy, s }, i) =>
-      animate(
-        kopie,
-        { transform: [`translate(${dx}px, ${dy}px) scale(${s})`, 'translate(0px, 0px) scale(1)'] },
-        { duration: DAUER.szene, ease: KURVE, delay: i * STAFFEL },
-      ),
-    )
-    animate(text, { opacity: [1, 0], y: [0, -WEG_TEXT] }, { duration: DAUER.langsam, ease: KURVE })
-    await Promise.all(fluege)
-
-    // Ankommen: Marker läuft nach rechts aus, Satzzeichen blenden ein.
-    for (const z of zeichen) z.style.opacity = '0'
-    h1.style.opacity = '1'
-    for (const k of kopien)
-      k.kopie.querySelector<HTMLElement>('[data-hero-marker]')!.style.transformOrigin = 'right'
-    await Promise.all([
-      animate(
-        kopien.map((k) => k.kopie.querySelector<HTMLElement>('[data-hero-marker]')!),
-        { scaleX: [1, 0] },
-        { duration: DAUER.basis, ease: KURVE },
-      ),
-      animate(zeichen, { opacity: [0, 1] }, { duration: DAUER.basis, ease: KURVE }),
-    ])
-
-    // Umschalten: Die echte H1 steht, nichts bleibt zurück.
-    for (const k of kopien) k.kopie.remove()
-    fertig()
+    document.addEventListener('click', vorSprung, true)
   }
 
-  /* Endzustand von Teil 1, unabhängig davon, ob gespielt wurde. */
+  /* Endzustand ohne Gerede. */
   function fertig(): void {
-    delete html.dataset.hero
-    const h1 = document.querySelector<HTMLElement>('[data-hero-h1]')
-    if (h1) h1.style.opacity = ''
-    for (const z of alle('[data-hero-zeichen]')) z.style.opacity = ''
+    if (root.dataset.hero === 'gerede') root.dataset.hero = 'fertig'
   }
 
   /*
-   * Teil 2: Einzug der Zeilen unter der H1, kein `inView`: Der Hero steht
-   * immer im ersten Fenster. Signatur, genau eine: der Strich unter der
-   * Adresse. Eine Tintenlinie unter der ganzen Adresszeile stünde knapp über
-   * der Kapitel-Linie von 01 und doppelte sie; die Tinte bleibt den Kapiteln.
-   * Der Strich zeigt auf das, was man aus dem Hero mitnehmen soll, und reimt
-   * sich auf den Kontakt (05). Er startet erst, wenn die Adresszeile
-   * angekommen ist: erst Text, dann Linie. Das Zurücktreten beim Scrollen
-   * bleibt bewusst weg: eine zweite Bewegung neben dem Strich wäre keine
-   * Signatur mehr.
+   * Ohne Gerede: Einzug der Zeilen unter der stehenden H1, dann der Strich
+   * unter der Adresse (erst Text, dann Linie). Kein `inView`: Der Hero steht
+   * immer im ersten Fenster.
    */
   function einzug(): void {
     const zeilen = alle('[data-hero-einzug]')
@@ -370,8 +639,8 @@ geredeHtml += escape(rest)
     }
   }
 
-  wennBewegt(async () => {
-    if (html.dataset.hero === 'gerede') await gerede()
-    einzug()
+  wennBewegt(() => {
+    if (root.dataset.hero === 'gerede') gerede()
+    else einzug()
   }, fertig)
 </script>
