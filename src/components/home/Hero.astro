@@ -196,6 +196,24 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
           class="m-0 mt-5 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:mt-7 sm:text-lg sm:leading-relaxed"
           set:html={geredeHtml}
         />
+        {
+          /*
+           * Der Hinweis: ein Textfeld im Fluss direkt unter dem Gerede, damit
+           * es nie über dem Text liegt. Es hüpft zweimal, ruht, hüpft wieder,
+           * bis gescrollt wird. Am Computer „Scrollen“, auf Touch „Wischen“.
+           */
+        }
+        <p data-hero-hinweis class="m-0 mt-6 sm:mt-8">
+          <span
+            data-hero-huepf
+            class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-fg"
+          >
+            <span data-hero-hinweis-fein>Scrollen</span>
+            <span data-hero-hinweis-fein><Arrow class="rotate-90" /></span>
+            <span data-hero-hinweis-grob>Wischen</span>
+            <span data-hero-hinweis-grob><Arrow class="-rotate-90" /></span>
+          </span>
+        </p>
       </div>
     </div>
 
@@ -203,29 +221,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     <div aria-hidden="true" data-hero-flug class="pointer-events-none absolute inset-0 z-[2]"></div>
   </section>
 
-  {
-    /*
-     * Der Hinweis: Maus mit laufendem Rad, auf Touch-Geräten ein Wisch-Pfeil.
-     * Er ist ein Knopf und spielt die Animation auf Klick selbst ab. Sobald
-     * gescrollt wird, übernimmt der Fortschrittsbalken seinen Platz.
-     */
-  }
-  <button
-    type="button"
-    data-hero-hinweis
-    aria-label="Animation abspielen"
-    class="fixed inset-x-0 bottom-5 z-10 mx-auto w-max cursor-pointer flex-col items-center gap-2 rounded-md border-0 bg-transparent px-4 py-2 font-[inherit] text-sm font-semibold text-fg"
-  >
-    <span aria-hidden="true" data-hero-maus>
-      <span data-hero-maus-rad></span>
-    </span>
-    <span aria-hidden="true" data-hero-wisch>
-      <Arrow class="-rotate-90" />
-      <Arrow class="-rotate-90" />
-    </span>
-    <span aria-hidden="true" data-hero-hinweis-fein>Scrollen</span>
-    <span aria-hidden="true" data-hero-hinweis-grob>Wischen</span>
-  </button>
   <div aria-hidden="true" data-hero-fortschritt>
     <span data-hero-fortschritt-balken></span>
   </div>
@@ -277,7 +272,7 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
   /*
    * Das Gerede läuft Wort für Wort ein, wie gesprochen: ab 0,8 s, 20 ms je
    * Wort. Reines CSS, es startet also schon, bevor das Skript geladen ist.
-   * `data-hero-sofort` (gesetzt, sobald jemand scrollt oder klickt) stellt
+   * `data-hero-sofort` (gesetzt, sobald jemand scrollt) stellt
    * alles sofort hin. `inline-block`, weil nur so `transform` greift.
    */
   [data-hero-laut] {
@@ -309,58 +304,40 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
 
   /* Hinweis und Fortschritt */
   html[data-hero='gerede'] [data-hero-hinweis] {
-    display: flex;
+    display: block;
     animation: hero-hinweis-ein 0.7s 3.8s both cubic-bezier(0.2, 0, 0, 1);
-    transition:
-      opacity 0.3s,
-      color 0.2s;
-  }
-  [data-hero-hinweis]:hover,
-  [data-hero-hinweis]:focus-visible {
-    color: var(--color-accent);
+    transition: opacity 0.3s;
   }
   html[data-hero='gerede'] [data-hero-hinweis][data-weg] {
     opacity: 0;
-    pointer-events: none;
   }
-  [data-hero-maus] {
-    position: relative;
-    display: block;
-    width: 1.5rem;
-    height: 2.4rem;
-    border: 2px solid currentColor;
-    border-radius: 999px;
-  }
-  [data-hero-maus-rad] {
-    position: absolute;
-    top: 0.4rem;
-    left: 50%;
-    width: 4px;
-    height: 0.5rem;
-    margin-left: -2px;
-    border-radius: 2px;
-    background: var(--color-accent);
-    animation: hero-rad 1.6s 4.5s infinite cubic-bezier(0.2, 0, 0, 1);
-  }
-  [data-hero-wisch] {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.4rem;
-    line-height: 0.6;
-    color: var(--color-accent);
-    animation: hero-wisch 1.6s 4.5s infinite cubic-bezier(0.2, 0, 0, 1);
+  /* Zweimal hoch und runter, dann gut 3 s Ruhe, immer wieder (wie ein iOS-Hinweis). */
+  html[data-hero='gerede'] [data-hero-huepf] {
+    animation: hero-huepf 4.2s 4.5s infinite;
   }
   [data-hero-hinweis-grob] {
     display: none;
   }
+  /*
+   * Niedrige Fenster (Notebooks, kleine iPhones): engere Abstände und am
+   * Computer eine Schriftstufe kleiner, damit Gerede und Hinweis ins erste
+   * Fenster passen.
+   */
+  @media (max-height: 740px) {
+    html[data-hero='gerede'] [data-hero-gerede],
+    html[data-hero='gerede'] [data-hero-hinweis] {
+      margin-top: 1rem;
+    }
+  }
+  @media (max-height: 740px) and (min-width: 40rem) {
+    html[data-hero='gerede'] [data-hero-gerede] {
+      font-size: 1rem;
+      line-height: 1.625;
+    }
+  }
   @media (pointer: coarse) {
-    [data-hero-maus],
     [data-hero-hinweis-fein] {
       display: none;
-    }
-    [data-hero-wisch] {
-      display: flex;
     }
     [data-hero-hinweis-grob] {
       display: inline;
@@ -404,29 +381,18 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
       transform: translateY(12px);
     }
   }
-  @keyframes hero-rad {
-    0% {
-      opacity: 0;
-      transform: translateY(0);
-    }
-    20% {
-      opacity: 1;
-    }
-    70%,
-    100% {
-      opacity: 0;
-      transform: translateY(0.7rem);
-    }
-  }
-  @keyframes hero-wisch {
+  @keyframes hero-huepf {
     0%,
+    14%,
+    28%,
     100% {
-      transform: translateY(4px);
-      opacity: 0.5;
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
     }
-    50% {
-      transform: translateY(-4px);
-      opacity: 1;
+    7%,
+    21% {
+      transform: translateY(-8px);
+      animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
     }
   }
 
@@ -604,8 +570,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
   const AUFSTIEG_HOEHE = 1.4
   /** Länge des Schweifs als Anteil der Flugbahn. */
   const SCHWEIF = 0.2
-  /** Dauer, wenn man auf den Hinweis klickt, in Millisekunden. */
-  const ABSPIELEN_MS = 4800
 
   type Kopie = {
     el: HTMLElement
@@ -916,7 +880,7 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
     const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
-    const hinweis = document.querySelector<HTMLButtonElement>('[data-hero-hinweis]')
+    const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
     const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
     const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
     const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
@@ -1024,7 +988,7 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     }
 
     /*
-     * Vorspann sofort komplett: Wer scrollt oder klickt, bevor das Gerede
+     * Vorspann sofort komplett: Wer scrollt, bevor das Gerede
      * steht, bekommt es ganz, mit Markern. Danach neu messen, denn während
      * des Einlaufens sind die Wörter noch verschoben.
      */
@@ -1125,7 +1089,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     function abschliessen(lageHalten: boolean): void {
       if (vorbei) return
       vorbei = true
-      abspielenStopp()
       markerSofort()
       root.dataset.heroSofort = ''
       auftakt?.removeAttribute('style')
@@ -1150,40 +1113,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
       }
       history.scrollRestoration = 'auto'
     }
-
-    /*
-     * Klick auf den Hinweis: Die Seite scrollt die Strecke selbst ab, in
-     * knapp fünf Sekunden. Mausrad, Wischen oder eine Taste übernehmen sofort.
-     */
-    let abspielenAktiv = false
-    function abspielenStopp(): void {
-      abspielenAktiv = false
-      for (const typ of ['wheel', 'touchstart', 'keydown'] as const) {
-        window.removeEventListener(typ, abspielenStopp)
-      }
-    }
-    function abspielen(): void {
-      if (vorbei || abspielenAktiv) return
-      vorspannSofort()
-      abspielenAktiv = true
-      for (const typ of ['wheel', 'touchstart', 'keydown'] as const) {
-        window.addEventListener(typ, abspielenStopp, { passive: true })
-      }
-      const start = window.scrollY
-      const strecke = buehne!.offsetHeight - rahmen!.offsetHeight
-      const ziel = window.scrollY + (buehne!.getBoundingClientRect().top - kopf) + strecke + 2
-      const dauer = ABSPIELEN_MS * (1 - fortschritt())
-      const t0 = performance.now()
-      const schritt = (jetzt: number) => {
-        if (!abspielenAktiv || vorbei) return
-        const t = klemme((jetzt - t0) / Math.max(1, dauer))
-        window.scrollTo({ top: start + (ziel - start) * weich(t), behavior: 'instant' })
-        if (t < 1) requestAnimationFrame(schritt)
-        else abspielenStopp()
-      }
-      requestAnimationFrame(schritt)
-    }
-    hinweis?.addEventListener('click', abspielen)
 
     /*
      * Ein Sprung innerhalb der Seite (Navigation, „Arbeiten ansehen“) während
