@@ -9,13 +9,18 @@ Regeln aus `DESIGN.md` zu Dauer und Weg gelten für diesen Hero ausdrücklich ni
 Pharrel: „Die Regeln sind unwichtig“).
 
 Version 3 vom 2026-10-11: Man kam schwer darauf, dass man scrollen muss, und die Fläche um die
-fliegenden Wörter war leer. Dazu kamen: Selbststart der Marker, ein deutlicher, anklickbarer
+fliegenden Wörter war leer. Dazu kamen: Selbststart der Marker, ein deutlicher
 Hinweis mit Fortschrittsbalken und ein Himmel aus Punktefeld, Staub, Schweifen und Landefunken.
 
 Version 4 vom 2026-10-11: Die Seite startet erst mit einer Überschrift, dann kommt das Gerede.
 Die Eröffnungszeile „Sie erzählen. Ich höre zu.“ (`heroAuftakt` in `company.json`) steht sofort an
 der Stelle der späteren H1. Darunter läuft das Gerede Wort für Wort ein. Beim Scrollen macht die
 Zeile Platz, und die H1 landet dort. Erzählung: Haltung, Lärm, Antwort.
+
+Version 5 vom 2026-10-11: Der Hinweis-Knopf (Maus-Symbol, fest am unteren Fensterrand, Klick
+spielte ab) überlappte je nach Fensterhöhe mit dem Gerede. Er ist ersetzt durch ein Textfeld im
+Fluss direkt unter dem Gerede, das nach Art eines iOS-Hinweises zweimal hüpft, ruht und wieder
+hüpft. Ein Klick-zum-Abspielen gibt es nicht mehr.
 
 ---
 
@@ -74,16 +79,18 @@ Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er s
 
 **Ohne Scrollen.**
 
-| Zeit      | Was passiert                                                                                                        |
-| --------- | ------------------------------------------------------------------------------------------------------------------- |
-| 0 s       | „Sie erzählen.“ / „Ich höre zu.“ steht sofort in Display-Größe, an der Stelle der späteren H1                       |
-| 0,8–3,0 s | Darunter läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                                             |
-| 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                                                  |
-| 3,8 s     | Unten erscheint der Hinweis: Maus mit laufendem Rad und „Scrollen“, auf Touch-Geräten ein Wisch-Pfeil und „Wischen“ |
+| Zeit      | Was passiert                                                                                     |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| 0 s       | „Sie erzählen.“ / „Ich höre zu.“ steht sofort in Display-Größe, an der Stelle der späteren H1    |
+| 0,8–3,0 s | Darunter läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                          |
+| 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                               |
+| 3,8 s     | Unter dem Gerede erscheint der Hinweis: ein Textfeld „Scrollen ↓“, auf Touch-Geräten „Wischen ↑“ |
+| ab 4,5 s  | Das Feld hüpft zweimal 8 px hoch und runter, ruht gut 3 s, hüpft wieder, bis gescrollt wird      |
 
-Der Hinweis ist ein Knopf. Ein Klick scrollt die Strecke in knapp 5 s selbst ab, Mausrad, Wischen
-oder eine Taste übernehmen sofort. Im Hintergrund wimmelt ein Punktefeld. Scrollt oder klickt
-jemand, bevor das Gerede steht, steht es sofort komplett, mit Markern.
+Das Feld steht im Fluss unter dem Text und kann ihn deshalb nie verdecken. In niedrigen Fenstern
+(bis 740 px Höhe) werden die Abstände enger und am Computer die Gerede-Schrift eine Stufe kleiner,
+damit alles ins erste Fenster passt. Im Hintergrund wimmelt ein Punktefeld. Scrollt jemand, bevor
+das Gerede steht, steht es sofort komplett, mit Markern.
 
 **Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
 klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. Fortschritt p:
