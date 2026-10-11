@@ -132,9 +132,10 @@ for (const [route, html] of pages) {
 
 // JavaScript nur vom eigenen Server, gebuendelt aus dem Repository (Motion fuer
 // die Bewegung, docs/MOTION_PLAN.md). Nichts von fremden Hosts, und ein Budget
-// je Seite, damit die Bewegung nicht zur Ladezeit wird: 90 KB unkomprimiert
-// entsprechen etwa 30 KB ueber die Leitung.
-const JS_BUDGET = 90 * 1024
+// je Seite, damit die Bewegung nicht zur Ladezeit wird: 100 KB unkomprimiert
+// entsprechen etwa 33 KB ueber die Leitung. Seit 2026-10-11 100 statt 90 KB:
+// Der Himmel des Scroll-Heros (Startseite) braucht rund 11 KB fuer sich.
+const JS_BUDGET = 100 * 1024
 const jsJeRoute = new Map()
 for (const [route, html] of pages) {
   const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])

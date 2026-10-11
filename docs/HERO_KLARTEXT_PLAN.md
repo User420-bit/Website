@@ -8,6 +8,10 @@ Version 1 (1,5 s nach dem Laden) war vorbei, bevor man gemerkt hatte, dass sie a
 Regeln aus `DESIGN.md` zu Dauer und Weg gelten für diesen Hero ausdrücklich nicht (Entscheidung
 Pharrel: „Die Regeln sind unwichtig“).
 
+Version 3 vom 2026-10-11: Man kam schwer darauf, dass man scrollen muss, und die Fläche um die
+fliegenden Wörter war leer. Dazu kamen: Selbststart der Marker, ein deutlicher, anklickbarer
+Hinweis mit Fortschrittsbalken und ein Himmel aus Punktefeld, Staub, Schweifen und Landefunken.
+
 ---
 
 ## 0. Die Idee in einem Satz
@@ -61,21 +65,28 @@ vorkommt.
 
 Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er so.
 
-## 3. Ablauf über die Scroll-Strecke
+## 3. Ablauf
 
-Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px, etwa 19 Rasten am Mausrad).
-Der Rahmen mit Gerede und H1 klebt währenddessen unter dem Header. Fortschritt p von 0 bis 1:
+**Ohne Scrollen.** Ab 0,5 s werden die vier Wörter nacheinander markiert. Ab 1,5 s steht unten
+der Hinweis: eine Maus mit laufendem Rad und „Scrollen“, auf Touch-Geräten ein Wisch-Pfeil und
+„Wischen“. Der Hinweis ist ein Knopf. Ein Klick scrollt die Strecke in knapp 5 s selbst ab, Mausrad,
+Wischen oder eine Taste übernehmen sofort. Im Hintergrund wimmelt ein Punktefeld.
 
-| p         | Was passiert                                                                                |
-| --------- | ------------------------------------------------------------------------------------------- |
-| 0         | Gerede steht, unten „Scrollen“ mit wippendem Pfeil (erscheint nach 0,8 s)                   |
-| 0,00–0,13 | Marker in verdünntem Orange zieht hinter die vier Wörter, nacheinander                      |
-| 0,14–0,29 | Jedes Wort steigt senkrecht aus seiner Zeile und wächst um 60 %, die Lücke bleibt           |
-| 0,24–0,42 | Der Rest des Geredes verblasst                                                              |
-| 0,20–0,89 | Flug: jedes Wort über einen eigenen Wegpunkt quer über die Seite, leicht gedreht, in die H1 |
-| 0,88–0,95 | Marker laufen aus, Komma und Punkt erscheinen                                               |
-| 0,86–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich                            |
-| 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                               |
+**Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
+klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. Fortschritt p:
+
+| p         | Was passiert                                                                   |
+| --------- | ------------------------------------------------------------------------------ |
+| 0,04–0,26 | Jedes Wort steigt aus seiner Zeile, staubt orange und wächst, die Lücke bleibt |
+| 0,12–0,38 | Der Rest des Geredes zerfällt von links nach rechts zu Staub                   |
+| 0,11–0,89 | Flug mit Sternschnuppen-Schweif und Funken über die Seite in die H1            |
+| 0,20–0,80 | Das Punktefeld ordnet sich vom Gewimmel zum ruhigen Raster                     |
+| 0,40–0,85 | Hinter der H1 glimmt es auf                                                    |
+| 0,77–0,96 | Landung: ein Rahmen rastet um jedes Wort ein, Funken springen ab               |
+| 0,88–0,95 | Marker laufen aus, Komma und Punkt erscheinen                                  |
+| 0,86–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich               |
+| 0,90–1,00 | Der Himmel blendet aus                                                         |
+| 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                  |
 
 Bis p = 1 läuft alles mit dem Scrollen vor und zurück. Bei p = 1 wird die Strecke entfernt und
 um genau ihre Länge zurückgescrollt: Für das Auge ändert sich nichts, aber oberhalb der H1 ist
@@ -96,6 +107,12 @@ keine Strecke mehr, in die man zurückscrollen könnte.
   ansehen“) schließt die Animation vorher ab, damit der Browser das richtige Ziel berechnet.
 - **Neuladen.** `history.scrollRestoration = 'manual'`, solange die Animation läuft, danach wieder
   `auto`.
+- **Himmel.** Ein Canvas hinter allem, nur während der Animation. Punktefeld, Staub, Schweife,
+  Funken und Landerahmen werden jedes Bild aus p gezeichnet, also auch rückwärts richtig. Zufall
+  mit fester Saat, damit jeder Besuch gleich aussieht. Farben kommen aus den Tokens (OKLCH, im
+  Skript nach RGB umgerechnet). Im Dunkelmodus leuchten Schweife additiv.
+- **Neuladen wirklich oben.** Stellt der Browser die alte Scrollposition erst nach dem Start
+  wieder her, setzt das Skript in der ersten 1,5 s wieder auf oben, solange niemand selbst scrollt.
 - **Sicherheitsnetz.** Läuft das Modul nach 2 s nicht, stellt CSS den fertigen Hero her und nimmt
   die Strecke weg.
 - **Zugänglichkeit.** Gerede, Kopien und Hinweis tragen `aria-hidden`. Für Screenreader gibt es
@@ -105,7 +122,8 @@ keine Strecke mehr, in die man zurückscrollen könnte.
 
 - Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
 - Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
-- Der wippende Pfeil läuft endlos, solange man nicht scrollt.
+- Hinweis und Punktefeld bewegen sich endlos, solange man nicht scrollt.
+- JavaScript-Budget von 90 auf 100 KB je Seite angehoben; der Himmel braucht rund 11 KB.
 
 ## 6. Prüfung
 
