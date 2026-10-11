@@ -32,6 +32,11 @@ const company = defineCollection({
      * (ohne Satzzeichen) muss darin vorkommen, in Lesereihenfolge.
      */
     heroGerede: z.string(),
+    /**
+     * Eröffnungszeile des Heros, eine Zeile je Eintrag (docs/HERO_KLARTEXT_PLAN.md,
+     * Version 4). Steht beim Öffnen an der Stelle der H1, bevor das Gerede einläuft.
+     */
+    heroAuftakt: z.array(z.string()).min(1),
     /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
     audience: z.string(),
     intro: z.string(),
