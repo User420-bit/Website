@@ -12,6 +12,11 @@ Version 3 vom 2026-10-11: Man kam schwer darauf, dass man scrollen muss, und die
 fliegenden Wörter war leer. Dazu kamen: Selbststart der Marker, ein deutlicher, anklickbarer
 Hinweis mit Fortschrittsbalken und ein Himmel aus Punktefeld, Staub, Schweifen und Landefunken.
 
+Version 4 vom 2026-10-11: Die Seite startet erst mit einer Überschrift, dann kommt das Gerede.
+Die Eröffnungszeile „Sie erzählen. Ich höre zu.“ (`heroAuftakt` in `company.json`) steht sofort an
+der Stelle der späteren H1. Darunter läuft das Gerede Wort für Wort ein. Beim Scrollen macht die
+Zeile Platz, und die H1 landet dort. Erzählung: Haltung, Lärm, Antwort.
+
 ---
 
 ## 0. Die Idee in einem Satz
@@ -67,16 +72,25 @@ Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er s
 
 ## 3. Ablauf
 
-**Ohne Scrollen.** Ab 0,5 s werden die vier Wörter nacheinander markiert. Ab 1,5 s steht unten
-der Hinweis: eine Maus mit laufendem Rad und „Scrollen“, auf Touch-Geräten ein Wisch-Pfeil und
-„Wischen“. Der Hinweis ist ein Knopf. Ein Klick scrollt die Strecke in knapp 5 s selbst ab, Mausrad,
-Wischen oder eine Taste übernehmen sofort. Im Hintergrund wimmelt ein Punktefeld.
+**Ohne Scrollen.**
+
+| Zeit      | Was passiert                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------- |
+| 0 s       | „Sie erzählen.“ / „Ich höre zu.“ steht sofort in Display-Größe, an der Stelle der späteren H1                       |
+| 0,8–3,0 s | Darunter läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                                             |
+| 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                                                  |
+| 3,8 s     | Unten erscheint der Hinweis: Maus mit laufendem Rad und „Scrollen“, auf Touch-Geräten ein Wisch-Pfeil und „Wischen“ |
+
+Der Hinweis ist ein Knopf. Ein Klick scrollt die Strecke in knapp 5 s selbst ab, Mausrad, Wischen
+oder eine Taste übernehmen sofort. Im Hintergrund wimmelt ein Punktefeld. Scrollt oder klickt
+jemand, bevor das Gerede steht, steht es sofort komplett, mit Markern.
 
 **Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
 klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. Fortschritt p:
 
 | p         | Was passiert                                                                   |
 | --------- | ------------------------------------------------------------------------------ |
+| 0,02–0,16 | Die Eröffnungszeile steigt 24 px nach oben und verblasst                       |
 | 0,04–0,26 | Jedes Wort steigt aus seiner Zeile, staubt orange und wächst, die Lücke bleibt |
 | 0,12–0,38 | Der Rest des Geredes zerfällt von links nach rechts zu Staub                   |
 | 0,11–0,89 | Flug mit Sternschnuppen-Schweif und Funken über die Seite in die H1            |

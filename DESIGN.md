@@ -831,7 +831,8 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   `global.css` hebt den Anfangszustand nach 2 s von selbst auf, falls das Modul nicht läuft.
 - **Die H1 bewegt sich nie,** auf keiner Seite. Sie ist das Erste, was gemalt wird (LCP). Eine
   Ausnahme, seit 2026-10-11 (`docs/HERO_KLARTEXT_PLAN.md`): Bei jedem Aufruf der Startseite von außen
-  öffnet sie mit Kundengerede. Beim Scrollen fliegen vier Wörter daraus in die H1. Für diesen Hero
+  öffnet sie mit der Zeile „Sie erzählen. Ich höre zu.“ an der Stelle der H1, darunter läuft
+  Kundengerede ein. Beim Scrollen macht die Zeile Platz, und vier Wörter fliegen aus dem Gerede in die H1. Für diesen Hero
   gelten Dauer- und Weggrenzen nicht. Ohne Skript, mit reduzierter Bewegung und beim Zurückkommen
   von einer Unterseite steht die H1 sofort.
 - **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
