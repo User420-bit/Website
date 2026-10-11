@@ -37,6 +37,11 @@ jobs:
       - name: Format
         run: npm run format:check
 
+      # docs/ARCHITEKTUR.md wird aus Code und Projektdateien erzeugt. Rot heißt:
+      # `npm run docs:architektur` ausführen und die Datei mit committen.
+      - name: Architektur-Dokument aktuell
+        run: npm run docs:check
+
       - name: Build
         run: npm run build
 

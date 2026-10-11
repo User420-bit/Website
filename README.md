@@ -11,6 +11,10 @@ verlangt.
 - **Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser
 - Jede Seite ist echtes HTML mit eigener URL, eigenem Title und eigenen Meta-Tags
 
+Wie die Website und jedes Projekt gebaut sind, steht in
+[`docs/ARCHITEKTUR.md`](docs/ARCHITEKTUR.md). Die Datei wird erzeugt, nicht geschrieben (siehe
+„Architektur-Dokument“ unten).
+
 Der Rework-Plan mit Ist-Analyse und Begründungen liegt in
 [`docs/REWORK_PLAN.md`](docs/REWORK_PLAN.md), der Umsetzungsstand in
 [`docs/REWORK_STATUS.md`](docs/REWORK_STATUS.md). Der Umbau der Startseite zu klaren
@@ -161,6 +165,21 @@ Eine neue Referenz braucht keine Szene; ohne Eintrag sieht ihre Seite aus wie bi
 Eine Szene kostet etwa 100 bis 200 Zeilen und wird mit dem Projekt gepflegt. Das ist der Preis dafür,
 dass die zehn Seiten nicht gleich aussehen.
 
+### Architektur-Dokument
+
+`docs/ARCHITEKTUR.md` fasst zusammen, wie die Website gebaut ist und was über die Architektur jedes
+Projekts bekannt ist: Stack, Art, Stand, technische Entscheidungen, dazu Seite, Bühne, Bilder und
+Aufnahmen auf der Website. `scripts/architektur.mjs` liest das alles aus den Projektdateien, der
+Registry in `src/components/projekte/index.ts`, den Imports der Seiten, `src/content.config.ts`,
+`src/pages/` und den Workflows. Von Hand bearbeitet wird die Datei nie.
+
+Wer eine Projektdatei, eine Seite, eine Bühne, eine Route oder einen Workflow ändert, führt danach
+`npm run docs:architektur` aus und committet die Datei mit. Vergessen geht nicht: CI prüft mit
+`npm run docs:check` und wird rot, sobald die Datei nicht mehr zum Code passt.
+
+Die Projekte selbst liegen in eigenen Repositories. Was sich dort ändert, kommt erst an, wenn die
+Projektdatei nachgezogen wird.
+
 ### Felder, die `null` sein dürfen
 
 `github`, `live`, `status`, `linkedin`, `portrait`, `openTo`, `street` und `zipCity`
@@ -171,18 +190,20 @@ wird vom Schema abgelehnt und bricht den Build.
 
 ## Scripts
 
-| Befehl                | Wirkung                                                        |
-| --------------------- | -------------------------------------------------------------- |
-| `npm run dev`         | Dev-Server mit Hot Reload                                      |
-| `npm run build`       | Produktions-Build nach `dist/`                                 |
-| `npm run preview`     | Vorschau des Builds                                            |
-| `npm run check`       | Typecheck (`astro check`)                                      |
-| `npm run lint`        | ESLint inklusive Accessibility-Regeln                          |
-| `npm run format`      | Prettier                                                       |
-| `npm run test:build`  | Prüft `dist/`: Routen, H1, Meta-Tags, tote Links, externes JS  |
-| `npm run guard:legal` | Prüft, ob das Impressum vollständig ist (blockiert den Deploy) |
-| `npm run screenshots` | Nimmt die Referenzen im Browser auf, siehe oben                |
-| `npm run verify`      | Alles davon in einem Durchlauf — vor jedem Push empfohlen      |
+| Befehl                     | Wirkung                                                        |
+| -------------------------- | -------------------------------------------------------------- |
+| `npm run dev`              | Dev-Server mit Hot Reload                                      |
+| `npm run build`            | Produktions-Build nach `dist/`                                 |
+| `npm run preview`          | Vorschau des Builds                                            |
+| `npm run check`            | Typecheck (`astro check`)                                      |
+| `npm run lint`             | ESLint inklusive Accessibility-Regeln                          |
+| `npm run format`           | Prettier                                                       |
+| `npm run test:build`       | Prüft `dist/`: Routen, H1, Meta-Tags, tote Links, externes JS  |
+| `npm run docs:architektur` | Schreibt `docs/ARCHITEKTUR.md` neu                             |
+| `npm run docs:check`       | Prüft, ob `docs/ARCHITEKTUR.md` zum Code passt (läuft in CI)   |
+| `npm run guard:legal`      | Prüft, ob das Impressum vollständig ist (blockiert den Deploy) |
+| `npm run screenshots`      | Nimmt die Referenzen im Browser auf, siehe oben                |
+| `npm run verify`           | Alles davon in einem Durchlauf — vor jedem Push empfohlen      |
 
 ## Deployment
 

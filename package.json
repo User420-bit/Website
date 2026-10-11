@@ -15,8 +15,10 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,astro,css,md,json,yml}\"",
     "format:check": "prettier --check \"**/*.{ts,astro,css,md,json,yml}\"",
-    "verify": "npm run check && npm run lint && npm run format:check && npm run build && npm run test:build",
+    "verify": "npm run check && npm run lint && npm run format:check && npm run docs:check && npm run build && npm run test:build",
     "test:build": "node scripts/verify-build.mjs",
+    "docs:architektur": "node scripts/architektur.mjs",
+    "docs:check": "node scripts/architektur.mjs --check",
     "guard:legal": "node scripts/guard-legal.mjs",
     "screenshots": "node scripts/screenshots.mjs"
   },
@@ -40,6 +42,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.0"
+    "typescript-eslint": "^8.18.0",
+    "yaml": "^2.9.1"
   }
 }
