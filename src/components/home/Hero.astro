@@ -106,7 +106,15 @@ geredeHtml += escape(rest)
     data-hero-rahmen
     class="relative flex min-h-[calc(100svh-var(--hero-kopf,4.5rem))] flex-col justify-center py-12 sm:py-16"
   >
-    <div data-hero-inhalt class="relative">
+    {
+      /*
+       * Der Himmel: Punktefeld, Staub, Schweife, Landeblitze. Ein Canvas hinter
+       * allem, nur während der Animation, gezeichnet aus dem Scrollstand.
+       */
+    }
+    <canvas aria-hidden="true" data-hero-himmel class="pointer-events-none"></canvas>
+
+    <div data-hero-inhalt class="relative z-[1]">
       <h1
         data-hero-h1
         class="display m-0 max-w-[20ch] text-[clamp(2.5rem,1.6rem+4.5vw,4.5rem)] font-semibold text-balance"
@@ -165,17 +173,35 @@ geredeHtml += escape(rest)
     </div>
 
     {/* Hier fliegen die Kopien der vier Wörter. */}
-    <div aria-hidden="true" data-hero-flug class="pointer-events-none absolute inset-0"></div>
+    <div aria-hidden="true" data-hero-flug class="pointer-events-none absolute inset-0 z-[2]"></div>
   </section>
 
-  <p
-    aria-hidden="true"
+  {
+    /*
+     * Der Hinweis: Maus mit laufendem Rad, auf Touch-Geräten ein Wisch-Pfeil.
+     * Er ist ein Knopf und spielt die Animation auf Klick selbst ab. Sobald
+     * gescrollt wird, übernimmt der Fortschrittsbalken seinen Platz.
+     */
+  }
+  <button
+    type="button"
     data-hero-hinweis
-    class="pointer-events-none fixed inset-x-0 bottom-6 z-10 m-0 flex flex-col items-center gap-1 text-sm font-medium text-fg-muted"
+    aria-label="Animation abspielen"
+    class="fixed inset-x-0 bottom-5 z-10 mx-auto w-max cursor-pointer flex-col items-center gap-2 rounded-md border-0 bg-transparent px-4 py-2 font-[inherit] text-sm font-semibold text-fg"
   >
-    <span>Scrollen</span>
-    <span data-hero-hinweis-pfeil><Arrow class="rotate-90" /></span>
-  </p>
+    <span aria-hidden="true" data-hero-maus>
+      <span data-hero-maus-rad></span>
+    </span>
+    <span aria-hidden="true" data-hero-wisch>
+      <Arrow class="-rotate-90" />
+      <Arrow class="-rotate-90" />
+    </span>
+    <span aria-hidden="true" data-hero-hinweis-fein>Scrollen</span>
+    <span aria-hidden="true" data-hero-hinweis-grob>Wischen</span>
+  </button>
+  <div aria-hidden="true" data-hero-fortschritt>
+    <span data-hero-fortschritt-balken></span>
+  </div>
 </div>
 
 <style is:global>
@@ -193,7 +219,9 @@ geredeHtml += escape(rest)
 
   [data-hero-gerede],
   [data-hero-flug],
-  [data-hero-hinweis] {
+  [data-hero-hinweis],
+  [data-hero-himmel],
+  [data-hero-fortschritt] {
     display: none;
   }
 
@@ -216,14 +244,101 @@ geredeHtml += escape(rest)
   html[data-hero='gerede'] [data-hero-flug] {
     display: block;
   }
+  html[data-hero='gerede'] [data-hero-himmel] {
+    display: block;
+    position: fixed;
+    top: var(--hero-kopf, 4.5rem);
+    left: 0;
+    z-index: 0;
+    width: 100vw;
+    height: calc(100svh - var(--hero-kopf, 4.5rem));
+  }
+
+  /* Hinweis und Fortschritt */
   html[data-hero='gerede'] [data-hero-hinweis] {
     display: flex;
-    animation: hero-hinweis-ein 0.6s 0.8s both cubic-bezier(0.2, 0, 0, 1);
+    animation: hero-hinweis-ein 0.7s 1.5s both cubic-bezier(0.2, 0, 0, 1);
+    transition:
+      opacity 0.3s,
+      color 0.2s;
+  }
+  [data-hero-hinweis]:hover,
+  [data-hero-hinweis]:focus-visible {
+    color: var(--color-accent);
+  }
+  html[data-hero='gerede'] [data-hero-hinweis][data-weg] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  [data-hero-maus] {
+    position: relative;
+    display: block;
+    width: 1.5rem;
+    height: 2.4rem;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+  }
+  [data-hero-maus-rad] {
+    position: absolute;
+    top: 0.4rem;
+    left: 50%;
+    width: 4px;
+    height: 0.5rem;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    animation: hero-rad 1.6s 2.2s infinite cubic-bezier(0.2, 0, 0, 1);
+  }
+  [data-hero-wisch] {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 0.6;
+    color: var(--color-accent);
+    animation: hero-wisch 1.6s 2.2s infinite cubic-bezier(0.2, 0, 0, 1);
+  }
+  [data-hero-hinweis-grob] {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    [data-hero-maus],
+    [data-hero-hinweis-fein] {
+      display: none;
+    }
+    [data-hero-wisch] {
+      display: flex;
+    }
+    [data-hero-hinweis-grob] {
+      display: inline;
+    }
+  }
+  html[data-hero='gerede'] [data-hero-fortschritt] {
+    display: block;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    z-index: 10;
+    width: 8rem;
+    height: 2px;
+    margin-left: -4rem;
+    overflow: hidden;
+    border-radius: 1px;
+    background: var(--color-border);
+    opacity: 0;
     transition: opacity 0.3s;
   }
-  html[data-hero='gerede'] [data-hero-hinweis-pfeil] {
-    animation: hero-hinweis-wippen 1.6s 1.4s infinite ease-in-out;
+  html[data-hero='gerede'] [data-hero-fortschritt][data-da] {
+    opacity: 1;
   }
+  [data-hero-fortschritt-balken] {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
   html[data-hero='gerede'] [data-hero-wort] {
     visibility: hidden;
   }
@@ -233,12 +348,32 @@ geredeHtml += escape(rest)
   @keyframes hero-hinweis-ein {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(12px);
     }
   }
-  @keyframes hero-hinweis-wippen {
-    50% {
+  @keyframes hero-rad {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    20% {
+      opacity: 1;
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateY(0.7rem);
+    }
+  }
+  @keyframes hero-wisch {
+    0%,
+    100% {
       transform: translateY(4px);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translateY(-4px);
+      opacity: 1;
     }
   }
 
@@ -253,7 +388,9 @@ geredeHtml += escape(rest)
     animation: hero-netz-rahmen 0s 2s both;
   }
   html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede],
-  html[data-bewegung=''][data-hero='gerede'] [data-hero-hinweis] {
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-hinweis],
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-himmel],
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-fortschritt] {
     animation: hero-netz-weg 0s 2s both;
   }
   html[data-bewegung=''][data-hero='gerede'] [data-hero-wort] {
@@ -302,6 +439,8 @@ geredeHtml += escape(rest)
     z-index: -1;
     border-radius: 2px;
     background: var(--color-accent-soft);
+    /* Kräftiger als accent-soft, damit der Marker auch auf Nachtpapier leuchtet. */
+    background: color-mix(in oklch, var(--color-accent) 30%, transparent);
     transform: scaleX(0);
     transform-origin: left;
   }
@@ -338,6 +477,40 @@ geredeHtml += escape(rest)
     const c = 2 * w - (a + b) / 2
     return (1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b
   }
+  /** Reproduzierbarer Zufall: gleiche Saat, gleiche Funken, bei jedem Besuch. */
+  function zufall(saat: number): () => number {
+    let x = saat >>> 0
+    return () => {
+      x = (x + 0x6d2b79f5) >>> 0
+      let t = x
+      t = Math.imul(t ^ (t >>> 15), t | 1)
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  }
+  /** Ein Token wie `oklch(0.79 0.15 62)` als RGB, damit jeder Canvas es versteht. */
+  function rgb(farbe: string): [number, number, number] {
+    const m = /oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)/.exec(farbe)
+    if (!m) return [128, 128, 128]
+    let l = parseFloat(m[1]!)
+    if (l > 1) l /= 100
+    const c = parseFloat(m[2]!)
+    const h = (parseFloat(m[3]!) * Math.PI) / 180
+    const A = c * Math.cos(h)
+    const B = c * Math.sin(h)
+    const l_ = (l + 0.3963377774 * A + 0.2158037573 * B) ** 3
+    const m_ = (l - 0.1055613458 * A - 0.0638541728 * B) ** 3
+    const s_ = (l - 0.0894841775 * A - 1.291485548 * B) ** 3
+    const lin = [
+      4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
+      -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
+      -0.0041960863 * l_ - 0.7034186147 * m_ + 1.707614701 * s_,
+    ]
+    return lin.map((v) => {
+      const x = klemme(v)
+      return Math.round(255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055))
+    }) as [number, number, number]
+  }
 
   /*
    * Wo jedes Wort auf halbem Weg ist: Anteil der Fensterbreite, Anteil der
@@ -352,27 +525,335 @@ geredeHtml += escape(rest)
   ]
 
   /*
+   * Gleich nach dem Öffnen, ohne Scrollen: Die vier Wörter werden markiert
+   * (ab 0,5 s), dann erscheint der Hinweis (1,5 s). So sieht man sofort, dass
+   * hier etwas passiert und worauf es ankommt.
+   *
    * Fahrplan über die Scroll-Strecke, p von 0 bis 1:
-   *   0,00–0,13  Marker ziehen hinter die vier Wörter
-   *   0,14–0,23  Wörter lösen sich (gestaffelt)
-   *   0,24–0,42  der Rest des Geredes verblasst
-   *   0,14–0,29  jedes Wort steigt erst aus der Zeile auf und wächst
-   *   0,20–0,89  Flug über die Seite in die H1 (je Wort versetzt)
+   *   0,04–0,26  jedes Wort steigt aus der Zeile, staubt und wächst
+   *   0,12–0,38  der Rest des Geredes zerfällt von links nach rechts zu Staub
+   *   0,11–0,89  Flug mit Schweif über die Seite in die H1 (je Wort versetzt)
+   *   0,20–0,80  das Punktefeld ordnet sich vom Gewimmel zum Raster
+   *   0,40–0,85  hinter der H1 glimmt es auf
+   *   0,78–0,96  Landung: kurzer Ring um jedes Wort
    *   0,88–0,95  Marker laufen aus, Komma und Punkt erscheinen
    *   0,86–1,00  Für wen, Intro, Knöpfe, Adresse, dann der Strich
+   *   0,90–1,00  Himmel blendet aus
    *   1,00       fertig: Strecke weg, kein Zurück
    */
-  const MARKER_START = 0
-  const MARKER_VERSATZ = 0.025
-  const MARKER_DAUER = 0.06
-  const LOS = 0.14
-  const LOS_VERSATZ = 0.03
-  const LANDUNG = 0.8
-  /** Anteil der Strecke, in dem ein Wort aus der Zeile aufsteigt, bevor es fliegt. */
-  const AUFSTIEG = 0.06
-  /** Um wie viel es dabei wächst (0,6 = 60 %) und wie hoch es steigt (in eigenen Zeilenhöhen). */
+  const LOS = 0.04
+  const LOS_VERSATZ = 0.035
+  const AUFSTIEG = 0.07
+  const LANDUNG = 0.78
+  /** Um wie viel ein Wort beim Aufsteigen wächst (0,6 = 60 %) und wie hoch es steigt (in Zeilenhöhen). */
   const AUFSTIEG_GROESSE = 0.6
   const AUFSTIEG_HOEHE = 1.4
+  /** Länge des Schweifs als Anteil der Flugbahn. */
+  const SCHWEIF = 0.2
+  /** Dauer, wenn man auf den Hinweis klickt, in Millisekunden. */
+  const ABSPIELEN_MS = 4800
+
+  type Kopie = {
+    el: HTMLElement
+    marker: HTMLElement
+    /** Lage des Elements im Rahmen (unverschoben) und Versatz des Textes darin. */
+    ex: number
+    ey: number
+    ox: number
+    oy: number
+    /** Größe des Textes in der H1. */
+    zb: number
+    zh: number
+    /** Quelle: Versatz und Maßstab. */
+    dx: number
+    dy: number
+    s: number
+    /** Wegpunkt: Versatz und Maßstab. */
+    wx: number
+    wy: number
+    ws: number
+  }
+
+  type Lage = { x: number; y: number; s: number; dreh: number; flug: number; u: number }
+
+  /** Wo ein Wort bei Fortschritt p steht; `flug` ist der rohe Anteil der Flugbahn. */
+  function lage(k: Kopie, i: number, p: number, flugRoh?: number): Lage {
+    const los = LOS + i * LOS_VERSATZ
+    const an = LANDUNG + i * LOS_VERSATZ
+    // Erst steigt das Wort senkrecht aus der Zeile und wächst (um seine Mitte) …
+    const u = ausrollen(abschnitt(p, los, los + AUFSTIEG))
+    const groesse = k.s * (1 + AUFSTIEG_GROESSE * u)
+    const hubX = k.dx - ((groesse - k.s) * k.zb) / 2
+    const hubY = k.dy - ((groesse - k.s) * k.zh) / 2 - u * AUFSTIEG_HOEHE * k.s * k.zh
+    // … dann fliegt es über den Wegpunkt in die H1.
+    const flug = flugRoh ?? abschnitt(p, los + AUFSTIEG, an)
+    const t = weich(klemme(flug))
+    const w = WEGPUNKTE[i % WEGPUNKTE.length]!
+    return {
+      x: bogen(hubX, k.wx, 0, t),
+      y: bogen(hubY, k.wy, 0, t),
+      s: bogen(groesse, k.ws, 1, t),
+      dreh: w.r * Math.sin(Math.PI * t),
+      flug,
+      u,
+    }
+  }
+
+  /** Mitte des Textes einer Kopie im Rahmen, Drehung um die linke obere Ecke eingerechnet. */
+  function mitte(k: Kopie, l: Lage): [number, number] {
+    const cx = k.ox + k.zb / 2
+    const cy = k.oy + k.zh / 2
+    const w = (l.dreh * Math.PI) / 180
+    const rx = cx * Math.cos(w) - cy * Math.sin(w)
+    const ry = cx * Math.sin(w) + cy * Math.cos(w)
+    return [k.ex + l.x + l.s * rx, k.ey + l.y + l.s * ry]
+  }
+
+  /* ---------- der Himmel: Punktefeld, Staub, Schweife, Blitze ---------- */
+
+  type Punkt = { gx: number; gy: number; ox: number; oy: number; ph: number; f: number }
+  type Staub = { x: number; y: number; vx: number; vy: number; a: number; g: number; ph: number }
+
+  function himmel(canvas: HTMLCanvasElement, rahmen: HTMLElement, text: HTMLElement) {
+    const ctx = canvas.getContext('2d')
+    let dpr = 1
+    let breite = 0
+    let hoehe = 0
+    let kopf = 0
+    let dunkel = false
+    let farbe = { fg: [0, 0, 0], leise: [0, 0, 0], akzent: [0, 0, 0] } as Record<
+      'fg' | 'leise' | 'akzent',
+      [number, number, number]
+    >
+    let punkte: Punkt[] = []
+    let staub: Staub[] = []
+    let h1Mitte: [number, number, number] = [0, 0, 0]
+
+    const rgba = (c: [number, number, number], a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`
+
+    function vorbereiten(h1: HTMLElement): void {
+      if (!ctx) return
+      const css = getComputedStyle(root)
+      kopf = parseFloat(css.getPropertyValue('--hero-kopf')) || 0
+      dpr = Math.min(2, window.devicePixelRatio || 1)
+      breite = document.documentElement.clientWidth
+      hoehe = window.innerHeight - kopf
+      canvas.width = Math.round(breite * dpr)
+      canvas.height = Math.round(hoehe * dpr)
+      const bg = /oklch\(\s*([\d.]+)/.exec(css.getPropertyValue('--color-bg'))
+      dunkel = bg ? parseFloat(bg[1]!) < 0.5 : false
+      farbe = {
+        fg: rgb(css.getPropertyValue('--color-fg')),
+        leise: rgb(css.getPropertyValue('--color-fg-muted')),
+        akzent: rgb(css.getPropertyValue('--color-accent')),
+      }
+
+      // Punktefeld: ein Raster über das ganze Fenster, jeder Punkt mit eigenem Gewimmel.
+      const r1 = zufall(7)
+      const abstand = Math.max(28, Math.min(44, breite / 28))
+      punkte = []
+      for (let y = abstand / 2; y < hoehe; y += abstand) {
+        for (let x = abstand / 2; x < breite; x += abstand) {
+          punkte.push({
+            gx: x,
+            gy: y,
+            ox: (r1() - 0.5) * abstand * 2.4,
+            oy: (r1() - 0.5) * abstand * 2.4,
+            ph: r1() * Math.PI * 2,
+            f: 0.5 + r1(),
+          })
+        }
+      }
+
+      // Staub: aus jeder Zeile des Geredes, Wörter des Claims ausgenommen.
+      const r = rahmen.getBoundingClientRect()
+      const t = text.getBoundingClientRect()
+      const r2 = zufall(11)
+      staub = []
+      const gang = document.createTreeWalker(text, NodeFilter.SHOW_TEXT)
+      for (let n = gang.nextNode(); n; n = gang.nextNode()) {
+        if (n.parentElement?.closest('[data-hero-quelle]')) continue
+        const range = document.createRange()
+        range.selectNodeContents(n)
+        for (const z of range.getClientRects()) {
+          if (z.width < 4) continue
+          const anzahl = Math.round(z.width / 6)
+          for (let j = 0; j < anzahl; j++) {
+            const x = z.left + r2() * z.width
+            const anteil = (x - t.left) / Math.max(1, t.width)
+            staub.push({
+              x: x - r.left,
+              y: z.top - r.top + (0.2 + 0.6 * r2()) * z.height,
+              vx: (r2() - 0.25) * 110,
+              vy: -(25 + r2() * 140),
+              a: 0.12 + 0.2 * anteil + r2() * 0.04,
+              g: 0.7 + r2() * 1.3,
+              ph: r2() * Math.PI * 2,
+            })
+          }
+        }
+      }
+
+      const h = h1.getBoundingClientRect()
+      h1Mitte = [h.left + h.width / 2 - r.left, h.top + h.height / 2 - r.top, h.width]
+    }
+
+    function malen(p: number, zeit: number, kopien: Kopie[], quellen: HTMLElement[]): void {
+      if (!ctx) return
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.globalCompositeOperation = 'source-over'
+      ctx.shadowBlur = 0
+      ctx.clearRect(0, 0, breite, hoehe)
+      const r = rahmen.getBoundingClientRect()
+      // Rahmen-Koordinaten → Canvas-Koordinaten
+      const bx = r.left
+      const by = r.top - kopf
+      const aus = 1 - abschnitt(p, 0.9, 0.995)
+      if (aus <= 0) return
+      ctx.save()
+      ctx.beginPath()
+      ctx.rect(0, Math.max(0, by), breite, hoehe)
+      ctx.clip()
+
+      // Glimmen hinter der H1: flach wie die Zeile, im Hellen kaum mehr als ein Hauch
+      const glimm = ausrollen(abschnitt(p, 0.4, 0.85)) * aus * (dunkel ? 0.16 : 0.07)
+      if (glimm > 0.002) {
+        const [mx, my, mb] = h1Mitte
+        const radius = mb * 0.65
+        ctx.save()
+        ctx.translate(bx + mx, by + my)
+        ctx.scale(1, 0.4)
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, radius)
+        g.addColorStop(0, rgba(farbe.akzent, glimm))
+        g.addColorStop(0.6, rgba(farbe.akzent, glimm * 0.35))
+        g.addColorStop(1, rgba(farbe.akzent, 0))
+        ctx.fillStyle = g
+        ctx.fillRect(-radius, -radius, radius * 2, radius * 2)
+        ctx.restore()
+      }
+
+      // Punktefeld: Gewimmel → Raster
+      const ordnung = weich(abschnitt(p, 0.2, 0.8))
+      const unruhe = 1 - ordnung
+      const grund = (dunkel ? 0.3 : 0.32) * aus
+      for (const pt of punkte) {
+        const zitter = Math.sin(zeit * 0.0005 * pt.f + pt.ph) * 6 * unruhe
+        const x = pt.gx + pt.ox * unruhe + zitter
+        const y = pt.gy + pt.oy * unruhe + Math.cos(zeit * 0.0004 * pt.f + pt.ph) * 6 * unruhe
+        const funkeln = 1 - 0.6 * unruhe * (0.5 + 0.5 * Math.sin(zeit * 0.002 * pt.f + pt.ph))
+        ctx.fillStyle = rgba(farbe.leise, grund * funkeln)
+        ctx.fillRect(x - 1, y - 1, 2, 2)
+      }
+
+      // Staub aus dem zerfallenden Gerede
+      for (const st of staub) {
+        const e = abschnitt(p, st.a, st.a + 0.2)
+        if (e <= 0 || e >= 1) continue
+        const ee = ausrollen(e)
+        const x = bx + st.x + st.vx * ee + Math.sin(zeit * 0.003 + st.ph) * 3 * e
+        const y = by + st.y + st.vy * ee
+        ctx.fillStyle = rgba(farbe.leise, Math.sin(Math.PI * e) * 0.8 * aus)
+        ctx.fillRect(x, y, st.g, st.g)
+      }
+
+      if (dunkel) ctx.globalCompositeOperation = 'lighter'
+
+      kopien.forEach((k, i) => {
+        const l = lage(k, i, p)
+        const funken = zufall(100 + i)
+
+        // Staubwolke beim Aufsteigen aus der Zeile
+        if (l.u > 0 && l.u < 1) {
+          const q = quellen[i]!.getBoundingClientRect()
+          const qx = q.left + q.width / 2
+          const qy = q.top + q.height / 2 - kopf
+          for (let j = 0; j < 14; j++) {
+            const winkel = funken() * Math.PI * 2
+            const weit = (6 + funken() * 34) * l.u * (q.height / 18)
+            ctx.fillStyle = rgba(farbe.akzent, Math.sin(Math.PI * l.u) * 0.9)
+            const g = 1 + funken() * 1.6
+            ctx.fillRect(qx + Math.cos(winkel) * weit * 1.6, qy + Math.sin(winkel) * weit, g, g)
+          }
+        }
+
+        // Schweif wie bei einer Sternschnuppe: verjüngt, ausglühend, mit Funken
+        if (l.flug > 0 && l.flug < 1) {
+          const huelle = ausrollen(klemme(l.flug / 0.1)) * (1 - abschnitt(l.flug, 0.85, 1)) * aus
+          const kopfBreite = 0.22 * k.zh * l.s
+          const n = 28
+          const spur: [number, number][] = []
+          for (let j = 0; j <= n; j++) {
+            const f = l.flug - (SCHWEIF * j) / n
+            const lj = lage(k, i, p, Math.max(0, f))
+            const [x, y] = mitte(k, lj)
+            spur.push([bx + x, by + y])
+          }
+          ctx.lineCap = 'round'
+          for (let j = n - 1; j >= 0; j--) {
+            const rest = 1 - j / n
+            ctx.strokeStyle = rgba(farbe.akzent, huelle * rest ** 1.6 * (dunkel ? 0.75 : 0.55))
+            ctx.lineWidth = Math.max(0.5, kopfBreite * rest ** 1.2)
+            ctx.shadowColor = rgba(farbe.akzent, huelle * 0.8)
+            ctx.shadowBlur = j < 6 ? 18 : 0
+            ctx.beginPath()
+            ctx.moveTo(spur[j]![0], spur[j]![1])
+            ctx.lineTo(spur[j + 1]![0], spur[j + 1]![1])
+            ctx.stroke()
+          }
+          ctx.shadowBlur = 0
+          const funkFarbe = dunkel ? farbe.fg : farbe.akzent
+          for (let j = 0; j < 12; j++) {
+            const wo = 0.15 + funken() * 0.85
+            const a = spur[Math.min(n, Math.round(wo * n))]!
+            const seit = (funken() - 0.5) * kopfBreite * 3.2
+            const ph = funken() * Math.PI * 2
+            const glanz = 0.5 + 0.5 * Math.sin(zeit * 0.012 + ph)
+            ctx.fillStyle = rgba(funkFarbe, huelle * (1 - wo) * glanz)
+            const g = 1 + funken() * 1.5
+            ctx.fillRect(a[0] + seit, a[1] - seit * 0.6, g, g)
+          }
+        }
+
+        // Landung: ein Rahmen rastet um das Wort ein, Funken springen ab
+        const an = LANDUNG + i * LOS_VERSATZ
+        const e = abschnitt(p, an - 0.01, an + 0.07)
+        if (e > 0 && e < 1) {
+          const ee = ausrollen(e)
+          const [x, y] = mitte(k, { x: 0, y: 0, s: 1, dreh: 0, flug: 1, u: 1 })
+          const rand = k.zh * (0.06 + 0.3 * ee)
+          const b = k.zb + rand * 2
+          const h = k.zh + rand * 2
+          ctx.strokeStyle = rgba(farbe.akzent, Math.sin(Math.PI * e) * 0.85 * aus)
+          ctx.lineWidth = 1.5
+          ctx.beginPath()
+          if (ctx.roundRect) ctx.roundRect(bx + x - b / 2, by + y - h / 2, b, h, 4)
+          else ctx.rect(bx + x - b / 2, by + y - h / 2, b, h)
+          ctx.stroke()
+          const funkFarbe = dunkel ? farbe.fg : farbe.akzent
+          for (let j = 0; j < 12; j++) {
+            const winkel = funken() * Math.PI * 2
+            const weg = (8 + funken() * 34) * ee
+            const rx = Math.cos(winkel) * (k.zb / 2 + weg)
+            const ry = Math.sin(winkel) * (k.zh / 2 + weg * 0.7)
+            ctx.fillStyle = rgba(funkFarbe, (1 - e) * 0.9 * aus)
+            const g = 1 + funken() * 1.5
+            ctx.fillRect(bx + x + rx, by + y + ry, g, g)
+          }
+        }
+      })
+      ctx.restore()
+    }
+
+    return { vorbereiten, malen }
+  }
+
+  /** Maske setzen, mit Präfix für Safari. */
+  function maskieren(el: HTMLElement, wert: string): void {
+    el.style.setProperty('mask-image', wert)
+    el.style.setProperty('-webkit-mask-image', wert)
+  }
+
+  /* ---------- die Animation ---------- */
 
   function gerede(): void {
     const buehne = document.querySelector<HTMLElement>('[data-hero-buehne]')
@@ -380,9 +861,12 @@ geredeHtml += escape(rest)
     const h1 = document.querySelector<HTMLElement>('[data-hero-h1]')
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
-    const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
+    const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
+    const hinweis = document.querySelector<HTMLButtonElement>('[data-hero-hinweis]')
+    const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
+    const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
     const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
-    if (!buehne || !rahmen || !h1 || !text || !flug) return fertig()
+    if (!buehne || !rahmen || !h1 || !text || !flug || !leinwand) return fertig()
 
     const quellen = alle('[data-hero-quelle]')
     const ziele = alle('[data-hero-wort]', h1)
@@ -390,9 +874,10 @@ geredeHtml += escape(rest)
     const zeilen = alle('[data-hero-einzug]')
     if (quellen.length === 0 || quellen.length !== ziele.length) return fertig()
     const quellMarker = quellen.map((q) => q.querySelector<HTMLElement>('[data-hero-marker]')!)
+    const bild = himmel(leinwand, rahmen, text)
 
     // Die Kopien: in Display-Schrift wie die H1, liegen am Ziel und werden per transform bewegt.
-    const kopien = ziele.map((ziel) => {
+    const kopien: Kopie[] = ziele.map((ziel) => {
       const kopie = document.createElement('span')
       kopie.dataset.heroKopie = ''
       kopie.className = h1.className.replace(/\b(m-0|max-w-\[[^\]]+\]|text-balance)\b/g, '')
@@ -402,14 +887,7 @@ geredeHtml += escape(rest)
       return {
         el: kopie,
         marker: kopie.querySelector<HTMLElement>('[data-hero-marker]')!,
-        dx: 0,
-        dy: 0,
-        s: 1,
-        zb: 0,
-        zh: 0,
-        wx: 0,
-        wy: 0,
-        ws: 1,
+        ...{ ex: 0, ey: 0, ox: 0, oy: 0, zb: 0, zh: 0, dx: 0, dy: 0, s: 1, wx: 0, wy: 0, ws: 1 },
       }
     })
 
@@ -419,103 +897,104 @@ geredeHtml += escape(rest)
       return range.getBoundingClientRect()
     }
 
+    let kopf = 0
+
     /* Alles messen: Quelle, Ziel, Wegpunkt je Wort. Bei jeder Größenänderung neu. */
     function messen(): void {
-      const kopf = document.querySelector<HTMLElement>('.site-header')
-      if (kopf) root.style.setProperty('--hero-kopf', `${kopf.offsetHeight}px`)
+      const kopfEl = document.querySelector<HTMLElement>('.site-header')
+      if (kopfEl) root.style.setProperty('--hero-kopf', `${kopfEl.offsetHeight}px`)
+      kopf = kopfEl?.offsetHeight ?? 0
       const r = rahmen!.getBoundingClientRect()
       const fensterB = document.documentElement.clientWidth
+      // Glyphenkasten statt Zeilenkasten: Nur der ist proportional zur Schriftgröße.
+      maskieren(text!, '')
       kopien.forEach((k, i) => {
-        // Gemessen wird immer der Glyphenkasten des Textes, nie der Zeilenkasten:
-        // Nur der ist proportional zur Schriftgröße.
         const transform = k.el.style.transform
         k.el.style.transform = 'none'
         k.el.style.left = '0px'
         k.el.style.top = '0px'
         const e0 = k.el.getBoundingClientRect()
         const k0 = textKasten(k.el)
-        const ox = k0.left - e0.left
-        const oy = k0.top - e0.top
+        k.ox = k0.left - e0.left
+        k.oy = k0.top - e0.top
         const z = textKasten(ziele[i]!)
         // Kopie so legen, dass ihr Text genau auf dem Text der H1 liegt.
-        const ex = z.left - ox
-        const ey = z.top - oy
-        k.el.style.left = `${ex - r.left}px`
-        k.el.style.top = `${ey - r.top}px`
+        const ex = z.left - k.ox
+        const ey = z.top - k.oy
+        k.ex = ex - r.left
+        k.ey = ey - r.top
+        k.el.style.left = `${k.ex}px`
+        k.el.style.top = `${k.ey}px`
         k.el.style.transform = transform
         const q = textKasten(quellen[i]!)
         // Mit Ursprung oben links landet der Text bei e + d + s · o.
         k.s = q.height / z.height
         k.zb = z.width
         k.zh = z.height
-        k.dx = q.left - ex - k.s * ox
-        k.dy = q.top - ey - k.s * oy
+        k.dx = q.left - ex - k.s * k.ox
+        k.dy = q.top - ey - k.s * k.oy
         const w = WEGPUNKTE[i % WEGPUNKTE.length]!
         k.ws = w.s
         const links = 16 + w.x * Math.max(0, fensterB - 32 - z.width * w.s)
         const oben = r.top + w.y * Math.max(0, r.height - z.height * w.s)
-        k.wx = links - ex - k.ws * ox
-        k.wy = oben - ey - k.ws * oy
+        k.wx = links - ex - k.ws * k.ox
+        k.wy = oben - ey - k.ws * k.oy
       })
+      bild.vorbereiten(h1!)
     }
 
     /* Wie weit in der Strecke, 0 bis 1. */
     function fortschritt(): number {
-      const kopf = parseFloat(getComputedStyle(root).getPropertyValue('--hero-kopf')) || 0
       const strecke = buehne!.offsetHeight - rahmen!.offsetHeight
       if (strecke <= 0) return 1
       return klemme((kopf - buehne!.getBoundingClientRect().top) / strecke)
     }
 
+    /* Selbststart: Marker ziehen von allein auf, ohne Scrollen. */
+    const markerLaeufe = quellen.map((q, i) => {
+      const verzug = 0.5 + i * 0.22
+      animate(q, { color: 'var(--color-fg)' }, { duration: 0.3, delay: verzug })
+      return animate(
+        quellMarker[i]!,
+        { scaleX: [0, 1] },
+        { duration: 0.45, ease: KURVE, delay: verzug },
+      )
+    })
+    let markerStehen = false
+    function markerSofort(): void {
+      if (markerStehen) return
+      markerStehen = true
+      for (const lauf of markerLaeufe) lauf.complete()
+    }
+
     function zeichnen(p: number): void {
-      if (hinweis) hinweis.style.opacity = p > 0.005 ? '0' : ''
+      if (p > 0.003) markerSofort()
+      if (hinweis) hinweis.toggleAttribute('data-weg', p > 0.003)
+      if (fortschrittLeiste) fortschrittLeiste.toggleAttribute('data-da', p > 0.003 && p < 0.97)
+      if (balken) balken.style.transform = `scaleX(${p})`
 
-      // Markieren
-      quellen.forEach((q, i) => {
-        const t = ausrollen(
-          abschnitt(
-            p,
-            MARKER_START + i * MARKER_VERSATZ,
-            MARKER_START + i * MARKER_VERSATZ + MARKER_DAUER,
-          ),
-        )
-        quellMarker[i]!.style.transform = `scaleX(${t})`
-        q.style.color = t > 0 ? 'var(--color-fg)' : ''
-      })
+      // Das Gerede zerfällt von links nach rechts (Maske), der Staub kommt aus dem Canvas.
+      const welle = abschnitt(p, 0.12, 0.38) * 120 - 15
+      maskieren(
+        text!,
+        welle <= -15 ? '' : `linear-gradient(to right, transparent ${welle}%, #000 ${welle + 15}%)`,
+      )
 
-      // Rest des Geredes verblasst
-      text!.style.opacity = String(1 - ausrollen(abschnitt(p, 0.24, 0.42)))
-
-      // Flug
       kopien.forEach((k, i) => {
-        const los = LOS + i * LOS_VERSATZ
-        const an = LANDUNG + i * LOS_VERSATZ
-        const unterwegs = p >= los
+        const l = lage(k, i, p)
+        const unterwegs = p >= LOS + i * LOS_VERSATZ
         quellen[i]!.style.visibility = unterwegs ? 'hidden' : ''
         k.el.style.visibility = unterwegs ? 'visible' : 'hidden'
-        // Erst steigt das Wort senkrecht aus der Zeile und wächst (um seine Mitte),
-        // dann fliegt es über den Wegpunkt in die H1.
-        const u = ausrollen(abschnitt(p, los, los + AUFSTIEG))
-        const groesse = k.s * (1 + AUFSTIEG_GROESSE * u)
-        const hubX = k.dx - ((groesse - k.s) * k.zb) / 2
-        const hubY = k.dy - ((groesse - k.s) * k.zh) / 2 - u * AUFSTIEG_HOEHE * k.s * k.zh
-        const t = weich(abschnitt(p, los + AUFSTIEG, an))
-        const x = bogen(hubX, k.wx, 0, t)
-        const y = bogen(hubY, k.wy, 0, t)
-        const s = bogen(groesse, k.ws, 1, t)
-        const dreh = WEGPUNKTE[i % WEGPUNKTE.length]!.r * Math.sin(Math.PI * t)
-        k.el.style.transform = `translate(${x}px, ${y}px) scale(${s}) rotate(${dreh}deg)`
+        k.el.style.transform = `translate(${l.x}px, ${l.y}px) scale(${l.s}) rotate(${l.dreh}deg)`
         // Marker läuft nach der Landung nach rechts aus
         const aus = ausrollen(abschnitt(p, 0.88, 0.95))
         k.marker.style.transformOrigin = 'right'
         k.marker.style.transform = `scaleX(${1 - aus})`
       })
 
-      // Satzzeichen
       const punkt = ausrollen(abschnitt(p, 0.88, 0.95))
       for (const z of zeichen) z.style.opacity = String(punkt)
 
-      // Die Zeilen unter der H1, dann der Strich
       zeilen.forEach((zeile, i) => {
         const t = ausrollen(abschnitt(p, 0.86 + i * 0.03, 0.92 + i * 0.03))
         zeile.style.opacity = String(t)
@@ -524,26 +1003,31 @@ geredeHtml += escape(rest)
       if (strich) strich.style.transform = `scaleX(${ausrollen(abschnitt(p, 0.95, 1))})`
     }
 
-    let wartet = false
     let vorbei = false
+    let zuletzt = -1
 
-    function weiter(): void {
-      wartet = false
+    /* Eine Schleife für alles: DOM nur, wenn sich p ändert, der Himmel jedes Bild (er funkelt). */
+    function bildfolge(zeit: number): void {
       if (vorbei) return
-      const p = fortschritt()
-      zeichnen(p)
-      if (p >= 0.999) abschliessen(true)
-    }
-    function beimScrollen(): void {
-      if (!wartet) {
-        wartet = true
-        requestAnimationFrame(weiter)
+      // Neuladen heißt oben anfangen, auch wenn der Browser die alte Stelle erst
+      // spät wiederherstellt. Gilt nur, bis jemand selbst scrollt.
+      if (!nutzerDa && zeit - beginn < 1500 && window.scrollY > 0) {
+        window.scrollTo({ top: 0, behavior: 'instant' })
       }
+      const p = fortschritt()
+      if (p !== zuletzt) {
+        zuletzt = p
+        zeichnen(p)
+        if (p >= 0.999) return abschliessen(true)
+      }
+      bild.malen(p, zeit, kopien, quellen)
+      requestAnimationFrame(bildfolge)
     }
+
     function beiGroesse(): void {
       if (vorbei) return
       messen()
-      weiter()
+      zuletzt = -1
     }
 
     /*
@@ -554,12 +1038,14 @@ geredeHtml += escape(rest)
     function abschliessen(lageHalten: boolean): void {
       if (vorbei) return
       vorbei = true
-      window.removeEventListener('scroll', beimScrollen)
+      abspielenStopp()
+      markerSofort()
       window.removeEventListener('resize', beiGroesse)
       document.removeEventListener('click', vorSprung, true)
       rahmen!.removeEventListener('focusin', beiFokus)
       const vorher = rahmen!.getBoundingClientRect().top
       for (const k of kopien) k.el.remove()
+      leinwand!.remove()
       for (const q of quellen) q.style.visibility = ''
       for (const z of zeichen) z.style.opacity = ''
       // Explizit sichtbar: Die Regel für den Einzug ohne Gerede würde sonst wieder greifen.
@@ -577,6 +1063,40 @@ geredeHtml += escape(rest)
     }
 
     /*
+     * Klick auf den Hinweis: Die Seite scrollt die Strecke selbst ab, in
+     * knapp fünf Sekunden. Mausrad, Wischen oder eine Taste übernehmen sofort.
+     */
+    let abspielenAktiv = false
+    function abspielenStopp(): void {
+      abspielenAktiv = false
+      for (const typ of ['wheel', 'touchstart', 'keydown'] as const) {
+        window.removeEventListener(typ, abspielenStopp)
+      }
+    }
+    function abspielen(): void {
+      if (vorbei || abspielenAktiv) return
+      markerSofort()
+      abspielenAktiv = true
+      for (const typ of ['wheel', 'touchstart', 'keydown'] as const) {
+        window.addEventListener(typ, abspielenStopp, { passive: true })
+      }
+      const start = window.scrollY
+      const strecke = buehne!.offsetHeight - rahmen!.offsetHeight
+      const ziel = window.scrollY + (buehne!.getBoundingClientRect().top - kopf) + strecke + 2
+      const dauer = ABSPIELEN_MS * (1 - fortschritt())
+      const t0 = performance.now()
+      const schritt = (jetzt: number) => {
+        if (!abspielenAktiv || vorbei) return
+        const t = klemme((jetzt - t0) / Math.max(1, dauer))
+        window.scrollTo({ top: start + (ziel - start) * weich(t), behavior: 'instant' })
+        if (t < 1) requestAnimationFrame(schritt)
+        else abspielenStopp()
+      }
+      requestAnimationFrame(schritt)
+    }
+    hinweis?.addEventListener('click', abspielen)
+
+    /*
      * Ein Sprung innerhalb der Seite (Navigation, „Arbeiten ansehen“) während
      * der Strecke: erst abschließen, dann springt der Browser ans richtige Ziel.
      */
@@ -592,14 +1112,24 @@ geredeHtml += escape(rest)
     rahmen.addEventListener('focusin', beiFokus)
 
     // Neu laden heißt oben anfangen.
+    const beginn = performance.now()
+    let nutzerDa = false
+    const nutzer = () => {
+      nutzerDa = true
+      for (const typ of ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const) {
+        window.removeEventListener(typ, nutzer)
+      }
+    }
+    for (const typ of ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const) {
+      window.addEventListener(typ, nutzer, { passive: true })
+    }
     if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' })
 
     document.fonts.ready.then(() => {
       if (vorbei) return
       messen()
-      weiter()
-      window.addEventListener('scroll', beimScrollen, { passive: true })
       window.addEventListener('resize', beiGroesse)
+      requestAnimationFrame(bildfolge)
     })
     document.addEventListener('click', vorSprung, true)
   }
