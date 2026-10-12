@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Erreichbar unter <http://localhost:4321/Website/>.
+Erreichbar unter <http://localhost:4321/>.
 
 ## Inhalt ändern
 
