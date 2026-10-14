@@ -38,12 +38,11 @@ const company = defineCollection({
      */
     heroAuftakt: z.array(z.string()).min(1),
     /**
-     * Rückbezüge aufs Gerede (docs/NACH_DEM_HERO_PLAN.md): Ein Satz aus
-     * `heroGerede` kehrt weiter unten neben der Antwort wieder, die ihn
-     * beantwortet. `bei` ist der Titel einer Leistung (`services`), eines
-     * Werts (`about.values`) oder „Über Klartext“ (Text aus `about.md`),
-     * `gerede` steht wörtlich in `heroGerede`, `antwort` wörtlich dort. Sonst
-     * bricht der Build.
+     * Wahlhilfe in Leistungen (docs/RUHE_PLAN.md): Ein Satz aus `heroGerede`
+     * wird zur Wahl „Was davon kennen Sie?“, und die Leistung `bei` (Titel aus
+     * `services`) antwortet; `antwort` ist die Stelle ihrer Beschreibung, die
+     * den Marker bekommt. `gerede` steht wörtlich in `heroGerede`, `antwort`
+     * wörtlich in der Beschreibung. Sonst bricht der Build.
      */
     heroEchos: z
       .array(z.object({ bei: z.string(), gerede: z.string(), antwort: z.string() }))

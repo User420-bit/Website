@@ -5,6 +5,9 @@ jedes Kapitel eigene Merkmale für Bewegung hat, so wie jede Bühne einer Projek
 handelt. Die Kapitel sind inhaltlich verschieden, also sollen sie sich auch verschieden bewegen.
 Freigegeben wurden alle vier Vorschläge unten.
 
+> **Abgelöst am 2026-10-14** durch [`RUHE_PLAN.md`](RUHE_PLAN.md): zu schnell und unübersichtlich.
+> Die Signaturen sind wieder entfernt; der Text unten ist Geschichte.
+
 ---
 
 ## 1. Prinzip

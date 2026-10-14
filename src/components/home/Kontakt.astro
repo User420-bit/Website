@@ -10,19 +10,20 @@
  * neben der Adresse und war dort größer als sie. Jetzt steht es in 04, beim
  * Text über Ort und Person; hier bleibt die Adresse das einzige große Element.
  *
- * Bewegung (docs/BEWEGUNG_PLAN.md, G): Adresse und Erreichbarkeit bewegen
- * sich in ihren Komponenten. Hier nur die Haarlinie über der Adresse: Sie
- * zieht von links auf wie die Linien der Erreichbarkeit daneben.
+ * Seit 2026-10-14 zieht hier nichts mehr ein (docs/RUHE_PLAN.md).
  *
  * Schlusspunkt (docs/NACH_DEM_HERO_PLAN.md): Über der Adresse steht noch
  * einmal die Eröffnung des Heros, „Sie erzählen. Ich höre zu.“ Die Seite
  * endet, wo sie angefangen hat, nur dass jetzt die Adresse darunter steht.
  * Die Zeile steht ruhig: Bewegt wird hier die Adresse.
  *
- * Signatur „Adresse schreiben“ (docs/SEKTIONEN_SIGNATUR_PLAN.md): Das Kapitel
- * ist die Handlung, eine E-Mail schreiben. Die Adresse tippt sich Zeichen für
- * Zeichen ein, der Cursor blinkt dreimal und geht. Das macht `CopyEmail` mit
- * `schreiben`; Text, Link und Markieren bleiben dabei unverändert.
+ * Der Antworttermin (docs/RUHE_PLAN.md): Unter dem Knopf rechnet die Seite
+ * aus, bis wann eine Antwort kommt, wenn man heute schreibt: der nächste
+ * Werktag, Wochenenden und bayerische Feiertage ausgenommen. Dazu eine Reihe
+ * der nächsten sieben Tage mit „heute“ und „Antwort“, freie Tage blass. Das
+ * Versprechen „innerhalb eines Werktags“ wird so zu einem Datum. Nur mit
+ * Skript, denn das Datum steht erst beim Besuch fest; ohne bleibt der Satz im
+ * Intro.
  */
 import { getEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
@@ -75,8 +76,7 @@ if (profile.social.github) {
   <div
     class="grid grid-cols-1 items-start gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
   >
-    <div class="kontakt-handlung relative border-t border-border pt-6" data-kontakt-handlung>
-      <span aria-hidden="true" class="kontakt-linie" data-bewegt data-kontakt-linie></span>
+    <div class="border-t border-border pt-6">
       <p class="m-0 mb-5 text-xl leading-snug font-semibold tracking-tight sm:text-2xl">
         {
           company.heroAuftakt.map((zeile, z) => (
@@ -84,73 +84,166 @@ if (profile.social.github) {
           ))
         }
       </p>
-      <CopyEmail email={company.email} schreiben />
+      <CopyEmail email={company.email} />
       <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
         Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
       </p>
       <p class="mt-8 mb-0">
         <Button href={anfrage}>E-Mail schreiben</Button>
       </p>
+
+      <div class="mt-8" data-termin hidden>
+        <p class="m-0 text-sm text-fg-muted" data-termin-satz></p>
+        <ol
+          class="termin-tage mt-3 mb-0 flex list-none gap-1.5 p-0"
+          aria-hidden="true"
+          data-termin-tage
+        >
+        </ol>
+      </div>
     </div>
 
-    <MetaList rows={erreichbarkeit} einziehen />
+    <MetaList rows={erreichbarkeit} />
   </div>
 </Section>
 
 <style>
   /*
-   * Die Haarlinie bleibt als `border-top`, damit das Layout mit und ohne
-   * Skript gleich hoch ist. Mit Bewegung wird die Kante durchsichtig, und an
-   * ihrer Stelle liegt ein eigener Strich, der von links aufziehen kann (wie
-   * in 02 Leistungen).
+   * Die Tage: kleine Felder wie auf einem Wandkalender. Frei (Wochenende,
+   * Feiertag) gestrichelt und blass, heute mit Tintenrand, der Antworttag in
+   * Orange auf verdünntem Orange.
    */
-  .kontakt-linie {
-    display: none;
+  .termin-tage :global(li) {
+    display: grid;
+    width: 2.75rem;
+    padding: 0.25rem 0 0.375rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-fg-muted);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
   }
-  html[data-bewegung] .kontakt-handlung {
-    border-top-color: transparent;
+  .termin-tage :global(li b) {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-fg);
   }
-  html[data-bewegung] .kontakt-linie {
-    position: absolute;
-    inset-inline: 0;
-    top: -1px;
-    display: block;
-    height: 1px;
-    background-color: var(--color-border);
-    transform-origin: left;
+  .termin-tage :global(li small) {
+    font-size: 0.625rem;
+    font-weight: 500;
+    min-height: 0.8125rem;
   }
-  html[data-bewegung] .kontakt-linie[data-bewegt] {
-    transform: scaleX(0);
+  .termin-tage :global(li[data-frei]) {
+    border-style: dashed;
+    opacity: 0.55;
+  }
+  .termin-tage :global(li[data-frei] b) {
+    color: var(--color-fg-muted);
+  }
+  .termin-tage :global(li[data-heute]) {
+    border-color: var(--color-fg);
+  }
+  .termin-tage :global(li[data-antwort]) {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+  .termin-tage :global(li[data-antwort] b) {
+    color: var(--color-accent);
   }
 </style>
 
 <script>
-  import { DAUER, KURVE, animate, inView, wennBewegt } from '@/lib/motion'
+  const termin = document.querySelector<HTMLElement>('[data-termin]')
+  const satz = termin?.querySelector<HTMLElement>('[data-termin-satz]')
+  const tage = termin?.querySelector<HTMLElement>('[data-termin-tage]')
 
-  const handlung = document.querySelector<HTMLElement>('[data-kontakt-handlung]')
-  const linie = handlung?.querySelector<HTMLElement>('[data-kontakt-linie]')
+  /** Ostersonntag nach Gauß (gregorianisch), Grundlage der beweglichen Feiertage. */
+  function ostern(jahr: number): Date {
+    const a = jahr % 19
+    const b = Math.floor(jahr / 100)
+    const c = jahr % 100
+    const d = Math.floor(b / 4)
+    const e = b % 4
+    const f = Math.floor((b + 8) / 25)
+    const g = Math.floor((b - f + 1) / 3)
+    const h = (19 * a + b - d - g + 15) % 30
+    const i = Math.floor(c / 4)
+    const k = c % 4
+    const l = (32 + 2 * e + 2 * i - h - k) % 7
+    const m = Math.floor((a + 11 * h + 22 * l) / 451)
+    const monat = Math.floor((h + l - 7 * m + 114) / 31)
+    const tag = ((h + l - 7 * m + 114) % 31) + 1
+    return new Date(jahr, monat - 1, tag)
+  }
 
-  wennBewegt(() => {
-    if (!handlung || !linie) return
-    // Einmal, ohne Rückweg, zur selben Zeit wie die Linien der Erreichbarkeit.
-    const halt = inView(
-      handlung,
-      () => {
-        halt()
-        animate(
-          linie,
-          { transform: ['scaleX(0)', 'scaleX(1)'] },
-          { duration: DAUER.szene, ease: KURVE },
-        ).then(() =>
-          // Ein Bild später räumen: Motion schreibt den Endwert erst nach dem
-          // Auflösen als Inline-Style.
-          requestAnimationFrame(() => {
-            linie.removeAttribute('data-bewegt')
-            linie.style.removeProperty('transform')
-          }),
-        )
-      },
-      { amount: 0.2 },
-    )
-  })
+  const schluessel = (t: Date) => `${t.getFullYear()}-${t.getMonth() + 1}-${t.getDate()}`
+  const plus = (t: Date, n: number) => new Date(t.getFullYear(), t.getMonth(), t.getDate() + n)
+
+  /** Gesetzliche Feiertage in Bayern (Bruckmühl, also mit Mariä Himmelfahrt). */
+  function feiertage(jahr: number): Set<string> {
+    const o = ostern(jahr)
+    const fest = [
+      [1, 1],
+      [1, 6],
+      [5, 1],
+      [8, 15],
+      [10, 3],
+      [11, 1],
+      [12, 25],
+      [12, 26],
+    ].map(([m, d]) => new Date(jahr, m! - 1, d!))
+    const beweglich = [-2, 1, 39, 50, 60].map((n) => plus(o, n))
+    return new Set([...fest, ...beweglich].map(schluessel))
+  }
+
+  const frei = (t: Date) =>
+    t.getDay() === 0 || t.getDay() === 6 || feiertage(t.getFullYear()).has(schluessel(t))
+
+  /*
+   * „Innerhalb eines Werktags“: Wer an einem Werktag schreibt, hat die Antwort
+   * in der Regel am nächsten Werktag; wer an einem freien Tag schreibt, am
+   * ersten Werktag danach.
+   */
+  function antworttag(heute: Date): Date {
+    let tag = plus(heute, 1)
+    if (frei(heute)) tag = heute
+    while (frei(tag) || tag.getTime() === heute.getTime()) tag = plus(tag, 1)
+    return tag
+  }
+
+  if (termin && satz && tage) {
+    const jetzt = new Date()
+    const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate())
+    const antwort = antworttag(heute)
+    const kurz = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+    const lang = new Intl.DateTimeFormat('de-DE', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    })
+
+    const wann = document.createElement('span')
+    wann.className = 'font-medium text-fg'
+    wann.textContent = lang.format(antwort)
+    satz.append('Heute geschrieben, Antwort in der Regel bis ', wann, '.')
+
+    for (let n = 0; n < 7; n++) {
+      const t = plus(heute, n)
+      const li = document.createElement('li')
+      const istAntwort = t.getTime() === antwort.getTime()
+      li.toggleAttribute('data-heute', n === 0)
+      li.toggleAttribute('data-antwort', istAntwort)
+      li.toggleAttribute('data-frei', frei(t))
+      const marke = document.createElement('small')
+      marke.textContent = n === 0 ? 'heute' : istAntwort ? 'Antwort' : ''
+      const tag = document.createElement('b')
+      tag.textContent = String(t.getDate())
+      li.append(marke, kurz[t.getDay()]!, tag)
+      tage.append(li)
+    }
+    termin.hidden = false
+  }
 </script>

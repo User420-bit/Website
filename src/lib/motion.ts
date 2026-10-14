@@ -12,11 +12,12 @@
  *   `global.css` sie nach 2 s von selbst auf (Sicherheitsnetz); sobald es
  *   läuft, meldet es sich unten mit `data-bewegung="laeuft"`, und die
  *   Sektionen entscheiden selbst, wann etwas ins Bild kommt (`inView`).
- * - Die H1 bewegt sich nie. Text darf einziehen, aber kurz (≤ 320 ms) und
- *   höchstens 8 px weit; Linien, Bilder und Belege dürfen mehr.
+ * - Die H1 bewegt sich nie (außer im Scroll-Hero).
+ * - Nichts erscheint von selbst beim Scrollen (seit 2026-10-14,
+ *   docs/RUHE_PLAN.md): Bewegung antwortet auf eine Handlung.
  * - Was von selbst länger als 5 s läuft, braucht eine Pause-Taste.
  */
-export { animate, hover, inView, press, scroll, spring, stagger } from 'motion'
+export { animate, inView, press } from 'motion'
 
 /** Die eine Kurve des Systems, `--ease-quiet` in global.css. */
 export const KURVE: [number, number, number, number] = [0.2, 0, 0, 1]
@@ -29,13 +30,7 @@ export const DAUER = {
   szene: 0.6,
 } as const
 
-/** Abstand zwischen gestaffelten Elementen in Sekunden. */
-export const STAFFEL = 0.06
-
-/** Abstand zwischen ganzen Zeilen einer Liste (NumberedRows, MetaList, Werkzeuge). */
-export const STAFFEL_ZEILE = 0.08
-
-/** Wie weit Text höchstens einzieht, in Pixeln. */
+/** Wie weit Text bei einer Antwort (Blättern, Umschalten, Hero) höchstens wandert, in Pixeln. */
 export const WEG_TEXT = 8
 
 /** Wahr, wenn der Besucher Bewegung zulässt. Jede Bewegung prüft das zuerst. */

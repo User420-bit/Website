@@ -20,13 +20,11 @@ import { echosPruefen } from '@/lib/echo'
 
 const company = (await getEntry('company', 'main'))!.data
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
-const about = (await getEntry('about', 'about'))!.data
-// Jeder Rückbezug aufs Gerede muss auf einen Ort der Seite zeigen, sonst bricht der Build.
-echosPruefen(company.heroEchos, [
-  ...company.services.map((s) => s.title),
-  ...about.values.map((v) => v.title),
-  'Über Klartext',
-])
+// Jeder Satz der Wahlhilfe muss auf eine Leistung zeigen, sonst bricht der Build.
+echosPruefen(
+  company.heroEchos,
+  company.services.map((s) => s.title),
+)
 const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
 ---
 

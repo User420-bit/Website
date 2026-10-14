@@ -17,17 +17,13 @@
  * Beim Klick wächst der Screenshot, ohne ihn die große summary, in das erste
  * Bild der Projektseite (`data-uebergang`, siehe `uebergang` in `src/lib/site.ts`).
  *
- * Bewegung (docs/ARBEITEN_PLAN.md, 2.4): Beim Hereinscrollen zieht sich das
- * Bild von links auf (`data-bewegt="bild"`, innen, nie am Bildfeld selbst),
- * Titel und Text ziehen 8 px ein (`data-bewegt="text"`); beides steuert
- * `ProjectShowcase`. Der Screenshot steht ganz im Rahmen, ohne Parallaxe (seit
+ * Seit 2026-10-14 zieht hier nichts mehr ein (docs/RUHE_PLAN.md): Bild und
+ * Text stehen. Der Screenshot steht ganz im Rahmen, ohne Parallaxe (seit
  * 2026-10-08: Ein Beleg wird nicht beschnitten); bei Hover und Fokus wächst er
  * auf 1,02. Das Bildfeld trägt nie einen Transform, sonst bräche der Übergang.
  *
- * Der Stand trägt den Marker aus dem Hero (docs/NACH_DEM_HERO_PLAN.md): Jedes
- * Projekt sagt, wie weit es ist, und genau das ist die Antwort auf „Es soll
- * vorher klar sein“. Mit Bewegung zieht er beim Scrollen auf und wieder zurück,
- * wie die Marker im Hero (`ProjectShowcase`); ohne steht er.
+ * Der Stand trägt den Marker aus dem Hero: Jedes Projekt sagt, wie weit es
+ * ist. Er steht, ohne aufzuziehen.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -54,7 +50,7 @@ const bild = leitbild(screenshots)
   data-slug={projekt.id}
   hidden={hidden}
 >
-  <div class:list={['flex min-h-11 items-center', blaettern && 'pr-44']} data-bewegt="text">
+  <div class:list={['flex min-h-11 items-center', blaettern && 'pr-44']}>
     <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
       <h3 class="display m-0 text-xl font-semibold sm:text-2xl">
         {/* Stretched Link: die ganze Bühne ist klickbar, der Fokus bleibt am Text. */}
@@ -82,7 +78,7 @@ const bild = leitbild(screenshots)
           style={uebergang(projekt.id)}
         >
           {/* Bild und Aufzieh-Hülle lassen Zeiger durch: Transformiert (Hover 1,02) oder beschnitten (Einzug) lägen sie über dem gestreckten Titel-Link und fingen den Klick ab. */}
-          <div class="pointer-events-none h-full" data-bewegt="bild">
+          <div class="pointer-events-none h-full">
             <Image
               class="h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-(--duration-slow) motion-safe:group-focus-within:scale-[1.02] motion-safe:group-hover:scale-[1.02]"
               src={bild.image}
@@ -98,7 +94,6 @@ const bild = leitbild(screenshots)
           aria-hidden="true"
           class="m-0 max-w-[36ch] text-2xl leading-[1.25] font-medium tracking-tight text-balance text-fg-muted sm:text-3xl"
           data-uebergang
-          data-bewegt="text"
           style={uebergang(projekt.id)}
         >
           {summary}
@@ -112,7 +107,6 @@ const bild = leitbild(screenshots)
           'prose-flow m-0 max-w-[60ch] leading-relaxed text-fg-muted',
           !bild && 'sr-only',
         ]}
-        data-bewegt="text"
       >
         {summary}
       </p>
@@ -123,16 +117,13 @@ const bild = leitbild(screenshots)
               'prose-flow mb-0 max-w-[60ch] text-sm text-fg-muted',
               bild ? 'mt-3' : 'mt-0',
             ]}
-            data-bewegt="text"
           >
             <span class="font-medium text-fg">Stand:</span>{' '}
-            <mark class="marker" data-stand-marker data-marker-netz>
-              {firstSentence(status)}
-            </mark>
+            <mark class="marker">{firstSentence(status)}</mark>
           </p>
         )
       }
-      <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2" data-bewegt="text">
+      <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
         <p class="m-0 inline-flex items-center gap-2 text-sm font-medium text-accent">
           Zur Referenz
           <Arrow
@@ -166,13 +157,3 @@ const bild = leitbild(screenshots)
     </div>
   </div>
 </article>
-
-<style>
-  /*
-   * Mit Bewegung folgt der Marker `--stand` (0 bis 1), das `ProjectShowcase`
-   * beim Scrollen setzt. Bis dahin ist er leer.
-   */
-  :global(html[data-bewegung]) mark[data-stand-marker] {
-    background-size: calc(var(--stand, 0) * 100%) 100%;
-  }
-</style>

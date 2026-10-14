@@ -6,6 +6,10 @@ abflacht. Gebaut in `GeredeEcho.astro`, `lib/echo.ts`, `home/Leistungen.astro`,
 `home/Arbeitsweise.astro`, `NumberedRows.astro`, `home/Kontakt.astro`; Inhalt in `company.json` als
 `heroEchos`.
 
+> **Teilweise abgelöst am 2026-10-14** durch [`RUHE_PLAN.md`](RUHE_PLAN.md): Die Zitate über den
+> Kapiteln sind entfernt; drei der Sätze leben in der Wahlhilfe von Leistungen weiter, der Schlusspunkt
+> im Kontakt bleibt (stehend).
+
 ---
 
 ## 1. Was der Hero verspricht

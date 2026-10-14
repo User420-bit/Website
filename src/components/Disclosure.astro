@@ -8,6 +8,8 @@
  * und zieht `.disclosure-inhalt` von 0 auf das Maß (und zurück). Der Inhalt
  * steckt dafür in zwei Hüllen: Die äußere wird in der Höhe animiert und hat
  * keinen Innenabstand, sonst bliebe sie bei Höhe 0 so hoch wie ihr Padding.
+ * Nur die Höhe bewegt sich, als Antwort auf den Klick. Seit 2026-10-14 zieht
+ * im Inhalt nichts mehr ein: Die Punkte stehen, wenn die Höhe aufgeht.
  */
 interface Props {
   title: string
@@ -54,14 +56,9 @@ const { title, meta } = Astro.props
 </style>
 
 <script>
-  import { DAUER, KURVE, WEG_TEXT, alle, animate, bewegt } from '@/lib/motion'
+  import { DAUER, KURVE, alle, animate, bewegt } from '@/lib/motion'
 
   type Lauf = ReturnType<typeof animate>
-
-  /** Abstand der Punkte beim Öffnen; enger als `STAFFEL`, weil es viele sein können. */
-  const PUNKTE_STAFFEL = 0.04
-  /** Länger als das dauert das Einziehen aller Punkte nie, egal wie viele es sind. */
-  const PUNKTE_GESAMT = 0.3
 
   for (const details of alle<HTMLDetailsElement>('details.disclosure')) {
     const summary = details.querySelector<HTMLElement>(':scope > summary')
@@ -72,23 +69,12 @@ const { title, meta } = Astro.props
     /** Zählt jeden Start; ein Lauf räumt nur auf, wenn kein neuerer begonnen hat. */
     let nummer = 0
     let hoehe: Lauf | undefined
-    let punkte: Lauf | undefined
     /** Der Zustand, den das Skript selbst gerade setzt; jedes andere `toggle` kam von außen. */
     let erwartet: 'open' | 'closed' | undefined
-
-    const punkteRuhe = () => {
-      punkte?.stop()
-      punkte = undefined
-      for (const li of alle('li', inhalt)) {
-        li.style.removeProperty('opacity')
-        li.style.removeProperty('transform')
-      }
-    }
 
     const ruhe = () => {
       hoehe?.stop()
       hoehe = undefined
-      punkteRuhe()
       inhalt.style.removeProperty('height')
       inhalt.style.removeProperty('overflow')
       delete details.dataset.schliesst
@@ -116,36 +102,11 @@ const { title, meta } = Astro.props
         inhalt.style.removeProperty('height')
         inhalt.style.removeProperty('overflow')
       })
-
-      // Punkte ziehen nur ein, wenn wirklich von zu geöffnet wird; beim
-      // Umkehren eines Schließens stehen sie schon.
-      if (!vonZu) return
-      const liste = alle('li', inhalt)
-      if (liste.length === 0) return
-      punkte?.stop()
-      const dauer = DAUER.basis
-      const abstand =
-        liste.length > 1
-          ? Math.min(PUNKTE_STAFFEL, (PUNKTE_GESAMT - dauer) / (liste.length - 1))
-          : 0
-      punkte = animate(
-        liste,
-        { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
-        { duration: dauer, ease: KURVE, delay: (i: number) => i * abstand },
-      )
-      // Motion schreibt die Endwerte erst nach `finished` als Inline-Style;
-      // ein Bild später räumen, damit wirklich nichts transformiert bleibt.
-      punkte.finished.then(() =>
-        requestAnimationFrame(() => {
-          if (nr === nummer) punkteRuhe()
-        }),
-      )
     }
 
     const schliessen = () => {
       const von = inhalt.getBoundingClientRect().height
       hoehe?.stop()
-      punkteRuhe()
       details.dataset.schliesst = ''
       inhalt.style.overflow = 'hidden'
       inhalt.style.height = `${von}px`
