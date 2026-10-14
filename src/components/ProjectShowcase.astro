@@ -296,6 +296,7 @@ const blaetternKnopf =
     DAUER,
     inView,
     KURVE,
+    scroll,
     stagger,
     STAFFEL,
     WEG_TEXT,
@@ -344,6 +345,7 @@ const blaetternKnopf =
 
     for (const gruppe of alle('[data-gruppe]', showcase)) richteGruppeEin(gruppe, mitEinzug)
     richteUmschalterEin(showcase)
+    if (document.documentElement.hasAttribute('data-bewegung')) richteStandMarkerEin(showcase)
 
     const alleArbeiten = showcase.querySelector<HTMLElement>('[data-alle]')
     if (alleArbeiten && mitEinzug) {
@@ -360,6 +362,35 @@ const blaetternKnopf =
         },
         { amount: 0.5 },
       )
+    }
+  }
+
+  /*
+   * Der Stand jeder Arbeit trägt den Marker aus dem Hero, ans Scrollen gebunden
+   * wie dort: Er zieht auf, während die Zeile von 95 % bis 55 % der
+   * Fensterhöhe steigt, und läuft beim Zurückscrollen zurück. Gemessen wird die
+   * sichtbare Zeile; der Wert (`--stand`, 0 bis 1) gilt für alle Marker im
+   * Bühnenfeld. Die übrigen Bühnen sind ausgeblendet und hätten selbst nichts
+   * zu messen; so steht der Marker nach dem Blättern gleich weit. Gilt
+   * auch nach dem Zurückkommen von einer Projektseite: Er hängt am Scrollstand,
+   * nicht an einem Einzug.
+   */
+  function richteStandMarkerEin(showcase: HTMLElement) {
+    for (const feld of alle('[data-buehnenfeld]', showcase)) {
+      const marker = alle('[data-stand-marker]', feld)
+      if (marker.length === 0) continue
+      // Das Skript übernimmt; das Sicherheitsnetz aus global.css wird nicht gebraucht.
+      for (const m of marker) m.style.animation = 'none'
+      const stellen = () => {
+        const zeile = marker.map((m) => m.closest('p')).find((p) => p?.offsetParent)
+        if (!zeile) return
+        const oben = zeile.getBoundingClientRect().top / window.innerHeight
+        const stand = Math.min(1, Math.max(0, (0.95 - oben) / 0.4))
+        // Auf jedem Marker, nicht am Feld: Das Blättern räumt die Stile des Felds ab.
+        for (const m of marker) m.style.setProperty('--stand', stand.toFixed(4))
+      }
+      scroll(stellen)
+      stellen()
     }
   }
 

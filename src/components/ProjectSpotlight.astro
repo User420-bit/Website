@@ -23,6 +23,11 @@
  * `ProjectShowcase`. Der Screenshot steht ganz im Rahmen, ohne Parallaxe (seit
  * 2026-10-08: Ein Beleg wird nicht beschnitten); bei Hover und Fokus wächst er
  * auf 1,02. Das Bildfeld trägt nie einen Transform, sonst bräche der Übergang.
+ *
+ * Der Stand trägt den Marker aus dem Hero (docs/NACH_DEM_HERO_PLAN.md): Jedes
+ * Projekt sagt, wie weit es ist, und genau das ist die Antwort auf „Es soll
+ * vorher klar sein“. Mit Bewegung zieht er beim Scrollen auf und wieder zurück,
+ * wie die Marker im Hero (`ProjectShowcase`); ohne steht er.
  */
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
@@ -120,7 +125,10 @@ const bild = leitbild(screenshots)
             ]}
             data-bewegt="text"
           >
-            <span class="font-medium text-fg">Stand:</span> {firstSentence(status)}
+            <span class="font-medium text-fg">Stand:</span>{' '}
+            <mark class="marker" data-stand-marker data-marker-netz>
+              {firstSentence(status)}
+            </mark>
           </p>
         )
       }
@@ -158,3 +166,13 @@ const bild = leitbild(screenshots)
     </div>
   </div>
 </article>
+
+<style>
+  /*
+   * Mit Bewegung folgt der Marker `--stand` (0 bis 1), das `ProjectShowcase`
+   * beim Scrollen setzt. Bis dahin ist er leer.
+   */
+  :global(html[data-bewegung]) mark[data-stand-marker] {
+    background-size: calc(var(--stand, 0) * 100%) 100%;
+  }
+</style>

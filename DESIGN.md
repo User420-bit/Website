@@ -300,7 +300,8 @@ Deckkraft-Grau):
   und gewählter Reiter des Umschalters samt Strich, Hover-Farbe von Sekundärbutton, Aufklapper und
   Zurück-Link, Fokus-Outline, Textauswahl und der Scroll-Hinweis im Hero (eine Aufforderung, also
   Handlung). Als Marker (30 % Orange hinter dem Text) zeigt es eine Antwort: die vier Wörter im
-  Gerede des Heros und die Stellen, die einen Rückbezug beantworten (siehe Rückbezug aufs Gerede). Im Hellmodus bewusst dunkel gehalten, damit Orange als
+  Gerede des Heros, die Stellen, die einen Rückbezug beantworten (siehe Rückbezug aufs Gerede), und
+  der Stand jeder Arbeit auf der Bühne der Startseite. Ein Baustein, `mark.marker` in `global.css`. Im Hellmodus bewusst dunkel gehalten, damit Orange als
   Textfarbe 6,2 : 1 auf Papierweiß hält.
 - **Werkstatt-Orange, gedrückt** (`accent-strong`, hell #912300): nur der Hover des Primärbuttons.
   Dunkler statt durchsichtiger; Deckkraft ließ den Knopf blass wirken.
@@ -654,7 +655,8 @@ höre zu“; weiter unten zeigt die Seite, was sie gehört hat. Über einer Besc
 erzählen:“ (500, Tinte) und ein Satz wörtlich aus dem Gerede in Anführungszeichen (Body Small,
 Bleistiftgrau, Auslassungspunkte, wo er mitten im Satz beginnt oder endet). In der Beschreibung
 darunter trägt die Stelle, die ihn beantwortet, den Marker aus dem Hero: 30 % Orange hinter dem Text,
-Text in Tinte. Heute in Leistungen (alle drei Arten) und Arbeitsweise (Klartext, Pragmatismus).
+Text in Tinte. Heute in Leistungen (alle drei Arten), Arbeitsweise (Klartext, Pragmatismus) und Über
+Klartext (Text aus Markdown, `echoHtml`).
 
 - **Bewegung:** einmal, wenn die Gruppe (`data-echo-gruppe`) zu 40 % im Fenster ist. Das Zitat läuft
   Wort für Wort ein wie das Gerede (300 ms, 20 ms Versatz, 0,35em), danach zieht der Marker in
@@ -684,7 +686,11 @@ Kundenstimme.
   `order` (bis 2026-10-08 zufällig); kommt der Besucher von einer Projektseite zurück, steht deren
   Arbeit da. Kein automatischer Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter
   640 px darunter). Darunter ab 1024 px nebeneinander, schmaler untereinander: der Screenshot (16:9,
-  4 px, 1 px Liniengrau) und summary, „Stand: …“ und die Links wie in der Feature-Zeile. Ohne
+  4 px, 1 px Liniengrau) und summary, „Stand: …“ und die Links wie in der Feature-Zeile. Der Satz
+  nach „Stand:“ trägt den Marker (seit 2026-10-14): Mit Bewegung zieht er beim Scrollen auf, während
+  die Zeile von 95 % bis 55 % der Fensterhöhe steigt, und zurück, wie die Flüge im Hero; der Wert
+  (`--stand`) gilt für alle Bühnen der Auswahl, nach dem Blättern steht er gleich weit. Ohne Bewegung
+  steht er voll. Ohne
   Screenshot steht an der Stelle des Bildes die summary in Title Large, 500, Bleistiftgrau, max. 36ch,
   ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter. Der Screenshot steht ganz im Rahmen, ohne
   Parallaxe (seit 2026-10-08; die Parallaxe brauchte 6 % Überstand und schnitt 3 % je Kante ab, bei

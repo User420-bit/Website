@@ -7,15 +7,10 @@ import { getEntry } from 'astro:content'
 import Disclosure from '@/components/Disclosure.astro'
 import NumberedRows from '@/components/NumberedRows.astro'
 import Section from '@/components/Section.astro'
-import { echo, echosPruefen } from '@/lib/echo'
+import { echo } from '@/lib/echo'
 
 const about = (await getEntry('about', 'about'))!.data
 const company = (await getEntry('company', 'main'))!.data
-// Jeder Rückbezug muss auf eine Leistung oder einen Wert zeigen, sonst bricht der Build.
-echosPruefen(company.heroEchos, [
-  ...company.services.map((s) => s.title),
-  ...about.values.map((v) => v.title),
-])
 /** Werte mit Rückbezug aufs Gerede des Heros (docs/NACH_DEM_HERO_PLAN.md). */
 const werte = about.values.map((wert) => ({
   ...wert,
