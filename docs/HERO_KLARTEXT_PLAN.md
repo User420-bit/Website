@@ -22,6 +22,11 @@ spielte ab) überlappte je nach Fensterhöhe mit dem Gerede. Er ist ersetzt durc
 Fluss direkt unter dem Gerede, das nach Art eines iOS-Hinweises zweimal hüpft, ruht und wieder
 hüpft. Ein Klick-zum-Abspielen gibt es nicht mehr.
 
+Version 6 vom 2026-10-14: Kein eigenes Hinweis-Feld mehr. Das Gerede selbst sitzt in einer Karte
+(12 px Rundung, Rand, Schatten), und diese Karte hüpft als Ganzes, um das Scrollen anzuzeigen.
+Der Schatten ist eine bewusste Ausnahme von der Flat Page Rule in `DESIGN.md`, nur in diesem Hero
+(Entscheidung Pharrel).
+
 ---
 
 ## 0. Die Idee in einem Satz
@@ -79,18 +84,21 @@ Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er s
 
 **Ohne Scrollen.**
 
-| Zeit      | Was passiert                                                                                     |
-| --------- | ------------------------------------------------------------------------------------------------ |
-| 0 s       | „Sie erzählen.“ / „Ich höre zu.“ steht sofort in Display-Größe, an der Stelle der späteren H1    |
-| 0,8–3,0 s | Darunter läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                          |
-| 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                               |
-| 3,8 s     | Unter dem Gerede erscheint der Hinweis: ein Textfeld „Scrollen ↓“, auf Touch-Geräten „Wischen ↑“ |
-| ab 4,5 s  | Das Feld hüpft zweimal 8 px hoch und runter, ruht gut 3 s, hüpft wieder, bis gescrollt wird      |
+| Zeit      | Was passiert                                                                                  |
+| --------- | --------------------------------------------------------------------------------------------- |
+| 0 s       | „Sie erzählen.“ / „Ich höre zu.“ steht sofort in Display-Größe, an der Stelle der späteren H1 |
+| 0,4–1,0 s | Darunter zieht die Karte ein: abgerundet, mit Rand und Schatten                               |
+| 0,8–3,0 s | In der Karte läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                   |
+| 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                            |
+| ab 4,5 s  | Die Karte hüpft zweimal 8 px hoch und runter, ruht gut 3 s, hüpft wieder, bis gescrollt wird  |
 
-Das Feld steht im Fluss unter dem Text und kann ihn deshalb nie verdecken. In niedrigen Fenstern
-(bis 740 px Höhe) werden die Abstände enger und am Computer die Gerede-Schrift eine Stufe kleiner,
-damit alles ins erste Fenster passt. Im Hintergrund wimmelt ein Punktefeld. Scrollt jemand, bevor
-das Gerede steht, steht es sofort komplett, mit Markern.
+Die Karte ist der Hinweis; ein eigenes Feld oder einen Knopf gibt es nicht. Der Start des Hüpfens
+richtet sich nach der Länge des Geredes (`huepfAb`: letztes Wort steht plus 1,5 s). Wer scrollt,
+hat den Hinweis verstanden: Die Karte hüpft danach nicht mehr, auch beim Zurückscrollen nicht. Erst
+dann misst das Skript die Wörter, damit sie nicht aus einer Hüpfhöhe losfliegen. In niedrigen
+Fenstern (bis 740 px Höhe) werden die Abstände enger und am Computer die Gerede-Schrift eine Stufe
+kleiner, damit alles ins erste Fenster passt. Im Hintergrund wimmelt ein Punktefeld. Scrollt
+jemand, bevor das Gerede steht, steht es sofort komplett, mit Markern.
 
 **Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
 klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. Fortschritt p:
@@ -98,6 +106,7 @@ klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. F
 | p         | Was passiert                                                                   |
 | --------- | ------------------------------------------------------------------------------ |
 | 0,02–0,16 | Die Eröffnungszeile steigt 24 px nach oben und verblasst                       |
+| 0,10–0,34 | Fläche, Rand und Schatten der Karte blenden aus, während das Gerede zerfällt   |
 | 0,04–0,26 | Jedes Wort steigt aus seiner Zeile, staubt orange und wächst, die Lücke bleibt |
 | 0,12–0,38 | Der Rest des Geredes zerfällt von links nach rechts zu Staub                   |
 | 0,11–0,89 | Flug mit Sternschnuppen-Schweif und Funken über die Seite in die H1            |
@@ -136,14 +145,15 @@ keine Strecke mehr, in die man zurückscrollen könnte.
   wieder her, setzt das Skript in der ersten 1,5 s wieder auf oben, solange niemand selbst scrollt.
 - **Sicherheitsnetz.** Läuft das Modul nach 2 s nicht, stellt CSS den fertigen Hero her und nimmt
   die Strecke weg.
-- **Zugänglichkeit.** Gerede, Kopien und Hinweis tragen `aria-hidden`. Für Screenreader gibt es
+- **Zugänglichkeit.** Gerede, Karte und Kopien tragen `aria-hidden`. Für Screenreader gibt es
   die H1 vom ersten Moment an.
 
 ## 5. Bekannte Kosten
 
 - Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
 - Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
-- Hinweis und Punktefeld bewegen sich endlos, solange man nicht scrollt.
+- Die Karte mit dem Gerede und das Punktefeld bewegen sich endlos, solange man nicht scrollt.
+  Wer gerade liest, liest alle gut 4 s zwei Hüpfer lang einen bewegten Text.
 - JavaScript-Budget von 90 auf 100 KB je Seite angehoben; der Himmel braucht rund 11 KB.
 
 ## 6. Prüfung
