@@ -21,7 +21,6 @@
  * Animation. So stimmen Scroll-Positionen beim Zurückblättern überein.
  */
 import { getEntry } from 'astro:content'
-import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import { href, mailto } from '@/lib/site'
 
@@ -78,6 +77,8 @@ woerter.forEach((wort, i) => {
 geredeHtml += lautHtml(rest)
 /** Wann das letzte Wort steht, in Sekunden (Start 0,8 s, 20 ms je Wort, 0,3 s Einblenden). */
 const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
+/** Ab wann das Feld hüpft: wenn die Marker stehen (siehe Selbststart im Skript), plus eine Atempause. */
+const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 ---
 
 <div data-hero-buehne data-gerede-ende={geredeEnde}>
@@ -191,29 +192,32 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
             ))
           }
         </p>
-        <p
-          data-hero-gerede
-          class="m-0 mt-5 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:mt-7 sm:text-lg sm:leading-relaxed"
-          set:html={geredeHtml}
-        />
         {
           /*
-           * Der Hinweis: ein Textfeld im Fluss direkt unter dem Gerede, damit
-           * es nie über dem Text liegt. Es hüpft zweimal, ruht, hüpft wieder,
-           * bis gescrollt wird. Am Computer „Scrollen“, auf Touch „Wischen“.
+           * Das Feld: eine Karte mit Schatten um das Gerede. Sie ist zugleich
+           * der Hinweis zum Scrollen: Sie hüpft zweimal, ruht, hüpft wieder,
+           * bis gescrollt wird. Beim Zerfall des Geredes blendet sie aus.
            */
         }
-        <p data-hero-hinweis class="m-0 mt-6 sm:mt-8">
-          <span
-            data-hero-huepf
-            class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-fg"
+        <div data-hero-feld class="mt-5 w-fit sm:mt-7" style={`--hero-huepf-ab:${huepfAb}s`}>
+          <div
+            data-hero-karte
+            class="relative rounded-[var(--radius-lg)] px-5 py-4 sm:px-7 sm:py-6"
           >
-            <span data-hero-hinweis-fein>Scrollen</span>
-            <span data-hero-hinweis-fein><Arrow class="rotate-90" /></span>
-            <span data-hero-hinweis-grob>Wischen</span>
-            <span data-hero-hinweis-grob><Arrow class="-rotate-90" /></span>
-          </span>
-        </p>
+            <p
+              data-hero-gerede
+              class="relative m-0 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:text-lg sm:leading-relaxed"
+              set:html={geredeHtml}
+            />
+          </div>
+          {/* Leiser Zusatz unter der Karte, damit das Hüpfen als Aufforderung lesbar ist. */}
+          <p
+            data-hero-hinweis
+            class="m-0 mt-3 text-center text-xs font-medium tracking-[0.08em] text-accent uppercase sm:mt-4 sm:text-sm"
+          >
+            Scrollen ↓
+          </p>
+        </div>
       </div>
     </div>
 
@@ -242,7 +246,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
   [data-hero-vorspann],
   [data-hero-gerede],
   [data-hero-flug],
-  [data-hero-hinweis],
   [data-hero-himmel],
   [data-hero-fortschritt] {
     display: none;
@@ -302,45 +305,88 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     height: calc(100svh - var(--hero-kopf, 4.5rem));
   }
 
-  /* Hinweis und Fortschritt */
+  /*
+   * Das Feld um das Gerede: Karte mit Rand und Schatten. Fläche, Rand und
+   * Schatten liegen auf `::before`, damit sie beim Zerfall des Geredes
+   * ausblenden (`--hero-feld`, vom Skript gesetzt), ohne den Text mitzunehmen.
+   * Ausnahme von der Flat Page Rule, nur in diesem Hero (Entscheidung Pharrel).
+   * `data-hero-feld` hüpft, und mit ihm Karte und Hinweis darunter.
+   */
+  [data-hero-karte]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-border);
+    border-radius: inherit;
+    background: var(--color-bg-elevated);
+    box-shadow:
+      0 1px 2px oklch(0 0 0 / 0.06),
+      0 12px 32px -8px oklch(0 0 0 / 0.18);
+    opacity: var(--hero-feld, 1);
+  }
+  /* Auf Nachtpapier braucht der Schatten mehr Tiefe, sonst sieht man ihn nicht. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) [data-hero-karte]::before {
+      box-shadow:
+        0 1px 0 oklch(1 0 0 / 0.05) inset,
+        0 2px 4px oklch(0 0 0 / 0.5),
+        0 18px 48px -6px oklch(0 0 0 / 0.85);
+    }
+  }
+  :root[data-theme='dark'] [data-hero-karte]::before {
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.05) inset,
+      0 2px 4px oklch(0 0 0 / 0.5),
+      0 18px 48px -6px oklch(0 0 0 / 0.85);
+  }
+  html[data-hero='gerede'] [data-hero-feld] {
+    animation:
+      hero-feld-ein 0.6s 0.4s both cubic-bezier(0.2, 0, 0, 1),
+      hero-huepf 4.2s var(--hero-huepf-ab, 4.5s) infinite;
+  }
+  /* Der Hinweis kommt kurz bevor die Karte zu hüpfen beginnt und geht beim ersten Scrollen. */
   html[data-hero='gerede'] [data-hero-hinweis] {
-    display: block;
-    animation: hero-hinweis-ein 0.7s 3.8s both cubic-bezier(0.2, 0, 0, 1);
+    animation: hero-hinweis-ein 0.6s calc(var(--hero-huepf-ab, 4.5s) - 0.6s) both
+      cubic-bezier(0.2, 0, 0, 1);
     transition: opacity 0.3s;
   }
   html[data-hero='gerede'] [data-hero-hinweis][data-weg] {
     opacity: 0;
   }
-  /* Zweimal hoch und runter, dann gut 3 s Ruhe, immer wieder (wie ein iOS-Hinweis). */
-  html[data-hero='gerede'] [data-hero-huepf] {
-    animation: hero-huepf 4.2s 4.5s infinite;
-  }
-  [data-hero-hinweis-grob] {
-    display: none;
+  /*
+   * Wer scrollt, hat den Hinweis verstanden: Das Feld hört auf zu hüpfen,
+   * auch beim Zurückscrollen. Das Skript misst erst danach, damit die Wörter
+   * nicht aus einer Hüpfhöhe losfliegen.
+   */
+  html[data-hero='gerede'][data-hero-sofort] [data-hero-feld] {
+    animation: none;
   }
   /*
    * Niedrige Fenster (Notebooks, kleine iPhones): engere Abstände und am
-   * Computer eine Schriftstufe kleiner, damit Gerede und Hinweis ins erste
+   * Computer eine Schriftstufe kleiner, damit Überschrift und Feld ins erste
    * Fenster passen.
    */
   @media (max-height: 740px) {
-    html[data-hero='gerede'] [data-hero-gerede],
-    html[data-hero='gerede'] [data-hero-hinweis] {
+    html[data-hero='gerede'] [data-hero-feld] {
       margin-top: 1rem;
+    }
+    html[data-hero='gerede'] [data-hero-karte] {
+      padding-block: 0.875rem;
+    }
+    html[data-hero='gerede'] [data-hero-hinweis] {
+      margin-top: 0.5rem;
+    }
+  }
+  /* Kleine Handys (iPhone SE): engere Zeilen, sonst rutscht der Hinweis aus dem Fenster. */
+  @media (max-height: 700px) and (max-width: 40rem) {
+    html[data-hero='gerede'] [data-hero-gerede] {
+      line-height: 1.5;
     }
   }
   @media (max-height: 740px) and (min-width: 40rem) {
     html[data-hero='gerede'] [data-hero-gerede] {
       font-size: 1rem;
       line-height: 1.625;
-    }
-  }
-  @media (pointer: coarse) {
-    [data-hero-hinweis-fein] {
-      display: none;
-    }
-    [data-hero-hinweis-grob] {
-      display: inline;
     }
   }
   html[data-hero='gerede'] [data-hero-fortschritt] {
@@ -378,6 +424,11 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
   @keyframes hero-hinweis-ein {
     from {
       opacity: 0;
+    }
+  }
+  @keyframes hero-feld-ein {
+    from {
+      opacity: 0;
       transform: translateY(12px);
     }
   }
@@ -408,7 +459,6 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
   }
   html[data-bewegung=''][data-hero='gerede'] [data-hero-vorspann],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede],
-  html[data-bewegung=''][data-hero='gerede'] [data-hero-hinweis],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-himmel],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-fortschritt] {
     animation: hero-netz-weg 0s 2s both;
@@ -880,6 +930,7 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
     const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
+    const feld = document.querySelector<HTMLElement>('[data-hero-feld]')
     const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
     const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
     const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
@@ -1030,6 +1081,8 @@ const geredeEnde = 0.8 + (laut - 1) * 0.02 + 0.3
         text!,
         welle <= -15 ? '' : `linear-gradient(to right, transparent ${welle}%, #000 ${welle + 15}%)`,
       )
+      // Das Feld um das Gerede geht mit: Fläche und Schatten blenden aus, während der Text zerfällt.
+      feld?.style.setProperty('--hero-feld', String(1 - ausrollen(abschnitt(p, 0.1, 0.34))))
 
       kopien.forEach((k, i) => {
         const l = lage(k, i, p)
