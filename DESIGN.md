@@ -780,8 +780,13 @@ Besucher die Szene einem anderen Projekt zuordnen? Dann ist sie falsch.
   (`animation-timeline: scroll(root)`, Bereich 0 bis 45–90vh) zusätzlich hinter `@supports`; sie wird
   in Langschreibweise notiert, weil der Minifier `animation-timeline` sonst in die Kurzform zieht und
   der Browser die ganze Deklaration verwirft. Endlosschleifen nur, wo sie die Aussage sind (DealerSim
-  produziert weiter, Vaulter schreibt mit), und dann langsam. Availably führt einmal vor und kommt dann
-  zur Ruhe, wie die App selbst.
+  produziert weiter, JustBeauty schlägt den Takt), dann langsam und **nur mit einem sichtbaren
+  „Anhalten“ in der Bühne** (WCAG 2.2.2, seit 2026-10-14): ein Kontrollkästchen oder Reiter, der ohne
+  Skript wirkt, alles in der Bühne anhält und bei reduzierter Bewegung fehlt, weil dann nichts läuft.
+  Wer weiterlaufen lässt, setzt dort fort, wo angehalten wurde; ein Zähler springt nicht nach vorn.
+  Was sich nur beim Scrollen bewegt, braucht keins: TIEFGANG rüttelt, bröckelt und glüht nur, solange
+  gebohrt wird. Einmalige Abläufe beim Laden bleiben unter 5 s (Feynman, Vaulter, MemoryTree) oder
+  haben einen Abspielknopf (Availably führt einmal vor und kommt dann zur Ruhe, wie die App selbst).
 - **Illustration** in CSS und Inline-SVG aus dem Repository, kein Bild von außen.
 
 Was auch die Lizenz nicht erlaubt: Schrift von Drittanbietern oder eine zweite Familie (Monospace
@@ -943,8 +948,8 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   erfüllt ist, auch wenn der Besucher zurückkehrt. Den Zweck zu erfüllen kostet nichts: Kein Inhalt
   verschwindet, nichts wird ausgelöst. Dekoration ohne Zweck wiederholt sich nicht. Im Hero hüpfen
   Feld und Hinweis, und das Punktefeld wimmelt, bis zum ersten Scrollen; wenige Pixel genügen, denn
-  beides steht ab p > 0,003 still, und das erste Wort hebt erst bei 0,04 ab. Bühnen wiederholen nur
-  nach der Bühnenlizenz (die Schleife ist die Aussage, langsam). Alles Übrige: nach höchstens 5 s
+  beides steht ab p > 0,003 still, und das erste Wort hebt erst bei 0,04 ab. Bühnen sind davon nicht
+  ausgenommen: Eine Endlosschleife dort braucht ein „Anhalten“ (siehe Bühnenlizenz). Alles Übrige: nach höchstens 5 s
   Ruhe oder eine Pause-Taste (WCAG 2.2.2).
 
 Was die Seite außerdem kann und behält:
@@ -1008,6 +1013,8 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 
 - **Don't** eine Theme-Auswahl, Test-Themes oder einen Farbmodus-Umschalter für Besucher einbauen. Hell
   und dunkel folgen der Systemeinstellung.
+- **Don't** eine Bühne endlos laufen lassen, ohne „Anhalten“ in der Bühne. Reduzierte Bewegung
+  allein genügt nicht: Wer die Systemeinstellung nicht kennt, hätte sonst keinen Ausweg.
 - **Don't** Schatten außerhalb der Feld-Regel setzen, Schatten als Zustand (Hover, Fokus) einsetzen
   oder einen zweiten Schatten-Token anlegen. Glow, Anheben, Unschärfe und Transluzenz gibt es nie.
 - **Don't** Text in Versalien oder gesperrt setzen, außer in einer Szene der Bühne (The No Caps Rule).
