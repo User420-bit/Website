@@ -37,6 +37,16 @@ const company = defineCollection({
      * Version 4). Steht beim Öffnen an der Stelle der H1, bevor das Gerede einläuft.
      */
     heroAuftakt: z.array(z.string()).min(1),
+    /**
+     * Rückbezüge aufs Gerede (docs/NACH_DEM_HERO_PLAN.md): Ein Satz aus
+     * `heroGerede` kehrt weiter unten neben der Antwort wieder, die ihn
+     * beantwortet. `bei` ist der Titel einer Leistung (`services`) oder eines
+     * Werts (`about.values`), `gerede` steht wörtlich in `heroGerede`,
+     * `antwort` wörtlich in der Beschreibung dort. Sonst bricht der Build.
+     */
+    heroEchos: z
+      .array(z.object({ bei: z.string(), gerede: z.string(), antwort: z.string() }))
+      .default([]),
     /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
     audience: z.string(),
     intro: z.string(),

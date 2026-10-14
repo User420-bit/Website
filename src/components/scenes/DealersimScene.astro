@@ -14,6 +14,13 @@
  *
  * Alles liegt auf dem Pixelraster aus `dealersim/pixel.ts` und wird nur in
  * ganzen Vielfachen skaliert (×3 auf dem Handy, ×4 darüber).
+ *
+ * „Anhalten“ (WCAG 2.2.2, seit 2026-10-14): Die Produktion läuft endlos, also
+ * gibt es unter dem Raum einen Schalter, der alles anhält, Ware, Personen,
+ * Takt und Zähler. Er ist ein Kontrollkästchen vor dem Bild, damit er auch
+ * ohne Skript wirkt (`:checked ~`); mit Skript zählt der Zähler dann nicht
+ * weiter und springt beim Weiterlaufen nicht nach vorn. Ohne Bewegung steht
+ * nichts still, was man anhalten könnte, also fehlt er dann.
  */
 import {
   BILDSCHIRM,
@@ -173,6 +180,7 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
 ---
 
 <figure class="ds-raum m-0" data-ds-raum data-uebergang>
+  <input type="checkbox" id="ds-halt" class="ds-halt-feld sr-only" data-ds-halt />
   <div class="ds-bild">
     <svg viewBox={`0 0 ${B} ${H}`} aria-hidden="true">
       <path class="wand-l" d={wand.links}></path>
@@ -266,6 +274,7 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
       }
     </div>
   </div>
+  <label for="ds-halt" class="ds-halt">Anhalten</label>
   <p class="sr-only" role="status" data-meldung></p>
   <figcaption class="mt-3 max-w-[65ch] text-sm text-fg-muted">
     <span class="font-medium text-fg">Szene</span> · Der erste Raum, nachgezeichnet. Er produziert weiter,
@@ -291,10 +300,14 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
     let zuletzt = performance.now()
     let wegSeit = 0
     let level = 1
+    const halt = $<HTMLInputElement>('[data-ds-halt]')
+    // Der Browser kann das Häkchen beim Zurückblättern wiederherstellen.
+    let angehalten = halt.checked
 
+    /** Verbucht die Zeit seit dem letzten Takt; angehalten wird nichts produziert. */
     const takt = () => {
       const jetzt = performance.now()
-      stueck += (rate() * (jetzt - zuletzt)) / 1000
+      if (!angehalten) stueck += (rate() * (jetzt - zuletzt)) / 1000
       zuletzt = jetzt
     }
     const zeigen = () => {
@@ -317,10 +330,16 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
 
     $('[data-schilder]').inert = false
     $('[data-hinweis]').hidden = false
+    halt.addEventListener('change', () => {
+      takt()
+      angehalten = halt.checked
+      melden(angehalten ? 'Produktion angehalten.' : 'Produktion läuft weiter.')
+    })
     if (!still) {
       raum.dataset.live = ''
       zeigen()
       setInterval(() => {
+        if (angehalten) return
         takt()
         zeigen()
       }, 250)
@@ -696,8 +715,12 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
       animation: ds-takt calc(3s / var(--stufe, 1)) steps(6) infinite;
     }
     @supports (animation-timeline: scroll()) {
-      /* Ein Stück alle zwei Sekunden, eine Stunde lang: Dann hat niemand mehr die Seite offen. */
-      .ds-raum {
+      /*
+       * Ein Stück alle zwei Sekunden, eine Stunde lang: Dann hat niemand mehr
+       * die Seite offen. Auf der Anzeige statt auf dem Raum, damit „Anhalten“
+       * (ein Geschwister davor) sie erreicht; der Wert erbt nach unten.
+       */
+      .hud {
         animation: ds-produzieren 3600s steps(1800) forwards;
       }
       .hud-klein::before {
@@ -713,6 +736,50 @@ const prozent = (wert: number, von: number) => `${((wert / von) * 100).toFixed(3
     }
     .ds-raum[data-live] .hud-zahl::after {
       content: none;
+    }
+
+    /* Angehalten: Alles bleibt, wo es gerade ist, und läuft von dort weiter. */
+    .ds-halt-feld:checked ~ .ds-bild :is(.ware, .person, .schild-takt, .hud) {
+      animation-play-state: paused;
+    }
+  }
+
+  /*
+   * Der Schalter ist Bedienung der Seite, nicht Teil des Spiels: Stil des
+   * Sekundärknopfs (DESIGN.md), angehalten wie ein gewählter Zustand in Orange.
+   */
+  .ds-halt {
+    display: none;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    cursor: pointer;
+    transition:
+      color var(--duration-base) var(--ease-quiet),
+      background-color var(--duration-base) var(--ease-quiet),
+      border-color var(--duration-base) var(--ease-quiet);
+  }
+  .ds-halt:hover,
+  .ds-halt-feld:checked ~ .ds-halt {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+  .ds-halt-feld:focus-visible ~ .ds-halt {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  /* Nach der Grundregel, sonst gewinnt deren `display: none`. */
+  @media (prefers-reduced-motion: no-preference) {
+    .ds-halt {
+      display: inline-flex;
     }
   }
 

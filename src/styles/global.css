@@ -41,6 +41,12 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
+  /*
+   * Der einzige Schatten im System: für ein Feld über unruhigem Grund
+   * (Feld-Regel in DESIGN.md). Im Dunkeln tiefer, sonst sieht man ihn nicht.
+   */
+  --shadow-feld: 0 1px 2px oklch(0 0 0 / 0.06), 0 12px 32px -8px oklch(0 0 0 / 0.18);
+
   /* Bewegung: drei Dauern, eine Kurve. Mehr gibt es nicht. */
   --ease-quiet: cubic-bezier(0.2, 0, 0, 1);
   --default-transition-duration: 200ms;
@@ -64,6 +70,9 @@
       --color-accent-fg: oklch(0.17 0.02 60);
       --color-border: oklch(0.4 0.006 80);
       --color-border-strong: oklch(0.58 0.01 80);
+      --shadow-feld:
+        inset 0 1px 0 oklch(1 0 0 / 0.05), 0 2px 4px oklch(0 0 0 / 0.5),
+        0 18px 48px -6px oklch(0 0 0 / 0.85);
     }
   }
 
@@ -79,6 +88,9 @@
     --color-accent-fg: oklch(0.17 0.02 60);
     --color-border: oklch(0.4 0.006 80);
     --color-border-strong: oklch(0.58 0.01 80);
+    --shadow-feld:
+      inset 0 1px 0 oklch(1 0 0 / 0.05), 0 2px 4px oklch(0 0 0 / 0.5),
+      0 18px 48px -6px oklch(0 0 0 / 0.85);
   }
 }
 

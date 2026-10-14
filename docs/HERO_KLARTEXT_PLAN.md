@@ -31,6 +31,14 @@ Version 7 vom 2026-10-14: Unter der Karte steht leise in Orange „Scrollen ↓�
 Das Hüpfen allein lässt sich als Deko lesen; das Wort macht es zur Aufforderung. Es erscheint kurz
 vor dem ersten Hüpfer, hüpft mit der Karte und verschwindet beim ersten Scrollen.
 
+Version 8 vom 2026-10-14: Abgleich mit `DESIGN.md`. Der Hinweis steht in Label Small, normaler
+Schreibung und mit SVG-Pfeil („↓“ fehlt in der Hausschrift und kam aus einer Ersatzschrift). Der
+Schatten kommt aus dem Token `--shadow-feld` (Feld-Regel). Nach der neuen Zweckbindung hört nach dem
+ersten Scrollen auch das Gewimmel des Punktefelds auf, nicht nur das Hüpfen.
+
+Nach dem Hero (2026-10-14): Das Gerede kehrt weiter unten wieder, wo die Seite es beantwortet, und
+der Kontakt endet mit der Eröffnungszeile. Siehe [`NACH_DEM_HERO_PLAN.md`](NACH_DEM_HERO_PLAN.md).
+
 ---
 
 ## 0. Die Idee in einem Satz
@@ -94,7 +102,7 @@ Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er s
 | 0,4–1,0 s | Darunter zieht die Karte ein: abgerundet, mit Rand und Schatten                               |
 | 0,8–3,0 s | In der Karte läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                   |
 | 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                            |
-| ab 3,9 s  | Unter der Karte erscheint leise in Orange „Scrollen ↓“                                        |
+| ab 3,9 s  | Unter der Karte erscheint leise in Orange „Scrollen“ mit Pfeil nach unten                     |
 | ab 4,5 s  | Die Karte hüpft zweimal 8 px hoch und runter, ruht gut 3 s, hüpft wieder, bis gescrollt wird  |
 
 Die Karte ist der Hinweis, das Wort darunter macht ihn eindeutig; einen Knopf gibt es nicht. Der Start des Hüpfens
@@ -157,8 +165,10 @@ keine Strecke mehr, in die man zurückscrollen könnte.
 
 - Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
 - Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
-- Die Karte mit dem Gerede und das Punktefeld bewegen sich endlos, solange man nicht scrollt.
-  Wer gerade liest, liest alle gut 4 s zwei Hüpfer lang einen bewegten Text.
+- Die Karte mit dem Gerede und das Punktefeld bewegen sich, bis man scrollt; wer nie scrollt, sieht
+  sie endlos. Wer gerade liest, liest alle gut 4 s zwei Hüpfer lang einen bewegten Text. Begründet
+  mit der Zweckbindung in `DESIGN.md`: Wenige Pixel Scrollen halten beides an, bevor ein Wort
+  abhebt. Ob das als Mechanismus im Sinne von WCAG 2.2.2 genügt, ist eine Auslegung, kein Beleg.
 - JavaScript-Budget von 90 auf 100 KB je Seite angehoben; der Himmel braucht rund 11 KB.
 
 ## 6. Prüfung

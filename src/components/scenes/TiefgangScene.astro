@@ -1000,8 +1000,17 @@ const liste = 'prose-flow m-0 max-w-[65ch] list-none space-y-3 p-0'
       animation: tg-broeckeln 560ms cubic-bezier(0.25, 0.6, 0.55, 1) infinite;
       animation-delay: var(--d);
     }
+    /*
+     * Die Lava pulsiert nur, solange gebohrt wird, also beim Scrollen
+     * (WCAG 2.2.2, seit 2026-10-14: vorher endlos, ohne Anhalten). Steht
+     * das Fahrzeug, bleibt die Glut, wo sie gerade ist, statt zurückzuspringen.
+     */
     .tg-lava .tg-wand::after {
       animation: tg-klopfen 3.2s ease-in-out infinite alternate;
+      animation-play-state: paused;
+    }
+    .tg-bohrt .tg-lava .tg-wand::after {
+      animation-play-state: running;
     }
   }
 

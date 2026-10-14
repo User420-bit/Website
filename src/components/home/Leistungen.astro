@@ -11,10 +11,16 @@
  * Bewegung: Kommen die drei Arten ins Fenster, zieht die Haarlinie über jeder
  * Spalte von links auf, Titel und Text ziehen 8 px ein, Spalte um Spalte. Die
  * Aufklapper bewegt `Disclosure.astro` selbst.
+ *
+ * Rückbezug (docs/NACH_DEM_HERO_PLAN.md): Über jeder Beschreibung steht ein
+ * Satz aus dem Gerede des Heros, den diese Art Software beantwortet, und die
+ * Antwort trägt den Marker. Spalte um Spalte, wie das Gerede selbst.
  */
 import { getCollection, getEntry } from 'astro:content'
 import Disclosure from '@/components/Disclosure.astro'
+import GeredeEcho from '@/components/GeredeEcho.astro'
 import Section from '@/components/Section.astro'
+import { echo } from '@/lib/echo'
 import { href } from '@/lib/site'
 
 const company = (await getEntry('company', 'main'))!.data
@@ -37,21 +43,40 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 >
   <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3" data-leistungen>
     {
-      company.services.map((service) => {
+      company.services.map((service, i) => {
         const items = punkteZu(service.title)
+        const rueck = echo(
+          company.heroEchos,
+          company.heroGerede,
+          service.title,
+          service.description,
+        )
         return (
-          <div class="leistung relative border-t border-border pt-4 pb-8" data-leistung>
+          <div
+            class="leistung relative flex flex-col border-t border-border pt-4 pb-8"
+            data-leistung
+            data-echo-gruppe={rueck ? '' : undefined}
+            style={rueck ? `--echo-ab: ${0.3 + i * 0.35}s` : undefined}
+          >
             <dt class="text-lg font-semibold tracking-tight">
               <span aria-hidden="true" class="leistung-linie" data-bewegt />
               <span class="leistung-text block" data-bewegt>
                 {service.title}
               </span>
             </dt>
+            {/* `grow`: Die Aufklapper stehen auf einer Höhe, auch wenn ein Zitat länger ist. */}
             <dd
-              class="leistung-text prose-flow mt-2 ml-0 text-sm leading-relaxed text-fg-muted"
+              class="leistung-text prose-flow mt-2 ml-0 grow text-sm leading-relaxed text-fg-muted"
               data-bewegt
             >
-              {service.description}
+              {rueck ? (
+                <>
+                  <GeredeEcho worte={rueck.worte} class="mb-2" />
+                  <span class="block" set:html={rueck.html} />
+                </>
+              ) : (
+                service.description
+              )}
             </dd>
             {items.length > 0 && (
               <dd class="mt-4 ml-0 border-t border-border text-sm">

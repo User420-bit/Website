@@ -13,6 +13,12 @@
  * Bewegung (docs/BEWEGUNG_PLAN.md, G): Adresse und Erreichbarkeit bewegen
  * sich in ihren Komponenten. Hier nur die Haarlinie über der Adresse: Sie
  * zieht von links auf wie die Linien der Erreichbarkeit daneben.
+ *
+ * Schlusspunkt (docs/NACH_DEM_HERO_PLAN.md): Über der Adresse steht noch
+ * einmal die Eröffnung des Heros, „Sie erzählen. Ich höre zu.“, und läuft
+ * Wort für Wort ein wie das Gerede. Die Seite endet, wo sie angefangen hat,
+ * nur dass jetzt die Adresse darunter steht. Wort und Einlauf kommen aus
+ * `GeredeEcho.astro` (`data-echo-gruppe`, `data-echo-wort`).
  */
 import { getEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
@@ -25,6 +31,9 @@ const company = (await getEntry('company', 'main'))!.data
 const profile = (await getEntry('profile', 'main'))!.data
 const contact = (await getEntry('contact', 'main'))!.data
 const anfrage = mailto(company.email, contact.subject)
+/** Wie viele Wörter der Eröffnung vor Zeile `z` stehen: Die Nummer läuft über die Zeilen weiter. */
+const vorher = (z: number) =>
+  company.heroAuftakt.slice(0, z).reduce((n, zeile) => n + zeile.split(' ').length, 0)
 
 /** Erreichbarkeit im Kontakt: der Ort, dann die Profile, die in profile.json gesetzt sind. */
 const erreichbarkeit: { label: string; value: string; href?: string; external?: boolean }[] = [
@@ -65,8 +74,27 @@ if (profile.social.github) {
   <div
     class="grid grid-cols-1 items-start gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
   >
-    <div class="kontakt-handlung relative border-t border-border pt-6" data-kontakt-handlung>
+    <div
+      class="kontakt-handlung relative border-t border-border pt-6"
+      data-kontakt-handlung
+      data-echo-gruppe
+    >
       <span aria-hidden="true" class="kontakt-linie" data-bewegt data-kontakt-linie></span>
+      <p class="m-0 mb-5 text-xl leading-snug font-semibold tracking-tight sm:text-2xl">
+        {
+          company.heroAuftakt.map((zeile, z) => (
+            <span class:list={['block', z > 0 && 'text-fg-muted']}>
+              {zeile.split(' ').map((wort, i) => (
+                <>
+                  <span data-echo-wort style={`--i: ${vorher(z) + i}`}>
+                    {wort}
+                  </span>{' '}
+                </>
+              ))}
+            </span>
+          ))
+        }
+      </p>
       <CopyEmail email={company.email} />
       <p class="mt-3 mb-0 max-w-[65ch] text-xs text-fg-muted">
         Öffnet sich kein Mailprogramm? Dann die Adresse markieren und kopieren.
