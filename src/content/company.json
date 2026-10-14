@@ -4,6 +4,33 @@
     "claim": "Ihre Probleme, klar gelöst.",
     "heroGerede": "Ihre Seite hat mir ein Bekannter aus Rosenheim geschickt. Wir haben eine Baukasten-Website, die auf dem Handy komisch aussieht, und im Laden läuft alles über eine Excel-Tabelle: Bestand, Termine, Rechnungen. Jedes Jahr sucht die Steuerberatung die Belege zusammen. Eine Agentur wollte uns gleich ein ganzes System verkaufen, aber wir wollen kein System. Wir wollen, dass sich jemand unsere Probleme anschaut und ehrlich sagt, was Software braucht und was nicht. Es soll vorher klar sein, was es kostet und wie lange es dauert. Und wenn es fertig ist, soll es gelöst sein, nicht drei Monate lang nachgebessert.",
     "heroAuftakt": ["Sie erzählen.", "Ich höre zu."],
+    "heroEchos": [
+      {
+        "bei": "Kleine Programme",
+        "gerede": "Jedes Jahr sucht die Steuerberatung die Belege zusammen.",
+        "antwort": "Export für die Steuerberatung"
+      },
+      {
+        "bei": "Websites",
+        "gerede": "Wir haben eine Baukasten-Website, die auf dem Handy komisch aussieht",
+        "antwort": "auf dem Handy gut aussehen"
+      },
+      {
+        "bei": "Web-Apps",
+        "gerede": "im Laden läuft alles über eine Excel-Tabelle",
+        "antwort": "wenn die Tabelle nicht mehr reicht"
+      },
+      {
+        "bei": "Klartext",
+        "gerede": "Es soll vorher klar sein, was es kostet und wie lange es dauert.",
+        "antwort": "was es kostet – vor dem Projekt"
+      },
+      {
+        "bei": "Pragmatismus",
+        "gerede": "Eine Agentur wollte uns gleich ein ganzes System verkaufen, aber wir wollen kein System.",
+        "antwort": "Kein neues Werkzeug, wenn ein vorhandenes reicht"
+      }
+    ],
     "audience": "Für Selbstständige und kleine Betriebe im Raum Rosenheim",
     "intro": "Klartext baut kleine Programme, Websites und Web-Apps.",
     "location": "Bruckmühl, Bayern",

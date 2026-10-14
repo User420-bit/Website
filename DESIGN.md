@@ -299,7 +299,8 @@ Deckkraft-Grau):
   Belege und Links im Text, das Wort „Kundenprojekt“, „Zur Referenz“, aktiver Anker der Navigation
   und gewählter Reiter des Umschalters samt Strich, Hover-Farbe von Sekundärbutton, Aufklapper und
   Zurück-Link, Fokus-Outline, Textauswahl und der Scroll-Hinweis im Hero (eine Aufforderung, also
-  Handlung). Im Hellmodus bewusst dunkel gehalten, damit Orange als
+  Handlung). Als Marker (30 % Orange hinter dem Text) zeigt es eine Antwort: die vier Wörter im
+  Gerede des Heros und die Stellen, die einen Rückbezug beantworten (siehe Rückbezug aufs Gerede). Im Hellmodus bewusst dunkel gehalten, damit Orange als
   Textfarbe 6,2 : 1 auf Papierweiß hält.
 - **Werkstatt-Orange, gedrückt** (`accent-strong`, hell #912300): nur der Hover des Primärbuttons.
   Dunkler statt durchsichtiger; Deckkraft ließ den Knopf blass wirken.
@@ -646,6 +647,28 @@ Skript und Bewegung). Sonst steht der fertige Hero mit H1, „Für wen“, Intro
   Handys bis 700 px Höhe Zeilenhöhe 1,5. Prüfgröße: 375 × 667 px, der Hinweis muss im ersten
   Fenster stehen.
 
+### Rückbezug aufs Gerede (`GeredeEcho`)
+
+Seit 2026-10-14 ([`docs/NACH_DEM_HERO_PLAN.md`](docs/NACH_DEM_HERO_PLAN.md)). Der Hero verspricht „Ich
+höre zu“; weiter unten zeigt die Seite, was sie gehört hat. Über einer Beschreibung steht „Sie
+erzählen:“ (500, Tinte) und ein Satz wörtlich aus dem Gerede in Anführungszeichen (Body Small,
+Bleistiftgrau, Auslassungspunkte, wo er mitten im Satz beginnt oder endet). In der Beschreibung
+darunter trägt die Stelle, die ihn beantwortet, den Marker aus dem Hero: 30 % Orange hinter dem Text,
+Text in Tinte. Heute in Leistungen (alle drei Arten) und Arbeitsweise (Klartext, Pragmatismus).
+
+- **Bewegung:** einmal, wenn die Gruppe (`data-echo-gruppe`) zu 40 % im Fenster ist. Das Zitat läuft
+  Wort für Wort ein wie das Gerede (300 ms, 20 ms Versatz, 0,35em), danach zieht der Marker in
+  600 ms von links auf, über Zeilenumbrüche hinweg. Nebeneinanderstehende Gruppen fangen nacheinander
+  an. Ohne Skript und mit reduzierter Bewegung steht alles, Marker inklusive.
+- **Daten:** `heroEchos` in `company.json`; `lib/echo.ts` baut das HTML und bricht den Build, wenn der
+  Satz nicht wörtlich im Gerede oder die Antwort nicht in der Beschreibung steht.
+
+**The Echo Rule.** Ein Satz aus dem Gerede kehrt nur wörtlich wieder und nur neben der Stelle, die
+ihn beantwortet. Höchstens ein Rückbezug je Block, und nicht in jedem Block: Wo kein Satz ehrlich
+passt, steht keiner. Der Marker liegt nur auf der antwortenden Stelle, nie auf ganzen Absätzen. Kein
+neuer Satz wird als „Sie erzählen“ ausgegeben, der nicht im Gerede steht: Das wäre eine erfundene
+Kundenstimme.
+
 ### Arbeiten der Startseite (`ProjectShowcase`)
 
 - **Umschalter:** zwei Radio-Buttons als Textreiter, „Kunden“ und „Eigene Projekte“, je mit der
@@ -815,7 +838,9 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 ### Kontaktblock
 
-Nur die Handlung, kein Bild. Links unter einer Haarlinie die Adresse (`CopyEmail`), der
+Nur die Handlung, kein Bild. Links unter einer Haarlinie zuerst der Schlusspunkt der Erzählung: die
+Eröffnung des Heros, „Sie erzählen. / Ich höre zu.“, in Title Medium (600, zweite Zeile
+Bleistiftgrau), Wort für Wort einlaufend wie das Gerede. Darunter die Adresse (`CopyEmail`), der
 Webmail-Hinweis als Caption und der einzige Primärbutton des Bereichs; rechts die Erreichbarkeit als
 Meta-Liste (Ort, Profil, Code), deren erste Zeile ihre eigene Haarlinie mitbringt. Ab 1024 px stehen
 beide Spalten `1fr | 1fr` mit 3rem Abstand nebeneinander, beide Linien auf einer Höhe, wie die drei
@@ -969,6 +994,7 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Do** Hover und Tastaturfokus gleich aussehen lassen (`group-hover` immer mit `group-focus-within`).
 - **Do** Bewegung an `prefers-reduced-motion: no-preference` koppeln und Inhalt ohne Animation sofort
   sichtbar lassen.
+- **Do** einen Satz aus dem Gerede nur wörtlich und neben seiner Antwort wiederholen (The Echo Rule).
 - **Do** jede Wiederholung an einen Zweck binden, den der Besucher ohne Verlust erfüllen kann, und
   sie danach anhalten (Zweckbindung). Den Zweck in den Kommentar der Komponente schreiben.
 - **Do** den sichtbaren Fokus erhalten: 2 px Outline in Orange, 2 px Abstand.

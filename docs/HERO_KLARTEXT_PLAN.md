@@ -36,6 +36,9 @@ Schreibung und mit SVG-Pfeil („↓“ fehlt in der Hausschrift und kam aus ein
 Schatten kommt aus dem Token `--shadow-feld` (Feld-Regel). Nach der neuen Zweckbindung hört nach dem
 ersten Scrollen auch das Gewimmel des Punktefelds auf, nicht nur das Hüpfen.
 
+Nach dem Hero (2026-10-14): Das Gerede kehrt weiter unten wieder, wo die Seite es beantwortet, und
+der Kontakt endet mit der Eröffnungszeile. Siehe [`NACH_DEM_HERO_PLAN.md`](NACH_DEM_HERO_PLAN.md).
+
 ---
 
 ## 0. Die Idee in einem Satz

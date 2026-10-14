@@ -1,0 +1,137 @@
+---
+/**
+ * Ein Rückbezug aufs Gerede des Heros (docs/NACH_DEM_HERO_PLAN.md): „Sie
+ * erzählen:“ und ein Satz, wörtlich aus dem Gerede. Die Antwort darauf steht
+ * gleich darunter in der Beschreibung, ihre entscheidende Stelle trägt den
+ * Marker aus dem Hero (`<mark data-echo-antwort>`, gebaut in `lib/echo.ts`).
+ *
+ * Der Behälter, der Zitat und Antwort umschließt, trägt `data-echo-gruppe`.
+ * Kommt er ins Fenster, läuft das Zitat Wort für Wort ein wie das Gerede im
+ * Hero, danach zieht der Marker über die Antwort, auch über Zeilenumbrüche,
+ * wie ein Textmarker. Einmal, ohne Rückweg. Ohne Skript und mit reduzierter
+ * Bewegung steht beides sofort, Marker inklusive: Auch ohne Hero sagt die
+ * Markierung, welche Stelle antwortet.
+ */
+interface Props {
+  worte: string[]
+  class?: string
+}
+
+const { worte, class: className = '' } = Astro.props
+---
+
+{/* Ein `span` als Block, damit er auch in Zeilen steht, die selbst nur `span` sind. */}
+<span class:list={['block text-sm leading-relaxed text-fg-muted', className]} data-echo>
+  <span class="font-medium text-fg">Sie erzählen:</span>{' '}
+  {
+    worte.map((wort, i) => (
+      <>
+        <span data-echo-wort style={`--i: ${i}`}>
+          {wort}
+        </span>{' '}
+      </>
+    ))
+  }
+</span>
+
+<style is:global>
+  [data-echo-wort] {
+    display: inline-block;
+  }
+
+  /*
+   * Der Marker: eine Fläche hinter dem Text, die von links aufzieht. Als
+   * Hintergrund statt als eigenes Element, damit er Zeilenumbrüchen folgt:
+   * `box-decoration-break: slice` legt die Zeilen gedanklich hintereinander,
+   * also zieht er erst die erste Zeile, dann die nächste. Farbe wie im Hero.
+   */
+  mark[data-echo-antwort] {
+    margin-inline: -0.12em;
+    padding-inline: 0.12em;
+    border-radius: 2px;
+    color: var(--color-fg);
+    background: linear-gradient(
+        color-mix(in oklch, var(--color-accent) 30%, transparent),
+        color-mix(in oklch, var(--color-accent) 30%, transparent)
+      )
+      no-repeat 0 0 / 100% 100%;
+  }
+
+  /* Anfangszustand nur mit Skript und erlaubter Bewegung. */
+  html[data-bewegung] [data-echo-gruppe]:not([data-echo-an]) [data-echo-wort] {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  html[data-bewegung] [data-echo-gruppe]:not([data-echo-an]) mark[data-echo-antwort] {
+    color: inherit;
+    background-size: 0% 100%;
+  }
+
+  /*
+   * Ins Fenster gekommen: erst das Zitat (20 ms je Wort, wie das Gerede),
+   * dann der Marker. `--echo-ab` lässt nebeneinanderstehende Gruppen
+   * nacheinander anfangen.
+   */
+  [data-echo-gruppe] {
+    --echo-ab: 0.3s;
+  }
+  [data-echo-gruppe][data-echo-an] [data-echo-wort] {
+    animation: echo-wort 0.3s calc(var(--echo-ab) + var(--i) * 20ms) both cubic-bezier(0.2, 0, 0, 1);
+  }
+  [data-echo-gruppe][data-echo-an] mark[data-echo-antwort] {
+    transition:
+      background-size 0.6s cubic-bezier(0.2, 0, 0, 1) var(--echo-marker-ab),
+      color 0.2s var(--echo-marker-ab);
+  }
+  @keyframes echo-wort {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
+  }
+
+  /* Sicherheitsnetz wie in global.css: Läuft das Modul nicht, steht nach 2 s alles. */
+  html[data-bewegung=''] [data-echo-wort] {
+    animation: bewegt-sichtbar 0s 2s both;
+  }
+  html[data-bewegung=''] mark[data-echo-antwort] {
+    animation: echo-netz 0s 2s both;
+  }
+  @keyframes echo-netz {
+    to {
+      color: var(--color-fg);
+      background-size: 100% 100%;
+    }
+  }
+
+  @media print {
+    html[data-bewegung] [data-echo-gruppe] [data-echo-wort] {
+      opacity: 1;
+      transform: none;
+    }
+    html[data-bewegung] [data-echo-gruppe] mark[data-echo-antwort] {
+      background-size: 100% 100%;
+    }
+  }
+</style>
+
+<script>
+  import { alle, inView, wennBewegt } from '@/lib/motion'
+
+  wennBewegt(() => {
+    for (const gruppe of alle('[data-echo-gruppe]')) {
+      // Der Marker setzt ein, wenn das letzte Wort des Zitats steht.
+      const worte = alle('[data-echo-wort]', gruppe).length
+      const ab = parseFloat(getComputedStyle(gruppe).getPropertyValue('--echo-ab')) || 0.3
+      gruppe.style.setProperty('--echo-marker-ab', `${ab + worte * 0.02 + 0.25}s`)
+      const stopp = inView(
+        gruppe,
+        () => {
+          stopp()
+          gruppe.dataset.echoAn = ''
+        },
+        { amount: 0.4 },
+      )
+    }
+  })
+</script>

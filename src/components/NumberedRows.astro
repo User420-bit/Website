@@ -17,8 +17,12 @@
  * das Pixel, das der Rand belegte, hält `pb-[calc(1rem+1px)]` frei. Ohne
  * Skript sieht die Liste darum genauso aus wie vorher.
  */
+import GeredeEcho from '@/components/GeredeEcho.astro'
+import type { Echo } from '@/lib/echo'
+
 interface Props {
-  items: readonly { title: string; description: string }[]
+  /** `echo`: optionaler Rückbezug aufs Gerede des Heros (`lib/echo.ts`), steht über der Erklärung. */
+  items: readonly { title: string; description: string; echo?: Echo }[]
   titleColumn?: boolean
   class?: string
 }
@@ -34,6 +38,7 @@ const { items, titleColumn = false, class: className = '' } = Astro.props
           'relative grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 pt-4 pb-[calc(1rem+1px)]',
           titleColumn && 'sm:grid-cols-[2rem_10rem_minmax(0,1fr)]',
         ]}
+        data-echo-gruppe={item.echo ? '' : undefined}
       >
         <span
           aria-hidden="true"
@@ -54,7 +59,14 @@ const { items, titleColumn = false, class: className = '' } = Astro.props
             titleColumn && 'sm:col-start-3 sm:mt-0',
           ]}
         >
-          {item.description}
+          {item.echo ? (
+            <>
+              <GeredeEcho worte={item.echo.worte} class="mb-1.5" />
+              <span class="block" set:html={item.echo.html} />
+            </>
+          ) : (
+            item.description
+          )}
         </span>
         <span
           aria-hidden="true"
