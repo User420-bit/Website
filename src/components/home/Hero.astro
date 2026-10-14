@@ -21,6 +21,7 @@
  * Animation. So stimmen Scroll-Positionen beim Zurückblättern überein.
  */
 import { getEntry } from 'astro:content'
+import Arrow from '@/components/Arrow.astro'
 import Button from '@/components/Button.astro'
 import { href, mailto } from '@/lib/site'
 
@@ -213,9 +214,9 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
           {/* Leiser Zusatz unter der Karte, damit das Hüpfen als Aufforderung lesbar ist. */}
           <p
             data-hero-hinweis
-            class="m-0 mt-3 text-center text-xs font-medium tracking-[0.08em] text-accent uppercase sm:mt-4 sm:text-sm"
+            class="m-0 mt-3 flex items-center justify-center gap-1.5 text-[0.8125rem] leading-normal font-medium text-accent sm:mt-4"
           >
-            Scrollen ↓
+            Scrollen <Arrow class="rotate-90" />
           </p>
         </div>
       </div>
@@ -319,25 +320,8 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     border: 1px solid var(--color-border);
     border-radius: inherit;
     background: var(--color-bg-elevated);
-    box-shadow:
-      0 1px 2px oklch(0 0 0 / 0.06),
-      0 12px 32px -8px oklch(0 0 0 / 0.18);
+    box-shadow: var(--shadow-feld);
     opacity: var(--hero-feld, 1);
-  }
-  /* Auf Nachtpapier braucht der Schatten mehr Tiefe, sonst sieht man ihn nicht. */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) [data-hero-karte]::before {
-      box-shadow:
-        0 1px 0 oklch(1 0 0 / 0.05) inset,
-        0 2px 4px oklch(0 0 0 / 0.5),
-        0 18px 48px -6px oklch(0 0 0 / 0.85);
-    }
-  }
-  :root[data-theme='dark'] [data-hero-karte]::before {
-    box-shadow:
-      0 1px 0 oklch(1 0 0 / 0.05) inset,
-      0 2px 4px oklch(0 0 0 / 0.5),
-      0 18px 48px -6px oklch(0 0 0 / 0.85);
   }
   html[data-hero='gerede'] [data-hero-feld] {
     animation:
@@ -766,7 +750,14 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       h1Mitte = [h.left + h.width / 2 - r.left, h.top + h.height / 2 - r.top, h.width]
     }
 
-    function malen(p: number, zeit: number, kopien: Kopie[], quellen: HTMLElement[]): void {
+    /** `feldZeit` treibt nur das Gewimmel des Punktefelds; steht sie still, steht es still. */
+    function malen(
+      p: number,
+      zeit: number,
+      kopien: Kopie[],
+      quellen: HTMLElement[],
+      feldZeit = zeit,
+    ): void {
       if (!ctx) return
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.globalCompositeOperation = 'source-over'
@@ -805,10 +796,10 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       const unruhe = 1 - ordnung
       const grund = (dunkel ? 0.3 : 0.32) * aus
       for (const pt of punkte) {
-        const zitter = Math.sin(zeit * 0.0005 * pt.f + pt.ph) * 6 * unruhe
+        const zitter = Math.sin(feldZeit * 0.0005 * pt.f + pt.ph) * 6 * unruhe
         const x = pt.gx + pt.ox * unruhe + zitter
-        const y = pt.gy + pt.oy * unruhe + Math.cos(zeit * 0.0004 * pt.f + pt.ph) * 6 * unruhe
-        const funkeln = 1 - 0.6 * unruhe * (0.5 + 0.5 * Math.sin(zeit * 0.002 * pt.f + pt.ph))
+        const y = pt.gy + pt.oy * unruhe + Math.cos(feldZeit * 0.0004 * pt.f + pt.ph) * 6 * unruhe
+        const funkeln = 1 - 0.6 * unruhe * (0.5 + 0.5 * Math.sin(feldZeit * 0.002 * pt.f + pt.ph))
         ctx.fillStyle = rgba(farbe.leise, grund * funkeln)
         ctx.fillRect(x - 1, y - 1, 2, 2)
       }
@@ -1109,6 +1100,8 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
     let vorbei = false
     let zuletzt = -1
+    /** Zeitpunkt, ab dem das Punktefeld stillsteht (erstes Scrollen). */
+    let stillAb: number | null = null
 
     /* Eine Schleife für alles: DOM nur, wenn sich p ändert, der Himmel jedes Bild (er funkelt). */
     function bildfolge(zeit: number): void {
@@ -1124,7 +1117,10 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         zeichnen(p)
         if (p >= 0.999) return abschliessen(true)
       }
-      bild.malen(p, zeit, kopien, quellen)
+      // Zweck erfüllt: Nach dem ersten Scrollen hört das Gewimmel auf, und zwar
+      // bevor ein Wort abhebt. Ab dann bewegt sich der Himmel nur noch mit dem Scrollen.
+      if (vorspannSteht && stillAb === null) stillAb = zeit
+      bild.malen(p, zeit, kopien, quellen, stillAb ?? zeit)
       requestAnimationFrame(bildfolge)
     }
 

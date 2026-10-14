@@ -136,14 +136,14 @@ components:
     backgroundColor: '{colors.accent}'
     textColor: '{colors.accent-fg}'
     typography: '{typography.label}'
-    rounded: '{rounded.sm}'
-    padding: '0.625rem 1rem'
+    rounded: '{rounded.md}'
+    padding: '0.75rem 1.25rem'
   button-secondary:
-    backgroundColor: 'transparent'
+    backgroundColor: '{colors.surface}'
     textColor: '{colors.fg}'
     typography: '{typography.label}'
-    rounded: '{rounded.sm}'
-    padding: '0.625rem 1rem'
+    rounded: '{rounded.md}'
+    padding: '0.75rem 1.25rem'
   button-secondary-hover:
     textColor: '{colors.accent}'
   button-text:
@@ -155,7 +155,7 @@ components:
     backgroundColor: '{colors.accent}'
     textColor: '{colors.accent-fg}'
     typography: '{typography.label}'
-    rounded: '{rounded.sm}'
+    rounded: '{rounded.md}'
     padding: '0.375rem 0.75rem'
   kind-label:
     textColor: '{colors.fg-muted}'
@@ -217,6 +217,15 @@ components:
   copy-email-inline:
     textColor: '{colors.fg}'
     typography: '{typography.body-sm}'
+  hero-feld:
+    backgroundColor: '{colors.bg-elevated}'
+    textColor: '{colors.fg-muted}'
+    typography: '{typography.body-lead}'
+    rounded: '{rounded.lg}'
+    padding: '1.5rem 1.75rem'
+  scroll-hint:
+    textColor: '{colors.accent}'
+    typography: '{typography.label-sm}'
   code-block:
     backgroundColor: '{colors.bg-elevated}'
     textColor: '{colors.fg}'
@@ -249,7 +258,7 @@ auf den Projektseiten; unter `/projekte/` stehen sie als linierte Zeilen wie in 
 Kasten entsteht nur dort, wo wirklich etwas ein Behälter ist.
 
 Die Stimmung ist **ruhig, sachlich, warm**. Ruhig heißt: viel vertikale Luft zwischen den Sektionen,
-begrenzte Zeilenbreite, flache Flächen ohne Schatten. Sachlich heißt: eine einzige, selbst gehostete
+begrenzte Zeilenbreite, flache Flächen; ein Schatten nur dort, wo ein Feld sonst im Grund unterginge. Sachlich heißt: eine einzige, selbst gehostete
 Schrift, klare Größenstufen, Tabellenziffern für Zeiträume und Nummern, Monospace nur für technische
 Namen auf Projektseiten. Warm heißt: Alle Grautöne tragen einen leichten Gelbstich (Farbton 80), und
 der Akzent ist ein erdiges Orange statt eines kühlen Blaus.
@@ -264,13 +273,16 @@ Systemeinstellung des Besuchers.
   Laufweite
 - Kapitelkopf gestapelt: Tintenlinie oben, darunter Nummer, H2, Intro und Inhalt an derselben
   linken Kante; Haarlinien statt Karten
-- Flach: keine Schatten, keine Transluzenz, Struktur aus 1-px-Linien in Liniengrau und Tinte
+- Fast flach: Struktur aus 1-px-Linien in Liniengrau und Tinte, keine Transluzenz; ein einziger
+  Schatten-Token für ein Feld über unruhigem Grund (Feld-Regel)
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
 - Bewegung über die ganze Seite, mit festen Grenzen (eine Kurve, vier Dauern, Text 8 px), nur bei
-  `prefers-reduced-motion: no-preference`; ohne Skript steht der Endzustand
-- Eine Ausnahme mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung
-  und Illustration tragen darf (Bühnenlizenz), sonst nirgends
+  `prefers-reduced-motion: no-preference`; ohne Skript steht der Endzustand. Was sich wiederholt,
+  braucht einen Zweck und hört auf, wenn er erfüllt ist (Zweckbindung)
+- Zwei Ausnahmen mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung
+  und Illustration tragen darf (Bühnenlizenz), und der Scroll-Hero der Startseite, für den Dauer- und
+  Weggrenzen nicht gelten (siehe Components); sonst nirgends
 
 ## Colors
 
@@ -286,7 +298,8 @@ Deckkraft-Grau):
 - **Werkstatt-Orange** (`accent`, hell #ab3a00): Primärbutton und Header-Anfrage, Text-Button,
   Belege und Links im Text, das Wort „Kundenprojekt“, „Zur Referenz“, aktiver Anker der Navigation
   und gewählter Reiter des Umschalters samt Strich, Hover-Farbe von Sekundärbutton, Aufklapper und
-  Zurück-Link, Fokus-Outline und Textauswahl. Im Hellmodus bewusst dunkel gehalten, damit Orange als
+  Zurück-Link, Fokus-Outline, Textauswahl und der Scroll-Hinweis im Hero (eine Aufforderung, also
+  Handlung). Im Hellmodus bewusst dunkel gehalten, damit Orange als
   Textfarbe 6,2 : 1 auf Papierweiß hält.
 - **Werkstatt-Orange, gedrückt** (`accent-strong`, hell #912300): nur der Hover des Primärbuttons.
   Dunkler statt durchsichtiger; Deckkraft ließ den Knopf blass wirken.
@@ -309,7 +322,8 @@ damit sie in hell und dunkel geprüft sind statt errechnet.
 
 - **Papierweiß** (`bg`, #fcfcfa) / **Nachtpapier** (`bg-dark`, #100f0d): Seitengrund.
 - **Karteikartenweiß** (`bg-elevated`, #ffffff) / **Werkbankschwarz** (`bg-elevated-dark`, #1c1a18):
-  nur noch der Codeblock. Hebt sich minimal vom Grund ab; die Linie macht die Kante.
+  die Fläche echter Behälter mit Text: Codeblock und das Feld des Geredes im Hero. Hebt sich minimal
+  vom Grund ab; die Linie macht die Kante, beim Feld zusätzlich der Schatten.
 - **Werkbank** (`surface`, #f5f3f0) / **Werkbank, Nacht** (`surface-dark`, #191816): eine Stufe
   unter Papier (1,08 : 1), die Fläche von Sekundärknöpfen, Blättern-Knöpfen und den Bildfeldern der
   Arbeiten, bevor ein Bild geladen ist. Seit 2026-10-08: Ein Knopf, der nur aus Rand bestand, war
@@ -380,7 +394,9 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
 - **Title Small** (600, 1,125rem, 1,556, −0,025em): Titel der drei Leistungsspalten und die
   Wortmarke.
 - **Subhead** (500, 1rem, 1,5): Titel eines Aufklappers, Name eines Werts.
-- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch) und Summary auf Unterseiten. Auf
+- **Body Lead** (400, 1,125rem, 1,625): Hero-Intro (max. 60ch), das Gerede im Feld des Heros
+  (max. 60ch; unter 640 px 0,875rem bei 1,625, in Fenstern bis 740 px Höhe am Computer 1rem) und
+  Summary auf Unterseiten. Auf
   Projektseiten unter 640 px 1rem, damit die Bühne früher beginnt (siehe Bühne der Projektseite).
 - **Body** (400, 1rem, 1,5) und **Prose** (400, 1rem, 1,625): Sektions-Intros bzw. längerer
   Fließtext (Über Klartext, Projekttext, Rechtstexte). Max. 65ch, Rechtstexte 68ch.
@@ -388,8 +404,8 @@ Große Überschriften tragen die Klasse `.display`: Laufweite −0,03em, Zeilenh
   Meta-Liste, Footer, Navigation.
 - **Label** (500, 0,875rem): Button-Text, Namen von Listeneinträgen, die leisen
   Zwischenüberschriften in Bleistiftgrau („Im Einzelnen“) und die Einträge des Umschalters.
-- **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel) und Titel unter den Feldern des
-  Kontaktabzugs der Arbeiten.
+- **Label Small** (500, 0,8125rem): Art des Projekts (KindLabel), Titel unter den Feldern des
+  Kontaktabzugs der Arbeiten und der Scroll-Hinweis im Hero (in Orange).
 - **Caption** (400, 0,75rem): Belegzeile und der Webmail-Hinweis im Kontakt.
 - **Mono** (400, 0,75rem, Zeilenhöhe 1,5rem) und **Code** (400, 0,875rem, 1,625): Zeile „Technik“ der
   Meta-Liste und Codeblöcke. Beides nur auf Projektseiten.
@@ -411,6 +427,10 @@ Randnotiz „Erkenntnisse“, deren Text bewusst in voller Tinte läuft.
 
 **The Measure Rule.** Fließtext läuft nie breiter als 65ch, die H1 nie breiter als 20ch.
 
+**The No Caps Rule.** Text steht in normaler Schreibung. Versalien und gesperrte Laufweite gibt es nur
+innerhalb einer Szene der Bühne, wo sie zum Projekt gehören. Ein Hinweis wird leise durch Größe und
+Farbe, nicht durch Großbuchstaben (seit 2026-10-14; „SCROLLEN“ im Hero war der Anlass).
+
 ## Layout
 
 Eine zentrierte Spalte: `max-width` 64rem, seitlicher Rand 1rem. Die Startseite ist eine Folge
@@ -427,7 +447,8 @@ Kante, in jeder Breite gleich: Der Kopf liest sich von oben nach unten, und nebe
 bleibt keine leere Randspalte stehen. Innerhalb eines Kapitels ist kein
 Abstand größer als 3rem; die Kapitelluft bleibt die größte Pause auf der Seite und der Kapitelanfang
 ist auch in der verkleinerten Ganzseite zu finden. Der Hero steht außerhalb dieses Rasters und nutzt
-ebenfalls die volle Spalte.
+ebenfalls die volle Spalte. Er ist die einzige Sektion, die das erste Fenster unter dem Header füllt
+(`100svh` minus Header), damit Scroll-Positionen beim Zurückblättern stimmen.
 
 **Zeilen statt Raster:** Listen sind linierte Zeilen. Die Arbeiten der Startseite (seit dem
 2026-10-08, vorher ein Raster unter der Bühne): Umschalter „Kunden · Eigene Projekte“, darunter die
@@ -481,22 +502,38 @@ seines Kapitels.
 
 ## Elevation & Depth
 
-Das System ist flach, ohne Ausnahme. Es gibt keinen Schatten, keine Unschärfe und keine Transluzenz:
-Der Sticky-Header ist deckend in Papierweiß (`bg-bg`). Seine untere Haarlinie erscheint erst nach dem
+Das System ist flach, mit einer eng gefassten Ausnahme (Feld-Regel, unten). Es gibt keine Unschärfe
+und keine Transluzenz, und Schatten nur für ein Feld über unruhigem Grund. Der Sticky-Header ist deckend in Papierweiß (`bg-bg`). Seine untere Haarlinie erscheint erst nach dem
 Scrollen (scrollgesteuerte CSS-Animation, `animation-timeline: scroll(root)`, Bereich 0–4rem). Ohne
 Browser-Unterstützung oder bei reduzierter Bewegung steht die Linie immer.
 
 Struktur entsteht aus zwei Linien derselben Stärke: Liniengrau (`border-border`) für Zeilen,
 Zwischenblöcke und den Footer, Tinte (`border-fg`) als Kapitel-Linie über jeder Sektion der
 Startseite und über der Vor-/Zurück-Navigation der Projektseiten. Weil die Tintenlinie nur dort
-steht, trennt sie Kapitel von Zeile ohne Fläche und ohne Schatten. Eine zweite Flächenebene (`bg-elevated`) gibt es nur beim
-Codeblock.
+steht, trennt sie Kapitel von Zeile ohne Fläche und ohne Schatten. Eine zweite Flächenebene
+(`bg-elevated`) gibt es nur bei echten Behältern mit Text: Codeblock und Feld.
 
 ### Named Rules
 
-**The Flat Page Rule.** Keine Schatten, kein Glow, kein Anheben, keine Transluzenz. Ordnung wird durch
-Linie sichtbar, ein Zustand durch Farbe. Das gilt auch in der Bühne: Ihre Szenen sind flach gezeichnet,
-Tiefe entsteht dort aus Perspektive und Farbe, nie aus Schatten.
+**The Flat Page Rule.** Flach ist der Normalfall. Ordnung wird durch Linie sichtbar, ein Zustand durch
+Farbe. Kein Glow, kein Anheben, keine Unschärfe, keine Transluzenz, nirgends. Das gilt auch in der
+Bühne: Ihre Szenen sind flach gezeichnet, Tiefe entsteht dort aus Perspektive und Farbe, nie aus
+Schatten.
+
+**The Lifted Field Rule.** Ein Schatten ist erlaubt, wenn alle vier Bedingungen gelten (gelockert am
+2026-10-14, Entscheidung Pharrel; vorher galt „flach, ohne Ausnahme“):
+
+1. **Es ist ein Feld:** ein echter Behälter mit Text, 12 px, Karteikartenweiß bzw. Werkbankschwarz,
+   1 px Liniengrau. Keine Liste, kein Bild, kein Knopf, keine Kachel einer Übersicht.
+2. **Der Grund ist unruhig:** Das Feld liegt über Bewegung, einem Punktefeld oder einem Bild und
+   ginge ohne Schatten darin unter. Prüffrage: Würde man es auf ruhigem Papier auch ohne Schatten
+   als Feld lesen? Dann ohne.
+3. **Höchstens eins je Bildschirm.**
+4. **Nur das Token:** `--shadow-feld` aus `global.css`, mit Dunkel-Zwilling (im Dunkeln tiefer,
+   sonst sieht man ihn nicht). Kein Rohwert in einer Komponente, kein zweiter Schatten.
+
+Ein Schatten ist nie ein Zustand: Er erscheint nicht bei Hover oder Fokus und wächst nicht. Heute
+erfüllt das genau ein Element, das Feld des Geredes im Scroll-Hero.
 
 ## Shapes
 
@@ -504,7 +541,7 @@ Kantig mit merklicher Rundung am Bedienbaren. 8 px (`md`) für alles, was man dr
 Header-Anfrage, „Adresse kopieren“, Blättern-Knöpfe, Lightbox-Knöpfe, Skip-Link, Fokusring und die
 Hover-Fläche der Navigation (seit 2026-10-08; vorher 4 px, und die Knöpfe sahen aus wie Kästchen).
 4 px (`sm`) für Abgebildetes: Bilder, Screenshots, Bildfelder. 12 px (`lg`) nur für echte Behälter:
-Codeblock und Hinweiskasten. Pillen gibt es nicht; die Hover-Fläche eines Ankers ist ein Zustand,
+Codeblock, Hinweiskasten und das Feld im Hero. Pillen gibt es nicht; die Hover-Fläche eines Ankers ist ein Zustand,
 keine Form.
 
 Wiederkehrende Linien-Motive:
@@ -530,8 +567,9 @@ Bildzeichen mehr.
 
 ### Named Rules
 
-**The Size-Matched Corner Rule.** Bedienbares und Bilder 4 px, echte Behälter 12 px. Keine Rundung
-über 12 px, keine Pillen.
+**The Size-Matched Corner Rule.** Bedienbares 8 px, Bilder 4 px, echte Behälter 12 px. Keine Rundung
+über 12 px, keine Pillen. (Bis 2026-10-14 stand hier „Bedienbares und Bilder 4 px“, obwohl Knöpfe seit
+dem 2026-10-08 8 px tragen.)
 
 ## Components
 
@@ -583,6 +621,31 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
 
+### Scroll-Hero der Startseite (`Hero`)
+
+Ablauf, Fahrplan und Gründe stehen in [`docs/HERO_KLARTEXT_PLAN.md`](docs/HERO_KLARTEXT_PLAN.md);
+hier steht, wie die Teile aussehen. Alles davon gibt es nur, wenn der Hero spielt (von außen, mit
+Skript und Bewegung). Sonst steht der fertige Hero mit H1, „Für wen“, Intro und Knöpfen.
+
+- **Auftakt:** „Sie erzählen. / Ich höre zu.“ in Display an der Stelle der späteren H1, die zweite
+  Zeile in Bleistiftgrau.
+- **Feld:** das Gerede in einem Feld nach der Feld-Regel: 12 px, Karteikartenweiß bzw.
+  Werkbankschwarz, 1 px Liniengrau, `--shadow-feld`, Innenabstand 1rem × 1,25rem (ab 640 px
+  1,5rem × 1,75rem), so breit wie sein Text (max. 60ch). Die vier Claim-Wörter darin fett und eng
+  wie die H1, mit Marker in Orange. Während das Gerede zerfällt, blenden Fläche, Rand und Schatten
+  mit aus; ein leerer Kasten bleibt nie stehen.
+- **Scroll-Hinweis:** „Scrollen“ in Label Small, Orange, mit Pfeil nach unten aus `Arrow.astro`,
+  mittig 0,75rem (ab 640 px 1rem) unter dem Feld. Er kommt 0,6 s vor dem ersten Hüpfer, hüpft mit
+  dem Feld und verschwindet beim ersten Scrollen. Kein Knopf, keine Pille: Das Feld ist der Hinweis,
+  das Wort macht ihn eindeutig.
+- **Hüpfen:** Feld und Hinweis gehen zweimal 8 px hoch und runter, ruhen gut 3 s und wiederholen das
+  bis zum ersten Scrollen (Zweckbindung, siehe Bewegung).
+- **Fortschritt:** 8rem breiter, 2 px hoher Balken unten in der Mitte, Orange auf Liniengrau,
+  sichtbar nur während der Strecke.
+- **Niedrige Fenster** (bis 740 px Höhe): engere Abstände, am Computer das Gerede in 1rem; auf
+  Handys bis 700 px Höhe Zeilenhöhe 1,5. Prüfgröße: 375 × 667 px, der Hinweis muss im ersten
+  Fenster stehen.
+
 ### Arbeiten der Startseite (`ProjectShowcase`)
 
 - **Umschalter:** zwei Radio-Buttons als Textreiter, „Kunden“ und „Eigene Projekte“, je mit der
@@ -614,8 +677,8 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
   Blätterrichtung (24 px, 320 ms), der Umschalter blendet die Auswahl über (120 / 200 ms); ohne Skript
   und ohne Bewegung wechselt beides sofort.
 - **Kontaktabzug** (`ProjectThumb`, seit 2026-10-08 statt des Rasters): je Arbeit der Auswahl ein
-  Feld, in der Reihenfolge `order`. Bildfeld 16:9 (4 px, 1 px Liniengrau, Karteikartenweiß bzw.
-  Werkbankschwarz), darunter der Titel in Label Small, Bleistiftgrau, einzeilig mit Auslassung. Das
+  Feld, in der Reihenfolge `order`. Bildfeld 16:9 (4 px, 1 px Liniengrau, Werkbank bzw.
+  Werkbank, Nacht), darunter der Titel in Label Small, Bleistiftgrau, einzeilig mit Auslassung. Das
   Feld der Arbeit auf der Bühne trägt `aria-current`: Rahmen und Titel in Tinte, darunter ein
   2-px-Strich in Orange, der beim Blättern von links aufzieht (200 ms), wie unter dem gewählten
   Reiter. Hover und Fokus setzen den Rahmen auf Kantengrau, das Bild wächst auf 1,02. Passt die Reihe
@@ -776,14 +839,16 @@ Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 
 ### Containers
 
-Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle; auch Bühne und Kontaktabzug der
-Startseite rahmen nur ihre Bildfelder.
+Nur wo etwas wirklich ein Behälter ist. Keine Karten mit Hülle für Listen oder Übersichten; auch
+Bühne und Kontaktabzug der Startseite rahmen nur ihre Bildfelder.
 
 - **Codeblock:** 12 px, Karteikartenweiß bzw. Werkbankschwarz, 1 px Liniengrau, 1rem Innenabstand,
   Code-Schrift, horizontal scrollbar.
 - **Hinweiskasten** (unvollständiger Rechtstext): 12 px, `accent/10` Fläche, `accent/50` Rand, 1rem
   Innenabstand.
-- **Shadow Strategy:** keine (siehe Elevation & Depth).
+- **Feld** (Gerede im Hero): 12 px, Karteikartenweiß bzw. Werkbankschwarz, 1 px Liniengrau,
+  `--shadow-feld`. Der einzige Behälter mit Schatten (siehe Scroll-Hero).
+- **Shadow Strategy:** ein Token, `--shadow-feld`, nur nach der Feld-Regel (siehe Elevation & Depth).
 
 ### Navigation
 
@@ -848,8 +913,14 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   `data-uebergang` tragen zu Beginn einer Navigation keinen Transform, sonst bricht der Übergang.
 - **Kein Layout-Sprung:** Bewegung läuft über `transform`, `opacity` und `clip-path`; eine Höhe animiert
   nur der Aufklapper.
-- **Schleifen** nur in den Bühnen der Projektseiten. Nichts läuft von selbst länger als 5 s; was es
-  täte, bekäme eine Pause-Taste (WCAG 2.2.2).
+- **Zweckbindung** (seit 2026-10-14, vorher „Schleifen nur in den Bühnen“): Was sich von selbst
+  wiederholt, braucht einen benannten Zweck, den der Besucher erfüllen kann, und hört auf, sobald er
+  erfüllt ist, auch wenn der Besucher zurückkehrt. Den Zweck zu erfüllen kostet nichts: Kein Inhalt
+  verschwindet, nichts wird ausgelöst. Dekoration ohne Zweck wiederholt sich nicht. Im Hero hüpfen
+  Feld und Hinweis, und das Punktefeld wimmelt, bis zum ersten Scrollen; wenige Pixel genügen, denn
+  beides steht ab p > 0,003 still, und das erste Wort hebt erst bei 0,04 ab. Bühnen wiederholen nur
+  nach der Bühnenlizenz (die Schleife ist die Aussage, langsam). Alles Übrige: nach höchstens 5 s
+  Ruhe oder eine Pause-Taste (WCAG 2.2.2).
 
 Was die Seite außerdem kann und behält:
 
@@ -898,6 +969,8 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Do** Hover und Tastaturfokus gleich aussehen lassen (`group-hover` immer mit `group-focus-within`).
 - **Do** Bewegung an `prefers-reduced-motion: no-preference` koppeln und Inhalt ohne Animation sofort
   sichtbar lassen.
+- **Do** jede Wiederholung an einen Zweck binden, den der Besucher ohne Verlust erfüllen kann, und
+  sie danach anhalten (Zweckbindung). Den Zweck in den Kommentar der Komponente schreiben.
 - **Do** den sichtbaren Fokus erhalten: 2 px Outline in Orange, 2 px Abstand.
 - **Do** einer neuen Referenz eine Szene geben, die genau ein Merkmal aus ihrer Projektdatei ins Bild
   setzt, mit eigenen Variablen, Dunkel-Zwilling, Endzustand ohne Bewegung und der Bildunterschrift
@@ -909,7 +982,9 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 
 - **Don't** eine Theme-Auswahl, Test-Themes oder einen Farbmodus-Umschalter für Besucher einbauen. Hell
   und dunkel folgen der Systemeinstellung.
-- **Don't** Schatten, Glow, Anheben, Unschärfe oder Transluzenz für Tiefe oder Hover verwenden.
+- **Don't** Schatten außerhalb der Feld-Regel setzen, Schatten als Zustand (Hover, Fokus) einsetzen
+  oder einen zweiten Schatten-Token anlegen. Glow, Anheben, Unschärfe und Transluzenz gibt es nie.
+- **Don't** Text in Versalien oder gesperrt setzen, außer in einer Szene der Bühne (The No Caps Rule).
 - **Don't** eine zweite Akzentfarbe oder farbige Sektionsflächen einführen. Verdünntes Orange liegt
   nur hinter einem Anker oder Knopf unter dem Zeiger, nie hinter Inhalt.
 - **Don't** Rohfarbwerte in Komponenten schreiben; sie brechen den Dunkelmodus.
