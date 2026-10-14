@@ -380,3 +380,37 @@ html[data-bewegung=''] [data-bewegt-kinder] > * {
     clip-path: none;
   }
 }
+
+/*
+ * Der Marker (DESIGN.md, Farben): 30 % Orange hinter dem Text, Text in Tinte.
+ * Er zeigt eine Antwort: die vier Wörter im Gerede des Heros, die Stelle, die
+ * einen Rückbezug beantwortet (`GeredeEcho`), und den Stand einer Arbeit.
+ * Als Hintergrund statt als eigenes Element, damit er Zeilenumbrüchen folgt:
+ * `box-decoration-break: slice` legt die Zeilen gedanklich hintereinander,
+ * eine wachsende `background-size` zieht also erst die erste Zeile, dann die
+ * nächste. Wer ihn aufziehen lässt, setzt die Größe unter `html[data-bewegung]`
+ * auf `0% 100%` und hängt `data-marker-netz` an, damit er nach 2 s auch dann
+ * steht, wenn das Modul nicht läuft.
+ */
+mark.marker {
+  --marker-farbe: color-mix(in oklch, var(--color-accent) 30%, transparent);
+  margin-inline: -0.12em;
+  padding-inline: 0.12em;
+  border-radius: 2px;
+  color: var(--color-fg);
+  background: linear-gradient(var(--marker-farbe), var(--marker-farbe)) no-repeat 0 0 / 100% 100%;
+}
+html[data-bewegung=''] mark.marker[data-marker-netz] {
+  animation: marker-netz 0s 2s both;
+}
+@keyframes marker-netz {
+  to {
+    color: var(--color-fg);
+    background-size: 100% 100%;
+  }
+}
+@media print {
+  html[data-bewegung] mark.marker {
+    background-size: 100% 100%;
+  }
+}

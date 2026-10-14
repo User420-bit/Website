@@ -39,23 +39,7 @@ const { worte, class: className = '' } = Astro.props
     display: inline-block;
   }
 
-  /*
-   * Der Marker: eine Fläche hinter dem Text, die von links aufzieht. Als
-   * Hintergrund statt als eigenes Element, damit er Zeilenumbrüchen folgt:
-   * `box-decoration-break: slice` legt die Zeilen gedanklich hintereinander,
-   * also zieht er erst die erste Zeile, dann die nächste. Farbe wie im Hero.
-   */
-  mark[data-echo-antwort] {
-    margin-inline: -0.12em;
-    padding-inline: 0.12em;
-    border-radius: 2px;
-    color: var(--color-fg);
-    background: linear-gradient(
-        color-mix(in oklch, var(--color-accent) 30%, transparent),
-        color-mix(in oklch, var(--color-accent) 30%, transparent)
-      )
-      no-repeat 0 0 / 100% 100%;
-  }
+  /* Der Marker selbst (`mark.marker`) steht in global.css; hier nur, wann er aufzieht. */
 
   /* Anfangszustand nur mit Skript und erlaubter Bewegung. */
   html[data-bewegung] [data-echo-gruppe]:not([data-echo-an]) [data-echo-wort] {
@@ -93,15 +77,6 @@ const { worte, class: className = '' } = Astro.props
   /* Sicherheitsnetz wie in global.css: Läuft das Modul nicht, steht nach 2 s alles. */
   html[data-bewegung=''] [data-echo-wort] {
     animation: bewegt-sichtbar 0s 2s both;
-  }
-  html[data-bewegung=''] mark[data-echo-antwort] {
-    animation: echo-netz 0s 2s both;
-  }
-  @keyframes echo-netz {
-    to {
-      color: var(--color-fg);
-      background-size: 100% 100%;
-    }
   }
 
   @media print {

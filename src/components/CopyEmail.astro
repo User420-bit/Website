@@ -13,13 +13,23 @@
  * auf einem inneren `<span>`, damit eine umbrochene Adresse (schmale
  * Bildschirme) unter jeder Zeile ihre Linie behält. „Adresse kopieren“ gibt
  * bei Druck nach, „Kopiert.“ zieht ein und blendet nach 2 s aus.
+ *
+ * `schreiben` (Signatur des Kontakts, docs/SEKTIONEN_SIGNATUR_PLAN.md): Statt
+ * der aufziehenden Linie tippt sich die Adresse ein, Zeichen für Zeichen
+ * (55 ms je Zeichen), mit Unterstrich; danach blinkt ein oranger Cursor
+ * dreimal und verschwindet, zusammen unter 3 s. Der Text selbst wird nicht
+ * zerlegt: Ein `clip-path` deckt ihn schrittweise an den gemessenen
+ * Zeichengrenzen auf, so bleiben Link, Vorlesen und Markieren wie sie sind.
+ * Bricht die Adresse um (sehr schmal), zieht wie sonst nur die Linie auf.
  */
 interface Props {
   email: string
+  /** Adresse tippt sich beim Hereinscrollen ein (siehe oben). */
+  schreiben?: boolean
   class?: string
 }
 
-const { email, class: className = '' } = Astro.props
+const { email, schreiben = false, class: className = '' } = Astro.props
 ---
 
 <div class:list={['flex flex-col items-start gap-3', className]}>
@@ -27,7 +37,12 @@ const { email, class: className = '' } = Astro.props
     class="adresse display text-2xl font-semibold wrap-anywhere text-fg no-underline sm:text-3xl"
     href={`mailto:${email}`}
   >
-    <span class="adresse-linie" data-adresse-linie data-bewegt>{email}</span>
+    <span
+      class="adresse-linie"
+      data-adresse-linie
+      data-bewegt
+      data-schreiben={schreiben || undefined}>{email}</span
+    >{schreiben && <span aria-hidden="true" class="adresse-cursor" data-adresse-cursor />}
   </a>
   <span class="flex flex-wrap items-center gap-x-4 gap-y-2">
     <button
@@ -95,6 +110,30 @@ const { email, class: className = '' } = Astro.props
     }
   }
 
+  /*
+   * Schreiben: Die Adresse ist anfangs ganz abgedeckt (das Sicherheitsnetz
+   * oben deckt sie nach 2 s auf, falls das Modul nicht läuft). `inline-block`,
+   * damit `clip-path` eine einzige Box hat; das Skript prüft vorher, dass die
+   * Adresse in eine Zeile passt.
+   */
+  html[data-bewegung] .adresse-linie[data-schreiben][data-bewegt] {
+    clip-path: inset(0 100% 0 0);
+  }
+  /* Bezugspunkt des Cursors beim Schreiben. */
+  .adresse {
+    position: relative;
+  }
+  .adresse-cursor {
+    position: absolute;
+    top: 0.12em;
+    bottom: 0.2em;
+    left: 0;
+    width: 2px;
+    background-color: var(--color-accent);
+    opacity: 0;
+    pointer-events: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .adresse {
       transition: none;
@@ -132,10 +171,97 @@ const { email, class: className = '' } = Astro.props
 
   const mitBewegung = bewegt()
 
+  /** Millisekunden je Zeichen beim Schreiben; der Cursor blinkt danach dreimal (je 500 ms). */
+  const ZEICHEN_MS = 55
+  const BLINKEN = 3
+
+  /*
+   * Schreiben: Zeichengrenzen über einen Range messen, dann den Text in
+   * Sprüngen an genau diesen Grenzen aufdecken, Cursor an der Kante mit.
+   * Falsch, wenn die Adresse umbricht; dann bleibt es bei der Linie.
+   */
+  function schreiben(linie: HTMLElement): boolean {
+    const text = linie.firstChild
+    const cursor = linie.parentElement?.querySelector<HTMLElement>('[data-adresse-cursor]')
+    if (!(text instanceof Text) || !cursor) return false
+    const range = document.createRange()
+    range.selectNodeContents(text)
+    if (range.getClientRects().length > 1) return false
+
+    linie.style.display = 'inline-block'
+    linie.style.backgroundSize = '100% 1px'
+    const kasten = linie.getBoundingClientRect()
+    const versatz = kasten.left - linie.parentElement!.getBoundingClientRect().left
+    const grenzen = [0]
+    for (let i = 1; i <= text.length; i++) {
+      range.setStart(text, 0)
+      range.setEnd(text, i)
+      grenzen.push(range.getBoundingClientRect().right - kasten.left)
+    }
+    const breite = kasten.width
+    const schritte = grenzen.length - 1
+    const dauer = schritte * ZEICHEN_MS
+
+    /*
+     * Beobachtet wird der Link, nicht der Text: Chromium rechnet den
+     * `clip-path` des Ziels in die Sichtbarkeit ein, eine ganz abgedeckte
+     * Adresse käme also nie ins Fenster.
+     */
+    inView(
+      linie.parentElement!,
+      () => {
+        const auf = linie.animate(
+          grenzen.map((x, k) => ({
+            clipPath: `inset(0 ${Math.max(0, breite - x).toFixed(1)}px 0 0)`,
+            offset: k / schritte,
+            easing: 'step-end',
+          })),
+          { duration: dauer, fill: 'forwards' },
+        )
+        cursor.style.opacity = '1'
+        const mit = cursor.animate(
+          grenzen.map((x, k) => ({
+            transform: `translateX(${(versatz + x).toFixed(1)}px)`,
+            offset: k / schritte,
+            easing: 'step-end',
+          })),
+          { duration: dauer, fill: 'forwards' },
+        )
+        void Promise.all([auf.finished, mit.finished])
+          .then(() => {
+            // Endzustand wie ohne Bewegung: nichts abgedeckt, nichts transformiert.
+            linie.removeAttribute('data-bewegt')
+            for (const p of ['clip-path', 'display', 'background-size'])
+              linie.style.removeProperty(p)
+            auf.cancel()
+            return cursor.animate([{ opacity: 1 }, { opacity: 0 }], {
+              duration: 250,
+              iterations: BLINKEN * 2,
+              direction: 'alternate',
+              easing: 'steps(1, end)',
+            }).finished
+          })
+          .then(() => {
+            cursor.style.opacity = '0'
+            mit.cancel()
+          })
+      },
+      { amount: 0.6 },
+    )
+    return true
+  }
+
   for (const linie of document.querySelectorAll<HTMLElement>('[data-adresse-linie]')) {
     if (!mitBewegung || !netzAnhalten(linie)) {
       linieInRuhe(linie)
       continue
+    }
+    if ('schreiben' in linie.dataset) {
+      if (schreiben(linie)) continue
+      // Umbrochen: Abdeckung weg, dann wie sonst die Linie.
+      linie.style.removeProperty('display')
+      linie.style.removeProperty('background-size')
+      linie.style.clipPath = 'none'
     }
     // Einmal, sobald die Adresse im Fenster steht, ohne Rückweg.
     inView(

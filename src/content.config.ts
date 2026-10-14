@@ -40,9 +40,10 @@ const company = defineCollection({
     /**
      * Rückbezüge aufs Gerede (docs/NACH_DEM_HERO_PLAN.md): Ein Satz aus
      * `heroGerede` kehrt weiter unten neben der Antwort wieder, die ihn
-     * beantwortet. `bei` ist der Titel einer Leistung (`services`) oder eines
-     * Werts (`about.values`), `gerede` steht wörtlich in `heroGerede`,
-     * `antwort` wörtlich in der Beschreibung dort. Sonst bricht der Build.
+     * beantwortet. `bei` ist der Titel einer Leistung (`services`), eines
+     * Werts (`about.values`) oder „Über Klartext“ (Text aus `about.md`),
+     * `gerede` steht wörtlich in `heroGerede`, `antwort` wörtlich dort. Sonst
+     * bricht der Build.
      */
     heroEchos: z
       .array(z.object({ bei: z.string(), gerede: z.string(), antwort: z.string() }))

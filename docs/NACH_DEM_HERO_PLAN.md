@@ -57,6 +57,13 @@ Stelle der Antwort.
 | Leistungen · Web-Apps       | „… im Laden läuft alles über eine Excel-Tabelle …“                                         | wenn die Tabelle nicht mehr reicht               |
 | Arbeitsweise · Klartext     | „Es soll vorher klar sein, was es kostet und wie lange es dauert.“                         | was es kostet – vor dem Projekt                  |
 | Arbeitsweise · Pragmatismus | „Eine Agentur wollte uns gleich ein ganzes System verkaufen, aber wir wollen kein System.“ | Kein neues Werkzeug, wenn ein vorhandenes reicht |
+| Über Klartext               | „Wir wollen, dass sich jemand unsere Probleme anschaut …“                                  | Hinter Klartext steht Pharrel Sandjo Djomou      |
+
+**01 Arbeiten** bekommt kein Zitat, aber den Marker: Jede Arbeit sagt, wie weit sie ist, und die
+„Stand“-Zeile ist genau das Klartext-Versprechen. Ihr Satz trägt den Marker, ans Scrollen gebunden
+wie die Flüge im Hero: Er zieht auf, während die Zeile von 95 % bis 55 % der Fensterhöhe steigt, und
+läuft beim Zurückscrollen zurück. Nach dem Blättern steht er gleich weit. So kommt das, was den Hero
+ausmacht (Scrollen treibt etwas an), direkt nach ihm noch einmal vor, ohne neues Schauspiel.
 
 Dazu ein **Schlusspunkt**: Im Kontakt steht über der Adresse noch einmal „Sie erzählen. Ich höre zu.“
 und läuft ein wie das Gerede. Die Seite endet, wo sie angefangen hat; jetzt steht die Adresse
@@ -69,7 +76,7 @@ der Seite.
   Antwort in der Beschreibung steht; sonst bricht der Build. Ein Zitat, das nie gesagt wurde, wäre
   erfunden (`PRODUCT.md`: keine erfundenen Kundenstimmen).
 - Neben der Antwort, nie allein. Höchstens ein Rückbezug je Block, und nicht in jedem Block: 01
-  Arbeiten und 04 Über bleiben ohne, Struktur und Lernen auch.
+  Arbeiten bleibt ohne Zitat, Struktur und Lernen auch.
 - Der Marker liegt nur auf der Stelle, die antwortet, nicht auf ganzen Sätzen.
 - Für alle sichtbar, nicht nur nach dem Hero. „Sie erzählen:“ liest sich auch ohne Hero als typischer
   Satz eines Kunden; wer den Hero gesehen hat, erkennt ihn wieder. So bleibt die Seite für jeden gleich
@@ -91,11 +98,12 @@ der Seite.
   danach kommt, ist ein ausgegrauter Reiter ohne Kundenprojekt. Das ist der härteste Erwartungsbruch
   der Seite, und kein Effekt behebt ihn. Er verschwindet erst, wenn PointCare oder JustBeauty
   veröffentlicht sind.
-- **01 Arbeiten ohne Rückbezug.** Kein Satz im Gerede passt ehrlich zu den Arbeiten; ein gezwungener
-  Bezug wäre schlechter als keiner.
-- **04 Über ohne Rückbezug.** „… dass sich jemand unsere Probleme anschaut und ehrlich sagt, was
-  Software braucht und was nicht“ passte, aber der Text kommt aus Markdown (`about.md`); ein Marker
-  darin braucht mehr Umbau, als er bringt.
+- **01 Arbeiten ohne Zitat.** Kein Satz im Gerede passt ehrlich zu den Arbeiten; ein gezwungener
+  Bezug wäre schlechter als keiner. Dort trägt nur der Stand den Marker.
+- **04 Über, Text aus Markdown.** Der Rückbezug arbeitet auf dem fertigen HTML von `about.md`
+  (`echoHtml` in `lib/echo.ts`). Wer den Satz „Hinter Klartext steht …“ dort umschreibt, bricht den
+  Build und muss `heroEchos` mitziehen.
+- **Unterseiten** bleiben, wie sie sind. Wer dort landet, hat den Hero meist nicht gesehen.
 - **Leere Fläche nach dem Hero.** Nach der Landung bleibt unter Adresse und Knöpfen ein Streifen
   leeres Fenster bis zur Kapitel-Linie von 01 (am Desktop rund 250 px). Der Hero füllt das erste
   Fenster mit Absicht (gleiche Scroll-Positionen beim Zurückblättern); das bleibt so.
