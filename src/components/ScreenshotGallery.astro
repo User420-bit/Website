@@ -18,11 +18,12 @@
  * "Schließen" zu springen. Ohne Script bleibt Blättern bedienbar, nur Esc
  * braucht dann einen Druck je geblättertem Bild.
  *
- * Bewegung (docs/BEWEGUNG_PLAN.md, H): Das Leitbild steht still, es ist das
- * Ziel des Übergangs von der Startseite und darf in keinem Moment verschoben sein.
- * Der Kontaktabzug kommt beim Hereinscrollen Bild um Bild (16 px, 60 ms
- * Staffel). Die Lightbox blendet beim Öffnen in 200 ms auf, das Bild wächst
- * von 0,98; reines CSS (`@starting-style`), Schließen geht sofort.
+ * Bewegung: Das Leitbild steht still, es ist das Ziel des Übergangs von der
+ * Startseite und darf in keinem Moment verschoben sein. Seit 2026-10-14 zieht
+ * auch der Kontaktabzug nicht mehr ein: Bilder und Linien stehen, Bewegung
+ * gibt es nur als Antwort auf eine Handlung. Die Lightbox blendet beim Öffnen
+ * in 200 ms auf, das Bild wächst von 0,98; reines CSS (`@starting-style`),
+ * Schließen geht sofort.
  */
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
@@ -95,9 +96,9 @@ const nachbar = (i: number, schritt: number) =>
       )}
 
       {weitere.length > 0 && (
-        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0" data-kontaktabzug>
+        <ul class="mt-6 flex list-none flex-wrap gap-3 p-0">
           {weitere.map((shot) => (
-            <li data-bewegt="galerie">
+            <li>
               <button
                 type="button"
                 class={knopf}
@@ -204,16 +205,6 @@ const nachbar = (i: number, schritt: number) =>
   )
 }
 
-<style>
-  /* Anfangszustand nur mit Skript und erlaubter Bewegung, nie im Ausdruck. */
-  @media screen {
-    :global(html[data-bewegung]) [data-bewegt='galerie'] {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-  }
-</style>
-
 <style is:global>
   /* Hinter der offenen Lightbox scrollt die Seite nicht mit. */
   html:has(.lightbox:popover-open) {
@@ -243,8 +234,6 @@ const nachbar = (i: number, schritt: number) =>
 </style>
 
 <script>
-  import { DAUER, KURVE, STAFFEL, alle, animate, inView, stagger, wennBewegt } from '@/lib/motion'
-
   /*
    * Blättern in der Lightbox: Die Knöpfe tun ihre Arbeit ohne Script. Hier
    * kommt dazu, was HTML nicht kann. Pfeiltasten und Wischen drücken den
@@ -297,44 +286,4 @@ const nachbar = (i: number, schritt: number) =>
     },
     { passive: true },
   )
-
-  // Wie in ProjectPage: Nach 2 s hat das Netz in global.css womöglich schon aufgedeckt.
-  const ZU_SPAET = 1800
-
-  /**
-   * Nach dem Einzug bleibt nichts zurück: kein Anfangszustand, kein
-   * Inline-Stil, kein Transform (Motion hinterließe `translateY(0px)`). Erst
-   * im nächsten Bild, denn Motion schreibt seinen Endwert selbst noch einmal
-   * im nächsten Bild.
-   */
-  const aufraeumen = (teile: HTMLElement[]) =>
-    requestAnimationFrame(() => {
-      for (const teil of teile) {
-        teil.removeAttribute('data-bewegt')
-        teil.style.removeProperty('opacity')
-        teil.style.removeProperty('transform')
-        teil.style.removeProperty('animation')
-      }
-    })
-
-  wennBewegt(() => {
-    if (performance.now() > ZU_SPAET) return
-    for (const abzug of alle('[data-kontaktabzug]')) {
-      const bilder = alle('[data-bewegt="galerie"]', abzug)
-      // Das Modul läuft, das Netz wird nicht gebraucht: Es deckte sonst nach
-      // 2 s auf, und beim Hereinscrollen zögen die Bilder ein zweites Mal ein.
-      for (const bild of bilder) bild.style.animation = 'none'
-      inView(
-        abzug,
-        () => {
-          animate(
-            bilder,
-            { opacity: [0, 1], transform: ['translateY(16px)', 'none'] },
-            { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
-          ).then(() => aufraeumen(bilder))
-        },
-        { amount: 0.3 },
-      )
-    }
-  })
 </script>
