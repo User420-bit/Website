@@ -199,16 +199,24 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
            * bis gescrollt wird. Beim Zerfall des Geredes blendet sie aus.
            */
         }
-        <div
-          data-hero-feld
-          class="relative mt-5 w-fit rounded-[var(--radius-lg)] px-5 py-4 sm:mt-7 sm:px-7 sm:py-6"
-          style={`--hero-huepf-ab:${huepfAb}s`}
-        >
+        <div data-hero-feld class="mt-5 w-fit sm:mt-7" style={`--hero-huepf-ab:${huepfAb}s`}>
+          <div
+            data-hero-karte
+            class="relative rounded-[var(--radius-lg)] px-5 py-4 sm:px-7 sm:py-6"
+          >
+            <p
+              data-hero-gerede
+              class="relative m-0 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:text-lg sm:leading-relaxed"
+              set:html={geredeHtml}
+            />
+          </div>
+          {/* Leiser Zusatz unter der Karte, damit das Hüpfen als Aufforderung lesbar ist. */}
           <p
-            data-hero-gerede
-            class="relative m-0 max-w-[60ch] text-sm leading-relaxed text-fg-muted sm:text-lg sm:leading-relaxed"
-            set:html={geredeHtml}
-          />
+            data-hero-hinweis
+            class="m-0 mt-3 text-center text-xs font-medium tracking-[0.08em] text-accent uppercase sm:mt-4 sm:text-sm"
+          >
+            Scrollen ↓
+          </p>
         </div>
       </div>
     </div>
@@ -302,8 +310,9 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
    * Schatten liegen auf `::before`, damit sie beim Zerfall des Geredes
    * ausblenden (`--hero-feld`, vom Skript gesetzt), ohne den Text mitzunehmen.
    * Ausnahme von der Flat Page Rule, nur in diesem Hero (Entscheidung Pharrel).
+   * `data-hero-feld` hüpft, und mit ihm Karte und Hinweis darunter.
    */
-  [data-hero-feld]::before {
+  [data-hero-karte]::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -317,14 +326,14 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   }
   /* Auf Nachtpapier braucht der Schatten mehr Tiefe, sonst sieht man ihn nicht. */
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) [data-hero-feld]::before {
+    :root:not([data-theme='light']) [data-hero-karte]::before {
       box-shadow:
         0 1px 0 oklch(1 0 0 / 0.05) inset,
         0 2px 4px oklch(0 0 0 / 0.5),
         0 18px 48px -6px oklch(0 0 0 / 0.85);
     }
   }
-  :root[data-theme='dark'] [data-hero-feld]::before {
+  :root[data-theme='dark'] [data-hero-karte]::before {
     box-shadow:
       0 1px 0 oklch(1 0 0 / 0.05) inset,
       0 2px 4px oklch(0 0 0 / 0.5),
@@ -334,6 +343,15 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     animation:
       hero-feld-ein 0.6s 0.4s both cubic-bezier(0.2, 0, 0, 1),
       hero-huepf 4.2s var(--hero-huepf-ab, 4.5s) infinite;
+  }
+  /* Der Hinweis kommt kurz bevor die Karte zu hüpfen beginnt und geht beim ersten Scrollen. */
+  html[data-hero='gerede'] [data-hero-hinweis] {
+    animation: hero-hinweis-ein 0.6s calc(var(--hero-huepf-ab, 4.5s) - 0.6s) both
+      cubic-bezier(0.2, 0, 0, 1);
+    transition: opacity 0.3s;
+  }
+  html[data-hero='gerede'] [data-hero-hinweis][data-weg] {
+    opacity: 0;
   }
   /*
    * Wer scrollt, hat den Hinweis verstanden: Das Feld hört auf zu hüpfen,
@@ -351,7 +369,18 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   @media (max-height: 740px) {
     html[data-hero='gerede'] [data-hero-feld] {
       margin-top: 1rem;
+    }
+    html[data-hero='gerede'] [data-hero-karte] {
       padding-block: 0.875rem;
+    }
+    html[data-hero='gerede'] [data-hero-hinweis] {
+      margin-top: 0.5rem;
+    }
+  }
+  /* Kleine Handys (iPhone SE): engere Zeilen, sonst rutscht der Hinweis aus dem Fenster. */
+  @media (max-height: 700px) and (max-width: 40rem) {
+    html[data-hero='gerede'] [data-hero-gerede] {
+      line-height: 1.5;
     }
   }
   @media (max-height: 740px) and (min-width: 40rem) {
@@ -391,6 +420,11 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   }
   html[data-hero='gerede'] [data-hero-zeichen] {
     opacity: 0;
+  }
+  @keyframes hero-hinweis-ein {
+    from {
+      opacity: 0;
+    }
   }
   @keyframes hero-feld-ein {
     from {
@@ -897,6 +931,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
     const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
     const feld = document.querySelector<HTMLElement>('[data-hero-feld]')
+    const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
     const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
     const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
     const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
@@ -1036,6 +1071,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         auftakt.style.opacity = String(1 - weg)
         auftakt.style.transform = `translateY(${-24 * weg}px)`
       }
+      if (hinweis) hinweis.toggleAttribute('data-weg', p > 0.003)
       if (fortschrittLeiste) fortschrittLeiste.toggleAttribute('data-da', p > 0.003 && p < 0.97)
       if (balken) balken.style.transform = `scaleX(${p})`
 

@@ -27,6 +27,10 @@ Version 6 vom 2026-10-14: Kein eigenes Hinweis-Feld mehr. Das Gerede selbst sitz
 Der Schatten ist eine bewusste Ausnahme von der Flat Page Rule in `DESIGN.md`, nur in diesem Hero
 (Entscheidung Pharrel).
 
+Version 7 vom 2026-10-14: Unter der Karte steht leise in Orange „Scrollen ↓“ (Versalien, klein).
+Das Hüpfen allein lässt sich als Deko lesen; das Wort macht es zur Aufforderung. Es erscheint kurz
+vor dem ersten Hüpfer, hüpft mit der Karte und verschwindet beim ersten Scrollen.
+
 ---
 
 ## 0. Die Idee in einem Satz
@@ -90,9 +94,10 @@ Der Text wird später überarbeitet (Pharrel, 2026-10-11). Bis dahin bleibt er s
 | 0,4–1,0 s | Darunter zieht die Karte ein: abgerundet, mit Rand und Schatten                               |
 | 0,8–3,0 s | In der Karte läuft das Gerede Wort für Wort ein (20 ms je Wort, reines CSS)                   |
 | 2,9–3,9 s | Die vier Claim-Wörter werden nacheinander markiert                                            |
+| ab 3,9 s  | Unter der Karte erscheint leise in Orange „Scrollen ↓“                                        |
 | ab 4,5 s  | Die Karte hüpft zweimal 8 px hoch und runter, ruht gut 3 s, hüpft wieder, bis gescrollt wird  |
 
-Die Karte ist der Hinweis; ein eigenes Feld oder einen Knopf gibt es nicht. Der Start des Hüpfens
+Die Karte ist der Hinweis, das Wort darunter macht ihn eindeutig; einen Knopf gibt es nicht. Der Start des Hüpfens
 richtet sich nach der Länge des Geredes (`huepfAb`: letztes Wort steht plus 1,5 s). Wer scrollt,
 hat den Hinweis verstanden: Die Karte hüpft danach nicht mehr, auch beim Zurückscrollen nicht. Erst
 dann misst das Skript die Wörter, damit sie nicht aus einer Hüpfhöhe losfliegen. In niedrigen
