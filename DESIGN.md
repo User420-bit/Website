@@ -457,8 +457,8 @@ ebenfalls die volle Spalte. Er ist die einzige Sektion, die das erste Fenster un
 Bühne mit einer Arbeit, ab 1024 px zweispaltig (`7fr | 5fr`, 3rem Abstand, links das Bild, rechts der
 Text), darunter 2rem tiefer der Kontaktabzug als eine Reihe, die nicht umbricht (Felder 6 bis 8rem
 breit, 0,75rem Abstand; passt sie nicht, scrollt sie waagerecht), darunter 1,5rem tiefer „Alle
-Arbeiten ansehen“. Jede Arbeit steht genau einmal groß da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, darunter
-Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
+Arbeiten ansehen“. Jede Arbeit steht genau einmal groß da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, unter
+der Beschreibung die Belegzeile der Spalte (seit 2026-10-14), darunter Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
 Klartext: der Text in einer Spalte (65ch), darunter das Foto über die volle Spaltenbreite. Kontakt:
 ab 1024 px zwei Spalten `1fr | 1fr` mit 3rem Abstand unter je einer Haarlinie — links Adresse und
 Knopf, rechts die Erreichbarkeit (Meta-Liste); schmaler gestapelt, die Adresse zuerst.
@@ -620,6 +620,7 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Nummernzeile** (`NumberedRows`): Ziffer (Body Small, Tabellenziffern, `aria-hidden`), Titel
   (Subhead), Erklärung (Body Small, max. 55ch), 1rem Innenabstand, Haarlinie unten. Arbeitsweise mit
   eigener Titelspalte ab 640 px (`2rem | 10rem | 1fr`), die Kontakt-Schritte ohne (`2rem | 1fr`).
+  Mit `fahrplan` (Arbeitsweise) läuft neben den Ziffern eine Linie, siehe Signaturen.
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
 
@@ -851,7 +852,8 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 Nur die Handlung, kein Bild. Links unter einer Haarlinie zuerst der Schlusspunkt der Erzählung: die
 Eröffnung des Heros, „Sie erzählen. / Ich höre zu.“, in Title Medium (600, zweite Zeile
-Bleistiftgrau), Wort für Wort einlaufend wie das Gerede. Darunter die Adresse (`CopyEmail`), der
+Bleistiftgrau), ruhig. Darunter die Adresse (`CopyEmail`, mit `schreiben`: sie tippt sich ein, siehe
+Signaturen), der
 Webmail-Hinweis als Caption und der einzige Primärbutton des Bereichs; rechts die Erreichbarkeit als
 Meta-Liste (Ort, Profil, Code), deren erste Zeile ihre eigene Haarlinie mitbringt. Ab 1024 px stehen
 beide Spalten `1fr | 1fr` mit 3rem Abstand nebeneinander, beide Linien auf einer Höhe, wie die drei
@@ -869,9 +871,35 @@ Unter dem Text, über die volle Spaltenbreite: ein eigenes Foto des Rosenheimer 
 belegt den Raum, von dem der Text spricht (Bruckmühl, TH Rosenheim, Raum Rosenheim), und steht
 deshalb nach dem Text, nie davor. Ab 640 px schneidet der Rahmen 3 : 1 aus dem Panorama, mit mehr
 Himmel als Wald weggenommen, damit das Land die Mitte hält; unter 640 px ein 4:3-Ausschnitt, der auf
-das Land zoomt. Der Platz rechts neben dem Text bleibt dem Portrait, sobald eines hinterlegt ist. Nur
+das Land zoomt. Mit Bewegung ist das Bild im Rahmen größer (am Computer 1,35-fach breit) und
+schwenkt beim Scrollen waagerecht einmal durch das Panorama (Signatur, siehe dort); ohne steht der
+beschriebene Ausschnitt. Der Platz rechts neben dem Text bleibt dem Portrait, sobald eines
+hinterlegt ist. Nur
 echte, eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository; die
 Bildunterschrift nennt nur, was das Bild belegbar zeigt.
+
+### Signaturen der Kapitel
+
+Seit 2026-10-14 ([`docs/SEKTIONEN_SIGNATUR_PLAN.md`](docs/SEKTIONEN_SIGNATUR_PLAN.md)). Wie jede
+Bühne einer Projektseite ein Merkmal ihres Projekts ins Bild setzt, hat jedes Kapitel der Startseite
+eine eigene Bewegung, die aus seiner Aussage kommt. Die gemeinsame Grundbewegung (Kapitel-Linie, Text
+8 px, Haarlinien) bleibt darunter; Rückbezüge und Marker verbinden die Kapitel mit dem Hero.
+
+| Kapitel         | Aussage                                        | Signatur                                                                                                      |
+| --------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Hero            | Aus Gerede wird Klartext                       | Vier Wörter fliegen beim Scrollen aus dem Gerede in die H1                                                    |
+| 01 Arbeiten     | Jedes Projekt sagt, wie weit es ist            | Der Stand trägt einen Marker, der beim Scrollen aufzieht                                                      |
+| 02 Leistungen   | Hinter jeder Leistung steht ein echtes Projekt | Belegzeile je Spalte, die Namen rücken nacheinander von links nach, nachdem die Antwort markiert ist (120 ms) |
+| 03 Arbeitsweise | Erst klären, was geht, dann bauen              | Fahrplan: Linie neben den Ziffern, Spitze bei 60 % der Fensterhöhe, erreichte Ziffern rasten orange ein       |
+| 04 Über         | Eine Person, direkt ansprechbar (im Raum)      | Das Panorama schwenkt beim Scrollen waagerecht einmal durch, wie ein Blick vom Gipfel                         |
+| 05 Kontakt      | Das erste Gespräch kostet nichts               | Die Adresse tippt sich ein (55 ms je Zeichen), der Cursor blinkt dreimal und geht                             |
+
+**The Signature Rule.** Jedes Kapitel hat genau eine Signatur, und sie kommt aus seiner Aussage, nicht
+aus einem Vorrat an Effekten. Prüffrage wie bei den Bühnen: Würde ein Besucher die Bewegung einem
+anderen Kapitel zuordnen? Dann ist sie falsch. Eine Signatur ist entweder ans Scrollen gebunden (vor
+und zurück) oder läuft einmal und kommt zur Ruhe (unter 5 s); sie darf länger und weiter gehen als
+die Grundbewegung, aber nie Text unlesbar machen, nie den Inhalt verändern, den sie zeigt (Link,
+Vorlesen, Markieren bleiben), und ohne Skript und mit reduzierter Bewegung steht ihr Endzustand.
 
 ### Containers
 
@@ -939,8 +967,9 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
 - **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
   Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
 - **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
-  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`; nur das Foto in Über Klartext,
-  nie ein Screenshot, der wird nicht beschnitten), Felder eines Kontaktabzugs kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
+  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`; nie ein Screenshot, der wird
+  nicht beschnitten; das Foto in Über Klartext schwenkt seit 2026-10-14 weiter, als Signatur),
+  Felder eines Kontaktabzugs kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
   (`clip-path`); das Bildfeld darum bleibt unberührt, es ist Ziel des Übergangs.
 - **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Fläche, Linie, 2 px Pfeil,
   Bild 1,02).

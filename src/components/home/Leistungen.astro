@@ -15,6 +15,13 @@
  * Rückbezug (docs/NACH_DEM_HERO_PLAN.md): Über jeder Beschreibung steht ein
  * Satz aus dem Gerede des Heros, den diese Art Software beantwortet, und die
  * Antwort trägt den Marker. Spalte um Spalte, wie das Gerede selbst.
+ *
+ * Signatur „Belege rücken nach“ (docs/SEKTIONEN_SIGNATUR_PLAN.md): Das
+ * Kapitel sagt „Hinter jeder Leistung steht ein echtes Projekt“. Unter jeder
+ * Beschreibung steht deshalb die Belegzeile der Spalte, alle Projekte aus den
+ * Einzelpunkten, und sie setzt sich Name für Name zusammen, nachdem die
+ * Antwort markiert ist: erst die Behauptung, dann rücken die Belege nach.
+ * Unveröffentlichte Projekte stehen ohne Link, wie in den Aufklappern.
  */
 import { getCollection, getEntry } from 'astro:content'
 import Disclosure from '@/components/Disclosure.astro'
@@ -32,6 +39,8 @@ const leistungen = await getCollection('leistungen')
 /** Die Einzelpunkte einer Spalte, über den gleichen Titel gefunden. */
 const punkteZu = (titel: string) =>
   leistungen.find((group) => group.data.title === titel)?.data.items ?? []
+/** Alle Projekte, die eine Spalte belegen, in der Reihenfolge ihres ersten Auftretens. */
+const belegeZu = (titel: string) => [...new Set(punkteZu(titel).flatMap((item) => item.evidence))]
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
 ---
 
@@ -45,6 +54,7 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     {
       company.services.map((service, i) => {
         const items = punkteZu(service.title)
+        const belege = belegeZu(service.title)
         const rueck = echo(
           company.heroEchos,
           company.heroGerede,
@@ -78,6 +88,25 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
                 service.description
               )}
             </dd>
+            {belege.length > 0 && (
+              <dd class="mt-3 mb-0 ml-0 text-xs leading-relaxed text-fg-muted">
+                Belege:{' '}
+                {belege.map((slug, j) => (
+                  <>
+                    <span class="beleg" style={`--j: ${j}`} data-beleg>
+                      {ohneSeite.has(slug) ? (
+                        projektTitel.get(slug)
+                      ) : (
+                        <a class="text-accent underline-offset-4" href={href(`/projekte/${slug}`)}>
+                          {projektTitel.get(slug) ?? slug}
+                        </a>
+                      )}
+                      {j < belege.length - 1 && ','}
+                    </span>{' '}
+                  </>
+                ))}
+              </dd>
+            )}
             {items.length > 0 && (
               <dd class="mt-4 ml-0 border-t border-border text-sm">
                 <Disclosure title="Im Einzelnen" meta={punkte(items.length)}>
@@ -162,6 +191,39 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     animation: none;
   }
 
+  /*
+   * Belege rücken nach: Name für Name von links, 120 ms Abstand. Mit
+   * Rückbezug erst, wenn dessen Marker steht (`--echo-marker-ab` setzt
+   * `GeredeEcho`), sonst kurz nach dem Einzug der Spalte (`data-belege-an`
+   * setzt das Skript unten). `inline-block`, weil nur so `transform` greift;
+   * ein Projektname bricht dadurch nicht mehr in sich um.
+   */
+  .beleg {
+    display: inline-block;
+  }
+  html[data-bewegung] [data-leistung]:not([data-belege-an]) [data-beleg],
+  html[data-bewegung] [data-leistung][data-echo-gruppe]:not([data-echo-an]) [data-beleg] {
+    opacity: 0;
+    transform: translateX(-0.5em);
+  }
+  [data-leistung][data-belege-an]:not([data-echo-gruppe]) [data-beleg] {
+    animation: beleg-ruecken 0.32s calc(0.4s + var(--j) * 120ms) both cubic-bezier(0.2, 0, 0, 1);
+  }
+  [data-leistung][data-belege-an][data-echo-an] [data-beleg] {
+    animation: beleg-ruecken 0.32s calc(var(--echo-marker-ab, 0.3s) + 0.5s + var(--j) * 120ms) both
+      cubic-bezier(0.2, 0, 0, 1);
+  }
+  @keyframes beleg-ruecken {
+    from {
+      opacity: 0;
+      transform: translateX(-0.5em);
+    }
+  }
+  /* Sicherheitsnetz wie in global.css: Läuft das Modul nicht, stehen die Belege nach 2 s. */
+  html[data-bewegung=''] [data-beleg] {
+    animation: bewegt-sichtbar 0s 2s both;
+  }
+
   /* Gedruckt wird der Endzustand, auch was nie ins Fenster kam. */
   @media print {
     html[data-bewegung] .leistung {
@@ -170,7 +232,8 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
     html[data-bewegung] .leistung-linie {
       display: none;
     }
-    html[data-bewegung] .leistung-text[data-bewegt] {
+    html[data-bewegung] .leistung-text[data-bewegt],
+    html[data-bewegung] [data-beleg] {
       opacity: 1;
       transform: none;
     }
@@ -192,6 +255,8 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
   }
 
   const einziehen = (spalte: HTMLElement, verzug: number) => {
+    // Gibt die Belegzeile frei; wann sie nachrückt, steht im CSS.
+    spalte.dataset.belegeAn = ''
     const linie = spalte.querySelector<HTMLElement>('.leistung-linie')
     const texte = alle('.leistung-text', spalte)
     const laeufe = [
