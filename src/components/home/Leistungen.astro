@@ -6,26 +6,20 @@
  * Spalten). Die Gruppen in leistungen.json heißen wie die Spalten in
  * company.json; darüber werden sie zugeordnet. Jeder Einzelpunkt nennt das
  * Projekt, das ihn belegt: ohne Beleg kein Eintrag, sonst wäre es eine
- * Wunschliste.
+ * Wunschliste. Unter jeder Beschreibung steht die Belegzeile der Spalte, alle
+ * Projekte aus ihren Einzelpunkten; unveröffentlichte ohne Link.
  *
- * Bewegung: Kommen die drei Arten ins Fenster, zieht die Haarlinie über jeder
- * Spalte von links auf, Titel und Text ziehen 8 px ein, Spalte um Spalte. Die
- * Aufklapper bewegt `Disclosure.astro` selbst.
- *
- * Rückbezug (docs/NACH_DEM_HERO_PLAN.md): Über jeder Beschreibung steht ein
- * Satz aus dem Gerede des Heros, den diese Art Software beantwortet, und die
- * Antwort trägt den Marker. Spalte um Spalte, wie das Gerede selbst.
- *
- * Signatur „Belege rücken nach“ (docs/SEKTIONEN_SIGNATUR_PLAN.md): Das
- * Kapitel sagt „Hinter jeder Leistung steht ein echtes Projekt“. Unter jeder
- * Beschreibung steht deshalb die Belegzeile der Spalte, alle Projekte aus den
- * Einzelpunkten, und sie setzt sich Name für Name zusammen, nachdem die
- * Antwort markiert ist: erst die Behauptung, dann rücken die Belege nach.
- * Unveröffentlichte Projekte stehen ohne Link, wie in den Aufklappern.
+ * Die Wahlhilfe (docs/RUHE_PLAN.md, seit 2026-10-14): Über den Spalten fragt
+ * die Seite „Was davon kennen Sie?“ und bietet drei Sätze aus dem Gerede des
+ * Heros an, wörtlich (`heroEchos`, geprüft in `lib/echo.ts`). Wer einen
+ * wählt, sieht die Spalte, die ihn beantwortet: Die anderen treten zurück,
+ * die antwortende Stelle bekommt den Marker, und „Im Einzelnen“ öffnet sich
+ * mit den Belegen. Noch einmal tippen hebt die Wahl auf. Die Wahlhilfe gibt
+ * es nur mit Skript; ohne steht der Abschnitt wie immer. Text zieht hier
+ * nicht mehr ein: Bewegung gibt es nur als Antwort auf die Wahl.
  */
 import { getCollection, getEntry } from 'astro:content'
 import Disclosure from '@/components/Disclosure.astro'
-import GeredeEcho from '@/components/GeredeEcho.astro'
 import Section from '@/components/Section.astro'
 import { echo } from '@/lib/echo'
 import { href } from '@/lib/site'
@@ -42,6 +36,14 @@ const punkteZu = (titel: string) =>
 /** Alle Projekte, die eine Spalte belegen, in der Reihenfolge ihres ersten Auftretens. */
 const belegeZu = (titel: string) => [...new Set(punkteZu(titel).flatMap((item) => item.evidence))]
 const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
+
+/** Je Spalte: Einzelpunkte, Belege und, falls vorhanden, der Satz aus dem Gerede samt Antwort. */
+const spalten = company.services.map((service) => ({
+  service,
+  items: punkteZu(service.title),
+  belege: belegeZu(service.title),
+  wahl: echo(company.heroEchos, company.heroGerede, service.title, service.description),
+}))
 ---
 
 <Section
@@ -50,270 +52,212 @@ const punkte = (n: number) => (n === 1 ? '1 Punkt' : `${n} Punkte`)
   title="Hinter jeder Leistung steht ein echtes Projekt"
   intro="Ob Programm, Website oder Web-App: klein genug, um verstanden zu werden, und solide genug, um zu bleiben."
 >
+  {
+    spalten.some((s) => s.wahl) && (
+      <div class="mb-10 sm:mb-12" data-wahl hidden>
+        <p class="m-0 text-sm font-medium text-fg" id="wahl-frage">
+          Was davon kennen Sie?
+        </p>
+        <div
+          class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-x-8"
+          role="group"
+          aria-labelledby="wahl-frage"
+        >
+          {spalten.map(({ service, wahl }, i) =>
+            wahl ? (
+              <button
+                type="button"
+                class="wahl-knopf"
+                aria-pressed="false"
+                aria-controls={`leistung-${i}`}
+                data-wahl-knopf={i}
+              >
+                {wahl.worte.join(' ')}
+                <span class="sr-only"> Antwort: {service.title}</span>
+              </button>
+            ) : (
+              <span aria-hidden="true" />
+            ),
+          )}
+        </div>
+        <p class="mt-3 mb-0 text-sm text-fg-muted">
+          Nichts davon?{' '}
+          <a class="text-accent underline underline-offset-4" href={href('/#kontakt')}>
+            Erzählen Sie es
+          </a>
+          .
+        </p>
+      </div>
+    )
+  }
+
   <dl class="m-0 grid grid-cols-1 gap-x-8 sm:grid-cols-3" data-leistungen>
     {
-      company.services.map((service, i) => {
-        const items = punkteZu(service.title)
-        const belege = belegeZu(service.title)
-        const rueck = echo(
-          company.heroEchos,
-          company.heroGerede,
-          service.title,
-          service.description,
-        )
-        return (
-          <div
-            class="leistung relative flex flex-col border-t border-border pt-4 pb-8"
-            data-leistung
-            data-echo-gruppe={rueck ? '' : undefined}
-            style={rueck ? `--echo-ab: ${0.3 + i * 0.35}s` : undefined}
-          >
-            <dt class="text-lg font-semibold tracking-tight">
-              <span aria-hidden="true" class="leistung-linie" data-bewegt />
-              <span class="leistung-text block" data-bewegt>
-                {service.title}
-              </span>
-            </dt>
-            {/* `grow`: Die Aufklapper stehen auf einer Höhe, auch wenn ein Zitat länger ist. */}
-            <dd
-              class="leistung-text prose-flow mt-2 ml-0 grow text-sm leading-relaxed text-fg-muted"
-              data-bewegt
-            >
-              {rueck ? (
+      spalten.map(({ service, items, belege, wahl }, i) => (
+        <div
+          class="leistung flex flex-col border-t border-border pt-4 pb-8"
+          id={`leistung-${i}`}
+          data-leistung={i}
+        >
+          <dt class="text-lg font-semibold tracking-tight">{service.title}</dt>
+          {/* `grow`: Belege und Aufklapper stehen über alle Spalten auf einer Höhe. */}
+          <dd class="prose-flow mt-2 ml-0 grow text-sm leading-relaxed text-fg-muted">
+            {wahl ? <span set:html={wahl.html} /> : service.description}
+          </dd>
+          {belege.length > 0 && (
+            <dd class="mt-3 mb-0 ml-0 text-xs leading-relaxed text-fg-muted">
+              Belege:{' '}
+              {belege.map((slug, j) => (
                 <>
-                  <GeredeEcho worte={rueck.worte} class="mb-2" />
-                  <span class="block" set:html={rueck.html} />
+                  {j > 0 && ', '}
+                  {ohneSeite.has(slug) ? (
+                    projektTitel.get(slug)
+                  ) : (
+                    <a class="text-accent underline-offset-4" href={href(`/projekte/${slug}`)}>
+                      {projektTitel.get(slug) ?? slug}
+                    </a>
+                  )}
                 </>
-              ) : (
-                service.description
-              )}
+              ))}
             </dd>
-            {belege.length > 0 && (
-              <dd class="mt-3 mb-0 ml-0 text-xs leading-relaxed text-fg-muted">
-                Belege:{' '}
-                {belege.map((slug, j) => (
-                  <>
-                    <span class="beleg" style={`--j: ${j}`} data-beleg>
-                      {ohneSeite.has(slug) ? (
-                        projektTitel.get(slug)
-                      ) : (
-                        <a class="text-accent underline-offset-4" href={href(`/projekte/${slug}`)}>
-                          {projektTitel.get(slug) ?? slug}
-                        </a>
-                      )}
-                      {j < belege.length - 1 && ','}
-                    </span>{' '}
-                  </>
-                ))}
-              </dd>
-            )}
-            {items.length > 0 && (
-              <dd class="mt-4 ml-0 border-t border-border text-sm">
-                <Disclosure title="Im Einzelnen" meta={punkte(items.length)}>
-                  <ul class="mt-0 grid list-none grid-cols-1 gap-y-5 p-0">
-                    {items.map((item) => (
-                      <li>
-                        <span class="block text-sm font-medium">{item.title}</span>
-                        <span class="prose-flow block text-sm text-fg-muted">
-                          {item.description}
+          )}
+          {items.length > 0 && (
+            <dd class="mt-4 ml-0 border-t border-border text-sm">
+              <Disclosure title="Im Einzelnen" meta={punkte(items.length)}>
+                <ul class="mt-0 grid list-none grid-cols-1 gap-y-5 p-0">
+                  {items.map((item) => (
+                    <li>
+                      <span class="block text-sm font-medium">{item.title}</span>
+                      <span class="prose-flow block text-sm text-fg-muted">{item.description}</span>
+                      {item.evidence.length > 0 && (
+                        <span class="mt-1 block text-xs text-fg-muted">
+                          Beleg:{' '}
+                          {item.evidence.map((slug, j) => (
+                            <>
+                              {j > 0 && ', '}
+                              {ohneSeite.has(slug) ? (
+                                projektTitel.get(slug)
+                              ) : (
+                                <a
+                                  class="text-accent underline-offset-4"
+                                  href={href(`/projekte/${slug}`)}
+                                >
+                                  {projektTitel.get(slug) ?? slug}
+                                </a>
+                              )}
+                            </>
+                          ))}
                         </span>
-                        {item.evidence.length > 0 && (
-                          <span class="mt-1 block text-xs text-fg-muted">
-                            Beleg:{' '}
-                            {item.evidence.map((slug, i) => (
-                              <>
-                                {i > 0 && ', '}
-                                {ohneSeite.has(slug) ? (
-                                  projektTitel.get(slug)
-                                ) : (
-                                  <a
-                                    class="text-accent underline-offset-4"
-                                    href={href(`/projekte/${slug}`)}
-                                  >
-                                    {projektTitel.get(slug) ?? slug}
-                                  </a>
-                                )}
-                              </>
-                            ))}
-                          </span>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </Disclosure>
-              </dd>
-            )}
-          </div>
-        )
-      })
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </Disclosure>
+            </dd>
+          )}
+        </div>
+      ))
     }
   </dl>
 </Section>
 
 <style>
   /*
-   * Die Haarlinie bleibt als `border-top`, damit das Layout mit und ohne
-   * Skript gleich hoch ist. Mit Bewegung wird die Kante durchsichtig, und an
-   * ihrer Stelle liegt ein eigenes Element, das von links aufziehen kann.
-   * Den Anfangszustand trägt nur, was noch `data-bewegt` hat; das Skript
-   * nimmt es nach dem Einziehen ab.
+   * Die Sätze sind Knöpfe im Stil des Sekundärknopfs (DESIGN.md), links
+   * bündig, weil sie Text sind. Gewählt: verdünntes Orange, Rand Orange.
    */
-  .leistung-linie {
-    display: none;
+  .wahl-knopf {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg);
+    font: inherit;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      color var(--duration-base) var(--ease-quiet),
+      background-color var(--duration-base) var(--ease-quiet),
+      border-color var(--duration-base) var(--ease-quiet);
   }
-  html[data-bewegung] .leistung {
-    border-top-color: transparent;
-  }
-  html[data-bewegung] .leistung-linie {
-    position: absolute;
-    inset-inline: 0;
-    top: -1px;
-    display: block;
-    height: 1px;
-    background-color: var(--color-border);
-    transform-origin: left;
-  }
-  html[data-bewegung] .leistung-linie[data-bewegt] {
-    transform: scaleX(0);
-  }
-  html[data-bewegung] .leistung-text[data-bewegt] {
-    opacity: 0;
-    transform: translateY(8px);
+  .wahl-knopf:hover,
+  .wahl-knopf[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-soft);
   }
 
   /*
-   * Läuft das Skript, wartet es selbst, bis die Spalten im Fenster sind. Das
-   * Sicherheitsnetz aus global.css (sichtbar nach 2 s) würde sonst Spalten
-   * weiter unten vorher aufdecken, und beim Hereinscrollen sprängen sie auf
-   * unsichtbar zurück, um einzuziehen.
+   * Die Antwort trägt den Marker nur, wenn ihr Satz gewählt ist; sonst ist sie
+   * Text wie jeder andere. Gewählt tritt die übrige Spalte zurück.
    */
-  html[data-bewegung] [data-leistungen][data-bereit] [data-bewegt] {
-    animation: none;
+  .leistung :global(mark.marker[data-antwort]) {
+    color: inherit;
+    background-size: 0% 100%;
+    transition:
+      background-size var(--duration-slow) var(--ease-quiet),
+      color var(--duration-base) var(--ease-quiet);
+  }
+  .leistung[data-gewaehlt] :global(mark.marker[data-antwort]) {
+    color: var(--color-fg);
+    background-size: 100% 100%;
+    transition-duration: 600ms, var(--duration-base);
+  }
+  .leistung {
+    transition: opacity var(--duration-base) var(--ease-quiet);
+  }
+  [data-leistungen][data-wahl-an] .leistung:not([data-gewaehlt]) {
+    opacity: 0.35;
   }
 
-  /*
-   * Belege rücken nach: Name für Name von links, 120 ms Abstand. Mit
-   * Rückbezug erst, wenn dessen Marker steht (`--echo-marker-ab` setzt
-   * `GeredeEcho`), sonst kurz nach dem Einzug der Spalte (`data-belege-an`
-   * setzt das Skript unten). `inline-block`, weil nur so `transform` greift;
-   * ein Projektname bricht dadurch nicht mehr in sich um.
-   */
-  .beleg {
-    display: inline-block;
-  }
-  html[data-bewegung] [data-leistung]:not([data-belege-an]) [data-beleg],
-  html[data-bewegung] [data-leistung][data-echo-gruppe]:not([data-echo-an]) [data-beleg] {
-    opacity: 0;
-    transform: translateX(-0.5em);
-  }
-  [data-leistung][data-belege-an]:not([data-echo-gruppe]) [data-beleg] {
-    animation: beleg-ruecken 0.32s calc(0.4s + var(--j) * 120ms) both cubic-bezier(0.2, 0, 0, 1);
-  }
-  [data-leistung][data-belege-an][data-echo-an] [data-beleg] {
-    animation: beleg-ruecken 0.32s calc(var(--echo-marker-ab, 0.3s) + 0.5s + var(--j) * 120ms) both
-      cubic-bezier(0.2, 0, 0, 1);
-  }
-  @keyframes beleg-ruecken {
-    from {
-      opacity: 0;
-      transform: translateX(-0.5em);
-    }
-  }
-  /* Sicherheitsnetz wie in global.css: Läuft das Modul nicht, stehen die Belege nach 2 s. */
-  html[data-bewegung=''] [data-beleg] {
-    animation: bewegt-sichtbar 0s 2s both;
-  }
-
-  /* Gedruckt wird der Endzustand, auch was nie ins Fenster kam. */
-  @media print {
-    html[data-bewegung] .leistung {
-      border-top-color: var(--color-border);
-    }
-    html[data-bewegung] .leistung-linie {
-      display: none;
-    }
-    html[data-bewegung] .leistung-text[data-bewegt],
-    html[data-bewegung] [data-beleg] {
-      opacity: 1;
-      transform: none;
+  @media (prefers-reduced-motion: reduce) {
+    .wahl-knopf,
+    .leistung,
+    .leistung :global(mark.marker[data-antwort]) {
+      transition: none;
     }
   }
 </style>
 
 <script>
-  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, inView, wennBewegt } from '@/lib/motion'
+  import { alle, bewegt } from '@/lib/motion'
 
+  const wahl = document.querySelector<HTMLElement>('[data-wahl]')
   const liste = document.querySelector<HTMLElement>('[data-leistungen]')
 
-  /** Endzustand ohne Bewegung: Anfangszustand abnehmen, eigene Inline-Styles räumen. */
-  const ruhe = (spalte: HTMLElement) => {
-    for (const el of alle('[data-bewegt]', spalte)) {
-      el.removeAttribute('data-bewegt')
-      el.style.removeProperty('opacity')
-      el.style.removeProperty('transform')
-    }
-  }
-
-  const einziehen = (spalte: HTMLElement, verzug: number) => {
-    // Gibt die Belegzeile frei; wann sie nachrückt, steht im CSS.
-    spalte.dataset.belegeAn = ''
-    const linie = spalte.querySelector<HTMLElement>('.leistung-linie')
-    const texte = alle('.leistung-text', spalte)
-    const laeufe = [
-      animate(
-        texte,
-        { opacity: [0, 1], transform: [`translateY(${WEG_TEXT}px)`, 'none'] },
-        {
-          duration: DAUER.langsam,
-          ease: KURVE,
-          delay: verzug,
-        },
-      ),
-    ]
-    if (linie) {
-      laeufe.push(
-        animate(
-          linie,
-          { transform: ['scaleX(0)', 'scaleX(1)'] },
-          {
-            duration: DAUER.szene,
-            ease: KURVE,
-            delay: verzug,
-          },
-        ),
-      )
-    }
-    // Motion schreibt die Endwerte erst nach `finished` als Inline-Style; ein
-    // Bild später räumen, damit `transform: none` und `opacity: 1` aus CSS gelten.
-    Promise.all(laeufe.map((lauf) => lauf.finished)).then(() =>
-      requestAnimationFrame(() => ruhe(spalte)),
-    )
-  }
-
-  // Nur wenn MotionReady einen Anfangszustand erlaubt hat, gibt es etwas zu tun.
-  if (liste && document.documentElement.hasAttribute('data-bewegung')) {
+  if (wahl && liste) {
+    const knoepfe = alle<HTMLButtonElement>('[data-wahl-knopf]', wahl)
     const spalten = alle('[data-leistung]', liste)
-    wennBewegt(
-      () => {
-        liste.dataset.bereit = ''
-        // Was im selben Augenblick ins Fenster kommt (am Desktop alle drei),
-        // zieht gestaffelt ein; am Handy kommt jede Spalte für sich.
-        let warteschlange: HTMLElement[] = []
-        inView(
-          spalten,
-          (spalte) => {
-            warteschlange.push(spalte as HTMLElement)
-            if (warteschlange.length > 1) return
-            requestAnimationFrame(() => {
-              const jetzt = warteschlange.sort((a, b) => spalten.indexOf(a) - spalten.indexOf(b))
-              warteschlange = []
-              jetzt.forEach((s, i) => einziehen(s, i * STAFFEL))
-            })
-          },
-          { amount: 0.2 },
-        )
-      },
-      () => spalten.forEach(ruhe),
-    )
+    wahl.hidden = false
+
+    /** `nr` wählt eine Spalte, `null` hebt die Wahl auf. */
+    const waehlen = (nr: string | null) => {
+      for (const knopf of knoepfe) {
+        knopf.setAttribute('aria-pressed', String(knopf.dataset.wahlKnopf === nr))
+      }
+      liste.toggleAttribute('data-wahl-an', nr !== null)
+      for (const spalte of spalten)
+        spalte.toggleAttribute('data-gewaehlt', spalte.dataset.leistung === nr)
+      const spalte = spalten.find((s) => s.dataset.leistung === nr)
+      if (!spalte) return
+
+      // Die Belege im Einzelnen gleich mit zeigen; der Aufklapper öffnet sich wie bei einem Klick.
+      const aufklapper = spalte.querySelector<HTMLDetailsElement>('details')
+      if (aufklapper && !aufklapper.open) aufklapper.querySelector('summary')?.click()
+
+      // Am Handy steht die Spalte womöglich unter dem Fenster: hinführen, nicht springen.
+      const oben = spalte.getBoundingClientRect().top
+      if (oben > window.innerHeight * 0.7 || oben < 0) {
+        spalte.scrollIntoView({ block: 'start', behavior: bewegt() ? 'smooth' : 'auto' })
+      }
+    }
+
+    for (const knopf of knoepfe) {
+      knopf.addEventListener('click', () => {
+        const nr = knopf.dataset.wahlKnopf ?? null
+        waehlen(knopf.getAttribute('aria-pressed') === 'true' ? null : nr)
+      })
+    }
   }
 </script>

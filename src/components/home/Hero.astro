@@ -13,9 +13,9 @@
  * mit Sprungziel in der Adresse und beim Zurückkommen von einer Unterseite
  * steht der fertige Hero sofort.
  *
- * Bewegung, Teil 2 (docs/BEWEGUNG_PLAN.md, B): Ohne Gerede ziehen „Für wen“,
- * Intro, Knöpfe und Adresszeile nacheinander 8 px ein, dazu der Strich unter
- * der Adresse. Mit Gerede kommen dieselben Zeilen am Ende der Scroll-Strecke.
+ * Bewegung, Teil 2: Mit Gerede kommen „Für wen“, Intro, Knöpfe und
+ * Adresszeile am Ende der Scroll-Strecke, dazu der Strich unter der Adresse.
+ * Ohne Gerede stehen sie sofort (seit 2026-10-14, docs/RUHE_PLAN.md).
  *
  * Der Hero füllt immer das erste Fenster unter dem Header, mit und ohne
  * Animation. So stimmen Scroll-Positionen beim Zurückblättern überein.
@@ -233,14 +233,15 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
 <style is:global>
   /*
-   * Ohne Gerede (kein Skript, reduzierte Bewegung, von innen): der gewohnte
-   * Einzug. Anfangszustand nur unter `html[data-bewegung]`.
+   * Mit Gerede kommen „Für wen“, Intro, Knöpfe und Adresszeile erst am Ende
+   * der Scroll-Strecke (Skript unten). Ohne Gerede stehen sie sofort: Seit
+   * 2026-10-14 zieht dort nichts mehr ein (docs/RUHE_PLAN.md).
    */
-  html[data-bewegung] [data-hero-einzug] {
+  html[data-hero='gerede'] [data-hero-einzug] {
     opacity: 0;
     transform: translateY(8px);
   }
-  html[data-bewegung] [data-hero-strich] {
+  html[data-hero='gerede'] [data-hero-strich] {
     transform: scaleX(0);
   }
 
@@ -515,7 +516,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 </style>
 
 <script>
-  import { DAUER, KURVE, STAFFEL, WEG_TEXT, alle, animate, stagger, wennBewegt } from '@/lib/motion'
+  import { KURVE, WEG_TEXT, alle, animate, wennBewegt } from '@/lib/motion'
 
   const root = document.documentElement
 
@@ -1206,38 +1207,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     if (root.dataset.hero === 'gerede') root.dataset.hero = 'fertig'
   }
 
-  /*
-   * Ohne Gerede: Einzug der Zeilen unter der stehenden H1, dann der Strich
-   * unter der Adresse (erst Text, dann Linie). Kein `inView`: Der Hero steht
-   * immer im ersten Fenster.
-   */
-  function einzug(): void {
-    const zeilen = alle('[data-hero-einzug]')
-    const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
-    if (zeilen.length === 0) return
-
-    animate(
-      zeilen,
-      { opacity: [0, 1], y: [WEG_TEXT, 0] },
-      { duration: DAUER.langsam, ease: KURVE, delay: stagger(STAFFEL) },
-    ).then(() => {
-      for (const zeile of zeilen) zeile.style.transform = 'none'
-    })
-
-    if (strich) {
-      const ankunft = (zeilen.length - 1) * STAFFEL + DAUER.langsam
-      animate(
-        strich,
-        { scaleX: [0, 1] },
-        { duration: DAUER.szene, ease: KURVE, delay: ankunft },
-      ).then(() => {
-        strich.style.transform = 'none'
-      })
-    }
-  }
-
   wennBewegt(() => {
     if (root.dataset.hero === 'gerede') gerede()
-    else einzug()
   }, fertig)
 </script>

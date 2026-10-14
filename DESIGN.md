@@ -277,9 +277,10 @@ Systemeinstellung des Besuchers.
   Schatten-Token für ein Feld über unruhigem Grund (Feld-Regel)
 - Eine zentrierte Spalte (max. 64rem), Fließtext max. 65ch
 - Leise Zustände: Farbe oder Linie ändert sich, Hover und Tastaturfokus sehen gleich aus
-- Bewegung über die ganze Seite, mit festen Grenzen (eine Kurve, vier Dauern, Text 8 px), nur bei
-  `prefers-reduced-motion: no-preference`; ohne Skript steht der Endzustand. Was sich wiederholt,
-  braucht einen Zweck und hört auf, wenn er erfüllt ist (Zweckbindung)
+- Ruhige Seite: Nichts erscheint von selbst beim Scrollen. Bewegung antwortet auf eine Handlung
+  (eine Kurve, vier Dauern), nur bei `prefers-reduced-motion: no-preference`; ohne Skript steht der
+  Endzustand. Was sich wiederholt, braucht einen Zweck und hört auf, wenn er erfüllt ist
+  (Zweckbindung)
 - Zwei Ausnahmen mit Grenzen: die Bühne der Projektseite, in der ein Projekt eigene Farben, Bewegung
   und Illustration tragen darf (Bühnenlizenz), und der Scroll-Hero der Startseite, für den Dauer- und
   Weggrenzen nicht gelten (siehe Components); sonst nirgends
@@ -300,8 +301,8 @@ Deckkraft-Grau):
   und gewählter Reiter des Umschalters samt Strich, Hover-Farbe von Sekundärbutton, Aufklapper und
   Zurück-Link, Fokus-Outline, Textauswahl und der Scroll-Hinweis im Hero (eine Aufforderung, also
   Handlung). Als Marker (30 % Orange hinter dem Text) zeigt es eine Antwort: die vier Wörter im
-  Gerede des Heros, die Stellen, die einen Rückbezug beantworten (siehe Rückbezug aufs Gerede), und
-  der Stand jeder Arbeit auf der Bühne der Startseite. Ein Baustein, `mark.marker` in `global.css`. Im Hellmodus bewusst dunkel gehalten, damit Orange als
+  Gerede des Heros, der Stand jeder Arbeit auf der Bühne der Startseite und, nach einer Wahl in der
+  Wahlhilfe, die Stelle der Leistung, die antwortet. Ein Baustein, `mark.marker` in `global.css`. Im Hellmodus bewusst dunkel gehalten, damit Orange als
   Textfarbe 6,2 : 1 auf Papierweiß hält.
 - **Werkstatt-Orange, gedrückt** (`accent-strong`, hell #912300): nur der Hover des Primärbuttons.
   Dunkler statt durchsichtiger; Deckkraft ließ den Knopf blass wirken.
@@ -458,7 +459,8 @@ Bühne mit einer Arbeit, ab 1024 px zweispaltig (`7fr | 5fr`, 3rem Abstand, link
 Text), darunter 2rem tiefer der Kontaktabzug als eine Reihe, die nicht umbricht (Felder 6 bis 8rem
 breit, 0,75rem Abstand; passt sie nicht, scrollt sie waagerecht), darunter 1,5rem tiefer „Alle
 Arbeiten ansehen“. Jede Arbeit steht genau einmal groß da. Leistungen: drei Spalten ab 640 px unter je einer Haarlinie, unter
-der Beschreibung die Belegzeile der Spalte (seit 2026-10-14), darunter Aufklapper. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
+der Beschreibung die Belegzeile der Spalte (seit 2026-10-14), darunter Aufklapper; über den Spalten
+die Wahlhilfe. Arbeitsweise: Nummernzeilen (`NumberedRows`, ab 640 px `2rem | 10rem | 1fr`). Über
 Klartext: der Text in einer Spalte (65ch), darunter das Foto über die volle Spaltenbreite. Kontakt:
 ab 1024 px zwei Spalten `1fr | 1fr` mit 3rem Abstand unter je einer Haarlinie — links Adresse und
 Knopf, rechts die Erreichbarkeit (Meta-Liste); schmaler gestapelt, die Adresse zuerst.
@@ -620,7 +622,6 @@ immer gleich aus. Übergänge nutzen die Tokens aus `global.css`: Kurve `--ease-
 - **Nummernzeile** (`NumberedRows`): Ziffer (Body Small, Tabellenziffern, `aria-hidden`), Titel
   (Subhead), Erklärung (Body Small, max. 55ch), 1rem Innenabstand, Haarlinie unten. Arbeitsweise mit
   eigener Titelspalte ab 640 px (`2rem | 10rem | 1fr`), die Kontakt-Schritte ohne (`2rem | 1fr`).
-  Mit `fahrplan` (Arbeitsweise) läuft neben den Ziffern eine Linie, siehe Signaturen.
 - **Vor/Zurück:** Navigation am Ende der Projektseite unter einer Tintenlinie; Label mit Pfeil in
   Bleistiftgrau, darunter der Titel mit aufziehendem Unterstrich.
 
@@ -649,28 +650,25 @@ Skript und Bewegung). Sonst steht der fertige Hero mit H1, „Für wen“, Intro
   Handys bis 700 px Höhe Zeilenhöhe 1,5. Prüfgröße: 375 × 667 px, der Hinweis muss im ersten
   Fenster stehen.
 
-### Rückbezug aufs Gerede (`GeredeEcho`)
+### Wahlhilfe in Leistungen
 
-Seit 2026-10-14 ([`docs/NACH_DEM_HERO_PLAN.md`](docs/NACH_DEM_HERO_PLAN.md)). Der Hero verspricht „Ich
-höre zu“; weiter unten zeigt die Seite, was sie gehört hat. Über einer Beschreibung steht „Sie
-erzählen:“ (500, Tinte) und ein Satz wörtlich aus dem Gerede in Anführungszeichen (Body Small,
-Bleistiftgrau, Auslassungspunkte, wo er mitten im Satz beginnt oder endet). In der Beschreibung
-darunter trägt die Stelle, die ihn beantwortet, den Marker aus dem Hero: 30 % Orange hinter dem Text,
-Text in Tinte. Heute in Leistungen (alle drei Arten), Arbeitsweise (Klartext, Pragmatismus) und Über
-Klartext (Text aus Markdown, `echoHtml`).
+Seit 2026-10-14 ([`docs/RUHE_PLAN.md`](docs/RUHE_PLAN.md)). Über den drei Spalten fragt die Seite
+„Was davon kennen Sie?“ (Label, Tinte) und bietet drei Sätze wörtlich aus dem Gerede des Heros an,
+je einen pro Spalte, als Knöpfe im Stil des Sekundärknopfs (8 px, Werkbank, Kantengrau, Body Small,
+linksbündig). Wer einen wählt, sieht die Antwort: Die beiden anderen Spalten treten auf 35 % zurück,
+die antwortende Stelle der Beschreibung bekommt den Marker, „Im Einzelnen“ öffnet sich mit den
+Belegen, am Handy führt die Seite zur Spalte. Der gewählte Knopf steht in verdünntem Orange mit
+orangem Rand (`aria-pressed`); noch einmal tippen hebt die Wahl auf. Darunter „Nichts davon?
+Erzählen Sie es.“ mit Link zum Kontakt. Nur mit Skript; ohne steht der Abschnitt wie immer.
 
-- **Bewegung:** einmal, wenn die Gruppe (`data-echo-gruppe`) zu 40 % im Fenster ist. Das Zitat läuft
-  Wort für Wort ein wie das Gerede (300 ms, 20 ms Versatz, 0,35em), danach zieht der Marker in
-  600 ms von links auf, über Zeilenumbrüche hinweg. Nebeneinanderstehende Gruppen fangen nacheinander
-  an. Ohne Skript und mit reduzierter Bewegung steht alles, Marker inklusive.
-- **Daten:** `heroEchos` in `company.json`; `lib/echo.ts` baut das HTML und bricht den Build, wenn der
-  Satz nicht wörtlich im Gerede oder die Antwort nicht in der Beschreibung steht.
+- **Daten:** `heroEchos` in `company.json` (Satz, Leistung, antwortende Stelle); `lib/echo.ts` bricht
+  den Build, wenn der Satz nicht wörtlich im Gerede oder die Stelle nicht in der Beschreibung steht.
+- **Bewegung:** nur als Antwort auf die Wahl: Zurücktreten 200 ms, Marker 600 ms.
 
-**The Echo Rule.** Ein Satz aus dem Gerede kehrt nur wörtlich wieder und nur neben der Stelle, die
-ihn beantwortet. Höchstens ein Rückbezug je Block, und nicht in jedem Block: Wo kein Satz ehrlich
-passt, steht keiner. Der Marker liegt nur auf der antwortenden Stelle, nie auf ganzen Absätzen. Kein
-neuer Satz wird als „Sie erzählen“ ausgegeben, der nicht im Gerede steht: Das wäre eine erfundene
-Kundenstimme.
+**The Echo Rule.** Ein Satz aus dem Gerede kehrt nur wörtlich wieder und nur dort, wo eine Stelle ihn
+beantwortet. Kein neuer Satz wird als Kundensatz ausgegeben, der nicht im Gerede steht: Das wäre eine
+erfundene Kundenstimme. (Vom 2026-10-14 bis zur Wahlhilfe standen die Sätze als „Sie erzählen:“ über
+mehreren Kapiteln; das war zu viel.)
 
 ### Arbeiten der Startseite (`ProjectShowcase`)
 
@@ -688,10 +686,7 @@ Kundenstimme.
   Arbeit da. Kein automatischer Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter
   640 px darunter). Darunter ab 1024 px nebeneinander, schmaler untereinander: der Screenshot (16:9,
   4 px, 1 px Liniengrau) und summary, „Stand: …“ und die Links wie in der Feature-Zeile. Der Satz
-  nach „Stand:“ trägt den Marker (seit 2026-10-14): Mit Bewegung zieht er beim Scrollen auf, während
-  die Zeile von 95 % bis 55 % der Fensterhöhe steigt, und zurück, wie die Flüge im Hero; der Wert
-  (`--stand`) gilt für alle Bühnen der Auswahl, nach dem Blättern steht er gleich weit. Ohne Bewegung
-  steht er voll. Ohne
+  nach „Stand:“ trägt den Marker (seit 2026-10-14), stehend, ohne aufzuziehen. Ohne
   Screenshot steht an der Stelle des Bildes die summary in Title Large, 500, Bleistiftgrau, max. 36ch,
   ohne Kasten: Ein leerer Rahmen wäre ein Platzhalter. Der Screenshot steht ganz im Rahmen, ohne
   Parallaxe (seit 2026-10-08; die Parallaxe brauchte 6 % Überstand und schnitt 3 % je Kante ab, bei
@@ -836,14 +831,14 @@ Bereichs schon vergeben ist.
 Natives `<details>`: funktioniert ohne JavaScript, per Tastatur und mit der Seitensuche. Zeile mit
 Titel (500), optionaler Zählung rechts („4 Punkte“, Tabellenziffern) und Plus/Minus-Marke; Haarlinie
 unten, Hover färbt die Zeile orange. Die Höhe animiert ein kleines Skript in jedem Browser (320 ms,
-`scrollHeight` messen, danach `auto`; die Punkte ziehen beim Öffnen gestaffelt ein); ohne Skript
+`scrollHeight` messen, danach `auto`; die Punkte stehen sofort, seit 2026-10-14 ohne Einzug); ohne Skript
 animiert sie nur, wo der Browser `interpolate-size` und `::details-content` kennt, sonst öffnet
 `<details>` sofort.
 
 ### CopyEmail
 
-Die Adresse als markierbarer Link in Title Large (1-px-Unterstrich als Hintergrund, der beim
-Hereinscrollen von links aufzieht und bei Hover orange wird), darunter — nicht
+Die Adresse als markierbarer Link in Title Large (1-px-Unterstrich als Hintergrund, der bei Hover
+orange wird), darunter — nicht
 daneben — „Adresse kopieren“ im Stil des Sekundärbuttons. Der Knopf erscheint erst, wenn der Browser die Zwischenablage anbietet; die
 Rückmeldung („Kopiert.“) steht in einem `role="status"`-Element neben dem Knopf und verschwindet
 nach zwei Sekunden. Gespeichert wird nichts.
@@ -852,9 +847,9 @@ nach zwei Sekunden. Gespeichert wird nichts.
 
 Nur die Handlung, kein Bild. Links unter einer Haarlinie zuerst der Schlusspunkt der Erzählung: die
 Eröffnung des Heros, „Sie erzählen. / Ich höre zu.“, in Title Medium (600, zweite Zeile
-Bleistiftgrau), ruhig. Darunter die Adresse (`CopyEmail`, mit `schreiben`: sie tippt sich ein, siehe
-Signaturen), der
-Webmail-Hinweis als Caption und der einzige Primärbutton des Bereichs; rechts die Erreichbarkeit als
+Bleistiftgrau). Darunter die Adresse (`CopyEmail`), der
+Webmail-Hinweis als Caption, der einzige Primärbutton des Bereichs und darunter der Antworttermin
+(siehe dort); rechts die Erreichbarkeit als
 Meta-Liste (Ort, Profil, Code), deren erste Zeile ihre eigene Haarlinie mitbringt. Ab 1024 px stehen
 beide Spalten `1fr | 1fr` mit 3rem Abstand nebeneinander, beide Linien auf einer Höhe, wie die drei
 Arten in „Leistungen“. Darunter stapeln sie sich, die Adresse zuerst, 2,5rem Abstand. Kein Ablauf
@@ -871,35 +866,22 @@ Unter dem Text, über die volle Spaltenbreite: ein eigenes Foto des Rosenheimer 
 belegt den Raum, von dem der Text spricht (Bruckmühl, TH Rosenheim, Raum Rosenheim), und steht
 deshalb nach dem Text, nie davor. Ab 640 px schneidet der Rahmen 3 : 1 aus dem Panorama, mit mehr
 Himmel als Wald weggenommen, damit das Land die Mitte hält; unter 640 px ein 4:3-Ausschnitt, der auf
-das Land zoomt. Mit Bewegung ist das Bild im Rahmen größer (am Computer 1,35-fach breit) und
-schwenkt beim Scrollen waagerecht einmal durch das Panorama (Signatur, siehe dort); ohne steht der
-beschriebene Ausschnitt. Der Platz rechts neben dem Text bleibt dem Portrait, sobald eines
+das Land zoomt. Das Foto steht still (seit 2026-10-14; vorher wanderte oder schwenkte es beim
+Scrollen). Der Platz rechts neben dem Text bleibt dem Portrait, sobald eines
 hinterlegt ist. Nur
 echte, eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository; die
 Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 
-### Signaturen der Kapitel
+### Antworttermin im Kontakt
 
-Seit 2026-10-14 ([`docs/SEKTIONEN_SIGNATUR_PLAN.md`](docs/SEKTIONEN_SIGNATUR_PLAN.md)). Wie jede
-Bühne einer Projektseite ein Merkmal ihres Projekts ins Bild setzt, hat jedes Kapitel der Startseite
-eine eigene Bewegung, die aus seiner Aussage kommt. Die gemeinsame Grundbewegung (Kapitel-Linie, Text
-8 px, Haarlinien) bleibt darunter; Rückbezüge und Marker verbinden die Kapitel mit dem Hero.
-
-| Kapitel         | Aussage                                        | Signatur                                                                                                      |
-| --------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Hero            | Aus Gerede wird Klartext                       | Vier Wörter fliegen beim Scrollen aus dem Gerede in die H1                                                    |
-| 01 Arbeiten     | Jedes Projekt sagt, wie weit es ist            | Der Stand trägt einen Marker, der beim Scrollen aufzieht                                                      |
-| 02 Leistungen   | Hinter jeder Leistung steht ein echtes Projekt | Belegzeile je Spalte, die Namen rücken nacheinander von links nach, nachdem die Antwort markiert ist (120 ms) |
-| 03 Arbeitsweise | Erst klären, was geht, dann bauen              | Fahrplan: Linie neben den Ziffern, Spitze bei 60 % der Fensterhöhe, erreichte Ziffern rasten orange ein       |
-| 04 Über         | Eine Person, direkt ansprechbar (im Raum)      | Das Panorama schwenkt beim Scrollen waagerecht einmal durch, wie ein Blick vom Gipfel                         |
-| 05 Kontakt      | Das erste Gespräch kostet nichts               | Die Adresse tippt sich ein (55 ms je Zeichen), der Cursor blinkt dreimal und geht                             |
-
-**The Signature Rule.** Jedes Kapitel hat genau eine Signatur, und sie kommt aus seiner Aussage, nicht
-aus einem Vorrat an Effekten. Prüffrage wie bei den Bühnen: Würde ein Besucher die Bewegung einem
-anderen Kapitel zuordnen? Dann ist sie falsch. Eine Signatur ist entweder ans Scrollen gebunden (vor
-und zurück) oder läuft einmal und kommt zur Ruhe (unter 5 s); sie darf länger und weiter gehen als
-die Grundbewegung, aber nie Text unlesbar machen, nie den Inhalt verändern, den sie zeigt (Link,
-Vorlesen, Markieren bleiben), und ohne Skript und mit reduzierter Bewegung steht ihr Endzustand.
+Seit 2026-10-14 ([`docs/RUHE_PLAN.md`](docs/RUHE_PLAN.md)). Unter „E-Mail schreiben“ rechnet die Seite
+aus, was „Antwort in der Regel innerhalb eines Werktags“ heute heißt: „Heute geschrieben, Antwort in
+der Regel bis Donnerstag, 15. Oktober.“ (Body Small, Datum in Tinte). Darunter die nächsten sieben
+Tage als kleine Felder (2,75rem, 8 px, Liniengrau, Wochentag und Datum in Tabellenziffern): heute mit
+Tintenrand, der Antworttag Orange auf verdünntem Orange, freie Tage gestrichelt und blass.
+Antworttag ist der nächste Werktag; wer an einem freien Tag schreibt, bekommt den ersten Werktag.
+Frei sind Wochenenden und die gesetzlichen Feiertage in Bayern (mit Mariä Himmelfahrt; Ostern nach
+Gauß). Nur mit Skript, weil das Datum erst beim Besuch feststeht; ohne steht der Satz im Intro.
 
 ### Containers
 
@@ -964,13 +946,17 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   Kundengerede ein. Beim Scrollen macht die Zeile Platz, und vier Wörter fliegen aus dem Gerede in die H1. Für diesen Hero
   gelten Dauer- und Weggrenzen nicht. Ohne Skript, mit reduzierter Bewegung und beim Zurückkommen
   von einer Unterseite steht die H1 sofort.
-- **Text zieht kurz ein:** höchstens 320 ms und 8 px, gestaffelt um 60 ms, einmal beim
-  Hereinscrollen (`inView`, Anteil 0,2, ohne Rückweg). H2 kommen mit ihrer Kapitel-Linie, nicht einzeln.
-- **Linien, Bilder und Belege dürfen mehr:** bis 600 ms. Linien ziehen von links auf (`scaleX`), Bilder
-  wandern im Rahmen höchstens 6 % (scrollgebunden, `overflow: hidden`; nie ein Screenshot, der wird
-  nicht beschnitten; das Foto in Über Klartext schwenkt seit 2026-10-14 weiter, als Signatur),
-  Felder eines Kontaktabzugs kommen bis 16 px weit. Das Bild der Bühne der Startseite zieht sich innen von links auf
-  (`clip-path`); das Bildfeld darum bleibt unberührt, es ist Ziel des Übergangs.
+- **Nichts erscheint von selbst** (The Still Page Rule, seit 2026-10-14, `docs/RUHE_PLAN.md`):
+  Text, Linien, Bilder und Felder stehen, wenn das Auge ankommt. Kein Einziehen, Aufziehen oder
+  Aufdecken beim Hereinscrollen, auf keiner Seite. Vorher zog jede Zeile 8 px ein, jede Linie
+  zog auf; wer schnell scrollt oder liest, sah Text erscheinen, während er ihn schon lesen wollte.
+  Ausnahmen: der Scroll-Hero (seine Geschichte) und die Bühnen der Projektseiten (Bühnenlizenz).
+- **Bewegung antwortet:** Sie folgt einer Handlung des Besuchers und zeigt deren Ergebnis: Hover,
+  Druck, Aufklapper öffnen, Blättern, Umschalten, Lightbox, Seitenwechsel, die Wahl in der
+  Wahlhilfe. Bis 320 ms für Zustände, 600 ms für einen Marker oder ein Bild, das wechselt.
+- **Neue Elemente statt Verschönerung:** Wo eine Seite mehr Leben braucht, bekommt sie ein Element,
+  das etwas tut (die Wahlhilfe beantwortet, welche Leistung passt; der Antworttermin rechnet ein
+  Datum aus), nicht eine Bewegung an etwas, das schon da ist.
 - **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Fläche, Linie, 2 px Pfeil,
   Bild 1,02).
   Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
@@ -1034,7 +1020,8 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Do** Hover und Tastaturfokus gleich aussehen lassen (`group-hover` immer mit `group-focus-within`).
 - **Do** Bewegung an `prefers-reduced-motion: no-preference` koppeln und Inhalt ohne Animation sofort
   sichtbar lassen.
-- **Do** einen Satz aus dem Gerede nur wörtlich und neben seiner Antwort wiederholen (The Echo Rule).
+- **Do** einen Satz aus dem Gerede nur wörtlich und nur dort wiederholen, wo eine Stelle ihn beantwortet
+  (The Echo Rule).
 - **Do** jede Wiederholung an einen Zweck binden, den der Besucher ohne Verlust erfüllen kann, und
   sie danach anhalten (Zweckbindung). Den Zweck in den Kommentar der Komponente schreiben.
 - **Do** den sichtbaren Fokus erhalten: 2 px Outline in Orange, 2 px Abstand.
@@ -1064,10 +1051,12 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 - **Don't** ein leeres oder erfundenes Bild zeigen, wo ein Screenshot fehlt. Dort steht der Satz.
 - **Don't** Pillen, Badges oder Chips auf der Startseite verwenden; Einordnung ist Text.
 - **Don't** farbige Seitenstreifen (`border-l` in Akzent) als Hervorhebung setzen.
-- **Don't** die H1 bewegen (außer dem Scroll-Hero der Startseite), Text weiter als
-  8 px oder länger als 320 ms einziehen lassen, oder einen Anfangszustand außerhalb von
-  `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung
-  steht der Endzustand, überall.
+- **Don't** die H1 bewegen (außer dem Scroll-Hero der Startseite), Text, Linien oder Bilder beim
+  Hereinscrollen einziehen oder aufziehen lassen (The Still Page Rule), oder einen Anfangszustand
+  außerhalb von `html[data-bewegung]` setzen. Ohne Skript und mit reduzierter Bewegung steht der
+  Endzustand, überall.
+- **Don't** etwas mit Bewegung verschönern, das schon da ist. Wenn etwas fehlt, ein Element bauen, das
+  eine Aufgabe hat.
 - **Don't** Motion direkt importieren; Kurve, Dauern und Prüfungen kommen aus `src/lib/motion.ts`.
 - **Don't** die Farben oder Bewegung einer Szene aus der Bühne hinaustragen, etwa in die Arbeiten der
   Startseite oder die Zeile unter `/projekte/`. Dort ist Gleichheit die Aussage.

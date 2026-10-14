@@ -10,6 +10,10 @@ reicht CSS nicht mehr: Scroll-Reveals mit Staffelung, richtungsabhängiges Blät
 gleich arbeitet. Werkzeug ist [Motion](https://motion.dev) (Paket `motion`, Vanilla-API), gebündelt
 aus dem Repository. Nichts kommt von fremden Servern; die Datenschutzerklärung bleibt wahr.
 
+> **Seit 2026-10-14 gilt [`RUHE_PLAN.md`](RUHE_PLAN.md):** Nichts zieht mehr beim Scrollen ein.
+> Die Regeln zum Einziehen und die Choreografie je Sektion unten sind Geschichte; Hover, Druck,
+> Aufklapper, Blättern und Seitenwechsel gelten weiter.
+
 ---
 
 ## 0. Was sich ändert, was bleibt
