@@ -17,8 +17,10 @@
  * Adresszeile am Ende der Scroll-Strecke, dazu der Strich unter der Adresse.
  * Ohne Gerede stehen sie sofort (seit 2026-10-14, docs/RUHE_PLAN.md).
  *
- * Der Hero füllt immer das erste Fenster unter dem Header, mit und ohne
- * Animation. So stimmen Scroll-Positionen beim Zurückblättern überein.
+ * Der Hero füllt das erste Fenster unter dem Header, mit und ohne Animation,
+ * so stimmen Scroll-Positionen beim Zurückblättern überein. Ab 44rem Fenster-
+ * höhe wächst er nicht weiter mit (seit 2026-10-17): Auf hohen Bildschirmen
+ * blieb sonst eine Viertelseite Leere zwischen Adresse und erster Tintenlinie.
  */
 import { getEntry } from 'astro:content'
 import Arrow from '@/components/Arrow.astro'
@@ -117,7 +119,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
   <section
     data-hero-rahmen
-    class="relative flex min-h-[calc(100svh-var(--hero-kopf,4.5rem))] flex-col justify-center py-12 sm:py-16"
+    class="relative flex min-h-[min(calc(100svh-var(--hero-kopf,4.5rem)),44rem)] flex-col justify-center py-12 sm:py-16"
   >
     {
       /*

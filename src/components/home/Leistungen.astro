@@ -113,7 +113,10 @@ const spalten = company.services.map((service) => ({
                   {ohneSeite.has(slug) ? (
                     projektTitel.get(slug)
                   ) : (
-                    <a class="text-accent underline-offset-4" href={href(`/projekte/${slug}`)}>
+                    <a
+                      class="text-accent underline underline-offset-4"
+                      href={href(`/projekte/${slug}`)}
+                    >
                       {projektTitel.get(slug) ?? slug}
                     </a>
                   )}
@@ -190,7 +193,9 @@ const spalten = company.services.map((service) => ({
 
   /*
    * Die Antwort trägt den Marker nur, wenn ihr Satz gewählt ist; sonst ist sie
-   * Text wie jeder andere. Gewählt tritt die übrige Spalte zurück.
+   * Text wie jeder andere. Gewählt treten die anderen Spalten zurück: ihr
+   * Titel wird Bleistiftgrau statt Tinte. Keine Deckkraft (bis 2026-10-17
+   * 35 %): Die drückte den Text unter 4,5 : 1, obwohl er lesbar bleiben soll.
    */
   .leistung :global(mark.marker[data-antwort]) {
     color: inherit;
@@ -204,16 +209,16 @@ const spalten = company.services.map((service) => ({
     background-size: 100% 100%;
     transition-duration: 600ms, var(--duration-base);
   }
-  .leistung {
-    transition: opacity var(--duration-base) var(--ease-quiet);
+  .leistung dt {
+    transition: color var(--duration-base) var(--ease-quiet);
   }
-  [data-leistungen][data-wahl-an] .leistung:not([data-gewaehlt]) {
-    opacity: 0.35;
+  [data-leistungen][data-wahl-an] .leistung:not([data-gewaehlt]) dt {
+    color: var(--color-fg-muted);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .wahl-knopf,
-    .leistung,
+    .leistung dt,
     .leistung :global(mark.marker[data-antwort]) {
       transition: none;
     }

@@ -316,10 +316,11 @@ Deckkraft-Grau):
   orangen Flächen, also Primärbutton, Skip-Link und Auswahl. 6,2 : 1 hell, 9,6 : 1 dunkel, auf
   „gedrückt“ 8,4 : 1 und 11,5 : 1.
 
-Deckkraft-Tönungen gibt es noch für den Hinweiskasten (`accent/10` Fläche, `accent/50` Rand) und
-den ausgegrauten Reiter des Umschalters (`fg-muted/70`, als nicht bedienbares Element von WCAG 1.4.3
-ausgenommen). Ränder und Flächen des Bedienbaren sind seit dem 2026-10-08 eigene Tokens (unten),
-damit sie in hell und dunkel geprüft sind statt errechnet.
+Deckkraft-Tönungen gibt es noch für den Hinweiskasten (`accent/10` Fläche, `accent/50` Rand). Für
+Text gibt es keine Deckkraft (seit 2026-10-17): Zurücktreten heißt Bleistiftgrau statt Tinte, nie
+Durchscheinen, damit nichts Lesbares unter 4,5 : 1 fällt. Ränder und Flächen des Bedienbaren sind
+seit dem 2026-10-08 eigene Tokens (unten), damit sie in hell und dunkel geprüft sind statt
+errechnet.
 
 ### Neutral
 
@@ -676,11 +677,11 @@ mehreren Kapiteln; das war zu viel.)
   Anzahl in Tabellenziffern; beim Öffnen steht „Kunden“. Label in Tinte, gewählt und bei Hover
   orange; der gewählte Reiter trägt einen 2-px-Strich in Orange auf der Haarlinie darunter. Ohne JavaScript schaltet CSS über `:has()` um; ohne `:has()` stehen beide Auswahlen
   untereinander. Gespeichert wird die Wahl nicht.
-- **Ausgegrauter Reiter:** Sind alle Arbeiten einer Auswahl unveröffentlicht (`published: false`),
-  bleibt ihr Reiter stehen, aber in `fg-muted/70`, mit „folgt“ statt der Anzahl, ohne Hover, mit
-  Cursor `not-allowed` und `disabled`, also weder per Klick noch per Pfeiltaste wählbar. Bühne und
-  Kontaktabzug der Auswahl fehlen, beim Öffnen steht die nächste. So steht „Kunden“ seit dem
-  2026-09-24, bis PointCare oder JustBeauty freigeschaltet sind.
+- **Auswahl ohne Arbeit:** Sind alle Arbeiten einer Auswahl unveröffentlicht (`published: false`),
+  fehlt sie samt Reiter; bleibt nur eine Auswahl, gibt es keinen Umschalter. Seit 2026-10-17; vom
+  2026-09-24 bis dahin stand „Kunden“ ausgegraut mit „folgt“ da, also als erste Aussage im
+  Beweis-Kapitel die, dass es noch keine Kunden gibt. Der Reiter kommt von selbst wieder, sobald
+  PointCare oder JustBeauty freigeschaltet sind.
 - **Bühne** (`ProjectSpotlight`): eine Arbeit der Auswahl groß. Beim Öffnen steht die erste nach
   `order` (bis 2026-10-08 zufällig); kommt der Besucher von einer Projektseite zurück, steht deren
   Arbeit da. Kein automatischer Wechsel. Oben Titel in Title Medium, daneben Art und Zeitraum (unter
@@ -877,8 +878,12 @@ Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 Seit 2026-10-14 ([`docs/RUHE_PLAN.md`](docs/RUHE_PLAN.md)). Unter „E-Mail schreiben“ rechnet die Seite
 aus, was „Antwort in der Regel innerhalb eines Werktags“ heute heißt: „Heute geschrieben, Antwort in
 der Regel bis Donnerstag, 15. Oktober.“ (Body Small, Datum in Tinte). Darunter die nächsten sieben
-Tage als kleine Felder (2,75rem, 8 px, Liniengrau, Wochentag und Datum in Tabellenziffern): heute mit
-Tintenrand, der Antworttag Orange auf verdünntem Orange, freie Tage gestrichelt und blass.
+Tage als Spalten unter einer Haarlinie (2,75rem breit, Marke, Wochentag und Datum in
+Tabellenziffern): heute mit 2-px-Tintenstrich auf der Linie, der Antworttag mit 2-px-Strich in Orange
+und oranger Schrift, freie Tage in Bleistiftgrau. Seit 2026-10-17; davor gerahmte Kacheln mit 8 px,
+gestrichelt und 55 % Deckkraft für freie Tage, der einzige gerahmte Kasten der Seite und unter 3 : 1.
+Mit Skript nimmt der Termin den Satz „Antwort in der Regel innerhalb eines Werktags“ aus dem Intro,
+sonst stünde die Zusage zweimal.
 Antworttag ist der nächste Werktag; wer an einem freien Tag schreibt, bekommt den ersten Werktag.
 Frei sind Wochenenden und die gesetzlichen Feiertage in Bayern (mit Mariä Himmelfahrt; Ostern nach
 Gauß). Nur mit Skript, weil das Datum erst beim Besuch feststeht; ohne steht der Satz im Intro.
@@ -924,7 +929,8 @@ Bühne und Kontaktabzug der Startseite rahmen nur ihre Bildfelder.
 ### Belegzeile (Signature)
 
 Unter jedem Leistungspunkt in den Aufklappern von „Leistungen“ steht „Beleg:“ in 0,75rem
-Bleistiftgrau, gefolgt von den Projektnamen als orange Links ohne Unterstrich. Sie ist das sichtbare
+Bleistiftgrau, gefolgt von den Projektnamen als orange Links mit Unterstrich (seit 2026-10-17; ohne
+Strich war die Farbe die einzige Unterscheidung zum grauen Text, 1,4 : 1, WCAG 1.4.1). Sie ist das sichtbare
 Versprechen des Werkstattbuchs: kein Punkt ohne Nachweis. Ein unveröffentlichtes Projekt steht dort
 als Name ohne Link in Bleistiftgrau, weil es keine Seite hat, auf die er zeigen könnte.
 
@@ -1006,6 +1012,9 @@ sofort, die Bühne zeigt das erste Projekt der Auswahl, Blättern entfällt, Auf
 
 ### Do:
 
+- **Do** Neues auf der Startseite nur aus den vorhandenen Formen bauen: linierte Zeile, Haarlinie,
+  Sekundärknopf, Marker, Strich auf der Linie (The Same Bricks Rule, seit 2026-10-17). Ein Element
+  mit Aufgabe (The Still Page Rule) rechtfertigt eine Aufgabe, keine neue Form.
 - **Do** Farben nur über die Tokens `bg`, `bg-elevated`, `fg`, `fg-muted`, `accent`, `accent-fg` und
   `border` setzen und jeder neuen Farbe einen Dunkel-Zwilling geben.
 - **Do** Werkstatt-Orange für Handlung, Beleg, Einordnung und Fokus reservieren (The One Signal Rule).

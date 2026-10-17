@@ -91,8 +91,8 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
   Live-Link folgt), JustBeauty (Analyse und Prototyp), kleinkram, MemoryTree, NoteList, Feynman,
   DealerSim, Vaulter, Availably. PointCare und JustBeauty sind vorerst unveröffentlicht
   (`published: false`, am 2026-09-24 vom Inhaber entschieden): Ohne Screenshot und Live-Link gibt es
-  dort noch nichts zu zeigen. Bis dahin steht „Kunden“ auf der Startseite ausgegraut, und die Belege
-  in „Leistungen“ nennen beide ohne Link.
+  dort noch nichts zu zeigen. Bis dahin fehlt „Kunden“ auf der Startseite samt Umschalter (seit
+  2026-10-17; davor ausgegraut mit „folgt“), und die Belege in „Leistungen“ nennen beide ohne Link.
 - Leistungsbereiche mit Projektbelegen in `src/content/leistungen.json`: dieselben drei wie die
   Spalten in `company.json` (Kleine Programme, Websites, Web-Apps). Spiele und KI stehen als Punkte
   darin, nicht als eigene Gruppen.
