@@ -105,7 +105,10 @@
     void document.fonts.ready.then(() => striche.forEach(stelle))
   }
 
-  const sections = [...byId.keys()]
+  // Kontakt hat keinen Anker in der Navigation (dort steht der Knopf „Anfrage“),
+  // wird aber beobachtet: Sonst bliebe im Kontakt der letzte Anker, „Über
+  // Klartext“, markiert.
+  const sections = [...new Set([...byId.keys(), 'kontakt'])]
     .map((id) => document.getElementById(id))
     .filter((el): el is HTMLElement => el !== null)
 
