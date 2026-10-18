@@ -35,6 +35,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Dieselben Prüfungen wie in CI: Ohne Branch-Schutz kann ein roter PR
+      # gemergt werden, live gehen soll er trotzdem nicht.
+      - name: Typecheck (astro check)
+        run: npm run check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format
+        run: npm run format:check
+
+      - name: Architektur-Dokument aktuell
+        run: npm run docs:check
+
       - name: Build
         run: npm run build
 
