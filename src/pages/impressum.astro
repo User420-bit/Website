@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content'
 import ProseLayout from '@/layouts/ProseLayout.astro'
 import IncompleteLegalNotice from '@/components/IncompleteLegalNotice.astro'
+import { telefonLink } from '@/lib/site'
 
 const legal = (await getEntry('legal', 'main'))!.data
 const addressComplete = legal.street !== null && legal.zipCity !== null
@@ -43,6 +44,14 @@ const addressComplete = legal.street !== null && legal.zipCity !== null
     <h2>Kontakt</h2>
     <p>
       E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
+      {
+        legal.phone && (
+          <>
+            <br />
+            Telefon: <a href={telefonLink(legal.phone)}>{legal.phone}</a>
+          </>
+        )
+      }
     </p>
   </section>
 

@@ -50,7 +50,17 @@ const company = defineCollection({
     /** Für wen: steht als Unterzeile direkt unter der H1, damit der Claim bleiben kann. */
     audience: z.string(),
     intro: z.string(),
+    /**
+     * Titel und Beschreibung der Startseite für Suchmaschinen und geteilte Links.
+     * Nicht der Claim: Der sagt, was Klartext verspricht; der Titel sagt, was
+     * jemand sucht (Leistung und Region, entschieden am 2026-10-18).
+     */
+    metaTitle: z.string().max(60),
+    metaDescription: z.string().max(160),
+    /** „Ort, Bundesland“. Die Strukturdaten der Startseite lesen beide Teile daraus. */
     location: z.string(),
+    /** Einzugsgebiet für die Strukturdaten. Bewusst ohne Straße (entschieden am 2026-10-18). */
+    areaServed: z.string(),
     email: z.email(),
     services: z
       .array(
@@ -205,7 +215,7 @@ const leistungen = defineCollection({
 })
 
 /**
- * Rechtsangaben. `street` und `zipCity` dürfen `null` sein, damit lokale
+ * Rechtsangaben. `street`, `zipCity` und `phone` dürfen `null` sein, damit lokale
  * Entwicklung ohne Pharrels Anschrift möglich ist — der Deploy-Workflow ruft
  * aber `npm run guard:legal` auf und bricht ab, solange sie fehlen.
  * Platzhalter in eckigen Klammern werden hier hart abgelehnt: Genau die sind
@@ -225,6 +235,15 @@ const legal = defineCollection({
     zipCity: z.string().nullable().refine(noPlaceholder, placeholderMessage),
     country: z.string().refine(noPlaceholder, placeholderMessage),
     email: z.email(),
+    /**
+     * Zweiter schneller Kontaktweg neben der E-Mail (EuGH C-298/07). Steht nur
+     * im Impressum und in der Datenschutzerklärung, nicht im Kontaktbereich.
+     * `null` erlaubt lokales Arbeiten; der Deploy bricht dann ab.
+     */
+    phone: z
+      .string()
+      .regex(/^[+\d][\d /-]{5,}$/, 'Nur Ziffern, Leerzeichen, „/“ und „-“, z. B. 0151 26091487.')
+      .nullable(),
     privacyLastUpdated: z.string().regex(/^\d{4}-\d{2}$/, 'Format: YYYY-MM'),
   }),
 })

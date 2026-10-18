@@ -10,6 +10,7 @@
  */
 import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { STAND, standText, vorschaubildTexte } from './vorschaubild-text.mjs'
 
 const DIST = 'dist'
 const BASE = '/'
@@ -73,6 +74,7 @@ for (const [route, expectedH1] of Object.entries(ROUTES)) {
     ['meta description', /<meta name="description" content="[^"]+"/],
     ['canonical', /<link rel="canonical" href="[^"]+"/],
     ['og:title', /<meta property="og:title" content="[^"]+"/],
+    ['og:image', /<meta property="og:image" content="https:\/\/[^"]+\/vorschaubild\.png"/],
   ]) {
     if (!pattern.test(html)) fail(`/${route}: ${tag} fehlt`)
   }
@@ -103,6 +105,27 @@ for (const { route, published } of projekte) {
   }
   if (!html.includes(name)) fail(`/${route}: der <article> setzt ${name} nicht`)
   if (!pages.get('')?.includes(name)) fail(`Startseite: kein Bildfeld mit ${name}`)
+}
+
+// Vorschaubild (og:image): vorhanden und aus den Texten gezeichnet, die gerade gelten.
+if (!existsSync(join(DIST, 'vorschaubild.png')))
+  fail('vorschaubild.png fehlt: npm run vorschaubild')
+if (!existsSync(STAND) || readFileSync(STAND, 'utf8') !== standText(vorschaubildTexte())) {
+  fail('Vorschaubild passt nicht mehr zu company.json: npm run vorschaubild und beides committen')
+}
+
+// Strukturdaten der Startseite: genau ein Block, und er ist gültiges JSON.
+const ldJson = [
+  ...(pages.get('') ?? '').matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g),
+]
+if (ldJson.length !== 1)
+  fail(`Startseite: erwartet genau einen JSON-LD-Block, gefunden ${ldJson.length}`)
+for (const [, json] of ldJson) {
+  try {
+    JSON.parse(json)
+  } catch (error) {
+    fail(`Startseite: JSON-LD ist kein gültiges JSON (${error.message})`)
+  }
 }
 
 if (!existsSync(join(DIST, '404.html'))) fail('404.html fehlt')

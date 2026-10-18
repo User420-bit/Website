@@ -62,6 +62,26 @@ export function uebergang(id: string): string {
   return `--uebergang: projekt-${id}`
 }
 
+/**
+ * Vorschaubild für geteilte Links (LinkedIn, WhatsApp) und die Strukturdaten.
+ * Erzeugt von `npm run vorschaubild` aus Name, Claim und Ort in `company.json`;
+ * `npm run test:build` meldet, wenn es nicht mehr zu diesen Texten passt.
+ */
+export const VORSCHAUBILD = {
+  pfad: '/vorschaubild.png',
+  breite: 1200,
+  hoehe: 630,
+} as const
+
+/**
+ * `tel:`-Link im internationalen Format: „0151 26091487“ wird zu
+ * `tel:+4915126091487`. Die Anzeige bleibt, wie sie in `legal.json` steht.
+ */
+export function telefonLink(nummer: string): string {
+  const ziffern = nummer.replace(/[^\d+]/g, '')
+  return `tel:${ziffern.startsWith('0') ? `+49${ziffern.slice(1)}` : ziffern}`
+}
+
 export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',
