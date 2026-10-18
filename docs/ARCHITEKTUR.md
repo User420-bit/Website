@@ -107,7 +107,7 @@ seine eigene Seitenkomponente diesen Körper und füllt dessen Slots, meist mit 
 
 **Deploy to GitHub Pages** ([`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml)), bei jedem Push auf `main` und Start von Hand:
 
-- `build`: Checkout → Rechtstext prüfen → Setup Node.js → Install dependencies → Build → Build prüfen → Setup Pages → Upload artifact
+- `build`: Checkout → Rechtstext prüfen → Setup Node.js → Install dependencies → Typecheck (astro check) → Lint → Format → Architektur-Dokument aktuell → Build → Build prüfen → Setup Pages → Upload artifact
 - `deploy`: Deploy to GitHub Pages
 
 ## Projekte

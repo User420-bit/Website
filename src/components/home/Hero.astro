@@ -1160,6 +1160,13 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       if (strich) strich.style.transform = 'none'
       root.dataset.hero = 'fertig'
       if (lageHalten) {
+        /*
+         * Der Rahmen klebte in voller Fensterhöhe, ohne Gerede ist er höchstens
+         * 44rem hoch. Schrumpft er hier, springt alles darunter um die Differenz
+         * (gemessen 127 px am Desktop, Layout-Shift 0,28). Er behält deshalb für
+         * diesen Besuch die Höhe, in der er klebte, wie in `hero-netz-rahmen`.
+         */
+        rahmen!.style.minHeight = 'calc(100svh - var(--hero-kopf, 4.5rem))'
         const nachher = rahmen!.getBoundingClientRect().top
         window.scrollBy({ top: nachher - vorher, behavior: 'instant' })
       }

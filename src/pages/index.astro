@@ -17,6 +17,7 @@ import Arbeitsweise from '@/components/home/Arbeitsweise.astro'
 import Ueber from '@/components/home/Ueber.astro'
 import Kontakt from '@/components/home/Kontakt.astro'
 import { echosPruefen } from '@/lib/echo'
+import { VORSCHAUBILD } from '@/lib/site'
 
 const company = (await getEntry('company', 'main'))!.data
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.order - b.data.order)
@@ -25,10 +26,38 @@ echosPruefen(
   company.heroEchos,
   company.services.map((s) => s.title),
 )
-const description = `${company.name} – kleine Programme, Websites und Web-Apps aus ${company.location.split(',')[0]}.`
+
+/*
+ * Strukturdaten für Suchmaschinen: wer Klartext ist und wo. Ort und
+ * Einzugsgebiet, keine Straße und kein Name: Die Anschrift steht im Impressum,
+ * die Person nur dort und in „Über Klartext“ (PRODUCT.md).
+ */
+const [ort, region] = company.location.split(',').map((teil) => teil.trim())
+const strukturdaten = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: company.name,
+  url: Astro.site!.href,
+  email: company.email,
+  description: company.metaDescription,
+  image: new URL(VORSCHAUBILD.pfad, Astro.site).href,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: ort,
+    addressRegion: region,
+    addressCountry: 'DE',
+  },
+  areaServed: { '@type': 'AdministrativeArea', name: company.areaServed },
+}
 ---
 
-<BaseLayout title={`${company.name} – ${company.claim}`} description={description} isHome>
+<BaseLayout title={company.metaTitle} description={company.metaDescription} isHome>
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(strukturdaten)}
+  />
   <Hero />
 
   {

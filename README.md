@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Erreichbar unter <http://localhost:4321/Website/>.
+Erreichbar unter <http://localhost:4321/>.
 
 ## Inhalt ändern
 
@@ -36,19 +36,22 @@ Alle Texte liegen als Dateien im Repository. Es gibt keinen Admin-Bereich und ke
 Datenbank — ändern heißt: Datei editieren, committen, fertig. Der Deploy läuft
 automatisch.
 
-| Was                                                | Datei                            |
-| -------------------------------------------------- | -------------------------------- |
-| Firmenname, Claim (H1), Für wen, Intro, Leistungen | `src/content/company.json`       |
-| Leistungen im Einzelnen, mit Belegen               | `src/content/leistungen.json`    |
-| Inhaber, Werkstudenten-Hinweis, Portrait           | `src/content/profile.json`       |
-| Text, Werte, Arbeitsweise                          | `src/content/about.md`           |
-| Eine Referenz                                      | `src/content/projekte/<name>.md` |
-| Werkzeug-Gruppen                                   | `src/content/skills.json`        |
-| Kontakt-Abschnitt                                  | `src/content/contact.json`       |
-| Impressum und Datenschutz                          | `src/content/legal.json`         |
+| Was                                                  | Datei                            |
+| ---------------------------------------------------- | -------------------------------- |
+| Firmenname, Claim (H1), Für wen, Intro, Leistungen   | `src/content/company.json`       |
+| Titel und Beschreibung der Startseite, Einzugsgebiet | `src/content/company.json`       |
+| Leistungen im Einzelnen, mit Belegen                 | `src/content/leistungen.json`    |
+| Inhaber, Portrait                                    | `src/content/profile.json`       |
+| Text, Werte, Arbeitsweise                            | `src/content/about.md`           |
+| Eine Referenz                                        | `src/content/projekte/<name>.md` |
+| Werkzeug-Gruppen                                     | `src/content/skills.json`        |
+| Kontakt-Abschnitt                                    | `src/content/contact.json`       |
+| Impressum und Datenschutz                            | `src/content/legal.json`         |
 
 Wer den Claim in `company.json` ändert, muss ihn auch in `scripts/verify-build.mjs` unter
-`ROUTES['']` nachziehen — der Build-Check prüft die H1 der Startseite gegen diesen Text.
+`ROUTES['']` nachziehen — der Build-Check prüft die H1 der Startseite gegen diesen Text. Danach
+`npm run vorschaubild` ausführen (siehe unten), sonst meldet der Build-Check ein veraltetes
+Vorschaubild.
 
 ### Logo einbauen
 
@@ -57,6 +60,15 @@ reiner Text (`src/components/Header.astro`), und `public/favicon.svg` zeigt ein 
 "K" als Platzhalter. Sobald das Logo da ist: SVG unter `src/assets/` ablegen, im Header neben der
 Wortmarke einbinden und `public/favicon.svg` ersetzen. Die Akzentfarbe steht in
 `src/styles/global.css`.
+
+### Vorschaubild für geteilte Links
+
+Wer einen Link auf LinkedIn oder WhatsApp teilt, sieht `public/vorschaubild.png` (1200 × 630):
+Wortmarke, Claim, Leistungen und Ort in Hausschrift. `npm run vorschaubild` zeichnet es aus
+`company.json` neu und legt den Stand der Texte in `scripts/vorschaubild.stand.json` ab; beides wird
+committet. Passt der Stand nicht mehr zu `company.json`, wird `npm run test:build` rot. Ohne
+Playwright-Chromium geht ein anderer Browser über `BROWSER=/pfad/zu/chrome npm run vorschaubild`.
+Kommt das Logo, gehört es im Skript an die Stelle der Wortmarke.
 
 ### Eine Referenz hinzufügen
 
@@ -203,12 +215,16 @@ wird vom Schema abgelehnt und bricht den Build.
 | `npm run docs:check`       | Prüft, ob `docs/ARCHITEKTUR.md` zum Code passt (läuft in CI)   |
 | `npm run guard:legal`      | Prüft, ob das Impressum vollständig ist (blockiert den Deploy) |
 | `npm run screenshots`      | Nimmt die Referenzen im Browser auf, siehe oben                |
+| `npm run vorschaubild`     | Zeichnet das Vorschaubild für geteilte Links neu, siehe oben   |
 | `npm run verify`           | Alles davon in einem Durchlauf — vor jedem Push empfohlen      |
 
 ## Deployment
 
 Push auf `main` löst `.github/workflows/deploy.yml` aus. Auf jedem Pull Request
-läuft `.github/workflows/ci.yml`.
+läuft `.github/workflows/ci.yml`. Der Deploy führt dieselben Prüfungen noch einmal aus
+(Typecheck, Lint, Format, Architektur-Dokument, Build-Check): Ein roter PR, der trotzdem
+gemergt wird, geht nicht live. Zusätzlich empfohlen: unter **Settings → Branches** für `main`
+den Status-Check `check` aus CI verlangen, dann lässt sich ein roter PR gar nicht erst mergen.
 
 **Einmalig nötig, sonst schlägt jeder Deploy fehl:** In den Repository-Settings
 unter **Pages → Source** auf **GitHub Actions** stellen. Ohne diesen Schritt bricht
@@ -220,7 +236,8 @@ Live-URL nach der Aktivierung: <https://web-klartext.de/>
 ### Der Deploy bricht mit "Das Impressum ist unvollständig" ab
 
 Das ist Absicht. Eine deutsche Website mit Impressumspflicht darf nicht ohne
-ladungsfähige Anschrift online gehen. `street` und `zipCity` in
+ladungsfähige Anschrift online gehen, und neben der E-Mail braucht es einen zweiten
+schnellen Kontaktweg (EuGH C-298/07). `street`, `zipCity` und `phone` in
 `src/content/legal.json` eintragen, dann läuft der Deploy.
 
 ### Domain

@@ -15,8 +15,9 @@ Technik-Profis. Sie kommen mit drei Fragen: Kann Klartext mein Problem lösen? I
 Person dahinter vertrauenswürdig und gut ansprechbar?
 
 **Sekundär: Arbeitgeber.** Personaler und Fachbereichsleiter, die eine Werkstudentenstelle
-Wirtschaftsinformatik im Raum Rosenheim besetzen. Die Seite nennt diese Verfügbarkeit, richtet sich aber
-nicht danach aus. (Der ältere `docs/REWORK_PLAN.md` nannte Arbeitgeber als Hauptzielgruppe. Am 2026-09-16
+Wirtschaftsinformatik im Raum Rosenheim besetzen. Die Seite nennt diese Verfügbarkeit seit dem
+2026-10-17 nicht mehr (Hinweis aus „Über Klartext“ entfernt, am 2026-10-18 vom Inhaber bestätigt) und
+richtet sich nicht nach ihnen aus. (Der ältere `docs/REWORK_PLAN.md` nannte Arbeitgeber als Hauptzielgruppe. Am 2026-09-16
 vom Inhaber geändert: Kunden zuerst.)
 
 ## Product Purpose
@@ -36,7 +37,8 @@ Erfolg zählt in jeder dieser Formen:
 Der Name ist das Versprechen: verständliche Sprache statt Fachchinesisch, ehrliche Aussagen zu Aufwand,
 Nutzen und Grenzen **bevor** eine Zeile Code entsteht, und ein klares „Das Werkzeug von der Stange
 reicht“, wenn das stimmt. Jede Leistung ist mit einem echten, benannten Projekt belegt. Jede Referenzseite
-zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine Software, klar gebaut.“
+zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Ihre Probleme, klar gelöst.“ (ersetzt
+„Kleine Software, klar gebaut.“, am 2026-10-18 vom Inhaber bestätigt).
 
 ## Operating Context
 
@@ -57,6 +59,14 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 - Recht: Impressumspflicht nach § 5 DDG. `scripts/guard-legal.mjs` blockiert den Deploy, bis `street`
   und `zipCity` in `src/content/legal.json` gesetzt sind. Beide stehen seit dem 2026-09-16 drin
   (Kirchdorfer Straße 1b, 83052 Bruckmühl; vom Inhaber am 2026-10-08 bestätigt), die Seite ist live.
+  Seit dem 2026-10-18 verlangt der Wächter auch `phone`: Neben der E-Mail braucht das Impressum einen
+  zweiten schnellen Kontaktweg (EuGH C-298/07). Die Nummer steht nur in Impressum und
+  Datenschutzerklärung, nicht im Kontaktbereich.
+- Suche: Der Seitentitel der Startseite nennt Leistung und Region („Klartext – Websites und kleine
+  Programme im Raum Rosenheim“), nicht den Claim. Strukturdaten (ProfessionalService) nennen Ort und
+  Einzugsgebiet, bewusst keine Straße und keinen Namen. Ein typografisches Vorschaubild
+  (`npm run vorschaubild`) trägt geteilte Links, bis es ein Logo gibt. Am 2026-10-18 vom Inhaber
+  entschieden.
 - Aktuelle Umsetzungsentscheidungen, vom Inhaber **nicht als verbindlich bestätigt**: kein Tracking,
   keine Cookies, keine Drittanbieter-Ressourcen, keine Speicherung im Browser, fast kein JavaScript,
   Hell-/Dunkelmodus nach Systemeinstellung. Die Datenschutzerklärung beschreibt diesen Zustand. Jede
@@ -69,7 +79,7 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Kleine So
 
 ## Brand Commitments
 
-- Name: **Klartext**. Claim: **„Kleine Software, klar gebaut.“**
+- Name: **Klartext**. Claim: **„Ihre Probleme, klar gelöst.“**
 - Stimme: klares Deutsch, kein Fachchinesisch, ehrlich und konkret, keine Superlative. Grenzen und
   Fehler werden offen benannt.
 - Anrede: „Sie“, und nur dort, wo die Seite Besucher direkt anspricht. Sonst unpersönlich

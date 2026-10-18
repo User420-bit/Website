@@ -23,6 +23,7 @@ if (!company) throw new Error('src/content/company.json: Eintrag "main" fehlt.')
 <html lang="de">
   <head>
     <BaseHead title={title} description={description} noindex={noindex} />
+    <slot name="head" />
     <ProjectTransition />
     <MotionReady />
   </head>

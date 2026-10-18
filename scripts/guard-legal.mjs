@@ -18,6 +18,8 @@ const REQUIRED = [
   ['zipCity', 'PLZ und Ort'],
   ['country', 'Land'],
   ['email', 'Kontakt-E-Mail'],
+  // Zweiter schneller Kontaktweg neben der E-Mail (EuGH C-298/07).
+  ['phone', 'Telefonnummer'],
 ]
 
 const legal = JSON.parse(readFileSync(FILE, 'utf8')).main

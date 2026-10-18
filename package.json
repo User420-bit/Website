@@ -20,7 +20,8 @@
     "docs:architektur": "node scripts/architektur.mjs",
     "docs:check": "node scripts/architektur.mjs --check",
     "guard:legal": "node scripts/guard-legal.mjs",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "vorschaubild": "node scripts/vorschaubild.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
