@@ -5,9 +5,9 @@
  * bleibt, was man liest.
  *
  * Bewegung, Teil 1 (docs/HERO_KLARTEXT_PLAN.md): Wer von außen kommt, sieht
- * zuerst Kundengerede und einen Hinweis zum Scrollen. Beim Scrollen werden
- * die vier Wörter des Claims markiert, lösen sich aus dem Text, fliegen über
- * die Seite und landen in der H1. Das Scrollen treibt die Animation, vor und
+ * zuerst Kundengerede und einen Hinweis zum Scrollen. Beim Scrollen verstummt
+ * das Gerede, nur die vier markierten Wörter des Claims bleiben stehen und
+ * steigen nacheinander auf ihren Platz in der H1. Das Scrollen treibt die Animation, vor und
  * zurück, bis die H1 steht. Dann verschwindet die Scroll-Strecke, und es gibt
  * nichts mehr rückgängig zu machen. Ohne Skript, mit reduzierter Bewegung,
  * mit Sprungziel in der Adresse und beim Zurückkommen von einer Unterseite
@@ -121,14 +121,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     data-hero-rahmen
     class="relative flex min-h-[min(calc(100svh-var(--hero-kopf,4.5rem)),44rem)] flex-col justify-center py-12 sm:py-16"
   >
-    {
-      /*
-       * Der Himmel: Punktefeld, Staub, Schweife, Landeblitze. Ein Canvas hinter
-       * allem, nur während der Animation, gezeichnet aus dem Scrollstand.
-       */
-    }
-    <canvas aria-hidden="true" data-hero-himmel class="pointer-events-none"></canvas>
-
     <div data-hero-inhalt class="relative z-[1]">
       <h1
         data-hero-h1
@@ -250,7 +242,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   [data-hero-vorspann],
   [data-hero-gerede],
   [data-hero-flug],
-  [data-hero-himmel],
   [data-hero-fortschritt] {
     display: none;
   }
@@ -298,15 +289,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       opacity: 0;
       transform: translateY(0.35em);
     }
-  }
-  html[data-hero='gerede'] [data-hero-himmel] {
-    display: block;
-    position: fixed;
-    top: var(--hero-kopf, 4.5rem);
-    left: 0;
-    z-index: 0;
-    width: 100vw;
-    height: calc(100svh - var(--hero-kopf, 4.5rem));
   }
 
   /*
@@ -446,7 +428,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   }
   html[data-bewegung=''][data-hero='gerede'] [data-hero-vorspann],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede],
-  html[data-bewegung=''][data-hero='gerede'] [data-hero-himmel],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-fortschritt] {
     animation: hero-netz-weg 0s 2s both;
   }
@@ -529,390 +510,59 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   const abschnitt = (p: number, a: number, b: number) => klemme((p - a) / (b - a))
   const ausrollen = (t: number) => 1 - (1 - t) ** 3
   const weich = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2)
-  /** Quadratische Kurve von a über w (bei t = 0,5) nach b. */
-  const bogen = (a: number, w: number, b: number, t: number) => {
-    const c = 2 * w - (a + b) / 2
-    return (1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b
-  }
-  /** Reproduzierbarer Zufall: gleiche Saat, gleiche Funken, bei jedem Besuch. */
-  function zufall(saat: number): () => number {
-    let x = saat >>> 0
-    return () => {
-      x = (x + 0x6d2b79f5) >>> 0
-      let t = x
-      t = Math.imul(t ^ (t >>> 15), t | 1)
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-    }
-  }
-  /** Ein Token wie `oklch(0.79 0.15 62)` als RGB, damit jeder Canvas es versteht. */
-  function rgb(farbe: string): [number, number, number] {
-    const m = /oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)/.exec(farbe)
-    if (!m) return [128, 128, 128]
-    let l = parseFloat(m[1]!)
-    if (l > 1) l /= 100
-    const c = parseFloat(m[2]!)
-    const h = (parseFloat(m[3]!) * Math.PI) / 180
-    const A = c * Math.cos(h)
-    const B = c * Math.sin(h)
-    const l_ = (l + 0.3963377774 * A + 0.2158037573 * B) ** 3
-    const m_ = (l - 0.1055613458 * A - 0.0638541728 * B) ** 3
-    const s_ = (l - 0.0894841775 * A - 1.291485548 * B) ** 3
-    const lin = [
-      4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
-      -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
-      -0.0041960863 * l_ - 0.7034186147 * m_ + 1.707614701 * s_,
-    ]
-    return lin.map((v) => {
-      const x = klemme(v)
-      return Math.round(255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055))
-    }) as [number, number, number]
-  }
+  const mischen = (a: number, b: number, t: number) => a + (b - a) * t
 
   /*
-   * Wo jedes Wort auf halbem Weg ist: Anteil der Fensterbreite, Anteil der
-   * Rahmenhöhe, Größe relativ zur H1, Drehung in Grad. Die Wörter kreuzen
-   * sich absichtlich: Sie fliegen über die Seite, nicht auf geradem Weg.
-   */
-  const WEGPUNKTE = [
-    { x: 0.78, y: 0.12, s: 0.85, r: -7 },
-    { x: 0.04, y: 0.66, s: 0.8, r: 6 },
-    { x: 0.7, y: 0.8, s: 0.9, r: -5 },
-    { x: 0.3, y: 0.34, s: 0.95, r: 8 },
-  ]
-
-  /*
-   * Gleich nach dem Öffnen, ohne Scrollen: Die vier Wörter werden markiert
-   * (ab 0,5 s), dann erscheint der Hinweis (1,5 s). So sieht man sofort, dass
-   * hier etwas passiert und worauf es ankommt.
+   * Gleich nach dem Öffnen, ohne Scrollen: Die vier Wörter werden markiert,
+   * sobald das Gerede steht, dann erscheint der Hinweis. So sieht man sofort,
+   * dass hier etwas passiert und worauf es ankommt.
    *
-   * Fahrplan über die Scroll-Strecke, p von 0 bis 1:
-   *   0,04–0,26  jedes Wort steigt aus der Zeile, staubt und wächst
-   *   0,12–0,38  der Rest des Geredes zerfällt von links nach rechts zu Staub
-   *   0,11–0,89  Flug mit Schweif über die Seite in die H1 (je Wort versetzt)
-   *   0,20–0,80  das Punktefeld ordnet sich vom Gewimmel zum Raster
-   *   0,40–0,85  hinter der H1 glimmt es auf
-   *   0,78–0,96  Landung: kurzer Ring um jedes Wort
-   *   0,88–0,95  Marker laufen aus, Komma und Punkt erscheinen
-   *   0,86–1,00  Für wen, Intro, Knöpfe, Adresse, dann der Strich
-   *   0,90–1,00  Himmel blendet aus
+   * Fahrplan über die Scroll-Strecke, p von 0 bis 1. Drei Takte und nichts
+   * daneben (seit 2026-10-22; vorher flogen die Wörter mit Sternschweif durch
+   * einen Himmel aus Punkten, Staub und Funken):
+   *   0,02–0,14  die Eröffnungszeile macht Platz
+   *   0,04–0,32  das Gerede verstummt Wort für Wort, in Lesereihenfolge;
+   *              die vier markierten Wörter bleiben stehen
+   *   0,10–0,30  Fläche, Rand und Schatten des Feldes blenden aus
+   *   0,20–0,76  die vier Wörter steigen nacheinander auf ihren Platz in der H1,
+   *              der Marker jedes Wortes blendet im letzten Drittel seines Wegs aus
+   *   0,78–0,88  Komma und Punkt erscheinen
+   *   0,84–1,00  Für wen, Intro, Knöpfe, Adresse, dann der Strich
    *   1,00       fertig: Strecke weg, kein Zurück
    */
-  const LOS = 0.04
-  const LOS_VERSATZ = 0.035
-  const AUFSTIEG = 0.07
-  const LANDUNG = 0.78
-  /** Um wie viel ein Wort beim Aufsteigen wächst (0,6 = 60 %) und wie hoch es steigt (in Zeilenhöhen). */
-  const AUFSTIEG_GROESSE = 0.6
-  const AUFSTIEG_HOEHE = 1.4
-  /** Länge des Schweifs als Anteil der Flugbahn. */
-  const SCHWEIF = 0.2
+  const LOS = 0.2
+  const VERSATZ = 0.045
+  const FLUG = 0.42
+  /**
+   * Bogen statt Gerade: Die Seitwärtsbewegung eilt der Höhe um diesen Anteil
+   * der Flugzeit voraus. So rückt jedes Wort erst unter seinen Platz und
+   * steigt dann hinein, statt waagerecht durch die schon gelandeten zu gleiten.
+   */
+  const BOGEN = 0.2
 
   type Kopie = {
     el: HTMLElement
     marker: HTMLElement
-    /** Lage des Elements im Rahmen (unverschoben) und Versatz des Textes darin. */
+    /** Lage des Elements im Rahmen (unverschoben) und Mitte seines Textes, vom Element aus. */
     ex: number
     ey: number
-    ox: number
-    oy: number
-    /** Größe des Textes in der H1. */
-    zb: number
-    zh: number
-    /** Quelle: Versatz und Maßstab. */
-    dx: number
-    dy: number
+    mx: number
+    my: number
+    /** Quelle: wie weit ihre Textmitte von der Mitte des Ziels liegt, und ihr Maßstab. */
+    qx: number
+    qy: number
     s: number
-    /** Wegpunkt: Versatz und Maßstab. */
-    wx: number
-    wy: number
-    ws: number
   }
 
-  type Lage = { x: number; y: number; s: number; dreh: number; flug: number; u: number }
-
-  /** Wo ein Wort bei Fortschritt p steht; `flug` ist der rohe Anteil der Flugbahn. */
-  function lage(k: Kopie, i: number, p: number, flugRoh?: number): Lage {
-    const los = LOS + i * LOS_VERSATZ
-    const an = LANDUNG + i * LOS_VERSATZ
-    // Erst steigt das Wort senkrecht aus der Zeile und wächst (um seine Mitte) …
-    const u = ausrollen(abschnitt(p, los, los + AUFSTIEG))
-    const groesse = k.s * (1 + AUFSTIEG_GROESSE * u)
-    const hubX = k.dx - ((groesse - k.s) * k.zb) / 2
-    const hubY = k.dy - ((groesse - k.s) * k.zh) / 2 - u * AUFSTIEG_HOEHE * k.s * k.zh
-    // … dann fliegt es über den Wegpunkt in die H1.
-    const flug = flugRoh ?? abschnitt(p, los + AUFSTIEG, an)
-    const t = weich(klemme(flug))
-    const w = WEGPUNKTE[i % WEGPUNKTE.length]!
-    return {
-      x: bogen(hubX, k.wx, 0, t),
-      y: bogen(hubY, k.wy, 0, t),
-      s: bogen(groesse, k.ws, 1, t),
-      dreh: w.r * Math.sin(Math.PI * t),
-      flug,
-      u,
-    }
-  }
-
-  /** Mitte des Textes einer Kopie im Rahmen, Drehung um die linke obere Ecke eingerechnet. */
-  function mitte(k: Kopie, l: Lage): [number, number] {
-    const cx = k.ox + k.zb / 2
-    const cy = k.oy + k.zh / 2
-    const w = (l.dreh * Math.PI) / 180
-    const rx = cx * Math.cos(w) - cy * Math.sin(w)
-    const ry = cx * Math.sin(w) + cy * Math.cos(w)
-    return [k.ex + l.x + l.s * rx, k.ey + l.y + l.s * ry]
-  }
-
-  /* ---------- der Himmel: Punktefeld, Staub, Schweife, Blitze ---------- */
-
-  type Punkt = { gx: number; gy: number; ox: number; oy: number; ph: number; f: number }
-  type Staub = { x: number; y: number; vx: number; vy: number; a: number; g: number; ph: number }
-
-  function himmel(canvas: HTMLCanvasElement, rahmen: HTMLElement, text: HTMLElement) {
-    const ctx = canvas.getContext('2d')
-    let dpr = 1
-    let breite = 0
-    let hoehe = 0
-    let kopf = 0
-    let dunkel = false
-    let farbe = { fg: [0, 0, 0], leise: [0, 0, 0], akzent: [0, 0, 0] } as Record<
-      'fg' | 'leise' | 'akzent',
-      [number, number, number]
-    >
-    let punkte: Punkt[] = []
-    let staub: Staub[] = []
-    let h1Mitte: [number, number, number] = [0, 0, 0]
-
-    const rgba = (c: [number, number, number], a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`
-
-    function vorbereiten(h1: HTMLElement): void {
-      if (!ctx) return
-      const css = getComputedStyle(root)
-      kopf = parseFloat(css.getPropertyValue('--hero-kopf')) || 0
-      dpr = Math.min(2, window.devicePixelRatio || 1)
-      breite = document.documentElement.clientWidth
-      hoehe = window.innerHeight - kopf
-      canvas.width = Math.round(breite * dpr)
-      canvas.height = Math.round(hoehe * dpr)
-      const bg = /oklch\(\s*([\d.]+)/.exec(css.getPropertyValue('--color-bg'))
-      dunkel = bg ? parseFloat(bg[1]!) < 0.5 : false
-      farbe = {
-        fg: rgb(css.getPropertyValue('--color-fg')),
-        leise: rgb(css.getPropertyValue('--color-fg-muted')),
-        akzent: rgb(css.getPropertyValue('--color-accent')),
-      }
-
-      // Punktefeld: ein Raster über das ganze Fenster, jeder Punkt mit eigenem Gewimmel.
-      const r1 = zufall(7)
-      const abstand = Math.max(28, Math.min(44, breite / 28))
-      punkte = []
-      for (let y = abstand / 2; y < hoehe; y += abstand) {
-        for (let x = abstand / 2; x < breite; x += abstand) {
-          punkte.push({
-            gx: x,
-            gy: y,
-            ox: (r1() - 0.5) * abstand * 2.4,
-            oy: (r1() - 0.5) * abstand * 2.4,
-            ph: r1() * Math.PI * 2,
-            f: 0.5 + r1(),
-          })
-        }
-      }
-
-      // Staub: aus jeder Zeile des Geredes, Wörter des Claims ausgenommen.
-      const r = rahmen.getBoundingClientRect()
-      const t = text.getBoundingClientRect()
-      const r2 = zufall(11)
-      staub = []
-      const gang = document.createTreeWalker(text, NodeFilter.SHOW_TEXT)
-      for (let n = gang.nextNode(); n; n = gang.nextNode()) {
-        if (n.parentElement?.closest('[data-hero-quelle]')) continue
-        const range = document.createRange()
-        range.selectNodeContents(n)
-        for (const z of range.getClientRects()) {
-          if (z.width < 4) continue
-          const anzahl = Math.round(z.width / 6)
-          for (let j = 0; j < anzahl; j++) {
-            const x = z.left + r2() * z.width
-            const anteil = (x - t.left) / Math.max(1, t.width)
-            staub.push({
-              x: x - r.left,
-              y: z.top - r.top + (0.2 + 0.6 * r2()) * z.height,
-              vx: (r2() - 0.25) * 110,
-              vy: -(25 + r2() * 140),
-              a: 0.12 + 0.2 * anteil + r2() * 0.04,
-              g: 0.7 + r2() * 1.3,
-              ph: r2() * Math.PI * 2,
-            })
-          }
-        }
-      }
-
-      const h = h1.getBoundingClientRect()
-      h1Mitte = [h.left + h.width / 2 - r.left, h.top + h.height / 2 - r.top, h.width]
-    }
-
-    /** `feldZeit` treibt nur das Gewimmel des Punktefelds; steht sie still, steht es still. */
-    function malen(
-      p: number,
-      zeit: number,
-      kopien: Kopie[],
-      quellen: HTMLElement[],
-      feldZeit = zeit,
-    ): void {
-      if (!ctx) return
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.globalCompositeOperation = 'source-over'
-      ctx.shadowBlur = 0
-      ctx.clearRect(0, 0, breite, hoehe)
-      const r = rahmen.getBoundingClientRect()
-      // Rahmen-Koordinaten → Canvas-Koordinaten
-      const bx = r.left
-      const by = r.top - kopf
-      const aus = 1 - abschnitt(p, 0.9, 0.995)
-      if (aus <= 0) return
-      ctx.save()
-      ctx.beginPath()
-      ctx.rect(0, Math.max(0, by), breite, hoehe)
-      ctx.clip()
-
-      // Glimmen hinter der H1: flach wie die Zeile, im Hellen kaum mehr als ein Hauch
-      const glimm = ausrollen(abschnitt(p, 0.4, 0.85)) * aus * (dunkel ? 0.16 : 0.07)
-      if (glimm > 0.002) {
-        const [mx, my, mb] = h1Mitte
-        const radius = mb * 0.65
-        ctx.save()
-        ctx.translate(bx + mx, by + my)
-        ctx.scale(1, 0.4)
-        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, radius)
-        g.addColorStop(0, rgba(farbe.akzent, glimm))
-        g.addColorStop(0.6, rgba(farbe.akzent, glimm * 0.35))
-        g.addColorStop(1, rgba(farbe.akzent, 0))
-        ctx.fillStyle = g
-        ctx.fillRect(-radius, -radius, radius * 2, radius * 2)
-        ctx.restore()
-      }
-
-      // Punktefeld: Gewimmel → Raster
-      const ordnung = weich(abschnitt(p, 0.2, 0.8))
-      const unruhe = 1 - ordnung
-      const grund = (dunkel ? 0.3 : 0.32) * aus
-      for (const pt of punkte) {
-        const zitter = Math.sin(feldZeit * 0.0005 * pt.f + pt.ph) * 6 * unruhe
-        const x = pt.gx + pt.ox * unruhe + zitter
-        const y = pt.gy + pt.oy * unruhe + Math.cos(feldZeit * 0.0004 * pt.f + pt.ph) * 6 * unruhe
-        const funkeln = 1 - 0.6 * unruhe * (0.5 + 0.5 * Math.sin(feldZeit * 0.002 * pt.f + pt.ph))
-        ctx.fillStyle = rgba(farbe.leise, grund * funkeln)
-        ctx.fillRect(x - 1, y - 1, 2, 2)
-      }
-
-      // Staub aus dem zerfallenden Gerede
-      for (const st of staub) {
-        const e = abschnitt(p, st.a, st.a + 0.2)
-        if (e <= 0 || e >= 1) continue
-        const ee = ausrollen(e)
-        const x = bx + st.x + st.vx * ee + Math.sin(zeit * 0.003 + st.ph) * 3 * e
-        const y = by + st.y + st.vy * ee
-        ctx.fillStyle = rgba(farbe.leise, Math.sin(Math.PI * e) * 0.8 * aus)
-        ctx.fillRect(x, y, st.g, st.g)
-      }
-
-      if (dunkel) ctx.globalCompositeOperation = 'lighter'
-
-      kopien.forEach((k, i) => {
-        const l = lage(k, i, p)
-        const funken = zufall(100 + i)
-
-        // Staubwolke beim Aufsteigen aus der Zeile
-        if (l.u > 0 && l.u < 1) {
-          const q = quellen[i]!.getBoundingClientRect()
-          const qx = q.left + q.width / 2
-          const qy = q.top + q.height / 2 - kopf
-          for (let j = 0; j < 14; j++) {
-            const winkel = funken() * Math.PI * 2
-            const weit = (6 + funken() * 34) * l.u * (q.height / 18)
-            ctx.fillStyle = rgba(farbe.akzent, Math.sin(Math.PI * l.u) * 0.9)
-            const g = 1 + funken() * 1.6
-            ctx.fillRect(qx + Math.cos(winkel) * weit * 1.6, qy + Math.sin(winkel) * weit, g, g)
-          }
-        }
-
-        // Schweif wie bei einer Sternschnuppe: verjüngt, ausglühend, mit Funken
-        if (l.flug > 0 && l.flug < 1) {
-          const huelle = ausrollen(klemme(l.flug / 0.1)) * (1 - abschnitt(l.flug, 0.85, 1)) * aus
-          const kopfBreite = 0.22 * k.zh * l.s
-          const n = 28
-          const spur: [number, number][] = []
-          for (let j = 0; j <= n; j++) {
-            const f = l.flug - (SCHWEIF * j) / n
-            const lj = lage(k, i, p, Math.max(0, f))
-            const [x, y] = mitte(k, lj)
-            spur.push([bx + x, by + y])
-          }
-          ctx.lineCap = 'round'
-          for (let j = n - 1; j >= 0; j--) {
-            const rest = 1 - j / n
-            ctx.strokeStyle = rgba(farbe.akzent, huelle * rest ** 1.6 * (dunkel ? 0.75 : 0.55))
-            ctx.lineWidth = Math.max(0.5, kopfBreite * rest ** 1.2)
-            ctx.shadowColor = rgba(farbe.akzent, huelle * 0.8)
-            ctx.shadowBlur = j < 6 ? 18 : 0
-            ctx.beginPath()
-            ctx.moveTo(spur[j]![0], spur[j]![1])
-            ctx.lineTo(spur[j + 1]![0], spur[j + 1]![1])
-            ctx.stroke()
-          }
-          ctx.shadowBlur = 0
-          const funkFarbe = dunkel ? farbe.fg : farbe.akzent
-          for (let j = 0; j < 12; j++) {
-            const wo = 0.15 + funken() * 0.85
-            const a = spur[Math.min(n, Math.round(wo * n))]!
-            const seit = (funken() - 0.5) * kopfBreite * 3.2
-            const ph = funken() * Math.PI * 2
-            const glanz = 0.5 + 0.5 * Math.sin(zeit * 0.012 + ph)
-            ctx.fillStyle = rgba(funkFarbe, huelle * (1 - wo) * glanz)
-            const g = 1 + funken() * 1.5
-            ctx.fillRect(a[0] + seit, a[1] - seit * 0.6, g, g)
-          }
-        }
-
-        // Landung: ein Rahmen rastet um das Wort ein, Funken springen ab
-        const an = LANDUNG + i * LOS_VERSATZ
-        const e = abschnitt(p, an - 0.01, an + 0.07)
-        if (e > 0 && e < 1) {
-          const ee = ausrollen(e)
-          const [x, y] = mitte(k, { x: 0, y: 0, s: 1, dreh: 0, flug: 1, u: 1 })
-          const rand = k.zh * (0.06 + 0.3 * ee)
-          const b = k.zb + rand * 2
-          const h = k.zh + rand * 2
-          ctx.strokeStyle = rgba(farbe.akzent, Math.sin(Math.PI * e) * 0.85 * aus)
-          ctx.lineWidth = 1.5
-          ctx.beginPath()
-          if (ctx.roundRect) ctx.roundRect(bx + x - b / 2, by + y - h / 2, b, h, 4)
-          else ctx.rect(bx + x - b / 2, by + y - h / 2, b, h)
-          ctx.stroke()
-          const funkFarbe = dunkel ? farbe.fg : farbe.akzent
-          for (let j = 0; j < 12; j++) {
-            const winkel = funken() * Math.PI * 2
-            const weg = (8 + funken() * 34) * ee
-            const rx = Math.cos(winkel) * (k.zb / 2 + weg)
-            const ry = Math.sin(winkel) * (k.zh / 2 + weg * 0.7)
-            ctx.fillStyle = rgba(funkFarbe, (1 - e) * 0.9 * aus)
-            const g = 1 + funken() * 1.5
-            ctx.fillRect(bx + x + rx, by + y + ry, g, g)
-          }
-        }
-      })
-      ctx.restore()
-    }
-
-    return { vorbereiten, malen }
-  }
-
-  /** Maske setzen, mit Präfix für Safari. */
-  function maskieren(el: HTMLElement, wert: string): void {
-    el.style.setProperty('mask-image', wert)
-    el.style.setProperty('-webkit-mask-image', wert)
+  /** Wo ein Wort bei Fortschritt p steht: Verschiebung und Maßstab für `transform`. */
+  function lage(k: Kopie, i: number, p: number): { x: number; y: number; s: number; t: number } {
+    const los = LOS + i * VERSATZ
+    const t = abschnitt(p, los, los + FLUG)
+    const s = mischen(k.s, 1, weich(t))
+    // Die Textmitte wandert von der Quelle ans Ziel, gewachsen wird um sie herum.
+    const x = mischen(k.qx, 0, weich(klemme(t / (1 - BOGEN))))
+    const y = mischen(k.qy, 0, weich(klemme((t - BOGEN) / (1 - BOGEN))))
+    return { x: x - (s - 1) * k.mx, y: y - (s - 1) * k.my, s, t }
   }
 
   /* ---------- die Animation ---------- */
@@ -923,22 +573,21 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     const h1 = document.querySelector<HTMLElement>('[data-hero-h1]')
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
-    const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
     const feld = document.querySelector<HTMLElement>('[data-hero-feld]')
     const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
     const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
     const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
     const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
     const auftakt = document.querySelector<HTMLElement>('[data-hero-auftakt]')
-    if (!buehne || !rahmen || !h1 || !text || !flug || !leinwand) return fertig()
+    if (!buehne || !rahmen || !h1 || !text || !flug) return fertig()
 
     const quellen = alle('[data-hero-quelle]')
     const ziele = alle('[data-hero-wort]', h1)
     const zeichen = alle('[data-hero-zeichen]', h1)
     const zeilen = alle('[data-hero-einzug]')
+    const laute = alle('[data-hero-laut]', text)
     if (quellen.length === 0 || quellen.length !== ziele.length) return fertig()
     const quellMarker = quellen.map((q) => q.querySelector<HTMLElement>('[data-hero-marker]')!)
-    const bild = himmel(leinwand, rahmen, text)
 
     // Die Kopien: in Display-Schrift wie die H1, liegen am Ziel und werden per transform bewegt.
     const kopien: Kopie[] = ziele.map((ziel) => {
@@ -951,7 +600,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       return {
         el: kopie,
         marker: kopie.querySelector<HTMLElement>('[data-hero-marker]')!,
-        ...{ ex: 0, ey: 0, ox: 0, oy: 0, zb: 0, zh: 0, dx: 0, dy: 0, s: 1, wx: 0, wy: 0, ws: 1 },
+        ...{ ex: 0, ey: 0, mx: 0, my: 0, qx: 0, qy: 0, s: 1 },
       }
     })
 
@@ -963,15 +612,13 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
     let kopf = 0
 
-    /* Alles messen: Quelle, Ziel, Wegpunkt je Wort. Bei jeder Größenänderung neu. */
+    /* Alles messen: Quelle und Ziel je Wort. Bei jeder Größenänderung neu. */
     function messen(): void {
       const kopfEl = document.querySelector<HTMLElement>('.site-header')
       if (kopfEl) root.style.setProperty('--hero-kopf', `${kopfEl.offsetHeight}px`)
       kopf = kopfEl?.offsetHeight ?? 0
       const r = rahmen!.getBoundingClientRect()
-      const fensterB = document.documentElement.clientWidth
       // Glyphenkasten statt Zeilenkasten: Nur der ist proportional zur Schriftgröße.
-      maskieren(text!, '')
       kopien.forEach((k, i) => {
         const transform = k.el.style.transform
         k.el.style.transform = 'none'
@@ -979,32 +626,22 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         k.el.style.top = '0px'
         const e0 = k.el.getBoundingClientRect()
         const k0 = textKasten(k.el)
-        k.ox = k0.left - e0.left
-        k.oy = k0.top - e0.top
+        const ox = k0.left - e0.left
+        const oy = k0.top - e0.top
         const z = textKasten(ziele[i]!)
         // Kopie so legen, dass ihr Text genau auf dem Text der H1 liegt.
-        const ex = z.left - k.ox
-        const ey = z.top - k.oy
-        k.ex = ex - r.left
-        k.ey = ey - r.top
+        k.ex = z.left - ox - r.left
+        k.ey = z.top - oy - r.top
         k.el.style.left = `${k.ex}px`
         k.el.style.top = `${k.ey}px`
         k.el.style.transform = transform
+        k.mx = ox + z.width / 2
+        k.my = oy + z.height / 2
         const q = textKasten(quellen[i]!)
-        // Mit Ursprung oben links landet der Text bei e + d + s · o.
         k.s = q.height / z.height
-        k.zb = z.width
-        k.zh = z.height
-        k.dx = q.left - ex - k.s * k.ox
-        k.dy = q.top - ey - k.s * k.oy
-        const w = WEGPUNKTE[i % WEGPUNKTE.length]!
-        k.ws = w.s
-        const links = 16 + w.x * Math.max(0, fensterB - 32 - z.width * w.s)
-        const oben = r.top + w.y * Math.max(0, r.height - z.height * w.s)
-        k.wx = links - ex - k.ws * k.ox
-        k.wy = oben - ey - k.ws * k.oy
+        k.qx = q.left + q.width / 2 - (z.left + z.width / 2)
+        k.qy = q.top + q.height / 2 - (z.top + z.height / 2)
       })
-      bild.vorbereiten(h1!)
     }
 
     /* Wie weit in der Strecke, 0 bis 1. */
@@ -1061,7 +698,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
       // Die Eröffnungszeile macht Platz: Sie steigt nach oben weg und verblasst.
       if (auftakt) {
-        const weg = ausrollen(abschnitt(p, 0.02, 0.16))
+        const weg = ausrollen(abschnitt(p, 0.02, 0.14))
         auftakt.style.opacity = String(1 - weg)
         auftakt.style.transform = `translateY(${-24 * weg}px)`
       }
@@ -1069,32 +706,30 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       if (fortschrittLeiste) fortschrittLeiste.toggleAttribute('data-da', p > 0.003 && p < 0.97)
       if (balken) balken.style.transform = `scaleX(${p})`
 
-      // Das Gerede zerfällt von links nach rechts (Maske), der Staub kommt aus dem Canvas.
-      const welle = abschnitt(p, 0.12, 0.38) * 120 - 15
-      maskieren(
-        text!,
-        welle <= -15 ? '' : `linear-gradient(to right, transparent ${welle}%, #000 ${welle + 15}%)`,
-      )
-      // Das Feld um das Gerede geht mit: Fläche und Schatten blenden aus, während der Text zerfällt.
-      feld?.style.setProperty('--hero-feld', String(1 - ausrollen(abschnitt(p, 0.1, 0.34))))
+      // Das Gerede verstummt Wort für Wort, wie es gekommen ist. Die vier markierten bleiben stehen.
+      laute.forEach((wort, j) => {
+        const a = 0.04 + (0.2 * j) / laute.length
+        const still = ausrollen(abschnitt(p, a, a + 0.08))
+        wort.style.opacity = still > 0 ? String(1 - still) : ''
+      })
+      // Das Feld geht mit: Fläche und Schatten blenden aus, während das Gerede verstummt.
+      feld?.style.setProperty('--hero-feld', String(1 - ausrollen(abschnitt(p, 0.1, 0.3))))
 
+      // Der Marker zeigt „herausgegriffen“: Er blendet aus, während sein Wort auf den Platz steigt.
       kopien.forEach((k, i) => {
         const l = lage(k, i, p)
-        const unterwegs = p >= LOS + i * LOS_VERSATZ
+        const unterwegs = p >= LOS + i * VERSATZ
         quellen[i]!.style.visibility = unterwegs ? 'hidden' : ''
         k.el.style.visibility = unterwegs ? 'visible' : 'hidden'
-        k.el.style.transform = `translate(${l.x}px, ${l.y}px) scale(${l.s}) rotate(${l.dreh}deg)`
-        // Marker läuft nach der Landung nach rechts aus
-        const aus = ausrollen(abschnitt(p, 0.88, 0.95))
-        k.marker.style.transformOrigin = 'right'
-        k.marker.style.transform = `scaleX(${1 - aus})`
+        k.el.style.transform = `translate(${l.x}px, ${l.y}px) scale(${l.s})`
+        k.marker.style.opacity = String(1 - ausrollen(abschnitt(l.t, 0.7, 1)))
       })
-
-      const punkt = ausrollen(abschnitt(p, 0.88, 0.95))
-      for (const z of zeichen) z.style.opacity = String(punkt)
+      // Sind alle gelandet, ist es die H1: Komma und Punkt kommen dazu.
+      const satz = ausrollen(abschnitt(p, 0.78, 0.88))
+      for (const z of zeichen) z.style.opacity = String(satz)
 
       zeilen.forEach((zeile, i) => {
-        const t = ausrollen(abschnitt(p, 0.86 + i * 0.03, 0.92 + i * 0.03))
+        const t = ausrollen(abschnitt(p, 0.84 + i * 0.03, 0.9 + i * 0.03))
         zeile.style.opacity = String(t)
         zeile.style.transform = `translateY(${(1 - t) * WEG_TEXT}px)`
       })
@@ -1103,10 +738,8 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
     let vorbei = false
     let zuletzt = -1
-    /** Zeitpunkt, ab dem das Punktefeld stillsteht (erstes Scrollen). */
-    let stillAb: number | null = null
 
-    /* Eine Schleife für alles: DOM nur, wenn sich p ändert, der Himmel jedes Bild (er funkelt). */
+    /* Eine Schleife für alles: Gezeichnet wird nur, wenn sich p ändert. */
     function bildfolge(zeit: number): void {
       if (vorbei) return
       // Neuladen heißt oben anfangen, auch wenn der Browser die alte Stelle erst
@@ -1120,10 +753,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         zeichnen(p)
         if (p >= 0.999) return abschliessen(true)
       }
-      // Zweck erfüllt: Nach dem ersten Scrollen hört das Gewimmel auf, und zwar
-      // bevor ein Wort abhebt. Ab dann bewegt sich der Himmel nur noch mit dem Scrollen.
-      if (vorspannSteht && stillAb === null) stillAb = zeit
-      bild.malen(p, zeit, kopien, quellen, stillAb ?? zeit)
       requestAnimationFrame(bildfolge)
     }
 
@@ -1149,7 +778,6 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       rahmen!.removeEventListener('focusin', beiFokus)
       const vorher = rahmen!.getBoundingClientRect().top
       for (const k of kopien) k.el.remove()
-      leinwand!.remove()
       for (const q of quellen) q.style.visibility = ''
       for (const z of zeichen) z.style.opacity = ''
       // Explizit sichtbar: Die Regel für den Einzug ohne Gerede würde sonst wieder greifen.

@@ -180,8 +180,9 @@ for (const [route, html] of pages) {
 // JavaScript nur vom eigenen Server, gebuendelt aus dem Repository (Motion fuer
 // die Bewegung, docs/MOTION_PLAN.md). Nichts von fremden Hosts, und ein Budget
 // je Seite, damit die Bewegung nicht zur Ladezeit wird: 100 KB unkomprimiert
-// entsprechen etwa 33 KB ueber die Leitung. Seit 2026-10-11 100 statt 90 KB:
-// Der Himmel des Scroll-Heros (Startseite) braucht rund 11 KB fuer sich.
+// entsprechen etwa 33 KB ueber die Leitung. Seit 2026-10-11 100 statt 90 KB,
+// damals fuer den Himmel des Scroll-Heros (Startseite, rund 11 KB). Den gibt
+// es seit 2026-10-22 nicht mehr (docs/HERO_KLARTEXT_PLAN.md, Version 9).
 const JS_BUDGET = 100 * 1024
 const jsJeRoute = new Map()
 for (const [route, html] of pages) {

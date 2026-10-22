@@ -36,6 +36,16 @@ Schreibung und mit SVG-Pfeil („↓“ fehlt in der Hausschrift und kam aus ein
 Schatten kommt aus dem Token `--shadow-feld` (Feld-Regel). Nach der neuen Zweckbindung hört nach dem
 ersten Scrollen auch das Gewimmel des Punktefelds auf, nicht nur das Hüpfen.
 
+Version 9 vom 2026-10-22: Kein Himmel mehr. Sternschweif, Punktefeld, Staub, Glimmen hinter der H1,
+Landerahmen und Funken sind weg, der Canvas mit ihnen. Zusammen sahen sie nach Esoterik aus, nicht
+nach Klartext (Pharrel: „sieht sehr nach Schwurblerei aus“). Die Wörter fliegen nicht mehr gekippt
+über Wegpunkte quer durchs Fenster, wo sie sich kreuzten und überlagerten, sondern steigen auf einem
+flachen Bogen direkt auf ihren Platz in der H1: erst seitwärts unter den Platz, dann hinein, damit
+keines durch ein schon gelandetes gleitet. Das Gerede zerfällt nicht mehr zu Staub, es verstummt Wort
+für Wort in Lesereihenfolge, so wie es eingelaufen ist; die vier markierten Wörter bleiben dabei
+allein stehen. Der Marker blendet aus, während sein Wort landet, statt als Rest-Strich auszulaufen.
+Drei Takte, nichts daneben: Gerede verstummt, Wörter steigen auf, Satz steht.
+
 Nach dem Hero (2026-10-14): Das Gerede kehrt weiter unten wieder, wo die Seite es beantwortet, und
 der Kontakt endet mit der Eröffnungszeile. Siehe [`NACH_DEM_HERO_PLAN.md`](NACH_DEM_HERO_PLAN.md).
 
@@ -44,7 +54,7 @@ der Kontakt endet mit der Eröffnungszeile. Siehe [`NACH_DEM_HERO_PLAN.md`](NACH
 ## 0. Die Idee in einem Satz
 
 Die Startseite öffnet mit Kundengerede und einem Hinweis zum Scrollen. Beim Scrollen werden vier
-Wörter darin markiert, steigen aus dem Text, fliegen über die Seite und landen als H1
+Wörter darin markiert, steigen aus dem Text, steigen auf ihren Platz und stehen als H1
 „Ihre Probleme, klar gelöst.“ Ist die H1 erreicht, gibt es kein Zurück mehr.
 
 Was die Animation sagt: Klartext hört zu, zieht aus viel Gerede das Wesentliche, und was bleibt,
@@ -110,26 +120,21 @@ richtet sich nach der Länge des Geredes (`huepfAb`: letztes Wort steht plus 1,5
 hat den Hinweis verstanden: Die Karte hüpft danach nicht mehr, auch beim Zurückscrollen nicht. Erst
 dann misst das Skript die Wörter, damit sie nicht aus einer Hüpfhöhe losfliegen. In niedrigen
 Fenstern (bis 740 px Höhe) werden die Abstände enger und am Computer die Gerede-Schrift eine Stufe
-kleiner, damit alles ins erste Fenster passt. Im Hintergrund wimmelt ein Punktefeld. Scrollt
+kleiner, damit alles ins erste Fenster passt. Scrollt
 jemand, bevor das Gerede steht, steht es sofort komplett, mit Markern.
 
 **Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
 klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. Fortschritt p:
 
-| p         | Was passiert                                                                   |
-| --------- | ------------------------------------------------------------------------------ |
-| 0,02–0,16 | Die Eröffnungszeile steigt 24 px nach oben und verblasst                       |
-| 0,10–0,34 | Fläche, Rand und Schatten der Karte blenden aus, während das Gerede zerfällt   |
-| 0,04–0,26 | Jedes Wort steigt aus seiner Zeile, staubt orange und wächst, die Lücke bleibt |
-| 0,12–0,38 | Der Rest des Geredes zerfällt von links nach rechts zu Staub                   |
-| 0,11–0,89 | Flug mit Sternschnuppen-Schweif und Funken über die Seite in die H1            |
-| 0,20–0,80 | Das Punktefeld ordnet sich vom Gewimmel zum ruhigen Raster                     |
-| 0,40–0,85 | Hinter der H1 glimmt es auf                                                    |
-| 0,77–0,96 | Landung: ein Rahmen rastet um jedes Wort ein, Funken springen ab               |
-| 0,88–0,95 | Marker laufen aus, Komma und Punkt erscheinen                                  |
-| 0,86–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich               |
-| 0,90–1,00 | Der Himmel blendet aus                                                         |
-| 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                  |
+| p         | Was passiert                                                                                         |
+| --------- | ---------------------------------------------------------------------------------------------------- |
+| 0,02–0,14 | Die Eröffnungszeile steigt 24 px nach oben und verblasst                                             |
+| 0,04–0,32 | Das Gerede verstummt Wort für Wort in Lesereihenfolge, die vier Marker bleiben                       |
+| 0,10–0,30 | Fläche, Rand und Schatten der Karte blenden aus                                                      |
+| 0,20–0,76 | Die vier Wörter steigen nacheinander auf flachem Bogen in die H1, ihr Marker blendet beim Landen aus |
+| 0,78–0,88 | Komma und Punkt erscheinen                                                                           |
+| 0,84–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich                                     |
+| 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                                        |
 
 Bis p = 1 läuft alles mit dem Scrollen vor und zurück. Bei p = 1 wird die Strecke entfernt und
 um genau ihre Länge zurückgescrollt: Für das Auge ändert sich nichts, aber oberhalb der H1 ist
@@ -143,17 +148,17 @@ keine Strecke mehr, in die man zurückscrollen könnte.
 - **Kopien statt echter Wörter.** Die vier fliegenden Wörter sind Kopien in Display-Schrift. Sie
   liegen am Ziel (ihrem Wort in der H1) und werden per `transform` an Quelle, Wegpunkt und Ziel
   gesetzt. Gemessen wird immer der Glyphenkasten des Textes (Range), nicht der Zeilenkasten. Ablösen
-  und Landung sitzen auf 0 px genau.
+  und Landung sitzen auf 0 px genau. Gewachsen wird um die Textmitte, nicht um die Ecke.
+- **Bogen.** Die Seitwärtsbewegung eilt der Höhe um ein Fünftel der Flugzeit voraus (`BOGEN`). So
+  kommt jedes Wort von unten auf seinen Platz und gleitet nie durch ein schon gelandetes.
 - **Kein Zurück.** Abschluss bei p = 1: Kopien weg, H1 sichtbar, `data-hero="fertig"`, Strecke weg,
   `scrollBy` um die verschwundene Strecke.
 - **Sprung während der Strecke.** Ein Klick auf einen Anker der Seite (Navigation, „Arbeiten
   ansehen“) schließt die Animation vorher ab, damit der Browser das richtige Ziel berechnet.
 - **Neuladen.** `history.scrollRestoration = 'manual'`, solange die Animation läuft, danach wieder
   `auto`.
-- **Himmel.** Ein Canvas hinter allem, nur während der Animation. Punktefeld, Staub, Schweife,
-  Funken und Landerahmen werden jedes Bild aus p gezeichnet, also auch rückwärts richtig. Zufall
-  mit fester Saat, damit jeder Besuch gleich aussieht. Farben kommen aus den Tokens (OKLCH, im
-  Skript nach RGB umgerechnet). Im Dunkelmodus leuchten Schweife additiv.
+- **Kein Himmel** (seit Version 9). Alles läuft über `transform` und `opacity` an DOM-Elementen,
+  gezeichnet nur, wenn sich p ändert, und damit auch rückwärts richtig.
 - **Neuladen wirklich oben.** Stellt der Browser die alte Scrollposition erst nach dem Start
   wieder her, setzt das Skript in der ersten 1,5 s wieder auf oben, solange niemand selbst scrollt.
 - **Sicherheitsnetz.** Läuft das Modul nach 2 s nicht, stellt CSS den fertigen Hero her und nimmt
@@ -165,11 +170,12 @@ keine Strecke mehr, in die man zurückscrollen könnte.
 
 - Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
 - Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
-- Die Karte mit dem Gerede und das Punktefeld bewegen sich, bis man scrollt; wer nie scrollt, sieht
+- Die Karte mit dem Gerede bewegt sich, bis man scrollt; wer nie scrollt, sieht
   sie endlos. Wer gerade liest, liest alle gut 4 s zwei Hüpfer lang einen bewegten Text. Begründet
   mit der Zweckbindung in `DESIGN.md`: Wenige Pixel Scrollen halten beides an, bevor ein Wort
   abhebt. Ob das als Mechanismus im Sinne von WCAG 2.2.2 genügt, ist eine Auslegung, kein Beleg.
-- JavaScript-Budget von 90 auf 100 KB je Seite angehoben; der Himmel braucht rund 11 KB.
+- JavaScript-Budget von 90 auf 100 KB je Seite angehoben, damals für den Himmel (rund 11 KB). Seit
+  Version 9 ist er weg, das Budget steht unverändert.
 
 ## 6. Prüfung
 
