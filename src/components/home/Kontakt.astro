@@ -17,19 +17,9 @@
  * endet, wo sie angefangen hat, nur dass jetzt die Adresse darunter steht.
  * Die Zeile steht ruhig: Bewegt wird hier die Adresse.
  *
- * Der Antworttermin (docs/RUHE_PLAN.md): Unter dem Knopf rechnet die Seite
- * aus, bis wann eine Antwort kommt, wenn man heute schreibt: der nächste
- * Werktag, Wochenenden und bayerische Feiertage ausgenommen. Dazu eine Reihe
- * der nächsten sieben Tage mit „heute“ und „Antwort“, freie Tage blass. Das
- * Versprechen „innerhalb eines Werktags“ wird so zu einem Datum. Nur mit
- * Skript, denn das Datum steht erst beim Besuch fest; ohne bleibt der Satz im
- * Intro, mit nimmt das Skript ihn dort weg.
- *
- * Die Tage sind keine Kacheln mehr (bis 2026-10-17: Rahmen, 8 px, gestrichelt,
- * Deckkraft), sondern Spalten unter einer Haarlinie, wie die Reiter in 01:
- * heute mit Tintenstrich, der Antworttag mit orangem Strich und oranger
- * Schrift, freie Tage in Bleistiftgrau. Nichts auf der Seite sonst ist ein
- * gerahmter Kasten, und Deckkraft drückte die freien Tage unter 3 : 1.
+ * Der Antworttermin (bis 2026-10-22: Datum und sieben Tage als Kalender unter
+ * dem Knopf) ist entfallen, er versprach zu konkret. Die Antwortzeit steht
+ * nur noch als Regel im Intro.
  */
 import { getEntry } from 'astro:content'
 import Button from '@/components/Button.astro'
@@ -67,14 +57,7 @@ if (profile.social.github) {
 
 {/* Die Antwortzeit steht hier, bei der Adresse, und nicht mehr im Hero. */}
 <Section id="kontakt" index="05" title={contact.heading} intro={contact.description}>
-  {
-    /*
-      Die Regel „innerhalb eines Werktags“ steht nur, solange der Antworttermin
-      sie nicht als Datum ausspricht: Mit Skript nimmt er sie weg, sonst stünde
-      dieselbe Zusage zweimal untereinander (so bis 2026-10-17).
-    */
-  }
-  <span slot="intro" data-termin-regel>{' ' + contact.responseTime}</span>
+  <span slot="intro">{' ' + contact.responseTime}</span>
   {
     /*
       Jede Spalte bringt ihre Haarlinie selbst mit: die Handlung als Kante,
@@ -100,159 +83,8 @@ if (profile.social.github) {
       <p class="mt-8 mb-0">
         <Button href={anfrage}>E-Mail schreiben</Button>
       </p>
-
-      <div class="mt-8" data-termin hidden>
-        <p class="m-0 text-sm text-fg-muted" data-termin-satz></p>
-        <ol
-          class="termin-tage mt-3 mb-0 flex list-none gap-2 p-0"
-          aria-hidden="true"
-          data-termin-tage
-        >
-        </ol>
-      </div>
     </div>
 
     <MetaList rows={erreichbarkeit} />
   </div>
 </Section>
-
-<style>
-  /*
-   * Die Tage: Spalten unter einer Haarlinie, oben die Marke („heute“,
-   * „Antwort“), dann Wochentag und Datum. Heute trägt einen Tintenstrich auf
-   * der Linie, der Antworttag einen orangen Strich und orange Schrift, freie
-   * Tage (Wochenende, Feiertag) stehen in Bleistiftgrau. Keine Rahmen, keine
-   * Deckkraft: alles bleibt über 4,5 : 1.
-   */
-  .termin-tage :global(li) {
-    display: grid;
-    width: 2.75rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--color-border);
-    color: var(--color-fg);
-    font-size: 0.75rem;
-    line-height: 1.3;
-    text-align: center;
-    font-variant-numeric: tabular-nums;
-  }
-  .termin-tage :global(li b) {
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-  .termin-tage :global(li small) {
-    font-size: 0.625rem;
-    font-weight: 500;
-    min-height: 0.8125rem;
-    color: var(--color-fg-muted);
-  }
-  .termin-tage :global(li[data-frei]) {
-    color: var(--color-fg-muted);
-  }
-  .termin-tage :global(li[data-heute]) {
-    border-top: 2px solid var(--color-fg);
-    padding-top: calc(0.5rem - 1px);
-  }
-  .termin-tage :global(li[data-antwort]) {
-    border-top: 2px solid var(--color-accent);
-    padding-top: calc(0.5rem - 1px);
-    color: var(--color-accent);
-  }
-  .termin-tage :global(li[data-antwort] small) {
-    color: var(--color-accent);
-  }
-</style>
-
-<script>
-  const termin = document.querySelector<HTMLElement>('[data-termin]')
-  const satz = termin?.querySelector<HTMLElement>('[data-termin-satz]')
-  const tage = termin?.querySelector<HTMLElement>('[data-termin-tage]')
-
-  /** Ostersonntag nach Gauß (gregorianisch), Grundlage der beweglichen Feiertage. */
-  function ostern(jahr: number): Date {
-    const a = jahr % 19
-    const b = Math.floor(jahr / 100)
-    const c = jahr % 100
-    const d = Math.floor(b / 4)
-    const e = b % 4
-    const f = Math.floor((b + 8) / 25)
-    const g = Math.floor((b - f + 1) / 3)
-    const h = (19 * a + b - d - g + 15) % 30
-    const i = Math.floor(c / 4)
-    const k = c % 4
-    const l = (32 + 2 * e + 2 * i - h - k) % 7
-    const m = Math.floor((a + 11 * h + 22 * l) / 451)
-    const monat = Math.floor((h + l - 7 * m + 114) / 31)
-    const tag = ((h + l - 7 * m + 114) % 31) + 1
-    return new Date(jahr, monat - 1, tag)
-  }
-
-  const schluessel = (t: Date) => `${t.getFullYear()}-${t.getMonth() + 1}-${t.getDate()}`
-  const plus = (t: Date, n: number) => new Date(t.getFullYear(), t.getMonth(), t.getDate() + n)
-
-  /** Gesetzliche Feiertage in Bayern (Bruckmühl, also mit Mariä Himmelfahrt). */
-  function feiertage(jahr: number): Set<string> {
-    const o = ostern(jahr)
-    const fest = [
-      [1, 1],
-      [1, 6],
-      [5, 1],
-      [8, 15],
-      [10, 3],
-      [11, 1],
-      [12, 25],
-      [12, 26],
-    ].map(([m, d]) => new Date(jahr, m! - 1, d!))
-    const beweglich = [-2, 1, 39, 50, 60].map((n) => plus(o, n))
-    return new Set([...fest, ...beweglich].map(schluessel))
-  }
-
-  const frei = (t: Date) =>
-    t.getDay() === 0 || t.getDay() === 6 || feiertage(t.getFullYear()).has(schluessel(t))
-
-  /*
-   * „Innerhalb eines Werktags“: Wer an einem Werktag schreibt, hat die Antwort
-   * in der Regel am nächsten Werktag; wer an einem freien Tag schreibt, am
-   * ersten Werktag danach.
-   */
-  function antworttag(heute: Date): Date {
-    let tag = plus(heute, 1)
-    if (frei(heute)) tag = heute
-    while (frei(tag) || tag.getTime() === heute.getTime()) tag = plus(tag, 1)
-    return tag
-  }
-
-  if (termin && satz && tage) {
-    const jetzt = new Date()
-    const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate())
-    const antwort = antworttag(heute)
-    const kurz = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-    const lang = new Intl.DateTimeFormat('de-DE', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-    })
-
-    const wann = document.createElement('span')
-    wann.className = 'font-medium text-fg'
-    wann.textContent = lang.format(antwort)
-    satz.append('Heute geschrieben, Antwort in der Regel bis ', wann, '.')
-
-    for (let n = 0; n < 7; n++) {
-      const t = plus(heute, n)
-      const li = document.createElement('li')
-      const istAntwort = t.getTime() === antwort.getTime()
-      li.toggleAttribute('data-heute', n === 0)
-      li.toggleAttribute('data-antwort', istAntwort)
-      li.toggleAttribute('data-frei', frei(t))
-      const marke = document.createElement('small')
-      marke.textContent = n === 0 ? 'heute' : istAntwort ? 'Antwort' : ''
-      const tag = document.createElement('b')
-      tag.textContent = String(t.getDate())
-      li.append(marke, kurz[t.getDay()]!, tag)
-      tage.append(li)
-    }
-    termin.hidden = false
-    // Die Regel steht jetzt als Datum unter dem Knopf; im Intro wäre sie doppelt.
-    document.querySelector<HTMLElement>('[data-termin-regel]')?.remove()
-  }
-</script>
