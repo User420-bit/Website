@@ -1,0 +1,541 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Dienstag, 20. Oktober 2026",
+  "summary": "Zinsen, Energiepreise und die Schuldenlage Frankreichs bestimmen heute das Bild, während der Berliner Investitionsgipfel Milliardenzusagen bringt. Im Hintergrund wirken Huthi-Angriffe und Krawalle in Frankreich auf Märkte und Stimmung, KI-Themen liefern vor allem Börsennachrichten.",
+  "topThree": [
+    {
+      "title": "Gaspreis über 90 Euro, Ölpreis über 110 Dollar",
+      "briefing": "Europäisches Erdgas kostet erstmals seit Ende 2022 mehr als 90 Euro je Megawattstunde (MWh, rund 1.000 Kilowattstunden). Brent (Referenz-Rohöl aus der Nordsee) steigt auf den höchsten Stand seit fünf Monaten und kostet über 110 Dollar je Barrel. Auslöser sind Huthi-Angriffe auf Ziele in Saudi-Arabien, wohl auch das Auffüllen der Gasspeicher vor dem Winter.",
+      "impact": "Heiz- und Spritkosten steigen, während laut Umfrage eine Mehrheit vom Tankrabatt bislang kaum etwas merkt.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/international/energie-europaeischer-gaspreis-steigt-erstmals-seit-2022-ueber-90-euro/100263635.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/devisen-rohstoffe/oel-preis-brent-steigt-auf-den-hoechsten-stand-seit-fuenf-monaten/100263581.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-oelpreis-100.html"
+        }
+      ]
+    },
+    {
+      "title": "Immobilienkredite so teuer wie seit 2009 nicht mehr",
+      "briefing": "Die EZB (Europäische Zentralbank) hat die Zinsen zuletzt weiter erhöht, um die Inflation zu bekämpfen. Die durchschnittliche Verzinsung für Immobilienkredite liegt jetzt so hoch wie seit 2009 nicht mehr. Dazu kommen hohe Material- und Lohnkosten beim Bauen.",
+      "impact": "Wer eine Immobilie finanziert, zahlt über die Laufzeit spürbar mehr Zinsen. Bauprojekte kalkulieren zusätzlich mit höheren Material- und Lohnkosten.",
+      "tag": "Geldpolitik",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/immobilien/immobilienkredite-zinsen-so-hoch-wie-seit-2009-nicht-ezb-verteuert-kredite-a-4a3adadb-5cb0-42c8-a4cc-07a9ab2036af#ref=rss"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/immobilienkredite-zinsen-darlehen-100.html"
+        }
+      ]
+    },
+    {
+      "title": "Frankreich-Krise: Anleger greifen zu deutschen Bundesanleihen",
+      "briefing": "Der Ausverkauf französischer Staatsanleihen geht weiter, Premierminister Lecornu hat Mühe, einen Haushalt zu verabschieden. Anleger weichen deshalb stärker auf Bundesanleihen aus, die als sicherer Hafen gelten.",
+      "impact": "Wer Bundesanleihen-ETFs hält, sieht derzeit mehr Nachfrage nach deutschen Papieren. In französischen Staatsanleihen steigen die Renditen, weil die Kurse fallen.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/anleihen-wie-bundesanleihen-von-der-frankreich-krise-profitieren/100263278.html"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/politik/europa/frankreich-ausverkauf-bei-staatsanleihen-risiko-fuer-neue-schuldenkrise-waechst-a-30056f66-e012-44d0-9f9a-da36951a87ae#ref=rss"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Investitionen & Standort",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Investitionsgipfel: Erste Milliarden-Zusagen für Deutschland",
+          "oneLine": "Kanzler Merz verspricht bessere Bedingungen für Investoren, Milliarden sollen in acht Bereiche fließen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/investitionsgipfel-merz-wirbt-um-investoren-amazon-sagt-16-milliarden-euro-zu/100263324.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/investitionen-regierung-wirbt-um-investoren-deutschland-ist-zurueck/100263480.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/investitionsgipfel-114.html"
+            }
+          ]
+        },
+        {
+          "title": "Amazon investiert 16 Milliarden Euro in Deutschland",
+          "oneLine": "Amazon plant 2027 Investitionen von über 16 Milliarden Euro, vor allem in Cloud und KI rund um Frankfurt.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/deutschland/amazon-konzern-plant-investitionen-von-16-milliarden-euro-in-deutschland-a-50013c33-65c5-4a35-98c9-e59f73cbdf53#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Cloud-und-KI-Amazon-will-2027-16-Milliarden-Euro-in-Deutschland-investieren-11493822.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Bund und Nvidia vereinbaren Zusammenarbeit bei KI",
+          "oneLine": "Beide wollen Industriedaten für KI nutzbar machen, die Vereinbarung soll die Wettbewerbsfähigkeit stärken.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/bund-nvidia-zusammenarbeit-ki-100.html"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Kanzler-Merz-hofft-auf-Nvidia-als-Wachstumsbeschleuniger-11493401.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Deutschlands schwindende Anziehungskraft für Investoren",
+          "oneLine": "Konzerne meiden den Standort oder halbieren Pläne, etwa Eli Lilly in Alzey, was Folgen für die Wirtschaft hat.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/investoren-118.html"
+            }
+          ]
+        },
+        {
+          "title": "Investoren kehren zu deutschen Aktien zurück",
+          "oneLine": "Ausländisches Kapital hat deutsche Aktien wiederentdeckt; Portfoliomanager nennen Titel und Sektoren, die sie meiden.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/geldanlage/geld-investoren-entdecken-deutsche-aktien-wo-sie-zuschlagen-und-was-kleinanleger-lernen-koennen-a-e9d38c08-21cd-41ac-92d2-cfc3a008bf93#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "US-Kapital kauft zunehmend deutschen Mittelstand",
+          "oneLine": "Viele Familienunternehmen finden keine Nachfolger, deshalb werden sie immer öfter Übernahmeziele.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/why-us-investors-are-snapping-up-germany-s-famed-mittelstand/a-79705421?maca=en-rss-en-bus-2091-rdf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arbeit & Unternehmen",
+      "emoji": "👷",
+      "items": [
+        {
+          "title": "BMW schließt Abfindungsprogramm vorzeitig",
+          "oneLine": "Tausende Beschäftigte wollen BMW verlassen, die Abfindungen liegen oft im sechsstelligen Bereich.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-tausende-wollen-bmw-verlassen-abfindungsprogramm-geschlossen/100263648.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bmw-schliesst-abfindungsprogramm-vorzeitig-hohe-abfindungen-locken-tausende-mitarbeiter-zum-freiwilligen-ausstieg-a-c3b66a44-4936-4652-9938-9a161fbf35f4#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Qualcomm kündigt weltweiten Stellenabbau an",
+          "oneLine": "Schwache Nachfrage und sinkende Apple-Umsätze belasten den Chipkonzern, die Zahl der Stellen ist noch offen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/tech-branche-qualcomm-kuendigt-nach-schwachem-geschaeft-stellenabbau-an/100263644.html"
+            }
+          ]
+        },
+        {
+          "title": "Wettanbieter Paddy Power streicht 1.400 Stellen",
+          "oneLine": "Das Unternehmen macht gestiegene Steuern auf Online-Casino und Sportwetten verantwortlich.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cqzrdpkm3g84o?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "VW: Berichte über Gehaltsstopp bis 2030",
+          "oneLine": "Laut Zeitungsbericht plant VW eine weltweite Nullrunde für viele Beschäftigte, der Konzern spricht von Spekulationen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Volkswagen-Interne-Richtlinien-sehen-offenbar-Gehaltsstopp-bis-2030-vor-11492258.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Galeria erhält Kredit, jeder Standort auf dem Prüfstand",
+          "oneLine": "Ein Darlehen von Gordon Brothers sichert der insolventen Warenhauskette Ware für das Weihnachtsgeschäft.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/insolvenz-galeria-bekommt-wichtigen-kredit-deutlich-mehr-spielraum/100263656.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/galeria-insolvenz-jeder-standort-auf-dem-pruefstand-kredit-bringt-atempause-a-cf6c6b7c-54f9-4686-9d1f-cd71b5281ea8#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic: KI verändert interne Arbeit und Einstiegsjobs",
+          "oneLine": "Ingenieure liefern laut Anthropic fünfmal so viele Code-Beiträge wie vor einem Jahr, der Mensch wird zum Engpass.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/technik/ki/arbeitsmarkt-anthropic-zeigt-wie-ki-den-geschaeftsalltag-veraendert/100263274.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kaufkraft & Alltag",
+      "emoji": "🛒",
+      "items": [
+        {
+          "title": "Minijob-Grenze steigt 2027 auf 633 Euro im Monat",
+          "oneLine": "Minijobber dürfen ab Januar 2027 monatlich 633 Euro verdienen, der Mindestlohn steigt parallel.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/verdienstgrenze-minijob-das-aendert-sich-2027/100263626.html"
+            }
+          ]
+        },
+        {
+          "title": "Deutsche Post will Briefporto auf 1,15 Euro anheben",
+          "oneLine": "Ein Standardbrief würde von 95 Cent auf 1,15 Euro steigen, sofern die Bundesnetzagentur zustimmt.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/porto-standardbrief-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Spritpreise: Hessen und NRW besonders teuer",
+          "oneLine": "In Hessen und NRW ist Tanken besonders teuer, in Berlin vergleichsweise günstig.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/mobilitaetskosten-spritpreise-hessen-und-nrw-besonders-teuer/100263687.html"
+            }
+          ]
+        },
+        {
+          "title": "Steuerschätzung: Mehr Einnahmen für Bund und Länder möglich",
+          "oneLine": "Die Steuerschätzung startet heute, mehr Einnahmen als erwartet wecken bereits Begehrlichkeiten.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/steuereinnahmen-bund-laender-steuerschaetzung-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Digitales Ticket für Gelegenheitsfahrer: Bayern widerspricht",
+          "oneLine": "Verkehrsminister der Länder wollen ein bundesweites Ticket für Gelegenheitsfahrer, Bayern lehnt die Idee ab.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/deutschlandticket-316.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/oeffentlicher-nahverkehr-neues-digitales-ticket-fuer-den-nahverkehr-bayern-kontert/100263498.html"
+            }
+          ]
+        },
+        {
+          "title": "Tankrabatt bei Autofahrern kaum spürbar",
+          "oneLine": "Seit fast drei Wochen gilt der Tankrabatt, doch eine Mehrheit spürt die Entlastung beim Tanken kaum.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Umfrage-Entlastung-durch-Tankrabatt-kaum-spuerbar-11493618.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Konflikte",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Selenskyj trifft US-Gesandten Witkoff in Oslo",
+          "oneLine": "Die Gespräche finden statt, nachdem sich die Beziehungen zwischen Kiew und Washington verschlechtert hatten.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-neuer-ort-neue-hoffnung-selenskyj-trifft-witkoff-in-oslo/100263479.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-treffen-witkoff-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Trump verschärft Ton gegen Selenskyj und blockiert EU-Hilfe",
+          "oneLine": "Trump wirft Kiew mangelnde Gegenleistung vor, Selenskyj wirft den USA Zurückhaltung bei Waffenlieferungen vor.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-spannungen-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-trump-lobt-russland-und-blockiert-eu-hilfe-fuer-kiew/100263442.html"
+            }
+          ]
+        },
+        {
+          "title": "Huthi-Angriff auf Militärlager im Jemen: 53 Tote",
+          "oneLine": "Mindestens 53 Soldaten kommen laut Tagesschau bei einem Raketenangriff der Huthi-Miliz ums Leben.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/jemen-huthi-angriff-militaerlager-viele-tote-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Hegseth besucht Israel: Netanjahu deutet neue Iran-Angriffe an",
+          "oneLine": "Hegseth trifft Netanjahu kurz vor der Wahl in Israel, Netanjahu deutet neue Angriffe auf den Iran an.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-hegseth-in-israel-gespraech-mit-netanjahu-ueber-iran/100136895.html"
+            },
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/hegseth-makes-unannounced-visit-to-israel-meets-with-netanyahu-ahead-of-election-reports/"
+            }
+          ]
+        },
+        {
+          "title": "Russischer Satellit verfolgt europäischen Radarsatelliten",
+          "oneLine": "Das Manöver weckt Sorge vor militärischen Konflikten im All, der Zweck ist noch unklar.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Russischer-Satellit-beschattet-westlichen-Radarsatelliten-11492768.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/militaer-der-ukraine-krieg-verlagert-sich-in-den-weltraum/100263430.html"
+            }
+          ]
+        },
+        {
+          "title": "EU legt Arktis-Strategie vor und verstärkt Militärpräsenz",
+          "oneLine": "Brüssel will die Präsenz in der Arktis erhöhen und Grönland enger an Europa binden.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/eu-arktis-strategie-102.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/arktis-strategie-die-eu-ruestet-sich-fuer-den-machtkampf-um-groenland/100263335.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech & KI",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Google-Cloud-Ausfall stört Banking-Apps in Europa",
+          "oneLine": "Ein Ausfall der Google Cloud legt Revolut, ING und weitere Dienste stundenlang lahm, Ursache ist noch unklar.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Google-Cloud-Ausfall-legt-Revolut-und-weitere-Unternehmen-lahm-11494278.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/banken-versicherungen/banken/banken-massive-stoerungen-im-online-banking-von-ing-und-revolut/100263510.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/banken/google-grossausfall-fuehrt-zu-stoerungen-bei-banken-und-unternehmen-a-d3d6d7d5-af24-4183-abcc-be30880f6151#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "USA verbannen DeepSeek aus zivilen Bundesbehörden",
+          "oneLine": "Das Heimatschutzministerium untersagt alle DeepSeek-Produkte, die praktische Umsetzung bleibt offen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/USA-verbannen-DeepSeek-aus-allen-zivilen-Bundesbehoerden-11494370.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cjkgeq0k1wevo?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic-Fonds und Musk-Aktien für Kinder",
+          "oneLine": "Anthropic gründet vor dem Börsengang einen Gemeinwohl-Fonds, Musk will jedem US-Kind eine SpaceX-Aktie schenken.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/KI-Wohltaeter-Battle-Anthropic-gruendet-Fund-Musk-verschenkt-Aktien-an-Kinder-11493199.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/elon-musk-says-hell-give-every-kid-in-america-one-share-of-spacex-stock/"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cm2kez327gdko?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "KI-Zulieferer Elice erlebt schlechtestes Börsendebüt",
+          "oneLine": "Der Rechenzentrumsbetreiber endete am ersten Handelstag als Desaster, obwohl vorab große Nachfrage bestand.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/maerkte/boerse-inside/elice-ki-zulieferer-erlebt-schlechtestes-boersendebuet-der-geschichte/100263459.html"
+            }
+          ]
+        },
+        {
+          "title": "Bosch setzt auf KI mit Microsoft, Experten warnen",
+          "oneLine": "Der Konzern baut KI eng mit Microsoft aus, Digitalexperten warnen vor zu großer Abhängigkeit von US-Techriesen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/bosch-microsoft-ki-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Hochtief will sich um EU-„AI Gigafactory“ bewerben",
+          "oneLine": "Der Baukonzern baut Rechenzentren weltweit und sucht nach Handelsblatt-Informationen einen großen Partner.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/technik/ki/ki-baukonzern-hochtief-plant-eigene-bewerbung-fuer-ai-gigafactory/100262865.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Politik & Gesellschaft",
+      "emoji": "🏛",
+      "items": [
+        {
+          "title": "Mehr als 2.500 Menschen in Gewahrsam nach Krawallen in Frankreich",
+          "oneLine": "Die Regierung verlängert nächtliche Ausgangssperren, die sie nach eigener Aussage bewährt sieht.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/frankreich-wer-hinter-den-krawallen-vom-17.-oktober-steckt/100263360.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/frankreich-ausgangssperren-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Merz warnt Berlin vor Vergesellschaftung von Wohnraum",
+          "oneLine": "Linke, Grüne und SPD wollen große private Wohnungsbestände vergesellschaften, Merz sieht die Wirtschaftsordnung in Gefahr.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/berliner-regierungsbildung-merz-warnt-berlin-vor-vergesellschaftung-von-wohnraum/100263664.html"
+            }
+          ]
+        },
+        {
+          "title": "Kassenärzte warnen vor längeren Terminwartezeiten ab 2027",
+          "oneLine": "Ein festes Terminkontingent ab 2027 könnte gesetzlich Versicherte länger auf Arzttermine warten lassen, so die KBV.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/gesundheitsreform-kassen-und-aerzten-streiten-muessen-patienten-laenger-warten/100263379.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/gesellschaft/kassenaerzte-lange-wartezeiten-termine-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Alberta-Abstimmung: Klare Mehrheit gegen Abspaltung von Kanada",
+          "oneLine": "Nach ersten Auszählungen stimmen rund 76 Prozent gegen den Weg zur Abspaltung von Kanada.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/abstimmung-klare-mehrheit-in-alberta-gegen-unabhaengigkeit-von-kanada/100263436.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/amerika/alberta-kanada-100.html"
+            },
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/alberta-voters-reject-proposal-that-could-lead-to-separation-from-canada/"
+            }
+          ]
+        },
+        {
+          "title": "IFG: Regierung hat keine Belege für geplante Einschränkungen",
+          "oneLine": "Das Innenressort muss vor Gericht einräumen, dass es keine nachweisbaren Gründe für die IFG-Änderungen gibt.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Informationsfreiheitsgesetz-Regierung-hat-keine-Belege-fuer-angebliche-Gefahren-11494684.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "EU-Parlament: Kompromiss zum Verbrenner-Aus in Sicht",
+          "oneLine": "Die Fraktionsunterhändler haben sich geeinigt, das Verbrenner-Aus ab 2035 steht damit zur Disposition.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/eu-verbrenner-klima-100.html"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

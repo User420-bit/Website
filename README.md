@@ -36,17 +36,18 @@ Alle Texte liegen als Dateien im Repository. Es gibt keinen Admin-Bereich und ke
 Datenbank — ändern heißt: Datei editieren, committen, fertig. Der Deploy läuft
 automatisch.
 
-| Was                                                  | Datei                            |
-| ---------------------------------------------------- | -------------------------------- |
-| Firmenname, Claim (H1), Für wen, Intro, Leistungen   | `src/content/company.json`       |
-| Titel und Beschreibung der Startseite, Einzugsgebiet | `src/content/company.json`       |
-| Leistungen im Einzelnen, mit Belegen                 | `src/content/leistungen.json`    |
-| Inhaber, Portrait                                    | `src/content/profile.json`       |
-| Text, Werte, Arbeitsweise                            | `src/content/about.md`           |
-| Eine Referenz                                        | `src/content/projekte/<name>.md` |
-| Werkzeug-Gruppen                                     | `src/content/skills.json`        |
-| Kontakt-Abschnitt                                    | `src/content/contact.json`       |
-| Impressum und Datenschutz                            | `src/content/legal.json`         |
+| Was                                                  | Datei                                 |
+| ---------------------------------------------------- | ------------------------------------- |
+| Firmenname, Claim (H1), Für wen, Intro, Leistungen   | `src/content/company.json`            |
+| Titel und Beschreibung der Startseite, Einzugsgebiet | `src/content/company.json`            |
+| Leistungen im Einzelnen, mit Belegen                 | `src/content/leistungen.json`         |
+| Inhaber, Portrait                                    | `src/content/profile.json`            |
+| Text, Werte, Arbeitsweise                            | `src/content/about.md`                |
+| Eine Referenz                                        | `src/content/projekte/<name>.md`      |
+| Werkzeug-Gruppen                                     | `src/content/skills.json`             |
+| Kontakt-Abschnitt                                    | `src/content/contact.json`            |
+| Impressum und Datenschutz                            | `src/content/legal.json`              |
+| Eine Newsletter-Ausgabe (legt n8n an)                | `src/content/newsletter/<datum>.json` |
 
 Wer den Claim in `company.json` ändert, muss ihn auch in `scripts/verify-build.mjs` unter
 `ROUTES['']` nachziehen — der Build-Check prüft die H1 der Startseite gegen diesen Text. Danach
@@ -109,6 +110,21 @@ ohne Link. Hat „Kunden“ oder „Eigene Projekte“ dadurch nichts mehr zu ze
 noch ausgegraut da, mit „folgt“ statt der Anzahl. So stehen PointCare und JustBeauty seit dem
 2026-09-24. Zum Freischalten die Zeile löschen; `npm run test:build` prüft beide Richtungen: gebaut,
 was veröffentlicht ist, und nicht gebaut, was es nicht ist.
+
+### Newsletter
+
+`/newsletter/` zeigt den Nachrichten-Digest, den der n8n-Workflow „Digest“ sonntags, dienstags und
+donnerstags gegen 18 Uhr erstellt; jede Ausgabe hat zusätzlich eine eigene Seite
+`/newsletter/<datum>/`. Je Ausgabe liegt eine Datei `src/content/newsletter/<YYYY-MM-DD>.json` im
+Repository: die Antwort von Claude im JSON-Schema des Workflows, unverändert, plus `model`. Das
+Datum der Ausgabe kommt aus dem Dateinamen, nicht aus `digestDate`. Das Schema steht in
+`src/content.config.ts`; eine Datei, die nicht passt, bricht den Build.
+
+Der Workflow legt die Datei nach jedem Lauf über die GitHub-API auf `main` an, der Deploy
+veröffentlicht sie. Der Deploy prüft auch die Formatierung: Die Datei muss genau so aussehen wie
+`JSON.stringify(daten, null, 2)` mit Zeilenumbruch am Ende, sonst bricht `format:check` ab. Von Hand nachtragen geht genauso: Datei anlegen, committen. Plan und
+Begründung stehen im Vault unter „Plan – Newsletter-Archiv des n8n-Digests als eigene Seite auf
+web-klartext.de“.
 
 ### Ein Bild hinzufügen
 

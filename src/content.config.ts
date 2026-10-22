@@ -270,6 +270,52 @@ const contact = defineCollection({
   }),
 })
 
+/**
+ * Newsletter: je Ausgabe eine Datei `src/content/newsletter/<YYYY-MM-DD>.json`.
+ * Angelegt vom n8n-Workflow „Digest“ nach jedem Lauf, mit der Antwort von
+ * Claude im Schema dieses Workflows, unverändert, plus `model`. Das Datum der
+ * Ausgabe kommt aus dem Dateinamen (`ausgabeDatum` in `src/lib/site.ts`), nicht
+ * aus `digestDate`: Das schreibt das Modell als freien Text.
+ * `emoji` wird gelesen, aber nicht gezeigt (DESIGN.md, Hausschrift ohne Emojis).
+ */
+const quelle = z.object({
+  source: z.string().min(1),
+  link: z.url({ protocol: /^https?$/ }),
+})
+
+const newsletter = defineCollection({
+  loader: glob({ pattern: '*.json', base: 'src/content/newsletter' }),
+  schema: z.object({
+    model: z.string().min(1),
+    digestDate: z.string(),
+    summary: z.string().min(1),
+    topThree: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          briefing: z.string().min(1),
+          impact: z.string().min(1),
+          tag: z.string().min(1),
+          sources: z.array(quelle).min(1),
+        }),
+      )
+      .min(1),
+    clusters: z.array(
+      z.object({
+        name: z.string().min(1),
+        emoji: z.string(),
+        items: z.array(
+          z.object({
+            title: z.string().min(1),
+            oneLine: z.string().min(1),
+            sources: z.array(quelle).min(1),
+          }),
+        ),
+      }),
+    ),
+  }),
+})
+
 export const collections = {
   company,
   profile,
@@ -279,4 +325,5 @@ export const collections = {
   skills,
   legal,
   contact,
+  newsletter,
 }

@@ -1,0 +1,43 @@
+---
+/**
+ * Quellenzeile unter einer Meldung, gebaut wie die Belegzeile der Leistungen
+ * (DESIGN.md, Belegzeile): „Quellen:“ in Bleistiftgrau, dann die Redaktionen
+ * als orange Links mit Unterstrich. Nennt eine Meldung dieselbe Redaktion
+ * mehrfach, bekommt jeder weitere Link eine Nummer, damit Screenreader die
+ * Links unterscheiden. Externe Links öffnen im neuen Tab und sagen das dazu,
+ * wie in `MetaList`.
+ */
+interface Props {
+  quellen: readonly { source: string; link: string }[]
+  class?: string
+}
+
+const { quellen, class: className = '' } = Astro.props
+
+const gezaehlt = new Map<string, number>()
+const links = quellen.map(({ source, link }) => {
+  const n = (gezaehlt.get(source) ?? 0) + 1
+  gezaehlt.set(source, n)
+  return { text: n > 1 ? `${source} ${n}` : source, link }
+})
+---
+
+<p class:list={['m-0 text-xs text-fg-muted', className]}>
+  {links.length === 1 ? 'Quelle:' : 'Quellen:'}{' '}
+  {
+    links.map((q, i) => (
+      <>
+        <a
+          class="text-accent underline underline-offset-4"
+          href={q.link}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {q.text}
+          <span class="sr-only"> (öffnet in neuem Tab)</span>
+        </a>
+        {i < links.length - 1 && ', '}
+      </>
+    ))
+  }
+</p>

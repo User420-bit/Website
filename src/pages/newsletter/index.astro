@@ -1,0 +1,98 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Arrow from '@/components/Arrow.astro'
+import MetaList from '@/components/MetaList.astro'
+import Ausgabe from '@/components/newsletter/Ausgabe.astro'
+import { ausgaben, meldungen } from '@/lib/newsletter'
+import { datumLang, firstSentence, href } from '@/lib/site'
+
+/*
+ * Der Newsletter als Seite: oben, was er ist und wie er entsteht, darunter die
+ * neueste Ausgabe vollständig, dann die früheren als linierte Zeilen. Jede
+ * Ausgabe hat zusätzlich eine eigene Seite unter `/newsletter/<datum>/`.
+ * Die Dateien legt der n8n-Workflow „Digest“ an (README, Inhalt ändern).
+ */
+const alle = await ausgaben()
+const [neueste, ...fruehere] = alle
+---
+
+<BaseLayout
+  title="Newsletter – Klartext"
+  description="Dreimal die Woche das Wichtigste aus Wirtschaft, Politik und Technik, zusammengefasst aus zehn Nachrichtenquellen, jede Meldung mit Link zum Artikel."
+>
+  <article class="py-12 sm:py-16">
+    <h1 class="display m-0 text-4xl font-semibold text-balance sm:text-5xl">Newsletter</h1>
+    <p class="prose-flow mt-5 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
+      Dreimal die Woche das Wichtigste aus Wirtschaft, Politik und Technik, kurz eingeordnet. Jede
+      Meldung verlinkt den Artikel, aus dem sie stammt.
+    </p>
+
+    <MetaList
+      class="mt-8"
+      rows={[
+        { label: 'Erscheint', value: 'Sonntags, dienstags und donnerstags gegen 18 Uhr' },
+        {
+          label: 'Quellen',
+          value:
+            'Zehn Nachrichtenquellen, darunter Tagesschau, Handelsblatt, Manager Magazin, heise und BBC',
+        },
+        {
+          label: 'Entsteht',
+          value: 'Automatisch mit einem Sprachmodell, ohne redaktionelle Prüfung',
+        },
+      ]}
+    />
+
+    {
+      neueste ? (
+        <section class="mt-14 sm:mt-16">
+          <div class="border-t border-border pt-6">
+            <span class="block text-sm text-fg-muted">Neueste Ausgabe</span>
+            <h2 class="display mt-1 mb-0 text-3xl font-semibold text-balance sm:text-4xl">
+              {datumLang(neueste.datum, true)}
+            </h2>
+            <a
+              class="mt-3 inline-flex items-center gap-2 text-sm text-accent underline underline-offset-4"
+              href={href(`/newsletter/${neueste.id}`)}
+            >
+              Eigene Seite dieser Ausgabe <Arrow />
+            </a>
+          </div>
+          <div class="mt-8">
+            <Ausgabe ausgabe={neueste} ebene={3} />
+          </div>
+        </section>
+      ) : (
+        <p class="prose-flow mt-14 mb-0 max-w-[65ch] text-fg-muted">
+          Die erste Ausgabe erscheint am nächsten Sonntag, Dienstag oder Donnerstag gegen 18 Uhr.
+        </p>
+      )
+    }
+
+    {
+      fruehere.length > 0 && (
+        <section class="mt-16">
+          <h2 class="m-0 border-t border-border pt-6 text-xl font-semibold tracking-tight">
+            Frühere Ausgaben
+          </h2>
+          <ul class="mt-4 mb-0 list-none border-t border-border p-0">
+            {fruehere.map((ausgabe) => (
+              <li class="group relative grid gap-x-6 border-b border-border py-4 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                <a
+                  class="font-medium text-fg no-underline after:absolute after:inset-0 group-hover:text-accent group-focus-within:text-accent"
+                  href={href(`/newsletter/${ausgabe.id}`)}
+                >
+                  {datumLang(ausgabe.datum, true)}
+                </a>
+                <p class="prose-flow mt-1 mb-0 max-w-[60ch] text-sm text-fg-muted sm:mt-0">
+                  {firstSentence(ausgabe.data.summary)}{' '}
+                  <span class="whitespace-nowrap tabular-nums">{meldungen(ausgabe)} Meldungen</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

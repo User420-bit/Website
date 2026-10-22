@@ -1,0 +1,84 @@
+---
+/**
+ * Inhalt einer Newsletter-Ausgabe: Zusammenfassung, die drei wichtigsten
+ * Meldungen als nummerierte Zeilen, danach je Themenblock eine linierte Liste.
+ * Dieselbe Komponente steht auf `/newsletter/` (neueste Ausgabe, Überschriften
+ * eine Ebene tiefer) und auf der Seite der Ausgabe.
+ *
+ * Alles Text und Haarlinie, keine Karten, keine Emojis, keine Bewegung
+ * (DESIGN.md). Orange tragen nur die Einordnung (`tag`) und die Quellenlinks.
+ */
+import type { CollectionEntry } from 'astro:content'
+import Quellen from '@/components/newsletter/Quellen.astro'
+import { modellName } from '@/lib/site'
+
+interface Props {
+  ausgabe: CollectionEntry<'newsletter'>
+  /** Ebene der Abschnittsüberschriften: 2 auf der Seite der Ausgabe, 3 unter `/newsletter/`. */
+  ebene?: 2 | 3
+}
+
+const { ausgabe, ebene = 2 } = Astro.props
+const { summary, topThree, clusters, model } = ausgabe.data
+const H = ebene === 2 ? 'h2' : 'h3'
+const Hklein = ebene === 2 ? 'h3' : 'h4'
+---
+
+<p class="prose-flow m-0 max-w-[65ch] text-lg leading-relaxed">{summary}</p>
+
+<section class="mt-12">
+  <H class="m-0 border-t border-border pt-6 text-xl font-semibold tracking-tight">
+    Drei Meldungen, die zählen
+  </H>
+  <ol class="mt-4 mb-0 list-none border-t border-border p-0">
+    {
+      topThree.map((meldung, i) => (
+        <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-4 border-b border-border py-5">
+          <span aria-hidden="true" class="text-sm text-fg-muted tabular-nums">
+            {i + 1}
+          </span>
+          <div class="min-w-0">
+            <span class="block text-[0.8125rem] font-medium text-accent">{meldung.tag}</span>
+            <Hklein class="mt-1 mb-0 text-lg font-semibold tracking-tight text-balance">
+              {meldung.title}
+            </Hklein>
+            <p class="prose-flow mt-2 mb-0 max-w-[65ch] text-fg-muted">{meldung.briefing}</p>
+            <p class="prose-flow mt-3 mb-0 max-w-[65ch] text-sm">
+              <span class="font-medium">Was das bedeutet:</span>{' '}
+              <span class="text-fg-muted">{meldung.impact}</span>
+            </p>
+            <Quellen class="mt-3" quellen={meldung.sources} />
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+{
+  clusters
+    .filter((cluster) => cluster.items.length > 0)
+    .map((cluster) => (
+      <section class="mt-12">
+        <H class="m-0 border-t border-border pt-6 text-xl font-semibold tracking-tight">
+          {cluster.name}
+        </H>
+        <ul class="mt-4 mb-0 list-none border-t border-border p-0">
+          {cluster.items.map((meldung) => (
+            <li class="border-b border-border py-4">
+              <Hklein class="m-0 text-base font-medium text-balance">{meldung.title}</Hklein>
+              <p class="prose-flow mt-1 mb-0 max-w-[65ch] text-sm text-fg-muted">
+                {meldung.oneLine}
+              </p>
+              <Quellen class="mt-2" quellen={meldung.sources} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+}
+
+<p class="prose-flow mt-12 mb-0 max-w-[65ch] text-sm text-fg-muted">
+  Automatisch zusammengestellt von einem Sprachmodell ({modellName(model)}) aus öffentlichen
+  RSS-Feeds, ohne redaktionelle Prüfung. Maßgeblich sind die verlinkten Artikel.
+</p>

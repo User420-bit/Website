@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Arrow from '@/components/Arrow.astro'
+import MetaList from '@/components/MetaList.astro'
+import Ausgabe from '@/components/newsletter/Ausgabe.astro'
+import { ausgaben, meldungen, type Ausgabe as AusgabeEintrag } from '@/lib/newsletter'
+import { datumLang, firstSentence, href, modellName } from '@/lib/site'
+
+/*
+ * Eine Newsletter-Ausgabe auf eigener Seite, damit sich jede verlinken lässt.
+ * Am Ende Vor/Zurück zur älteren und neueren Ausgabe.
+ */
+export async function getStaticPaths() {
+  const alle = await ausgaben()
+  return alle.map((ausgabe, i) => ({
+    params: { datum: ausgabe.id },
+    props: { ausgabe, neuere: alle[i - 1], aeltere: alle[i + 1] },
+  }))
+}
+
+interface Props {
+  ausgabe: AusgabeEintrag
+  neuere?: AusgabeEintrag
+  aeltere?: AusgabeEintrag
+}
+
+const { ausgabe, neuere, aeltere } = Astro.props
+const titel = `Newsletter vom ${datumLang(ausgabe.datum)}`
+---
+
+<BaseLayout title={`${titel} – Klartext`} description={firstSentence(ausgabe.data.summary)}>
+  <article class="py-12 sm:py-16">
+    <a
+      class="inline-flex items-center gap-2 text-sm text-fg-muted no-underline hover:text-accent"
+      href={href('/newsletter')}
+    >
+      <Arrow direction="left" /> Alle Ausgaben
+    </a>
+
+    <h1 class="display mt-6 mb-0 text-4xl font-semibold text-balance sm:text-5xl">{titel}</h1>
+
+    <MetaList
+      class="mt-8"
+      rows={[
+        { label: 'Ausgabe', value: datumLang(ausgabe.datum, true) },
+        { label: 'Meldungen', value: String(meldungen(ausgabe)), variant: 'numeric' },
+        {
+          label: 'Erstellt',
+          value: `${modellName(ausgabe.data.model)}, ohne redaktionelle Prüfung`,
+        },
+      ]}
+    />
+
+    <div class="mt-10">
+      <Ausgabe ausgabe={ausgabe} />
+    </div>
+
+    {
+      (aeltere || neuere) && (
+        <nav
+          aria-label="Weitere Ausgaben"
+          class="mt-16 grid grid-cols-2 gap-6 border-t border-fg pt-6 text-sm"
+        >
+          <div>
+            {aeltere && (
+              <a class="group block no-underline" href={href(`/newsletter/${aeltere.id}`)}>
+                <span class="inline-flex items-center gap-2 text-fg-muted">
+                  <Arrow direction="left" /> Ältere Ausgabe
+                </span>
+                <span class="mt-1 block font-medium text-fg group-hover:text-accent group-focus-visible:text-accent">
+                  {datumLang(aeltere.datum)}
+                </span>
+              </a>
+            )}
+          </div>
+          <div class="text-right">
+            {neuere && (
+              <a class="group block no-underline" href={href(`/newsletter/${neuere.id}`)}>
+                <span class="inline-flex items-center gap-2 text-fg-muted">
+                  Neuere Ausgabe <Arrow />
+                </span>
+                <span class="mt-1 block font-medium text-fg group-hover:text-accent group-focus-visible:text-accent">
+                  {datumLang(neuere.datum)}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
+      )
+    }
+  </article>
+</BaseLayout>

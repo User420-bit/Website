@@ -22,16 +22,26 @@ export function firstSentence(text: string): string {
 }
 
 /**
- * Anker in der Hauptnavigation. Bewusst vier — mehr passt bei 390 px nicht.
+ * Hauptnavigation: vier Anker der Startseite und, seit 2026-10-22, eine eigene
+ * Seite. Ein Eintrag mit `seite` verlinkt dorthin statt auf einen Anker und
+ * ist auf dieser Seite und ihren Unterseiten aktiv (`aria-current="page"`).
  * "Arbeiten" steht vorn: erst der Beleg, dann das Angebot. "Kontakt" fehlt
- * hier, weil der Header dafuer die Schaltflaeche "Anfrage" traegt.
+ * hier, weil der Header dafuer die Schaltflaeche "Anfrage" traegt. `kurz` ist
+ * die Beschriftung unter 640 px, damit fuenf Punkte ab 360 px in eine Zeile
+ * passen.
  */
-export const NAV_ITEMS = [
+export const NAV_ITEMS: readonly {
+  id: string
+  label: string
+  kurz?: string
+  seite?: string
+}[] = [
   { id: 'arbeiten', label: 'Arbeiten' },
   { id: 'leistungen', label: 'Leistungen' },
   { id: 'arbeitsweise', label: 'Arbeitsweise' },
-  { id: 'ueber', label: 'Über Klartext' },
-] as const
+  { id: 'ueber', label: 'Über Klartext', kurz: 'Über' },
+  { id: 'newsletter', label: 'Newsletter', seite: '/newsletter' },
+]
 
 /**
  * `mailto:`-Link mit vorausgefülltem Betreff. Bewusst `encodeURIComponent` statt
@@ -86,4 +96,41 @@ export const KIND_LABELS: Record<string, string> = {
   kundenprojekt: 'Kundenprojekt',
   'eigenes-produkt': 'Eigenes Produkt',
   prototyp: 'Prototyp',
+}
+
+/**
+ * Datum einer Newsletter-Ausgabe aus ihrer Datei-ID (`2026-10-20`). Bricht den
+ * Build bei jedem anderen Namen ab, statt eine Ausgabe falsch einzusortieren.
+ */
+export function ausgabeDatum(id: string): Date {
+  const treffer = /^(\d{4})-(\d{2})-(\d{2})$/.exec(id)
+  const datum = treffer ? new Date(Date.UTC(+treffer[1]!, +treffer[2]! - 1, +treffer[3]!)) : null
+  if (!datum || datum.toISOString().slice(0, 10) !== id) {
+    throw new Error(
+      `src/content/newsletter/${id}.json: Dateiname muss ein Datum sein (YYYY-MM-DD).`,
+    )
+  }
+  return datum
+}
+
+/** „20. Oktober 2026“, mit `wochentag` „Dienstag, 20. Oktober 2026“. */
+export function datumLang(datum: Date, wochentag = false): string {
+  return new Intl.DateTimeFormat('de-DE', {
+    ...(wochentag ? { weekday: 'long' as const } : {}),
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(datum)
+}
+
+/** Modell-ID lesbar: `claude-haiku-5-5` wird „Claude Haiku 5.5“. */
+export function modellName(id: string): string {
+  const teile = id.split('-')
+  const version = teile.filter((t) => /^\d+$/.test(t)).join('.')
+  const name = teile
+    .filter((t) => !/^\d+$/.test(t))
+    .map((t) => t.charAt(0).toUpperCase() + t.slice(1))
+    .join(' ')
+  return version ? `${name} ${version}` : name
 }
