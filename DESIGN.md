@@ -915,6 +915,10 @@ Bühne und Kontaktabzug der Startseite rahmen nur ihre Bildfelder.
   sie um). Vorher klebten beide Zeilen: 89 px, bei 360 und 375 px mit umbrochener Linkzeile 121 px.
   Preis: Wer weit unten ist, erreicht die Anker über die Wortmarke oder nach oben scrollend
   (entschieden am 2026-09-25).
+- **Fünfter Punkt „Newsletter“ (seit 2026-10-22):** kein Anker, sondern die Seite `/newsletter/`;
+  dort und auf jeder Ausgabe steht er aktiv (`aria-current="page"`, Orange mit Strich). Damit fünf
+  Punkte ab 360 px in eine Zeile passen, stehen die Links unter 640 px in 0,8125rem mit 2 px
+  Innenabstand, und „Über Klartext“ heißt dort „Über“ (316 statt 358 px).
 - **Footer:** Copyright und Links (Werkzeuge, Impressum, Datenschutz) in Body Small, Bleistiftgrau,
   unterstrichen in Liniengrau, Hover Tintenschwarz mit durchlaufendem Strich.
 - **Skip-Link:** „Zum Inhalt springen“, bei Fokus als oranges 8-px-Feld oben links.

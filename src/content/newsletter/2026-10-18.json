@@ -1,0 +1,487 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "18. Oktober 2026",
+  "summary": "Energiepreise bestimmen die Lage: Angriffe im Golf und steigende Netzentgelte treffen Haushalte gleichzeitig. Die Unruhen in Frankreich belasten die Finanzmärkte, während Berlin eine neue Koalition vorbereitet.",
+  "topThree": [
+    {
+      "title": "Schiffsangriffe nahe Hormus auf Rekordniveau, Ölexporte stocken",
+      "briefing": "Vor der saudischen Küste wurden Angriffe auf zwei Schiffe gemeldet, in der Straße von Hormus (Meerenge zwischen Iran und Oman) lief ein Supertanker nach iranischen Angaben auf eine Mine. Laut BBC-Auswertung britischer Behördendaten wurden in einer Woche zwölf Schiffe getroffen, ein Rekordwert. Iran hat das Angebot zur Öffnung der Meerenge erneuert, der Verteidigungsminister droht zugleich Präsident Trump.",
+      "impact": "Stockende Ölexporte aus der Golfregion treiben die Preise für Sprit, Heizöl und Transport. Verbraucher spüren das im Winter an Zapfsäule und Heizkosten, Firmen mit hohen Frachtkosten direkt in der Kalkulation.",
+      "tag": "Geopolitik",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/ausland/asien/persischer-golf-tanker-angriffe-100.html"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/cmde8dpg8g0no?at_medium=RSS&at_campaign=rss"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/international/iran-krieg-erneut-explosion-an-supertanker-in-strasse-von-hormus/100136895.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/ausland/asien/iran-hormus-angebot-drohung-100.html"
+        }
+      ]
+    },
+    {
+      "title": "Netzentgelte für Strom und Gas steigen 2027",
+      "briefing": "Die Gebühren für die Strom- und Gasnetze steigen zum Jahreswechsel, private Haushalte müssen mit einem Anstieg rechnen. Berechnungen des Vergleichsportals Verivox zeigen, dass die Gebühren trotz hoher Zuschüsse weiter klettern. Netzentgelte sind ein fester Bestandteil des Strom- und Gaspreises.",
+      "impact": "Der Aufschlag erhöht die laufenden Wohnnebenkosten und schmälert den Spielraum im Haushaltsbudget. Die Belastung kommt zusätzlich zu den bereits gestiegenen Energiepreisen.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/energie-netzentgelte-fuer-strom-und-gas-steigen-2027/100263063.html"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/energie/netzentgelte-netzgebuehren-fuer-strom-und-gas-steigen-a-77145102-76b3-4214-a90d-733a444d86d2#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Frankreich: Ausschreitungen bei Protesten, Risikoaufschläge steigen",
+      "briefing": "Am Samstag demonstrierten laut Handelsblatt Hunderttausende gegen hohe Lebenshaltungskosten und Sozialabbau, Plünderungen und Brände folgten. Mehr als 1800 Menschen wurden festgenommen, Präsident Macron beruft eine Krisensitzung ein. Gleichzeitig steigen die Risikoaufschläge (Zinsaufschläge gegenüber als sicher geltenden Anleihen) für Frankreich laut Manager Magazin rapide.",
+      "impact": "Höhere Zinsaufschläge verteuern die Schuldenaufnahme des französischen Staates. Anleger mit Euro-Anleihen-ETFs und Frankreich-Anteil sehen die Kursschwankungen direkt im Depot.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/international/hunderttausende-demonstrieren-entsetzliche-gewalt-bei-protesten-erschuettert-frankreich/100263018.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/ausland/europa/frankreich-krawalle-proteste-100.html"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/politik/deutschland/der-finanzmarkt-ist-das-staerkste-bollwerk-gegen-populisten-a-eef7ccc6-8a19-47c6-8a03-716f00d9be83#ref=rss"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Energie & Preise",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Kraftstoff, Heizöl und Gas werden binnen kurzer Zeit teurer",
+          "oneLine": "Die stark gestiegenen Preise für Sprit, Heizöl und Erdgas verteuern den Alltag und belasten Firmen mit Extrakosten.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/energie-heizen-winter-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Nach dem Tankrabatt: Bilger hält gezielte Entlastungen für möglich",
+          "oneLine": "Der Tankrabatt gilt bis Jahresende, danach kommen laut Verkehrsminister Hilfen etwa für Busse und Taxis infrage.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/bilger-tankrabatt-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Stromsteuer-Senkung droht an klammen Kassen zu scheitern",
+          "oneLine": "Die angekündigte Entlastung hängt an leeren Haushaltskassen, der Thinktank Epico sieht trotzdem einen Weg.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/verbraucher-wie-sich-die-stromsteuer-fuer-alle-senken-laesst/100262547.html"
+            }
+          ]
+        },
+        {
+          "title": "China verdreifacht Dieselexporte, höchster Stand seit drei Jahren",
+          "oneLine": "China steigerte Diesel-Ausfuhren um 262,3 Prozent auf 1,85 Millionen Tonnen, das erhöht das Angebot auf dem Weltmarkt.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/kraftstoff-china-verdreifacht-dieselexporte-hoechster-stand-seit-ueber-drei-jahren/100263049.html"
+            }
+          ]
+        },
+        {
+          "title": "Pachtdeckel für Windräder stößt auf Widerstand",
+          "oneLine": "Die geplante Begrenzung der Flächenpachten soll Kosten bei Windkraftanlagen an Land senken, stößt aber auf Kritik.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/windkraft-geplanter-pachtdeckel-fuer-windraeder-in-der-kritik/100263065.html"
+            }
+          ]
+        },
+        {
+          "title": "E20-Benzin: Bundesregierung prüft höhere Bioethanol-Beimischung",
+          "oneLine": "Verkehrsminister Bilger will den Biokraftstoff-Anteil im Benzin anheben, der Bioethanol-Anteil könnte sich verdoppeln.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/e20-bundesregierung-prueft-hoehere-beimischung-von-bioethanol-im-benzin-a-245d7f71-47a0-4cd2-8055-3dc1e6333c24#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Aus-fuer-Verbrenner-Aus-koennte-E20-an-die-Tankstelle-bringen-11491669.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Märkte & Geldpolitik",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Fed-Chef Warsh sieht Konjunktur stark, Zinssignal bleibt aus",
+          "oneLine": "Warsh verweist auf Wirtschaftsstärke trotz hartnäckig hoher Inflation, ein klares Signal für den nächsten Zinsschritt fehlt.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/kevin-warsh-fed-chef-verbreitet-konjunkturoptimismus-kein-zeichen-fuer-zinsschritt-a-a3fe7866-da79-4194-8f9f-9423a03137aa#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Dax spürt KI-Beben, Industriewerte profitieren teils",
+          "oneLine": "Industrieunternehmen mit KI-Bezug bieten Chancen für ihre Aktien, laut Analyse bestehen zugleich klare Risiken.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/maerkte-insight-auch-der-dax-bekommt-das-ki-beben-zu-spueren-aber-weniger-sichtbar/100262546.html"
+            }
+          ]
+        },
+        {
+          "title": "Dax legt zu, Techwerte erholen sich nach KI-Verlusten",
+          "oneLine": "Nach deutlichen Verlusten bei KI-Aktien erholen sich Techwerte, der Dax schließt die Handelswoche mit Gewinnen ab.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-erholung-bei-techwerten-stuetzt-dax-commerzbank-und-nordex-im-fokus-a-2c73adbf-1c28-447d-b383-8023cacf7ad9#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "EZB genehmigt höhere UniCredit-Beteiligung an Commerzbank",
+          "oneLine": "Die Zustimmung der EZB ist eine weitere Hürde für UniCredits Übernahme der Commerzbank.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/banken/unicredit-ezb-winkt-uebernahme-der-commerzbank-durch-a-d4489eb2-1a0b-4768-8177-337fd35a97a4#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Lufthansa prüft Teilverkauf der IT-Tochter Lufthansa Systems",
+          "oneLine": "Laut Medienbericht geht es um eine Milliardensumme, der Verkauf von Teilen der Software-Sparte wird erwogen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/lufthansa-prueft-teilverkauf-von-it-tochter-a-c7c3a003-489b-4386-ac0f-c0c7528f7436#ref=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wirtschaft & Arbeit",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Eurowings prüft Kurzarbeit und streicht Flüge",
+          "oneLine": "Hohe Kerosinpreise treiben die Lufthansa-Tochter zu Flugstreichungen, zudem prüft sie Kurzarbeit.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/eurowings-prueft-kurzarbeit-und-streicht-fluege-sowie-weihnachtsfeier-a-c1700ca6-d261-41d4-8c5d-0e2d154ee812#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Autozulieferer Weber Magdeburg stellt Insolvenzantrag",
+          "oneLine": "Die Krise der Autoindustrie trifft mit dem Magdeburger Zulieferer ein weiteres Unternehmen und Arbeitsplätze.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/weber-magdeburg-erneut-rutscht-ein-autozulieferer-in-die-insolvenz-a-2636431b-4c8e-46ec-9763-f6ba300b94f3#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Deutschland und Frankreich wollen Verbrenner-Aus aufweichen",
+          "oneLine": "Beide Länder rücken vom EU-weit beschlossenen Aus für Verbrennermotoren ab, nach Druck der Autoindustrie.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/deutschland-und-frankreich-wollen-verbrenner-aus-aufweichen-a-4d764dcd-bfcb-4d1f-b0a5-0ee55fdd70a3#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Ende-des-Verbrenners-Deutschland-und-Frankreich-fuer-Lockerungen-11490190.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Airbus fordert fairen Anteil am neuen Kampfjet",
+          "oneLine": "Nach dem FCAS-Aus sucht Airbus neue Partner und verlangt für Deutschland faire Anteile am Kampfjet-Programm.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/ruestung-airbus-dringt-auf-fairen-anteil-bei-neuem-kampfjet-fuer-deutschland/100261837.html"
+            }
+          ]
+        },
+        {
+          "title": "Absagen für Investitionsgipfel: Pharmachefs bleiben fern",
+          "oneLine": "Mehrere Unternehmenschefs sagen ab oder kritisieren die Industriepolitik vor dem Gipfel der Bundesregierung.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/investitionen-in-gefahr-unternehmenschefs-kritisieren-deutsche-industriepolitik/100261824.html"
+            }
+          ]
+        },
+        {
+          "title": "KfW-Chef sieht AfD-Erfolge als Frage für Standortstabilität",
+          "oneLine": "KfW-Chef Wintels sagt, internationale Investoren beobachten die politische Lage in Deutschland genau.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/kfw-chef-afd-erfolge-werfen-fragen-zur-standortstabilitaet-auf/100263067.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Politik & Koalition",
+      "emoji": "🏛️",
+      "items": [
+        {
+          "title": "Linke, Grüne und SPD einigen sich auf Sondierung in Berlin",
+          "oneLine": "Das Papier sieht die Vergesellschaftung großer Wohnungsbestände vor, bis zur Umsetzung ist es laut Bericht ein langer Weg.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/berlin-sondierungsvereinbarung-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-das-plant-rot-gruen-rot-fuer-die-hauptstadt/100263061.html"
+            }
+          ]
+        },
+        {
+          "title": "Söder fordert auf der JU Brandmauer nach links",
+          "oneLine": "Söder will Berlin den Geldhahn zudrehen, falls Linke, Grüne und SPD gemeinsam regieren.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/soeder-junge-union-102.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-die-rote-front-steht-soeder-fordert-brandmauer-nach-links/100262770.html"
+            }
+          ]
+        },
+        {
+          "title": "Merz verteidigt Reformkurs und warnt die SPD",
+          "oneLine": "Merz will die Rentenreform vollständig umsetzen und den Koalitionserfolg nicht um jeden Preis.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/merz-junge-union-104.html"
+            }
+          ]
+        },
+        {
+          "title": "Schweitzer fordert Kompromiss bei Rente mit 63",
+          "oneLine": "Die abschlagsfreie Rente nach 45 Beitragsjahren braucht laut Arbeitsminister noch politische Debatten.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/schweitzer-rente-kompromiss-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Tabaksteuer steigt: Packung soll bis 2030 knapp 12 Euro kosten",
+          "oneLine": "Der Fiskus rechnet mit Mehreinnahmen in Milliardenhöhe, Rauchen wird spürbar teurer.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/tabaksteuer-steigt-12-euro-pro-packung-mit-20-zigaretten-a-6b11cf77-0261-4d6c-b600-af3cb822a2cc#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Trassenpreise steigen, Regionalverkehr droht Einschnitt",
+          "oneLine": "Der Bund soll mehr für den Regionalverkehr zahlen, sonst drohen Einschnitte im Nahverkehr.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/regionalbahnen-verkehrsminister-bund-muss-mehr-fuer-regionalverkehr-zahlen/100263071.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Krieg",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Trump setzt geplante Russland-Sanktionen aus",
+          "oneLine": "Das Weiße Haus nennt nationales Interesse, Moskau reagiert erfreut, die Ukraine zeigt sich entsetzt.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/amerika/usa-russland-ukraine-sanktionen-100.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-sanktionen-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Drohne dringt in Litauens Luftraum ein und stürzt ab",
+          "oneLine": "NATO-Jets stiegen auf, Kiew entschuldigte sich und vermutet eine russische Störaktion hinter dem Vorfall.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/litauen-drohne-absturz-ukraine-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-drohnen-alarm-an-nato-ostflanke-flugobjekt-kam-offenbar-ueber-polen/27982126.html"
+            }
+          ]
+        },
+        {
+          "title": "Gedrosseltes Starlink schwächt Ukraine, EU sucht Alternativen",
+          "oneLine": "Die Abhängigkeit von Musks Satellitennetz beunruhigt Europa, die EU berät laut heise über Alternativen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Musks-geopolitischer-Hebel-Gedrosseltes-Starlink-ruettelt-Europa-auf-11491703.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Starlink-in-der-Ukraine-Anordnung-zur-Beschraenkung-kam-wohl-aus-dem-Weissen-Haus-11490146.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Drohnenangriffe auf Ölanlagen in St. Petersburg gemeldet",
+          "oneLine": "Russische Angaben nennen Ölanlagen und ein Logistikzentrum als Ziele, auch die Ukraine meldet massiven Beschuss ihrer Energieanlagen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-krieg-angriffe-st-petersburg-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Trauer in Minab: Gedenken an Schulangriff im Iran-Krieg",
+          "oneLine": "Im Februar traf eine Rakete eine Schule in Minab, 168 Menschen starben, die meisten davon Kinder.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/iran-minab-schule-angriff-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Trump spricht Wahlempfehlung für Netanjahu aus",
+          "oneLine": "Knapp anderthalb Wochen vor der israelischen Wahl äußert sich Trump offen zur Wiederwahl des Ministerpräsidenten.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/angespanntes-verhaeltnis-trump-spricht-wahlempfehlung-fuer-netanjahu-aus/100263085.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech & KI",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Peking plant Exportkontrollen für KI- und Solartechnik",
+          "oneLine": "Die Regeln sind noch in Vorbereitung, erste Pflichten gelten laut Handelsblatt aber schon.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/china-neue-exportkontrollen-fuer-schluesseltechnologien-geplant/100263058.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/china-peking-plant-neue-exportkontrollen-fuer-schluesseltechnologien-wie-ki-a-934d9c8c-7092-4e81-9905-9aae499f8498#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Bau von KI-Rechenzentren in den USA stockt",
+          "oneLine": "Der KI-Boom trifft auf Engpässe beim Bau, Blockaden durch Gemeinden sind laut heise nicht der einzige Grund.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Bau-von-KI-Rechenzentren-kommt-in-den-USA-ins-Stocken-11491833.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Bundesregierung plant Kooperation mit Nvidia",
+          "oneLine": "Beim Investitionsgipfel soll laut Bericht eine Zusammenarbeit mit dem US-Chiphersteller verkündet werden.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Bundesregierung-plant-Kooperation-mit-US-Chiphersteller-Nvidia-11490926.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "TSMC meldet Rekordzahlen, mahnt im Ausblick zur Vorsicht",
+          "oneLine": "Der Chipfertiger verzeichnet weiter Rekordzahlen, der 2-nm-Umsatz wächst, der Ausblick fällt vorsichtig aus.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/TSMC-schreibt-weiter-Rekordzahlen-blickt-aber-vorsichtig-in-die-Zukunft-11490124.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "EU wirbt für souveräne KI, kämpft um Anschluss",
+          "oneLine": "Auf dem KI-Gipfel in Dublin setzt die EU auf vertrauenswürdige KI, Kritiker zweifeln am Anschluss an USA und China.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/eu-promotes-sovereign-trusted-ai-as-it-struggles-to-catch-us-and-china/a-79667770?maca=en-rss-en-bus-2091-rdf"
+            }
+          ]
+        },
+        {
+          "title": "Tech-Konzerne bauen 2026 Stellen ab, KI als Treiber",
+          "oneLine": "Makrotrends, KI-Einsatz und geopolitische Unsicherheit treiben die Entlassungen in der Tech-Branche.",
+          "sources": [
+            {
+              "source": "InformationWeek",
+              "link": "https://www.informationweek.com/it-staffing-careers/2026-tech-company-layoffs"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

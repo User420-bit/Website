@@ -39,6 +39,28 @@ const projektRouten = Object.fromEntries(
   projekte.filter((p) => p.published).map((p) => [p.route, p.title]),
 )
 
+/**
+ * Newsletter-Ausgaben ebenso aus dem Content: Jede Datei
+ * `src/content/newsletter/<YYYY-MM-DD>.json` muss als Seite gebaut sein, mit
+ * „Newsletter vom <Datum>“ als H1 (dasselbe Format wie `datumLang` in
+ * `src/lib/site.ts`).
+ */
+const NEWSLETTER_DIR = 'src/content/newsletter'
+const datumLang = new Intl.DateTimeFormat('de-DE', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+const newsletterRouten = Object.fromEntries(
+  (existsSync(NEWSLETTER_DIR) ? readdirSync(NEWSLETTER_DIR) : [])
+    .filter((name) => name.endsWith('.json') && !name.startsWith('._'))
+    .map((name) => {
+      const id = name.replace(/\.json$/, '')
+      return [`newsletter/${id}`, `Newsletter vom ${datumLang.format(new Date(`${id}T00:00:00Z`))}`]
+    }),
+)
+
 /** Route -> erwartete H1. */
 const ROUTES = {
   '': 'Ihre Probleme, klar gelöst.',
@@ -46,7 +68,9 @@ const ROUTES = {
   datenschutz: 'Datenschutzerklärung',
   projekte: 'Alle Arbeiten',
   werkzeuge: 'Werkzeuge',
+  newsletter: 'Newsletter',
   ...projektRouten,
+  ...newsletterRouten,
 }
 
 const errors = []

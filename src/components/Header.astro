@@ -24,13 +24,36 @@ interface Props {
 const { isHome = false, name } = Astro.props
 
 /*
+ * Anker zeigen auf die Startseite und tragen `data-nav-target` für
+ * `NavHighlight`. Ein Eintrag mit eigener Seite (Newsletter) ist auf ihr und
+ * ihren Unterseiten aktiv, mit `aria-current="page"`.
+ */
+const links = NAV_ITEMS.map((item) => {
+  const ziel = item.seite ? href(item.seite) : href(`/#${item.id}`)
+  return {
+    ...item,
+    ziel,
+    attribute: item.seite
+      ? Astro.url.pathname.startsWith(ziel)
+        ? { 'aria-current': 'page' as const }
+        : {}
+      : { 'data-nav-target': item.id },
+  }
+})
+
+/*
  * Die Anker stehen in Tinte und Gewicht 500, nicht mehr in Bleistiftgrau
  * (seit 2026-10-08): Sie sind der Weg durch die Seite und sahen aus wie der
  * Fuß. Hover legt verdünntes Orange hinter den Link, der aktive Anker steht
  * in Orange mit Strich darunter.
+ *
+ * Unter 640 px seit 2026-10-22 0,8125rem und 2 px Innenabstand statt Body
+ * Small und 4 px: Mit dem fünften Punkt „Newsletter“ und „Über“ als
+ * Kurzform braucht die Zeile so 316 px und passt ab 360 px (336 px Platz) in
+ * eine Zeile. Mit den alten Maßen waren es 358 px.
  */
 const linkClass =
-  'nav-link relative inline-block rounded-md px-1 py-1.5 text-sm font-medium text-fg no-underline transition-colors hover:bg-accent-soft hover:text-accent after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 sm:px-2.5 sm:text-[0.9375rem] sm:after:inset-x-2.5 after:origin-right after:scale-x-0 after:bg-accent after:transition-transform hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none'
+  'nav-link relative inline-block rounded-md px-0.5 py-1.5 text-[0.8125rem] font-medium text-fg no-underline transition-colors hover:bg-accent-soft hover:text-accent after:absolute after:inset-x-0.5 after:bottom-0 after:h-0.5 sm:px-2.5 sm:text-[0.9375rem] sm:after:inset-x-2.5 after:origin-right after:scale-x-0 after:bg-accent after:transition-transform hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none'
 ---
 
 <header class="site-header sticky top-0 z-50 bg-bg">
@@ -53,9 +76,9 @@ const linkClass =
     <nav aria-label="Hauptnavigation" class="relative hidden sm:block">
       <ul class="-mx-2.5 flex list-none flex-wrap justify-end gap-x-1 gap-y-1 p-0">
         {
-          NAV_ITEMS.map((item) => (
+          links.map((item) => (
             <li>
-              <a class={linkClass} href={href(`/#${item.id}`)} data-nav-target={item.id}>
+              <a class={linkClass} href={item.ziel} {...item.attribute}>
                 {item.label}
               </a>
             </li>
@@ -76,10 +99,10 @@ const linkClass =
 <nav aria-label="Hauptnavigation" class="relative mx-auto w-full max-w-5xl px-4 pb-2 sm:hidden">
   <ul class="-mx-1 flex list-none flex-wrap justify-between gap-y-1 p-0">
     {
-      NAV_ITEMS.map((item) => (
+      links.map((item) => (
         <li>
-          <a class={linkClass} href={href(`/#${item.id}`)} data-nav-target={item.id}>
-            {item.label}
+          <a class={linkClass} href={item.ziel} {...item.attribute}>
+            {item.kurz ?? item.label}
           </a>
         </li>
       ))
@@ -97,10 +120,12 @@ const linkClass =
    * nicht über `transform`, und `text-fg-muted` liegt in einer späteren Ebene
    * als die Regel in global.css; deshalb beides hier, ungeschichtet.
    */
-  .nav-link[aria-current='true'] {
+  .nav-link[aria-current='true'],
+  .nav-link[aria-current='page'] {
     color: var(--color-accent);
   }
-  .nav-link[aria-current='true']::after {
+  .nav-link[aria-current='true']::after,
+  .nav-link[aria-current='page']::after {
     scale: 1;
   }
 
