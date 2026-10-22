@@ -121,7 +121,8 @@ Datum der Ausgabe kommt aus dem Dateinamen, nicht aus `digestDate`. Das Schema s
 `src/content.config.ts`; eine Datei, die nicht passt, bricht den Build.
 
 Der Workflow legt die Datei nach jedem Lauf über die GitHub-API auf `main` an, der Deploy
-veröffentlicht sie. Von Hand nachtragen geht genauso: Datei anlegen, committen. Plan und
+veröffentlicht sie. Der Deploy prüft auch die Formatierung: Die Datei muss genau so aussehen wie
+`JSON.stringify(daten, null, 2)` mit Zeilenumbruch am Ende, sonst bricht `format:check` ab. Von Hand nachtragen geht genauso: Datei anlegen, committen. Plan und
 Begründung stehen im Vault unter „Plan – Newsletter-Archiv des n8n-Digests als eigene Seite auf
 web-klartext.de“.
 

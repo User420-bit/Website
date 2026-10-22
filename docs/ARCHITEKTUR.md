@@ -60,9 +60,11 @@ Astro, statisch generiert, ausgeliefert über GitHub Pages. Abhängigkeiten: `@a
 - `/`
 - `/datenschutz/`
 - `/impressum/`
+- `/newsletter/`
 - `/projekte/`
 - `/werkzeuge/`
 - `/projekte/<slug>/` für jedes veröffentlichte Projekt: `kleinkram`, `tiefgang`, `memorytree`, `notelist`, `feynman`, `dealersim`, `vaulter`, `availably`
+- `/newsletter/<datum>/` für jede Ausgabe in `src/content/newsletter/`
 - `/404.html`
 
 ### Inhalte
@@ -70,16 +72,17 @@ Astro, statisch generiert, ausgeliefert über GitHub Pages. Abhängigkeiten: `@a
 Alle Texte liegen als Content Collections im Repository, das Schema steht in
 [`src/content.config.ts`](../src/content.config.ts). Kein CMS, keine Datenbank.
 
-| Collection   | Quelle                         |
-| ------------ | ------------------------------ |
-| `company`    | `src/content/company.json`     |
-| `profile`    | `src/content/profile.json`     |
-| `about`      | `src/content/about.md`         |
-| `projekte`   | `src/content/projekte/**/*.md` |
-| `skills`     | `src/content/skills.json`      |
-| `leistungen` | `src/content/leistungen.json`  |
-| `legal`      | `src/content/legal.json`       |
-| `contact`    | `src/content/contact.json`     |
+| Collection   | Quelle                          |
+| ------------ | ------------------------------- |
+| `company`    | `src/content/company.json`      |
+| `profile`    | `src/content/profile.json`      |
+| `about`      | `src/content/about.md`          |
+| `projekte`   | `src/content/projekte/**/*.md`  |
+| `skills`     | `src/content/skills.json`       |
+| `leistungen` | `src/content/leistungen.json`   |
+| `legal`      | `src/content/legal.json`        |
+| `contact`    | `src/content/contact.json`      |
+| `newsletter` | `src/content/newsletter/*.json` |
 
 ### Wie eine Projektseite entsteht
 
