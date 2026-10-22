@@ -968,7 +968,7 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   erfüllt ist, auch wenn der Besucher zurückkehrt. Den Zweck zu erfüllen kostet nichts: Kein Inhalt
   verschwindet, nichts wird ausgelöst. Dekoration ohne Zweck wiederholt sich nicht. Im Hero hüpfen
   Feld und Hinweis, und das Punktefeld wimmelt, bis zum ersten Scrollen; wenige Pixel genügen, denn
-  beides steht ab p > 0,003 still, und das erste Wort hebt erst bei 0,04 ab. Bühnen sind davon nicht
+  beides steht ab p > 0,003 still, und das erste Wort hebt erst bei 0,2 ab. Bühnen sind davon nicht
   ausgenommen: Eine Endlosschleife dort braucht ein „Anhalten“ (siehe Bühnenlizenz). Alles Übrige: nach höchstens 5 s
   Ruhe oder eine Pause-Taste (WCAG 2.2.2).
 
@@ -992,7 +992,7 @@ Kommentaren ihrer Komponente.
 ### Skripte
 
 Kein Skript von fremden Servern; `scripts/verify-build.mjs` lehnt jedes `<script src>` ab, das nicht
-aus dem eigenen Build (`/_astro/`) kommt, und begrenzt JavaScript auf 100 KB je Seite (unkomprimiert; bis 2026-10-11 90 KB, angehoben für den Himmel des Scroll-Heros).
+aus dem eigenen Build (`/_astro/`) kommt, und begrenzt JavaScript auf 100 KB je Seite (unkomprimiert; bis 2026-10-11 90 KB, angehoben für den Himmel des Scroll-Heros, seit 2026-10-22 nur noch ein Punktefeld).
 Motion und die Bewegung der Sektionen liegen in gebündelten Modulen je Komponente (`<script>` in der
 `.astro`-Datei), Motion selbst in einem gemeinsamen Chunk. Daneben bleiben die winzigen Inline-Skripte:
 `MotionReady` und `ProjectTransition` als `is:inline` im `<head>` (das eine vergibt `data-bewegung`,
