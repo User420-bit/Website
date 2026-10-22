@@ -36,15 +36,16 @@ Schreibung und mit SVG-Pfeil („↓“ fehlt in der Hausschrift und kam aus ein
 Schatten kommt aus dem Token `--shadow-feld` (Feld-Regel). Nach der neuen Zweckbindung hört nach dem
 ersten Scrollen auch das Gewimmel des Punktefelds auf, nicht nur das Hüpfen.
 
-Version 9 vom 2026-10-22: Kein Himmel mehr. Sternschweif, Punktefeld, Staub, Glimmen hinter der H1,
-Landerahmen und Funken sind weg, der Canvas mit ihnen. Zusammen sahen sie nach Esoterik aus, nicht
-nach Klartext (Pharrel: „sieht sehr nach Schwurblerei aus“). Die Wörter fliegen nicht mehr gekippt
+Version 9 vom 2026-10-22: Kein Sternschweif mehr. Schweif, Staub, Glimmen hinter der H1, Landerahmen
+und Funken sind weg; sie sahen nach Esoterik aus, nicht nach Klartext (Pharrel: „sieht sehr nach
+Schwurblerei aus“). Das Punktefeld bleibt, wie es war (Pharrel: „Die Sterne im Hintergrund fand ich
+wirklich extrem gut“); der Himmel ist jetzt nur noch das. Die Wörter fliegen nicht mehr gekippt
 über Wegpunkte quer durchs Fenster, wo sie sich kreuzten und überlagerten, sondern steigen auf einem
 flachen Bogen direkt auf ihren Platz in der H1: erst seitwärts unter den Platz, dann hinein, damit
 keines durch ein schon gelandetes gleitet. Das Gerede zerfällt nicht mehr zu Staub, es verstummt Wort
 für Wort in Lesereihenfolge, so wie es eingelaufen ist; die vier markierten Wörter bleiben dabei
 allein stehen. Der Marker blendet aus, während sein Wort landet, statt als Rest-Strich auszulaufen.
-Drei Takte, nichts daneben: Gerede verstummt, Wörter steigen auf, Satz steht.
+Drei Takte vor dem Punktefeld: Gerede verstummt, Wörter steigen auf, Satz steht.
 
 Nach dem Hero (2026-10-14): Das Gerede kehrt weiter unten wieder, wo die Seite es beantwortet, und
 der Kontakt endet mit der Eröffnungszeile. Siehe [`NACH_DEM_HERO_PLAN.md`](NACH_DEM_HERO_PLAN.md).
@@ -120,7 +121,7 @@ richtet sich nach der Länge des Geredes (`huepfAb`: letztes Wort steht plus 1,5
 hat den Hinweis verstanden: Die Karte hüpft danach nicht mehr, auch beim Zurückscrollen nicht. Erst
 dann misst das Skript die Wörter, damit sie nicht aus einer Hüpfhöhe losfliegen. In niedrigen
 Fenstern (bis 740 px Höhe) werden die Abstände enger und am Computer die Gerede-Schrift eine Stufe
-kleiner, damit alles ins erste Fenster passt. Scrollt
+kleiner, damit alles ins erste Fenster passt. Im Hintergrund wimmelt ein Punktefeld. Scrollt
 jemand, bevor das Gerede steht, steht es sofort komplett, mit Markern.
 
 **Mit Scrollen.** Die Strecke ist 240 % der Fensterhöhe lang (Desktop rund 1 900 px). Der Rahmen
@@ -132,8 +133,10 @@ klebt währenddessen unter dem Header, unten zeigt ein Balken den Fortschritt. F
 | 0,04–0,32 | Das Gerede verstummt Wort für Wort in Lesereihenfolge, die vier Marker bleiben                       |
 | 0,10–0,30 | Fläche, Rand und Schatten der Karte blenden aus                                                      |
 | 0,20–0,76 | Die vier Wörter steigen nacheinander auf flachem Bogen in die H1, ihr Marker blendet beim Landen aus |
+| 0,20–0,80 | Das Punktefeld ordnet sich vom Gewimmel zum ruhigen Raster                                           |
 | 0,78–0,88 | Komma und Punkt erscheinen                                                                           |
 | 0,84–1,00 | „Für wen“, Intro, Knöpfe, Adresse ziehen ein, zuletzt der Strich                                     |
+| 0,90–1,00 | Das Punktefeld blendet aus                                                                           |
 | 1         | Fertig. Die Strecke verschwindet, der Rahmen klebt nicht mehr                                        |
 
 Bis p = 1 läuft alles mit dem Scrollen vor und zurück. Bei p = 1 wird die Strecke entfernt und
@@ -157,8 +160,11 @@ keine Strecke mehr, in die man zurückscrollen könnte.
   ansehen“) schließt die Animation vorher ab, damit der Browser das richtige Ziel berechnet.
 - **Neuladen.** `history.scrollRestoration = 'manual'`, solange die Animation läuft, danach wieder
   `auto`.
-- **Kein Himmel** (seit Version 9). Alles läuft über `transform` und `opacity` an DOM-Elementen,
-  gezeichnet nur, wenn sich p ändert, und damit auch rückwärts richtig.
+- **Himmel.** Ein Canvas hinter allem, nur während der Animation, seit Version 9 nur noch das
+  Punktefeld. Es wird aus p gezeichnet, also auch rückwärts richtig; bis zum ersten Scrollen jedes
+  Bild, weil es wimmelt, danach nur, wenn sich p ändert. Zufall mit fester Saat, damit jeder Besuch
+  gleich aussieht. Die Farbe kommt aus dem Token `--color-fg-muted` (OKLCH, im Skript nach RGB
+  umgerechnet). Die Wörter laufen über `transform` und `opacity` an DOM-Elementen.
 - **Neuladen wirklich oben.** Stellt der Browser die alte Scrollposition erst nach dem Start
   wieder her, setzt das Skript in der ersten 1,5 s wieder auf oben, solange niemand selbst scrollt.
 - **Sicherheitsnetz.** Läuft das Modul nach 2 s nicht, stellt CSS den fertigen Hero her und nimmt
@@ -170,12 +176,12 @@ keine Strecke mehr, in die man zurückscrollen könnte.
 
 - Wer nur den Claim lesen will, muss erst durch die Strecke. Das ist gewollt.
 - Der Largest Contentful Paint ist jetzt das Gerede, nicht die H1.
-- Die Karte mit dem Gerede bewegt sich, bis man scrollt; wer nie scrollt, sieht
+- Die Karte mit dem Gerede und das Punktefeld bewegen sich, bis man scrollt; wer nie scrollt, sieht
   sie endlos. Wer gerade liest, liest alle gut 4 s zwei Hüpfer lang einen bewegten Text. Begründet
   mit der Zweckbindung in `DESIGN.md`: Wenige Pixel Scrollen halten beides an, bevor ein Wort
   abhebt. Ob das als Mechanismus im Sinne von WCAG 2.2.2 genügt, ist eine Auslegung, kein Beleg.
 - JavaScript-Budget von 90 auf 100 KB je Seite angehoben, damals für den Himmel (rund 11 KB). Seit
-  Version 9 ist er weg, das Budget steht unverändert.
+  Version 9 ist er nur noch das Punktefeld und kleiner, das Budget steht unverändert.
 
 ## 6. Prüfung
 

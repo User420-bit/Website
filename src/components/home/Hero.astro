@@ -121,6 +121,15 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     data-hero-rahmen
     class="relative flex min-h-[min(calc(100svh-var(--hero-kopf,4.5rem)),44rem)] flex-col justify-center py-12 sm:py-16"
   >
+    {
+      /*
+       * Der Himmel: ein Punktefeld, das bis zum ersten Scrollen wimmelt und sich
+       * dann zum Raster ordnet. Ein Canvas hinter allem, nur während der
+       * Animation, gezeichnet aus dem Scrollstand.
+       */
+    }
+    <canvas aria-hidden="true" data-hero-himmel class="pointer-events-none"></canvas>
+
     <div data-hero-inhalt class="relative z-[1]">
       <h1
         data-hero-h1
@@ -242,6 +251,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   [data-hero-vorspann],
   [data-hero-gerede],
   [data-hero-flug],
+  [data-hero-himmel],
   [data-hero-fortschritt] {
     display: none;
   }
@@ -289,6 +299,15 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       opacity: 0;
       transform: translateY(0.35em);
     }
+  }
+  html[data-hero='gerede'] [data-hero-himmel] {
+    display: block;
+    position: fixed;
+    top: var(--hero-kopf, 4.5rem);
+    left: 0;
+    z-index: 0;
+    width: 100vw;
+    height: calc(100svh - var(--hero-kopf, 4.5rem));
   }
 
   /*
@@ -428,6 +447,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   }
   html[data-bewegung=''][data-hero='gerede'] [data-hero-vorspann],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-gerede],
+  html[data-bewegung=''][data-hero='gerede'] [data-hero-himmel],
   html[data-bewegung=''][data-hero='gerede'] [data-hero-fortschritt] {
     animation: hero-netz-weg 0s 2s both;
   }
@@ -511,23 +531,59 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
   const ausrollen = (t: number) => 1 - (1 - t) ** 3
   const weich = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2)
   const mischen = (a: number, b: number, t: number) => a + (b - a) * t
+  /** Reproduzierbarer Zufall: gleiche Saat, gleiches Punktefeld, bei jedem Besuch. */
+  function zufall(saat: number): () => number {
+    let x = saat >>> 0
+    return () => {
+      x = (x + 0x6d2b79f5) >>> 0
+      let t = x
+      t = Math.imul(t ^ (t >>> 15), t | 1)
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  }
+  /** Ein Token wie `oklch(0.79 0.15 62)` als RGB, damit jeder Canvas es versteht. */
+  function rgb(farbe: string): [number, number, number] {
+    const m = /oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)/.exec(farbe)
+    if (!m) return [128, 128, 128]
+    let l = parseFloat(m[1]!)
+    if (l > 1) l /= 100
+    const c = parseFloat(m[2]!)
+    const h = (parseFloat(m[3]!) * Math.PI) / 180
+    const A = c * Math.cos(h)
+    const B = c * Math.sin(h)
+    const l_ = (l + 0.3963377774 * A + 0.2158037573 * B) ** 3
+    const m_ = (l - 0.1055613458 * A - 0.0638541728 * B) ** 3
+    const s_ = (l - 0.0894841775 * A - 1.291485548 * B) ** 3
+    const lin = [
+      4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
+      -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
+      -0.0041960863 * l_ - 0.7034186147 * m_ + 1.707614701 * s_,
+    ]
+    return lin.map((v) => {
+      const x = klemme(v)
+      return Math.round(255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055))
+    }) as [number, number, number]
+  }
 
   /*
    * Gleich nach dem Öffnen, ohne Scrollen: Die vier Wörter werden markiert,
    * sobald das Gerede steht, dann erscheint der Hinweis. So sieht man sofort,
    * dass hier etwas passiert und worauf es ankommt.
    *
-   * Fahrplan über die Scroll-Strecke, p von 0 bis 1. Drei Takte und nichts
-   * daneben (seit 2026-10-22; vorher flogen die Wörter mit Sternschweif durch
-   * einen Himmel aus Punkten, Staub und Funken):
+   * Fahrplan über die Scroll-Strecke, p von 0 bis 1. Drei Takte vor dem
+   * Punktefeld (seit 2026-10-22; vorher flogen die Wörter gekippt und mit
+   * Sternschweif, dazu Staub, Glimmen und Funken):
    *   0,02–0,14  die Eröffnungszeile macht Platz
    *   0,04–0,32  das Gerede verstummt Wort für Wort, in Lesereihenfolge;
    *              die vier markierten Wörter bleiben stehen
    *   0,10–0,30  Fläche, Rand und Schatten des Feldes blenden aus
    *   0,20–0,76  die vier Wörter steigen nacheinander auf ihren Platz in der H1,
    *              der Marker jedes Wortes blendet im letzten Drittel seines Wegs aus
+   *   0,20–0,80  das Punktefeld ordnet sich vom Gewimmel zum Raster
    *   0,78–0,88  Komma und Punkt erscheinen
    *   0,84–1,00  Für wen, Intro, Knöpfe, Adresse, dann der Strich
+   *   0,90–1,00  das Punktefeld blendet aus
    *   1,00       fertig: Strecke weg, kein Zurück
    */
   const LOS = 0.2
@@ -565,6 +621,72 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     return { x: x - (s - 1) * k.mx, y: y - (s - 1) * k.my, s, t }
   }
 
+  /* ---------- der Himmel: ein Punktefeld ---------- */
+
+  type Punkt = { gx: number; gy: number; ox: number; oy: number; ph: number; f: number }
+
+  function himmel(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d')
+    let dpr = 1
+    let breite = 0
+    let hoehe = 0
+    let dunkel = false
+    let leise: [number, number, number] = [0, 0, 0]
+    let punkte: Punkt[] = []
+
+    function vorbereiten(): void {
+      if (!ctx) return
+      const css = getComputedStyle(root)
+      const kopf = parseFloat(css.getPropertyValue('--hero-kopf')) || 0
+      dpr = Math.min(2, window.devicePixelRatio || 1)
+      breite = document.documentElement.clientWidth
+      hoehe = window.innerHeight - kopf
+      canvas.width = Math.round(breite * dpr)
+      canvas.height = Math.round(hoehe * dpr)
+      const bg = /oklch\(\s*([\d.]+)/.exec(css.getPropertyValue('--color-bg'))
+      dunkel = bg ? parseFloat(bg[1]!) < 0.5 : false
+      leise = rgb(css.getPropertyValue('--color-fg-muted'))
+
+      // Ein Raster über das ganze Fenster, jeder Punkt mit eigenem Gewimmel.
+      const r1 = zufall(7)
+      const abstand = Math.max(28, Math.min(44, breite / 28))
+      punkte = []
+      for (let y = abstand / 2; y < hoehe; y += abstand) {
+        for (let x = abstand / 2; x < breite; x += abstand) {
+          punkte.push({
+            gx: x,
+            gy: y,
+            ox: (r1() - 0.5) * abstand * 2.4,
+            oy: (r1() - 0.5) * abstand * 2.4,
+            ph: r1() * Math.PI * 2,
+            f: 0.5 + r1(),
+          })
+        }
+      }
+    }
+
+    /** `zeit` treibt nur das Gewimmel; steht sie still, steht es still. */
+    function malen(p: number, zeit: number): void {
+      if (!ctx) return
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.clearRect(0, 0, breite, hoehe)
+      const aus = 1 - abschnitt(p, 0.9, 0.995)
+      if (aus <= 0) return
+      const unruhe = 1 - weich(abschnitt(p, 0.2, 0.8))
+      const grund = (dunkel ? 0.3 : 0.32) * aus
+      for (const pt of punkte) {
+        const zitter = Math.sin(zeit * 0.0005 * pt.f + pt.ph) * 6 * unruhe
+        const x = pt.gx + pt.ox * unruhe + zitter
+        const y = pt.gy + pt.oy * unruhe + Math.cos(zeit * 0.0004 * pt.f + pt.ph) * 6 * unruhe
+        const funkeln = 1 - 0.6 * unruhe * (0.5 + 0.5 * Math.sin(zeit * 0.002 * pt.f + pt.ph))
+        ctx.fillStyle = `rgba(${leise[0]},${leise[1]},${leise[2]},${grund * funkeln})`
+        ctx.fillRect(x - 1, y - 1, 2, 2)
+      }
+    }
+
+    return { vorbereiten, malen }
+  }
+
   /* ---------- die Animation ---------- */
 
   function gerede(): void {
@@ -573,13 +695,14 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     const h1 = document.querySelector<HTMLElement>('[data-hero-h1]')
     const text = document.querySelector<HTMLElement>('[data-hero-gerede]')
     const flug = document.querySelector<HTMLElement>('[data-hero-flug]')
+    const leinwand = document.querySelector<HTMLCanvasElement>('[data-hero-himmel]')
     const feld = document.querySelector<HTMLElement>('[data-hero-feld]')
     const hinweis = document.querySelector<HTMLElement>('[data-hero-hinweis]')
     const fortschrittLeiste = document.querySelector<HTMLElement>('[data-hero-fortschritt]')
     const balken = document.querySelector<HTMLElement>('[data-hero-fortschritt-balken]')
     const strich = document.querySelector<HTMLElement>('[data-hero-strich]')
     const auftakt = document.querySelector<HTMLElement>('[data-hero-auftakt]')
-    if (!buehne || !rahmen || !h1 || !text || !flug) return fertig()
+    if (!buehne || !rahmen || !h1 || !text || !flug || !leinwand) return fertig()
 
     const quellen = alle('[data-hero-quelle]')
     const ziele = alle('[data-hero-wort]', h1)
@@ -588,6 +711,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
     const laute = alle('[data-hero-laut]', text)
     if (quellen.length === 0 || quellen.length !== ziele.length) return fertig()
     const quellMarker = quellen.map((q) => q.querySelector<HTMLElement>('[data-hero-marker]')!)
+    const bild = himmel(leinwand)
 
     // Die Kopien: in Display-Schrift wie die H1, liegen am Ziel und werden per transform bewegt.
     const kopien: Kopie[] = ziele.map((ziel) => {
@@ -642,6 +766,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         k.qx = q.left + q.width / 2 - (z.left + z.width / 2)
         k.qy = q.top + q.height / 2 - (z.top + z.height / 2)
       })
+      bild.vorbereiten()
     }
 
     /* Wie weit in der Strecke, 0 bis 1. */
@@ -738,8 +863,10 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
 
     let vorbei = false
     let zuletzt = -1
+    /** Zeitpunkt, ab dem das Punktefeld stillsteht (erstes Scrollen). */
+    let stillAb: number | null = null
 
-    /* Eine Schleife für alles: Gezeichnet wird nur, wenn sich p ändert. */
+    /* Eine Schleife für alles: DOM nur, wenn sich p ändert, das Punktefeld auch, solange es wimmelt. */
     function bildfolge(zeit: number): void {
       if (vorbei) return
       // Neuladen heißt oben anfangen, auch wenn der Browser die alte Stelle erst
@@ -748,11 +875,16 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
         window.scrollTo({ top: 0, behavior: 'instant' })
       }
       const p = fortschritt()
-      if (p !== zuletzt) {
+      const neu = p !== zuletzt
+      if (neu) {
         zuletzt = p
         zeichnen(p)
         if (p >= 0.999) return abschliessen(true)
       }
+      // Zweck erfüllt: Nach dem ersten Scrollen hört das Gewimmel auf, und zwar
+      // bevor ein Wort abhebt. Ab dann bewegt sich der Himmel nur noch mit dem Scrollen.
+      if (vorspannSteht && stillAb === null) stillAb = zeit
+      if (neu || stillAb === null) bild.malen(p, stillAb ?? zeit)
       requestAnimationFrame(bildfolge)
     }
 
@@ -778,6 +910,7 @@ const huepfAb = Math.round((geredeEnde + 1.5) * 10) / 10
       rahmen!.removeEventListener('focusin', beiFokus)
       const vorher = rahmen!.getBoundingClientRect().top
       for (const k of kopien) k.el.remove()
+      leinwand!.remove()
       for (const q of quellen) q.style.visibility = ''
       for (const z of zeichen) z.style.opacity = ''
       // Explizit sichtbar: Die Regel für den Einzug ohne Gerede würde sonst wieder greifen.
