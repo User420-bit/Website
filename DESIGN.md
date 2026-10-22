@@ -849,8 +849,7 @@ nach zwei Sekunden. Gespeichert wird nichts.
 Nur die Handlung, kein Bild. Links unter einer Haarlinie zuerst der Schlusspunkt der Erzählung: die
 Eröffnung des Heros, „Sie erzählen. / Ich höre zu.“, in Title Medium (600, zweite Zeile
 Bleistiftgrau). Darunter die Adresse (`CopyEmail`), der
-Webmail-Hinweis als Caption, der einzige Primärbutton des Bereichs und darunter der Antworttermin
-(siehe dort); rechts die Erreichbarkeit als
+Webmail-Hinweis als Caption und der einzige Primärbutton des Bereichs; rechts die Erreichbarkeit als
 Meta-Liste (Ort, Profil, Code), deren erste Zeile ihre eigene Haarlinie mitbringt. Ab 1024 px stehen
 beide Spalten `1fr | 1fr` mit 3rem Abstand nebeneinander, beide Linien auf einer Höhe, wie die drei
 Arten in „Leistungen“. Darunter stapeln sie sich, die Adresse zuerst, 2,5rem Abstand. Kein Ablauf
@@ -873,20 +872,11 @@ hinterlegt ist. Nur
 echte, eigene Aufnahmen aus der Region, ohne GPS- und EXIF-Daten im Repository; die
 Bildunterschrift nennt nur, was das Bild belegbar zeigt.
 
-### Antworttermin im Kontakt
+### Antwortzeit im Kontakt
 
-Seit 2026-10-14 ([`docs/RUHE_PLAN.md`](docs/RUHE_PLAN.md)). Unter „E-Mail schreiben“ rechnet die Seite
-aus, was „Antwort in der Regel innerhalb eines Werktags“ heute heißt: „Heute geschrieben, Antwort in
-der Regel bis Donnerstag, 15. Oktober.“ (Body Small, Datum in Tinte). Darunter die nächsten sieben
-Tage als Spalten unter einer Haarlinie (2,75rem breit, Marke, Wochentag und Datum in
-Tabellenziffern): heute mit 2-px-Tintenstrich auf der Linie, der Antworttag mit 2-px-Strich in Orange
-und oranger Schrift, freie Tage in Bleistiftgrau. Seit 2026-10-17; davor gerahmte Kacheln mit 8 px,
-gestrichelt und 55 % Deckkraft für freie Tage, der einzige gerahmte Kasten der Seite und unter 3 : 1.
-Mit Skript nimmt der Termin den Satz „Antwort in der Regel innerhalb eines Werktags“ aus dem Intro,
-sonst stünde die Zusage zweimal.
-Antworttag ist der nächste Werktag; wer an einem freien Tag schreibt, bekommt den ersten Werktag.
-Frei sind Wochenenden und die gesetzlichen Feiertage in Bayern (mit Mariä Himmelfahrt; Ostern nach
-Gauß). Nur mit Skript, weil das Datum erst beim Besuch feststeht; ohne steht der Satz im Intro.
+„Antwort in der Regel innerhalb eines Werktags.“ steht als Regel im Intro von „Kontakt“, ohne Datum.
+Vom 2026-10-14 bis 2026-10-22 rechnete ein Skript daraus einen Antworttermin mit Datum und einer
+Reihe der nächsten sieben Tage; das versprach zu konkret und ist entfallen.
 
 ### Containers
 
@@ -965,8 +955,7 @@ importiert. Die Liste ist seither offen, die Grenzen sind geschlossen:
   Druck, Aufklapper öffnen, Blättern, Umschalten, Lightbox, Seitenwechsel, die Wahl in der
   Wahlhilfe. Bis 320 ms für Zustände, 600 ms für einen Marker oder ein Bild, das wechselt.
 - **Neue Elemente statt Verschönerung:** Wo eine Seite mehr Leben braucht, bekommt sie ein Element,
-  das etwas tut (die Wahlhilfe beantwortet, welche Leistung passt; der Antworttermin rechnet ein
-  Datum aus), nicht eine Bewegung an etwas, das schon da ist.
+  das etwas tut (die Wahlhilfe beantwortet, welche Leistung passt), nicht eine Bewegung an etwas, das schon da ist.
 - **Hover und Druck:** Hover ändert nur, was CSS schon änderte (Farbe, Fläche, Linie, 2 px Pfeil,
   Bild 1,02).
   Druck gibt 0,98 nach, 120 ms. Tastaturfokus sieht aus wie Hover.
