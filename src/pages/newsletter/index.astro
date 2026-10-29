@@ -3,13 +3,14 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import Arrow from '@/components/Arrow.astro'
 import MetaList from '@/components/MetaList.astro'
 import Ausgabe from '@/components/newsletter/Ausgabe.astro'
-import { ausgaben, meldungen } from '@/lib/newsletter'
+import { ausgaben, meldungen, SICHTBARE_AUSGABEN } from '@/lib/newsletter'
 import { datumLang, firstSentence, href } from '@/lib/site'
 
 /*
  * Der Newsletter als Seite: oben, was er ist und wie er entsteht, darunter die
  * neueste Ausgabe vollständig, dann die früheren als linierte Zeilen. Jede
- * Ausgabe hat zusätzlich eine eigene Seite unter `/newsletter/<datum>/`.
+ * Ausgabe hat zusätzlich eine eigene Seite unter `/newsletter/<datum>/`. Gezeigt
+ * werden nur die letzten `SICHTBARE_AUSGABEN`, rund ein Monat.
  * Die Dateien legt der n8n-Workflow „Digest“ an (README, Inhalt ändern).
  */
 const alle = await ausgaben()
@@ -22,6 +23,13 @@ const [neueste, ...fruehere] = alle
 >
   <article class="py-12 sm:py-16">
     <h1 class="display m-0 text-4xl font-semibold text-balance sm:text-5xl">Newsletter</h1>
+    <p
+      id="abgelaufen"
+      class="mt-5 mb-0 hidden max-w-[65ch] border-l-2 border-accent pl-4 text-fg target:block"
+    >
+      Diese Ausgabe ist älter als ein Monat und nicht mehr im Archiv. Hier steht die neueste,
+      darunter die übrigen.
+    </p>
     <p class="prose-flow mt-5 mb-0 max-w-[65ch] text-lg leading-relaxed text-fg-muted">
       Dreimal die Woche das Wichtigste aus Wirtschaft, Politik und Technik, kurz eingeordnet. Jede
       Meldung verlinkt den Artikel, aus dem sie stammt.
@@ -40,6 +48,7 @@ const [neueste, ...fruehere] = alle
           label: 'Entsteht',
           value: 'Automatisch mit einem Sprachmodell, ohne redaktionelle Prüfung',
         },
+        { label: 'Archiv', value: `Die letzten ${SICHTBARE_AUSGABEN} Ausgaben, rund ein Monat` },
       ]}
     />
 

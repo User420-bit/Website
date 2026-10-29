@@ -6,7 +6,15 @@ import { href } from '@/lib/site'
 /*
  * Bewegung: Seit 2026-10-14 zieht hier nichts mehr ein: Nummer, H1, Satz und
  * Knopf stehen, Bewegung gibt es nur als Antwort auf eine Handlung.
+ *
+ * GitHub Pages liefert diese Seite für jede unbekannte Adresse aus. Eine
+ * Adresse unter `/newsletter/` ist fast immer eine Ausgabe, die aus den
+ * letzten zwölf herausgefallen ist (`SICHTBARE_AUSGABEN`). Sie springt zur
+ * Übersicht, die mit `#abgelaufen` sagt, warum. Ohne JavaScript bleibt es bei
+ * dieser Seite. Der Statuscode bleibt 404, Suchmaschinen vergessen die Ausgabe.
  */
+const newsletter = href('/newsletter')
+const ziel = href('/newsletter#abgelaufen')
 ---
 
 <BaseLayout
@@ -14,6 +22,11 @@ import { href } from '@/lib/site'
   description="Die aufgerufene Seite existiert nicht."
   noindex
 >
+  <script slot="head" is:inline define:vars={{ newsletter, ziel }}>
+    if (location.pathname.startsWith(newsletter) && location.pathname !== newsletter) {
+      location.replace(ziel)
+    }
+  </script>
   <section class="py-20 sm:py-28">
     <p class="m-0 text-sm text-fg-muted tabular-nums">404</p>
     <h1 class="display mt-2 mb-0 text-4xl font-semibold text-balance sm:text-5xl">

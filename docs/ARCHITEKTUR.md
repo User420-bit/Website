@@ -64,7 +64,7 @@ Astro, statisch generiert, ausgeliefert über GitHub Pages. Abhängigkeiten: `@a
 - `/projekte/`
 - `/werkzeuge/`
 - `/projekte/<slug>/` für jedes veröffentlichte Projekt: `kleinkram`, `tiefgang`, `memorytree`, `notelist`, `feynman`, `dealersim`, `vaulter`, `availably`
-- `/newsletter/<datum>/` für jede Ausgabe in `src/content/newsletter/`
+- `/newsletter/<datum>/` für die letzten zwölf Ausgaben in `src/content/newsletter/`
 - `/404.html`
 
 ### Inhalte
