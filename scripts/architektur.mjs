@@ -296,7 +296,7 @@ schreibe(
   `- ${code('/projekte/<slug>/')} für jedes veröffentlichte Projekt: ${veroeffentlicht.map((p) => code(p.slug)).join(', ')}`,
   // Ohne Liste der Ausgaben: n8n legt je Lauf eine an, und der Deploy prüft
   // dieses Dokument mit `docs:check`. Eine Liste hier ließe jeden Lauf scheitern.
-  `- ${code('/newsletter/<datum>/')} für jede Ausgabe in ${code('src/content/newsletter/')}`,
+  `- ${code('/newsletter/<datum>/')} für die letzten zwölf Ausgaben in ${code('src/content/newsletter/')}`,
   `- ${code('/404.html')}`,
   '',
   '### Inhalte',

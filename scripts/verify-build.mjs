@@ -40,25 +40,36 @@ const projektRouten = Object.fromEntries(
 )
 
 /**
- * Newsletter-Ausgaben ebenso aus dem Content: Jede Datei
- * `src/content/newsletter/<YYYY-MM-DD>.json` muss als Seite gebaut sein, mit
- * „Newsletter vom <Datum>“ als H1 (dasselbe Format wie `datumLang` in
- * `src/lib/site.ts`).
+ * Newsletter-Ausgaben ebenso aus dem Content: Die neuesten `SICHTBARE_AUSGABEN`
+ * Dateien `src/content/newsletter/<YYYY-MM-DD>.json` muessen als Seite gebaut
+ * sein, mit „Newsletter vom <Datum>“ als H1 (dasselbe Format wie `datumLang` in
+ * `src/lib/site.ts`). Aeltere duerfen nicht gebaut sein. Die Zahl steht in
+ * `src/lib/newsletter.ts`, damit sie nur an einer Stelle gepflegt wird.
  */
 const NEWSLETTER_DIR = 'src/content/newsletter'
+const SICHTBARE_AUSGABEN = Number(
+  readFileSync('src/lib/newsletter.ts', 'utf8').match(/SICHTBARE_AUSGABEN = (\d+)/)?.[1],
+)
+if (!SICHTBARE_AUSGABEN)
+  throw new Error('SICHTBARE_AUSGABEN in src/lib/newsletter.ts nicht gefunden')
 const datumLang = new Intl.DateTimeFormat('de-DE', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
   timeZone: 'UTC',
 })
+const ausgabenIds = (existsSync(NEWSLETTER_DIR) ? readdirSync(NEWSLETTER_DIR) : [])
+  .filter((name) => name.endsWith('.json') && !name.startsWith('._'))
+  .map((name) => name.replace(/\.json$/, ''))
+  .sort()
+  .reverse()
 const newsletterRouten = Object.fromEntries(
-  (existsSync(NEWSLETTER_DIR) ? readdirSync(NEWSLETTER_DIR) : [])
-    .filter((name) => name.endsWith('.json') && !name.startsWith('._'))
-    .map((name) => {
-      const id = name.replace(/\.json$/, '')
-      return [`newsletter/${id}`, `Newsletter vom ${datumLang.format(new Date(`${id}T00:00:00Z`))}`]
-    }),
+  ausgabenIds
+    .slice(0, SICHTBARE_AUSGABEN)
+    .map((id) => [
+      `newsletter/${id}`,
+      `Newsletter vom ${datumLang.format(new Date(`${id}T00:00:00Z`))}`,
+    ]),
 )
 
 /** Route -> erwartete H1. */
@@ -105,6 +116,14 @@ for (const [route, expectedH1] of Object.entries(ROUTES)) {
 
   if (/\[[A-ZÄÖÜ][^\]]*\]/.test(html.replace(/<script[\s\S]*?<\/script>/g, ''))) {
     fail(`/${route}: sieht nach einem Platzhalter in eckigen Klammern aus`)
+  }
+}
+
+for (const id of ausgabenIds.slice(SICHTBARE_AUSGABEN)) {
+  if (existsSync(join(DIST, 'newsletter', id, 'index.html'))) {
+    fail(
+      `/newsletter/${id} ist aelter als die letzten ${SICHTBARE_AUSGABEN} Ausgaben und darf nicht gebaut sein`,
+    )
   }
 }
 
