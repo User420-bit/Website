@@ -8,7 +8,8 @@ verlangt.
 - **JavaScript nur aus dem eigenen Build:** Motion für die Bewegung der Sektionen, gebündelt aus dem
   Repository, dazu winzige Inline-Skripte; alles funktioniert auch ohne Skript (siehe
   [`docs/BEWEGUNG_PLAN.md`](docs/BEWEGUNG_PLAN.md))
-- **Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser
+- **Keine Cookies, keine Drittanbieter-Ressourcen** — auch keine Speicherung im Browser; Reichweite
+  cookielos mit selbst gehostetem Umami (`src/components/Reichweite.astro`, `deploy/umami/`)
 - Jede Seite ist echtes HTML mit eigener URL, eigenem Title und eigenen Meta-Tags
 
 Wie die Website und jedes Projekt gebaut sind, steht in
@@ -288,8 +289,11 @@ Base-Pfad und der abschließende Slash stimmen.
 ## Datenschutz
 
 Keine externen Schriften (die Hausschrift Instrument Sans liegt unter `src/assets/fonts/` und
-kommt vom eigenen Server; `npm run test:build` prüft das), kein Analytics, keine Cookies, keine Speicherung im
-Browser. Der Hell-/Dunkel-Modus folgt der Systemeinstellung und wird nicht
+kommt vom eigenen Server; `npm run test:build` prüft das), keine Cookies, keine Speicherung im
+Browser. Reichweitenmessung mit Umami, selbst gehostet auf dem eigenen Hetzner-Server
+(Einrichtung: [`deploy/umami/README.md`](deploy/umami/README.md)). Eingeschaltet wird sie über
+`websiteId` in `src/lib/reichweite.json`; solange der Wert `null` ist, wird nichts gemessen und die
+Datenschutzerklärung nennt die Messung nicht. Der Hell-/Dunkel-Modus folgt der Systemeinstellung und wird nicht
 gespeichert. Hosting durch GitHub (Microsoft) — Details in der
 Datenschutzerklärung der Seite.
 

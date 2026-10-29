@@ -1,0 +1,45 @@
+---
+/**
+ * Cookielose Reichweitenmessung mit Umami, selbst gehostet auf dem eigenen
+ * Hetzner-Server (seit 2026-10-29, vom Inhaber entschieden; Einrichtung in
+ * `deploy/umami/README.md`). Keine Cookies, nichts wird im Browser gespeichert.
+ *
+ * Solange `websiteId` in `src/lib/reichweite.json` leer ist, rendert diese
+ * Komponente nichts, und die Datenschutzerklärung nennt die Messung nicht.
+ * Jede Änderung hier muss dort (Abschnitt 3) nachgezogen werden.
+ *
+ * Gemessen werden Seitenaufrufe sowie als eigene Ereignisse Klicks auf externe
+ * Links und auf Kontaktwege. Das Kopieren der Adresse meldet `CopyEmail.astro`.
+ */
+import reichweite from '@/lib/reichweite.json'
+
+const { host, websiteId } = reichweite
+const domain = new URL(Astro.site!).hostname
+---
+
+{
+  websiteId && (
+    <script
+      is:inline
+      defer
+      src={`${host}/script.js`}
+      data-website-id={websiteId}
+      data-domains={domain}
+      data-do-not-track="true"
+    />
+  )
+}
+
+<script>
+  import { melde } from '@/lib/reichweite'
+
+  // Ein Listener für alle Links, auch für die, die später ins DOM kommen. Ohne
+  // geladenes Umami tut `melde` nichts.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href]')
+    if (!link) return
+    if (link.protocol === 'mailto:') melde('Kontakt', { weg: 'E-Mail' })
+    else if (link.protocol === 'tel:') melde('Kontakt', { weg: 'Telefon' })
+    else if (link.host !== location.host) melde('Externer Link', { ziel: link.host })
+  })
+</script>

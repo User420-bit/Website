@@ -3,8 +3,11 @@ import { getEntry } from 'astro:content'
 import ProseLayout from '@/layouts/ProseLayout.astro'
 import IncompleteLegalNotice from '@/components/IncompleteLegalNotice.astro'
 import { telefonLink } from '@/lib/site'
+import reichweite from '@/lib/reichweite.json'
 
 const legal = (await getEntry('legal', 'main'))!.data
+// Abschnitt 3 beschreibt Umami nur, wenn `Reichweite.astro` es auch einbindet.
+const messung = Boolean(reichweite.websiteId)
 const addressComplete = legal.street !== null && legal.zipCity !== null
 
 const [year, month] = legal.privacyLastUpdated.split('-')
@@ -27,7 +30,9 @@ const stand = `${monthNames[Number(month) - 1]} ${year}`
 
 <ProseLayout
   title="Datenschutzerklärung"
-  description="Datenschutzerklärung nach DSGVO. Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen."
+  description={messung
+    ? 'Datenschutzerklärung nach DSGVO. Keine Cookies, Reichweitenmessung mit selbst gehostetem Umami, keine Drittanbieter-Ressourcen.'
+    : 'Datenschutzerklärung nach DSGVO. Keine Cookies, kein Tracking, keine Drittanbieter-Ressourcen.'}
   subtitle={`Stand: ${stand}`}
   noindex={!addressComplete}
 >
@@ -91,13 +96,54 @@ const stand = `${monthNames[Number(month) - 1]} ${year}`
   </section>
 
   <section>
-    <h2>3. Keine Cookies, kein Tracking, keine Speicherung im Browser</h2>
-    <p>
-      Diese Website setzt keine Cookies, kein Web-Analytics und kein Profiling ein. Es werden auch
-      keine Daten im <code>localStorage</code> oder <code>sessionStorage</code> Ihres Browsers abgelegt.
-      Schriften, Skripte und Bilder werden ausschließlich vom selben Server geladen; es werden zur Laufzeit
-      keine Inhalte von Drittanbietern (Google Fonts, CDNs, iFrames, Karten- oder Videodienste) nachgeladen.
-    </p>
+    {
+      messung ? (
+        <>
+          <h2>3. Reichweitenmessung ohne Cookies (Umami)</h2>
+          <p>
+            Um zu verstehen, welche Inhalte gelesen werden, nutze ich die Open-Source-Software
+            Umami. Sie läuft auf meinem eigenen Server ({new URL(reichweite.host).hostname}) bei der
+            Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Deutschland; die Daten
+            verlassen Deutschland nicht und werden an niemanden weitergegeben. Mit Hetzner besteht
+            ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO).
+          </p>
+          <p>
+            Umami setzt keine Cookies, legt nichts im <code>localStorage</code> oder{' '}
+            <code>sessionStorage</code> Ihres Browsers ab und erstellt keine Profile. Bei jedem
+            Seitenaufruf werden verarbeitet: aufgerufene Seite, Referrer-URL, Browser,
+            Betriebssystem, Gerätetyp, Bildschirmgröße, Sprache und das aus der IP-Adresse
+            abgeleitete Land. Außerdem werden Klicks auf externe Links und auf die Kontaktwege
+            (E-Mail, Telefon, Kopieren der E-Mail-Adresse) gezählt. Ihre IP-Adresse wird nicht
+            gespeichert; zur Zählung von Besuchen bildet Umami aus IP-Adresse, User-Agent und einem
+            regelmäßig wechselnden Salt einen Hash. Ist in Ihrem Browser „Do Not Track“ aktiviert,
+            wird nichts gemessen.
+          </p>
+          <p>
+            Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer
+            datensparsamen Auswertung der Nutzung dieser Website). Sie können der Messung jederzeit
+            widersprechen, indem Sie „Do Not Track“ aktivieren, einen Content-Blocker verwenden oder
+            sich per E-Mail an mich wenden.
+          </p>
+          <p>
+            Abgesehen vom Messskript, das von meinem eigenen Server kommt, werden Schriften, Skripte
+            und Bilder ausschließlich vom selben Server wie die Website geladen; es werden zur
+            Laufzeit keine Inhalte von Drittanbietern (Google Fonts, CDNs, iFrames, Karten- oder
+            Videodienste) nachgeladen.
+          </p>
+        </>
+      ) : (
+        <>
+          <h2>3. Keine Cookies, kein Tracking, keine Speicherung im Browser</h2>
+          <p>
+            Diese Website setzt keine Cookies, kein Web-Analytics und kein Profiling ein. Es werden
+            auch keine Daten im <code>localStorage</code> oder <code>sessionStorage</code> Ihres
+            Browsers abgelegt. Schriften, Skripte und Bilder werden ausschließlich vom selben Server
+            geladen; es werden zur Laufzeit keine Inhalte von Drittanbietern (Google Fonts, CDNs,
+            iFrames, Karten- oder Videodienste) nachgeladen.
+          </p>
+        </>
+      )
+    }
     <p>
       Der Hell-/Dunkel-Modus richtet sich nach der Einstellung Ihres Betriebssystems und wird nicht
       gespeichert.

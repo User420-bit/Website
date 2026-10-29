@@ -67,8 +67,11 @@ zeigt auch, was nicht funktioniert hat („Erkenntnisse“). Claim: „Ihre Prob
   Einzugsgebiet, bewusst keine Straße und keinen Namen. Ein typografisches Vorschaubild
   (`npm run vorschaubild`) trägt geteilte Links, bis es ein Logo gibt. Am 2026-10-18 vom Inhaber
   entschieden.
-- Aktuelle Umsetzungsentscheidungen, vom Inhaber **nicht als verbindlich bestätigt**: kein Tracking,
-  keine Cookies, keine Drittanbieter-Ressourcen, keine Speicherung im Browser, fast kein JavaScript,
+- Reichweitenmessung mit Umami, selbst gehostet auf dem eigenen Hetzner-Server, cookielos und ohne
+  Banner. Am 2026-10-29 vom Inhaber entschieden (statt Cookies, die ein Banner und eine geänderte
+  Haltung bedeutet hätten; statt Plausible, weil selbst gehostet).
+- Aktuelle Umsetzungsentscheidungen, vom Inhaber **nicht als verbindlich bestätigt**: keine
+  Cookies, keine Drittanbieter-Ressourcen, keine Speicherung im Browser, fast kein JavaScript,
   Hell-/Dunkelmodus nach Systemeinstellung. Die Datenschutzerklärung beschreibt diesen Zustand. Jede
   Änderung daran muss deshalb auch `src/content/legal.json` und die Datenschutz-Seite anpassen.
 - Es gibt noch keine Logo-Datei. Der Header zeigt die Wortmarke als Text, das Favicon ein oranges

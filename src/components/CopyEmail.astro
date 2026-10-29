@@ -88,6 +88,7 @@ const { email, class: className = '' } = Astro.props
 
 <script>
   import { DAUER, KURVE, animate, bewegt, press } from '@/lib/motion'
+  import { melde } from '@/lib/reichweite'
 
   /**
    * Räumt erst im nächsten Bild auf: Motion schreibt die Endwerte selbst noch
@@ -138,6 +139,7 @@ const { email, class: className = '' } = Astro.props
       try {
         await navigator.clipboard.writeText(button.dataset.copy ?? '')
         status.textContent = 'Kopiert.'
+        melde('Kontakt', { weg: 'E-Mail kopiert' })
       } catch {
         status.textContent = 'Bitte die Adresse markieren und kopieren.'
       }

@@ -1,0 +1,8 @@
+{$UMAMI_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy umami:3000
+	# Keine Zugriffslogs: Die Messung soll die einzige Stelle sein, an der Besuche auftauchen.
+	log {
+		output discard
+	}
+}

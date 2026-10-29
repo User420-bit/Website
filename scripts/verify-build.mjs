@@ -203,6 +203,7 @@ for (const [route, html] of pages) {
 // damals fuer den Himmel des Scroll-Heros (Startseite, rund 11 KB). Seit
 // 2026-10-22 ist er nur noch ein Punktefeld (docs/HERO_KLARTEXT_PLAN.md, Version 9).
 const JS_BUDGET = 100 * 1024
+const reichweite = JSON.parse(readFileSync('src/lib/reichweite.json', 'utf8'))
 const jsJeRoute = new Map()
 for (const [route, html] of pages) {
   const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map((m) => m[1])
@@ -227,6 +228,9 @@ for (const [route, html] of pages) {
     }
   }
   for (const src of scripts) {
+    // Einzige Ausnahme: das Umami-Skript vom eigenen Server (Reichweite.astro).
+    // Es zaehlt nicht ins Budget, weil es nicht im Build liegt.
+    if (reichweite.websiteId && src === `${reichweite.host}/script.js`) continue
     if (!src.startsWith(`${BASE}_astro/`)) {
       fail(`/${route}: laedt JavaScript von ausserhalb des Builds (${src})`)
       continue
