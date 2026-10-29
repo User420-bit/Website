@@ -1,0 +1,417 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "22. Oktober 2026",
+  "summary": "Die Ausgabe zeigt wachsende Nervosität an Anleihe- und Techmärkten, während Berlin über günstigere Strom- und Spritpreise streitet. Dazu kommen geopolitische Risiken im Nahen Osten und eine gravierende PHP-Sicherheitslücke, die Millionen Webseiten bedroht.",
+  "topThree": [
+    {
+      "title": "Französische Staatsanleihen: Rendite auf 15-Jahres-Hoch",
+      "briefing": "Investoren verkaufen französische Staatsanleihen, die Rendite (Zinsertrag einer Anleihe) steigt auf den höchsten Stand seit 15 Jahren. Die Abstände zu anderen Eurostaaten weiten sich aus, auch weitere Krisenkandidaten der Eurozone geraten unter Druck. In Frankreich kündigen sich neue Demonstrationen an, Premierminister Lecornu spricht mit den Gewerkschaften.",
+      "impact": "Wer breit gestreute Euro-Staatsanleihen-ETFs hält, bekommt die Kursunterschiede zwischen den Ländern direkt zu spüren. Steigende Renditen verteuern auch die Kredite des französischen Staates.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/geldanlage/verstaerkter-ausverkauf-franzoesischer-anleihen-neue-demos-in-sicht-a-e40d2a72-203b-423d-9823-a03f1d60868d#ref=rss"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/staatsanleihen-diese-laender-machen-investoren-neben-frankreich-ebenfalls-nervoes-a-2820166d-c503-4d30-95b9-be4fbadcd5f0#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Steuerplus reicht laut Klingbeil nicht für Stromsteuer-Senkung",
+      "briefing": "Die neue Steuerschätzung erwartet für den Bund im kommenden Jahr mehr Einnahmen als zunächst angenommen. Finanzminister Klingbeil sagt jedoch, das Plus reiche nicht für eine Senkung der Stromsteuer (Abgabe auf den Stromverbrauch), die vor allem die Union gefordert hatte. Die Länder drängen den Bund zugleich, rasch einen Vorschlag für einen Spritpreisdeckel vorzulegen, der ab 1. Januar gelten soll.",
+      "impact": "Ohne Senkung zahlen Haushalte die Stromsteuer weiter im bisherigen Umfang. Ein Spritpreisdeckel würde die Tankkosten begrenzen, falls der Bund ihn beschließt.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/inland/innenpolitik/steuerschaetzung-bund-klingbeil-100.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/steuerschaetzung-klingbeil-steuerplus-reicht-nicht-fuer-stromsteuer-senkung/100264289.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/ministerpraesidentenkonferenz-laender-fordern-tempo-bei-stromsteuer-und-spritpreisdeckel/100264216.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/tanken-laender-dringen-auf-spritpreisdeckel-zum-1-januar/100264310.html"
+        }
+      ]
+    },
+    {
+      "title": "Techwerte unter Druck: Dax und Nasdaq geben nach Zahlen nach",
+      "briefing": "Die Bilanzen von Meta und Tesla erfüllen die hohen Erwartungen der Anleger nicht, der Techsektor verliert deutlich. Tesla meldet einen Gewinnrückgang um 43 Prozent auf 787 Millionen US-Dollar. Meta investiert mindestens 135 Milliarden Dollar in KI und finanziert das über eine neue Aktienklasse ohne Stimmrechte.",
+      "impact": "Wer einen Welt- oder Dax-ETF hält, spürt die Kursrückgänge bei den Techkonzernen wegen ihres hohen Gewichts. Die Sorge vor einer KI-Blase (Kursanstieg, der nicht durch Gewinne gedeckt ist) belastet die Stimmung an der Börse.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-vorboerslich-schwaecher-erwartet-sap-zahlen-koennen-tech-schwaeche-nicht-ausgleichen-a-fd917c52-6163-4c34-bd17-22a22542c2f0#ref=rss"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-tesla-meta-sap-100.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/meta-quartalszahlen-ki-investitionen-100.html"
+        },
+        {
+          "source": "heise",
+          "link": "https://www.heise.de/news/Tesla-Gewinn-bricht-um-43-Prozent-ein-Musk-wirbt-fuer-Optimus-11496536.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Geopolitik & Energie",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "US-Börsen im Minus wegen möglicher Iran-Angriffe",
+          "oneLine": "Offenbar geplante US- und israelische Angriffe auf den Iran belasten Ölpreis und Stimmung an der Wall Street.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/maerkte/marktberichte/dow-jones-sp-500-nasdaq-us-boersen-notieren-im-minus-tech-werte-druecken-nasdaq/100264154.html"
+            }
+          ]
+        },
+        {
+          "title": "IEA sieht 2027 keine Entspannung bei den Energiepreisen",
+          "oneLine": "IEA-Chef sieht keinen glaubwürdigen Weg zu normalen Energiepreisen 2027, auch an US-Tankstellen.",
+          "sources": [
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/international-energy-chief-no-credible-pathway-for-prices-to-normalize-in-2027/"
+            }
+          ]
+        },
+        {
+          "title": "Huthi-Angriff trifft Flughafen Dammam, zwei Tote",
+          "oneLine": "Nach dem Angriff ziehen die USA diplomatisches Personal ab, Saudi-Arabiens Öffnungsziel gerät unter Druck.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/flughafen-saudi-arabien-100.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/huthi-saudi-arabien-104.html"
+            }
+          ]
+        },
+        {
+          "title": "Israel wählt am 27. Oktober, Kriegskosten belasten Wirtschaft",
+          "oneLine": "Drei Jahre Krieg haben Israels Wirtschaft schwer getroffen, viele Wähler fragen nach den wirtschaftlichen Folgen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/israel-wirtschaft-wahl-100.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mobilität & Autoindustrie",
+      "emoji": "🚗",
+      "items": [
+        {
+          "title": "E-Auto-Absatz in Europa steigt im September um über 70 Prozent",
+          "oneLine": "Hohe Ölpreise und staatliche Prämien wie in Deutschland treiben die Neuzulassungen, BYD legt besonders stark zu.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/elektroautos-absatz-steigt-im-september-europaweit-um-mehr-als-70-prozent-a-5c78c5f7-a54f-415d-88ca-159e61ff3cff#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "EU: Batterieautos erreichen 22,7 Prozent Marktanteil",
+          "oneLine": "In den ersten neun Monaten verlieren Benziner und Diesel weiter Anteile am EU-Neuwagenmarkt.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/E-Auto-Zulassungen-in-der-EU-steigen-deutlich-11496336.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Volkswagen, Mercedes, Skoda: E-Boom kostet Milliarden",
+          "oneLine": "Der unerwartet starke E-Auto-Boom reißt nach Manager-Magazin-Recherchen Löcher in die Herstellerbilanzen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-mercedes-skoda-wie-der-elektroauto-boom-neue-loecher-in-die-kassen-reisst-a-eb41a812-468c-45bd-b4d8-f316d5721150#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Verbrenner-Kompromiss: EU-Ausschüsse stimmen ab",
+          "oneLine": "Nach der Einigung der Unterhändler befassen sich EU-Ausschüsse mit dem Kompromiss zum Verbrenner-Aus.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbrenner-aus-124.html"
+            }
+          ]
+        },
+        {
+          "title": "E-Auto-Prämie: Geld reicht für Anträge 2027",
+          "oneLine": "Umweltminister Schneider sagt, die Fördermittel genügen für alle im Jahr 2027 gestellten Anträge.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Schneider-Foerdergeld-fuer-E-Autos-reicht-auch-2027-11495678.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unternehmen & Übernahmen",
+      "emoji": "🏢",
+      "items": [
+        {
+          "title": "Evonik prüft Ashland-Kauf, BASF wirbt mit Jobgarantien",
+          "oneLine": "Ein Ashland-Zukauf erschwert eine BASF-Übernahme, BASF schließt betriebsbedingte Kündigungen bis 2032 aus.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/evonik-prueft-uebernahme-von-us-rivalen-a-eec3aa5d-e4e2-42a5-842a-a23c8cc6f3de#ref=rss"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/markus-kamieth-basf-chef-wirbt-mit-jobgarantien-fuer-evonik-uebernahme/100264295.html"
+            }
+          ]
+        },
+        {
+          "title": "EQT legt Übernahmeangebot für Qiagen vor",
+          "oneLine": "Der schwedische Finanzinvestor macht ein offizielles Angebot, auch der Staatsfonds aus Abu Dhabi ist beteiligt.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/pharma/qiagen-uebernahme-finanzinvestor-eqt-einigt-sich-mit-dax-konzern-a-fc78b8c8-cbb6-4cf8-b2b0-7f5fbc3f3eb4#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "SAP übertrifft Erwartungen im Cloudgeschäft",
+          "oneLine": "Mehr Cloudverträge als erwartet im dritten Quartal, CEO Klein wird bei den Cloud-Erlösen zuversichtlicher.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/sap-uebertrifft-erwartungen-im-cloudgeschaeft-a-79e85cdf-f9b3-4e6b-9634-d21e6e357723#ref=rss"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/sap-mittags-mb-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Bosch gliedert Mobilitätssparte und Services aus",
+          "oneLine": "Die Mobilitätssparte, IT und Immobilien werden in eigene Tochtergesellschaften ausgegliedert.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bosch-ordnet-konzern-neu-mobilitaetssparte-ausgegliedert-a-17f12151-921b-4db9-93f5-aa379d795e37#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Thyssenkrupp bringt TK Accelis am 28. Oktober an die Börse",
+          "oneLine": "Die Werkstoffsparte startet am 28. Oktober an der Frankfurter Börse als eigenständiges Unternehmen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/thyssenkrupp-wertstoffsparte-tk-accelis-geht-am-28-oktober-an-die-boerse-a-7dd2dc04-a07a-4fdd-a532-7fab72e9d77c#ref=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arbeit & Geld",
+      "emoji": "💶",
+      "items": [
+        {
+          "title": "Reform: So viel Netto bleibt 2027 vom Gehalt",
+          "oneLine": "Das Handelsblatt rechnet für Singles, Ehepaare und Eltern vor, wie sich das Nettogehalt verändert.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/reform-rechner-wie-wird-sich-das-reformpaket-auf-ihr-gehalt-auswirken-01/100260104.html"
+            }
+          ]
+        },
+        {
+          "title": "Barclays streicht 5.000 Stellen wegen mehr KI-Einsatz",
+          "oneLine": "Die britische Bank reduziert ihre Belegschaft um fünf Prozent, weil sie stärker auf KI setzt.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cm4g1p347qgxo?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "Lufthansa-Schlichtung ohne Einigung beendet",
+          "oneLine": "Eine breiter angelegte Mediation zu Tarif- und Strategiefragen läuft mit der Pilotengewerkschaft weiter.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/tarifstreit-schlichtung-bei-lufthansa-ohne-einigung-beendet/100264297.html"
+            }
+          ]
+        },
+        {
+          "title": "Neues Altersvorsorgedepot soll die Riester-Rente ablösen",
+          "oneLine": "Das staatlich geförderte Depot soll mehr Aktien und ETFs ermöglichen als die bisherige Riester-Rente.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/altersvorsorgedepot-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Kapitalrente ab 2028: Befreiungsschlag oder Risiko?",
+          "oneLine": "Beiträge fließen ab 2028 in Fonds, ob die Kapitalrente die großen Erwartungen erfüllt, bleibt offen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/renten-reform-kapitalrente-100.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Immobilien & Wohnen",
+      "emoji": "🏠",
+      "items": [
+        {
+          "title": "Mieten in Metropolen steigen um bis zu 6,7 Prozent",
+          "oneLine": "Ein neuer Index zeigt die stärksten Anstiege bei Angebotsmieten, in anderen Städten sind Angebote noch günstiger.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-die-mieten-fuer-bestandswohnungen-besonders-stark-steigen-01/100262197.html"
+            }
+          ]
+        },
+        {
+          "title": "Hohe Zinsen: Verkäufer warten in manchen Städten lange",
+          "oneLine": "Die Vermarktungsdauer von Wohnanzeigen unterscheidet sich stark zwischen den Städten, die Auswertung zeigt große Unterschiede.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-in-diesen-staedten-finden-eigentuemer-am-schnellsten-einen-kaeufer-01/100260831.html"
+            }
+          ]
+        },
+        {
+          "title": "Bestandswohnungen verteuern sich stärker als Neubau",
+          "oneLine": "Im dritten Quartal legten Bestandswohnungen deutlich zu, die Auswertung umfasst alle 400 deutschen Kreise.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-sind-die-preise-fuer-wohnraum-am-staerksten-gestiegen-01/100170988.html"
+            }
+          ]
+        },
+        {
+          "title": "Babyboomer verkaufen: Was das für die Preise heißt",
+          "oneLine": "Eine Studie für alle 400 Kreise zeigt, wo Käufer vom Generationenwechsel auf dem Immobilienmarkt profitieren könnten.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-kaeufer-vom-generationenwechsel-profitieren-koennten-01/100260073.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech & Regulierung",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "PHP-Sicherheitslücke bedroht Millionen Webseiten",
+          "oneLine": "Updates sind verfügbar, viele Webseiten waren vorsorglich offline, erfolgreiche Angriffe sind bislang nicht belegt.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/it-sicherheit-php-luecke-100.html"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/php2shell-Kritische-Sicherheitsluecken-erlauben-Codeeinschleusung-in-PHP-11492938.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/php-sicherheitsluecke-cloudflare-meldet-millionen-hackerangriffe-auf-php-seiten-a-e524c922-8f07-4f7c-8eab-1bbf8e1043fb#ref=rss"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cmly0lg3w5x2o?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "KI-Konzerne häufen 2,7 Billionen Dollar Verpflichtungen an",
+          "oneLine": "Microsoft, Alphabet und Co. weiten finanzielle Verpflichtungen aus, die in den Bilanzen nicht auftauchen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/technik/ki/ki-tech-konzerne-sammeln-27-billionen-dollar-schattenverschuldung-an-01/100262818.html"
+            }
+          ]
+        },
+        {
+          "title": "Meta soll 25 Milliarden Dollar Strafe an New Mexico zahlen",
+          "oneLine": "Ein Gericht sieht systematische Täuschung von Nutzern, die Summe entspricht rund 10.600 Euro je Einwohner.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/meta-cambrigde-skandal-milliardenstrafe-100.html"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Milliardenstrafe-fuer-Meta-Platforms-wegen-systematischer-Luegen-New-Mexico-11496252.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Verlage fordern EU-Stopp für neue Meta-AGB",
+          "oneLine": "Europäische Medienhäuser sehen in den neuen Nutzungsbedingungen eine Ausbeutung von Journalismus für KI.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Neue-AGB-von-Meta-Verlage-fordern-EU-Stopp-wegen-KI-Scraping-11497167.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Digitaler Euro: EZB startet Pilotprojekte 2027",
+          "oneLine": "Die Gesetzgebung soll noch in diesem Jahr stehen, die Europäische Zentralbank testet ab 2027 erste Pilotprojekte.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/zahlungsmittel-vom-naechsten-sommer-an-testet-die-ezb-den-digitalen-euro/100263167.html"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
