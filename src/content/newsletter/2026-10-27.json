@@ -1,0 +1,417 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "27.10.2026",
+  "summary": "Heute dominieren zwei Themen: die Metall-Tarifrunde mit möglichen Warnstreiks ab Sonntag und der geplante Börsengang des KI-Unternehmens Anthropic. Dazu kommen Sparprogramme und Stellenabbau bei Konzernen wie Mercedes sowie begrenzte Rücknahmen bei einem offenen Immobilienfonds.",
+  "topThree": [
+    {
+      "title": "Metall-Tarifrunde: IG Metall lehnt Arbeitgeberangebot ab, Warnstreiks drohen",
+      "briefing": "Fünf Arbeitgeberverbände legen erstmals ein abgestimmtes Angebot vor: 1,3 Prozent mehr, aber erst ab Sommer 2028. Die IG Metall fordert fünf Prozent, hält das Angebot für unzureichend und kündigt Warnstreiks (kurze, zeitlich begrenzte Arbeitsniederlegungen) an. Ab Sonntag sind Warnstreiks möglich.",
+      "impact": "Laut Angebot käme ein Lohnplus von 1,3 Prozent erst ab Sommer 2028. Warnstreiks können Produktion und Liefertermine in den Werken kurzfristig stören.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/metall-tarifrunde-arbeitgeber-bieten-13-prozent-mehr-ab-sommer-2028/100264937.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/ig-metall-wirtschaftsmeldung-oktober2026-100.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/metall-und-elektro-ig-metall-lehnt-erstes-angebot-ab-warnstreiks-kommen/100265295.html"
+        }
+      ]
+    },
+    {
+      "title": "DWS begrenzt Rücknahmen bei Immobilienfonds Grundbesitz Europa",
+      "briefing": "Die DWS darf Rücknahmen (Rückgabe von Fondsanteilen durch Anleger) beim Fonds „Grundbesitz Europa“ für zwölf Monate begrenzen, so sieht es das Gesetz vor. Der Fonds gehört zu drei offenen Immobilienfonds, die nach der Zinswende unter Druck geraten sind.",
+      "impact": "Wer Anteile an offenen Immobilienfonds hält, kann im Ernstfall nicht jederzeit und vollständig aussteigen. Der Fall zeigt, dass die Liquidität solcher Fonds in Krisenzeiten begrenzt sein kann.",
+      "tag": "Immobilien",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/geldanlage/dws-schraenkt-ruecknahme-bei-einem-immobilienfonds-ein-a-aaedd69d-7ad3-496d-9eee-fba0b2b91f45#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Anthropic meldet Börsengang an, Milliardenverluste im Prospekt",
+      "briefing": "Das KI-Unternehmen Anthropic hat seinen Börsengang (IPO, erster Handel an der Börse) bei der Nasdaq angemeldet. Der Umsatz ist laut heise vervierzehnfacht, der Verlust laut SAN liegt bei 80 Milliarden Dollar. Trotzdem legten Tech-Aktien zu, und der Dax notierte am Dienstag freundlich.",
+      "impact": "Wer KI- und Tech-Werte im Depot hält, sieht die Kurse bereits bewegt. Laut Medienberichten könnte Anthropic mit bis zu zwei Billionen Dollar bewertet werden.",
+      "tag": "Tech",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/trends/ki-anthropic-dreht-die-boersenstimmung-dafuer-gibt-es-drei-gruende/100265184.html"
+        },
+        {
+          "source": "heise",
+          "link": "https://www.heise.de/news/Anthropic-vor-Boersengang-Umsatz-vervierzehnfacht-und-enorme-KI-Kosten-11500707.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/tech/anthropic-ki-firma-meldet-boersengang-an-a-739aebf9-1c97-4eb7-954b-9cc36bd4237d#ref=rss"
+        },
+        {
+          "source": "SAN",
+          "link": "https://san.com/cc/anthropic-files-for-its-ipo-revealing-an-80b-loss-in-2026/"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Märkte und Unternehmen",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Beiersdorf: Nivea und Tesa schrumpfen weiter, Aktie unter Druck",
+          "oneLine": "Umsätze mit Nivea und Tesa liegen im dritten Quartal unter Vorjahr, der Rückgang bei Nivea bremst sich ab.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-beiersdorf-100.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/beiersdorf-nivea-rueckgang-verlangsamt-sich-geschaeft-bleibt-schwierig-a-8be261ee-29e5-4faa-94be-ac42001cb5fb#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Meta nimmt frisches Kapital für KI-Ausbau auf",
+          "oneLine": "Nasdaq legt im frühen Handel zu, Anleger richten den Blick auf die Fed-Entscheidung am Mittwoch.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-die-ki-erholung-geht-weiter/100265354.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/video/finanzen/handelsblatt-live-us-boersenexperte-koch-die-ki-erholung-setzt-sich-fort/100265365.html"
+            }
+          ]
+        },
+        {
+          "title": "Deutsche Börse startet Handel rund um die Uhr für 40 DAX-Aktien",
+          "oneLine": "Anleger können Siemens, SAP und Co. nun auch spätabends und am Wochenende handeln.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/dax-aktien-handel-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/audio/today/today-deutsche-boerse-startet-24-7-handel-moegliche-folgen-der-midterms-fuers-depot/100265368.html"
+            }
+          ]
+        },
+        {
+          "title": "Porsche stabilisiert Rendite trotz schwachem Absatz",
+          "oneLine": "Nach einem operativen Verlust von knapp einer Milliarde Euro im Vorjahr verdient Porsche wieder Geld.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/porsche-sportwagenbauer-stabilisiert-rendite-trotz-schwachem-absatz-a-78c2a869-ff90-4a33-8bca-f757a3b773db#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Syngenta peilt Börsenwert von über 66 Milliarden Dollar an",
+          "oneLine": "Der Agrarkonzern könnte im kommenden Jahr an die Börse gehen, nicht zum ersten Mal, aber an einem anderen Handelsplatz.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/agrarkonzern-syngenta-peilt-boersenwert-von-ueber-66-milliarden-dollar-an/100265352.html"
+            }
+          ]
+        },
+        {
+          "title": "Chinas KI-Leitindex 40 Prozent unter dem Höchststand",
+          "oneLine": "Der Index für KI- und Halbleiterfirmen hat seit dem Sommer stark verloren, nach einer größeren Rallye zuvor.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Erste-KI-Blase-geplatzt-Chinas-KI-Leitindex-40-Prozent-unter-dem-Hoechststand-11501107.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arbeit und Konzerne",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Mercedes-Benz senkt Gewinnprognose wegen Chinakrise",
+          "oneLine": "Wegen China und hoher Kosten liegt der Ausblick nur noch auf Vorjahresniveau.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-krise-in-china-zwingt-konzern-zu-prognosesenkung-a-3396e3c3-4b77-49b6-84fd-1ab82ebf539e#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Mercedes bietet Abfindungen auch in Werken, bis 330.000 Euro",
+          "oneLine": "Nach Verwaltung und Entwicklung laufen Freiwilligenprogramme nun auch in der Produktion.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-mercedes-bietet-bis-zu-330.000-euro-abfindung-in-der-produktion-01/100263206.html"
+            }
+          ]
+        },
+        {
+          "title": "Microsoft bietet rund 60.000 Mitarbeitern Abfindungen an",
+          "oneLine": "Um die Kosten des teuren KI-Ausbaus zu senken, sollen Beschäftigte in vier Ländern gehen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/microsoft-bietet-rund-60-000-mitarbeitern-abfindungen-an-a-51915fa4-261a-4828-ae37-1add671256a7#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Microsoft-bietet-60-000-Mitarbeitern-Goldenen-Handschlag-11501027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Siemens steht vor Milliardenauftrag für 30 Züge in Spanien",
+          "oneLine": "Die Einigung mit dem staatlichen spanischen Bahnbetreiber steht laut Berichten kurz bevor.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/bahnverkehr-siemens-steht-vor-milliardenauftrag-fuer-zuege-in-spanien/100265358.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/siemens-mobility-moeglicher-milliardenauftrag-fuer-zuege-in-spanien-a-f20389f4-d1b8-4ab8-8107-89d535abb743#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Infineon investiert über eine Milliarde Euro in Werk Villach",
+          "oneLine": "Das Werk in Österreich soll schnellere und größere Halbleiter fertigen, die Investition läuft über Jahre.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/infineon-investition-villach-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Galeria: Deutlich mehr als 30 Häusern droht das Aus",
+          "oneLine": "Der Insolvenzverwalter kann Mietverträge fristlos kündigen, Vermieter drohen jahrelange Leerstände.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/warenhaeuser-galeria-vermietern-droht-finanzielles-desaster/100263295.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geld und Vorsorge",
+      "emoji": "💶",
+      "items": [
+        {
+          "title": "Pflegekommission startet: Pflegeversicherung unter Druck",
+          "oneLine": "Die Pflegekosten steigen, auf immer weniger Beitragszahler kommen immer mehr Pflegebedürftige.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/pflegekommission-pflegereform-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/kommission-nimmt-arbeit-auf-pflegeversicherung-in-not-welche-reformen-geplant-sind/100265341.html"
+            }
+          ]
+        },
+        {
+          "title": "Deutsche sparen 2025 etwas weniger, aber deutlich über EU-Schnitt",
+          "oneLine": "Die Sparquote liegt laut Tagesschau deutlich über dem EU-Schnitt, nur in der Schweiz wird mehr gespart.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/sparquote-deutschland-2026-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/bruttosparquote-nur-die-schweizer-sparen-mehr-als-die-deutschen/100265308.html"
+            }
+          ]
+        },
+        {
+          "title": "Aktive ETFs in Deutschland: 119 Milliarden Euro verwaltet",
+          "oneLine": "Das Vermögen hat sich binnen zwölf Monaten fast verdoppelt, Anbieter setzen auf das neue Altersvorsorgedepot.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/fonds-etf/geldanlage-altersvorsorgedepot-duerfte-nachfrage-nach-aktiven-etfs-treiben-01/100263369.html"
+            }
+          ]
+        },
+        {
+          "title": "Verivox: Preiskampf in der Kfz-Versicherung ist zurück",
+          "oneLine": "Nach starken Preiserhöhungen der Vorjahre schwingt das Pendel nun Richtung günstigerer Tarife.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/scharfer-wettbewerb-verivox-preiskampf-in-der-kfz-versicherung-ist-zurueck/100265138.html"
+            }
+          ]
+        },
+        {
+          "title": "Aldi drückt mit niedrigen Preisen den Lebensmittelmarkt",
+          "oneLine": "Kunden wechseln zu den günstigen Preisen, Konkurrenten müssen nachziehen.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/sections/planet-money/2026/10/27/g-s1-149358/how-aldi-is-pushing-down-grocery-prices"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Energie und Netze",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Reiche reagiert auf Windkraft-Brandbrief der Länder",
+          "oneLine": "Investoren sollen Flächen für Windenergie auf See zurückgeben können, die Länder warnen vor einem Fadenriss.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/windkraft-reiche-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Eon will sparen: Steigende Kosten setzen Netzbetreiber unter Druck",
+          "oneLine": "Schulden und ineffiziente Abläufe belasten den Konzern, das Sparprogramm zielt nicht nur aufs Kostensenken.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-schulden-image-doppelstrukturen-warum-eon-jetzt-sparen-will/100263345.html"
+            }
+          ]
+        },
+        {
+          "title": "Schweiz: Diesel und Kerosin knapp, Tempo 80 wird geprüft",
+          "oneLine": "Der Bund gibt Pflichtlager frei, eine Temporeduktion auf Autobahnen ist aber noch fraglich.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Kraftstoffknappheit-Schweiz-bereitet-Tempo-80-auf-Autobahnen-vor-11501193.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Handel und Geopolitik",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Merz wirbt in Singapur für Handelsabkommen mit Asean-Staaten",
+          "oneLine": "Der Kanzler sucht Partner in Asien, offenbar auch als Gegengewicht zu den USA.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/merz-handel-asien-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/video/politik/welthandel-merz-wirbt-fuer-eu-handelsabkommen-mit-asean-staaten/100265315.html"
+            }
+          ]
+        },
+        {
+          "title": "USA warnen EU wegen EIB-Kredit für Airbus",
+          "oneLine": "US-Handelsbeauftragter Greer befürchtet Nachteile für Boeing durch den Milliardenkredit der EIB.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/airbus-usa-warnen-eu-wegen-milliardenkredits-der-eib-a-bb8b9ca9-dc26-43fe-a429-7d256dcba7de#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Audi baut erstes US-Werk, Trump führt es auf seine Zölle zurück",
+          "oneLine": "Die Ankündigung fällt in eine Phase massiven Stellenabbaus in der deutschen Autoindustrie.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/what-germany-thinks-of-carmaker-audi-s-4-billion-deal-with-trump/a-79760479?maca=en-rss-en-bus-2091-rdf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KI und Tech",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "SpaceX sichert sich 40 Milliarden Dollar für KI-Chips",
+          "oneLine": "Mit der Leasing-Vereinbarung für Nvidia-Chips wächst laut Berichten die Sorge vor einer KI-Schuldenspirale.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/elon-musk-spacex-sichert-sich-40-milliarden-dollar-fuer-ki-chips-a-efa1b6a2-18f0-4439-ba2c-2f773327d48f#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Space-X-Vereinbarung-zur-Finanzierung-von-KI-Chips-ueber-40-Milliarden-US-Dollar-11501039.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "OpenAI wirbt Anthropic-Kunden offenbar mit Rabatten ab",
+          "oneLine": "Laut Insiderinformationen scheint die Rabattstrategie bei Unternehmenskunden zu wirken.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/OpenAI-wirbt-Anthropic-Kunden-offenbar-mit-Rabatten-ab-11500685.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "OpenAI bringt GPT-6.1 Terra für KI-Agenten",
+          "oneLine": "Unabhängige Tests zeigen starke Effizienzgewinne bei KI-Agenten, die Computerarbeiten übernehmen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/GPT-6-1-Terra-Guenstiges-Modell-fuer-effiziente-Computerarbeit-11501275.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Siri AI spricht jetzt Französisch und Spanisch, Deutsch fehlt",
+          "oneLine": "Weitere Sprachen sind angekündigt, ein Termin für Deutsch ist bislang nicht genannt.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Apple-bringt-Siri-AI-mehr-Sprachen-bei-ausser-Deutsch-11502247.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Temu muss Empfehlungs-Algorithmen transparent machen",
+          "oneLine": "Nach einer Strafe über 200 Millionen Euro akzeptiert die EU-Kommission den Aktionsplan des Händlers.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Gegen-illegale-Waren-Temu-muss-Empfehlungs-Algorithmen-transparent-machen-11500701.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
