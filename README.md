@@ -117,7 +117,8 @@ was veröffentlicht ist, und nicht gebaut, was es nicht ist.
 donnerstags gegen 18 Uhr erstellt; jede Ausgabe hat zusätzlich eine eigene Seite
 `/newsletter/<datum>/`. Gezeigt und gebaut werden nur die letzten zwölf Ausgaben, rund ein Monat
 (`SICHTBARE_AUSGABEN` in `src/lib/newsletter.ts`): Kommt eine neue hinzu, fällt die älteste samt
-ihrer Seite heraus. Die Datei bleibt im Repository. Je Ausgabe liegt eine Datei `src/content/newsletter/<YYYY-MM-DD>.json` im
+ihrer Seite heraus. Die Datei bleibt im Repository. Wer einen alten Link aufruft, landet über `404.astro` auf
+`/newsletter/#abgelaufen`, dort erklärt ein Hinweis, warum. Je Ausgabe liegt eine Datei `src/content/newsletter/<YYYY-MM-DD>.json` im
 Repository: die Antwort von Claude im JSON-Schema des Workflows, unverändert, plus `model`. Das
 Datum der Ausgabe kommt aus dem Dateinamen, nicht aus `digestDate`. Das Schema steht in
 `src/content.config.ts`; eine Datei, die nicht passt, bricht den Build.
