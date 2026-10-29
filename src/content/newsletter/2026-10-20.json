@@ -11,15 +11,18 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/international/energie-europaeischer-gaspreis-steigt-erstmals-seit-2022-ueber-90-euro/100263635.html"
+          "link": "https://www.handelsblatt.com/politik/international/energie-europaeischer-gaspreis-steigt-erstmals-seit-2022-ueber-90-euro/100263635.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/finanzen/maerkte/devisen-rohstoffe/oel-preis-brent-steigt-auf-den-hoechsten-stand-seit-fuenf-monaten/100263581.html"
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/devisen-rohstoffe/oel-preis-brent-steigt-auf-den-hoechsten-stand-seit-fuenf-monaten/100263581.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-oelpreis-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-oelpreis-100.html",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -31,11 +34,13 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/immobilien/immobilienkredite-zinsen-so-hoch-wie-seit-2009-nicht-ezb-verteuert-kredite-a-4a3adadb-5cb0-42c8-a4cc-07a9ab2036af#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/immobilien/immobilienkredite-zinsen-so-hoch-wie-seit-2009-nicht-ezb-verteuert-kredite-a-4a3adadb-5cb0-42c8-a4cc-07a9ab2036af#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/immobilienkredite-zinsen-darlehen-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/immobilienkredite-zinsen-darlehen-100.html",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -47,11 +52,13 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/anleihen-wie-bundesanleihen-von-der-frankreich-krise-profitieren/100263278.html"
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/anleihen-wie-bundesanleihen-von-der-frankreich-krise-profitieren/100263278.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/politik/europa/frankreich-ausverkauf-bei-staatsanleihen-risiko-fuer-neue-schuldenkrise-waechst-a-30056f66-e012-44d0-9f9a-da36951a87ae#ref=rss"
+          "link": "https://www.manager-magazin.de/politik/europa/frankreich-ausverkauf-bei-staatsanleihen-risiko-fuer-neue-schuldenkrise-waechst-a-30056f66-e012-44d0-9f9a-da36951a87ae#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -67,15 +74,18 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/investitionsgipfel-merz-wirbt-um-investoren-amazon-sagt-16-milliarden-euro-zu/100263324.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/investitionsgipfel-merz-wirbt-um-investoren-amazon-sagt-16-milliarden-euro-zu/100263324.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/investitionen-regierung-wirbt-um-investoren-deutschland-ist-zurueck/100263480.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/investitionen-regierung-wirbt-um-investoren-deutschland-ist-zurueck/100263480.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/investitionsgipfel-114.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/investitionsgipfel-114.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -85,11 +95,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/deutschland/amazon-konzern-plant-investitionen-von-16-milliarden-euro-in-deutschland-a-50013c33-65c5-4a35-98c9-e59f73cbdf53#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/deutschland/amazon-konzern-plant-investitionen-von-16-milliarden-euro-in-deutschland-a-50013c33-65c5-4a35-98c9-e59f73cbdf53#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Cloud-und-KI-Amazon-will-2027-16-Milliarden-Euro-in-Deutschland-investieren-11493822.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Cloud-und-KI-Amazon-will-2027-16-Milliarden-Euro-in-Deutschland-investieren-11493822.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -99,11 +111,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/technologie/bund-nvidia-zusammenarbeit-ki-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/bund-nvidia-zusammenarbeit-ki-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Kanzler-Merz-hofft-auf-Nvidia-als-Wachstumsbeschleuniger-11493401.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Kanzler-Merz-hofft-auf-Nvidia-als-Wachstumsbeschleuniger-11493401.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -113,7 +127,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/technologie/investoren-118.html"
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/investoren-118.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -123,7 +138,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/finanzen/geldanlage/geld-investoren-entdecken-deutsche-aktien-wo-sie-zuschlagen-und-was-kleinanleger-lernen-koennen-a-e9d38c08-21cd-41ac-92d2-cfc3a008bf93#ref=rss"
+              "link": "https://www.manager-magazin.de/finanzen/geldanlage/geld-investoren-entdecken-deutsche-aktien-wo-sie-zuschlagen-und-was-kleinanleger-lernen-koennen-a-e9d38c08-21cd-41ac-92d2-cfc3a008bf93#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -133,7 +149,8 @@
           "sources": [
             {
               "source": "DW",
-              "link": "https://www.dw.com/en/why-us-investors-are-snapping-up-germany-s-famed-mittelstand/a-79705421?maca=en-rss-en-bus-2091-rdf"
+              "link": "https://www.dw.com/en/why-us-investors-are-snapping-up-germany-s-famed-mittelstand/a-79705421?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -149,11 +166,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-tausende-wollen-bmw-verlassen-abfindungsprogramm-geschlossen/100263648.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-tausende-wollen-bmw-verlassen-abfindungsprogramm-geschlossen/100263648.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bmw-schliesst-abfindungsprogramm-vorzeitig-hohe-abfindungen-locken-tausende-mitarbeiter-zum-freiwilligen-ausstieg-a-c3b66a44-4936-4652-9938-9a161fbf35f4#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bmw-schliesst-abfindungsprogramm-vorzeitig-hohe-abfindungen-locken-tausende-mitarbeiter-zum-freiwilligen-ausstieg-a-c3b66a44-4936-4652-9938-9a161fbf35f4#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -163,7 +182,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/tech-branche-qualcomm-kuendigt-nach-schwachem-geschaeft-stellenabbau-an/100263644.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/tech-branche-qualcomm-kuendigt-nach-schwachem-geschaeft-stellenabbau-an/100263644.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -173,7 +193,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cqzrdpkm3g84o?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cqzrdpkm3g84o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -183,7 +204,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Volkswagen-Interne-Richtlinien-sehen-offenbar-Gehaltsstopp-bis-2030-vor-11492258.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Volkswagen-Interne-Richtlinien-sehen-offenbar-Gehaltsstopp-bis-2030-vor-11492258.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -193,11 +215,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/insolvenz-galeria-bekommt-wichtigen-kredit-deutlich-mehr-spielraum/100263656.html"
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/insolvenz-galeria-bekommt-wichtigen-kredit-deutlich-mehr-spielraum/100263656.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/handel/galeria-insolvenz-jeder-standort-auf-dem-pruefstand-kredit-bringt-atempause-a-cf6c6b7c-54f9-4686-9d1f-cd71b5281ea8#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/handel/galeria-insolvenz-jeder-standort-auf-dem-pruefstand-kredit-bringt-atempause-a-cf6c6b7c-54f9-4686-9d1f-cd71b5281ea8#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -207,7 +231,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/technik/ki/arbeitsmarkt-anthropic-zeigt-wie-ki-den-geschaeftsalltag-veraendert/100263274.html"
+              "link": "https://www.handelsblatt.com/technik/ki/arbeitsmarkt-anthropic-zeigt-wie-ki-den-geschaeftsalltag-veraendert/100263274.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -223,7 +248,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/verdienstgrenze-minijob-das-aendert-sich-2027/100263626.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/verdienstgrenze-minijob-das-aendert-sich-2027/100263626.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -233,7 +259,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/porto-standardbrief-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/porto-standardbrief-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -243,7 +270,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/mobilitaetskosten-spritpreise-hessen-und-nrw-besonders-teuer/100263687.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/mobilitaetskosten-spritpreise-hessen-und-nrw-besonders-teuer/100263687.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -253,7 +281,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/steuereinnahmen-bund-laender-steuerschaetzung-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/steuereinnahmen-bund-laender-steuerschaetzung-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -263,11 +292,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/deutschlandticket-316.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/deutschlandticket-316.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/oeffentlicher-nahverkehr-neues-digitales-ticket-fuer-den-nahverkehr-bayern-kontert/100263498.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/oeffentlicher-nahverkehr-neues-digitales-ticket-fuer-den-nahverkehr-bayern-kontert/100263498.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -277,7 +308,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Umfrage-Entlastung-durch-Tankrabatt-kaum-spuerbar-11493618.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Umfrage-Entlastung-durch-Tankrabatt-kaum-spuerbar-11493618.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -293,11 +325,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-neuer-ort-neue-hoffnung-selenskyj-trifft-witkoff-in-oslo/100263479.html"
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-neuer-ort-neue-hoffnung-selenskyj-trifft-witkoff-in-oslo/100263479.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/ukraine-treffen-witkoff-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-treffen-witkoff-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -307,11 +341,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-spannungen-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-spannungen-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-trump-lobt-russland-und-blockiert-eu-hilfe-fuer-kiew/100263442.html"
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-trump-lobt-russland-und-blockiert-eu-hilfe-fuer-kiew/100263442.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -321,7 +357,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/jemen-huthi-angriff-militaerlager-viele-tote-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/jemen-huthi-angriff-militaerlager-viele-tote-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -331,11 +368,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-hegseth-in-israel-gespraech-mit-netanjahu-ueber-iran/100136895.html"
+              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-hegseth-in-israel-gespraech-mit-netanjahu-ueber-iran/100136895.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "SAN",
-              "link": "https://san.com/cc/hegseth-makes-unannounced-visit-to-israel-meets-with-netanyahu-ahead-of-election-reports/"
+              "link": "https://san.com/cc/hegseth-makes-unannounced-visit-to-israel-meets-with-netanyahu-ahead-of-election-reports/",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -345,11 +384,13 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Russischer-Satellit-beschattet-westlichen-Radarsatelliten-11492768.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Russischer-Satellit-beschattet-westlichen-Radarsatelliten-11492768.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/militaer-der-ukraine-krieg-verlagert-sich-in-den-weltraum/100263430.html"
+              "link": "https://www.handelsblatt.com/politik/international/militaer-der-ukraine-krieg-verlagert-sich-in-den-weltraum/100263430.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -359,11 +400,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/eu-arktis-strategie-102.html"
+              "link": "https://www.tagesschau.de/ausland/europa/eu-arktis-strategie-102.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/arktis-strategie-die-eu-ruestet-sich-fuer-den-machtkampf-um-groenland/100263335.html"
+              "link": "https://www.handelsblatt.com/politik/international/arktis-strategie-die-eu-ruestet-sich-fuer-den-machtkampf-um-groenland/100263335.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -379,15 +422,18 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Google-Cloud-Ausfall-legt-Revolut-und-weitere-Unternehmen-lahm-11494278.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Google-Cloud-Ausfall-legt-Revolut-und-weitere-Unternehmen-lahm-11494278.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/banken-versicherungen/banken/banken-massive-stoerungen-im-online-banking-von-ing-und-revolut/100263510.html"
+              "link": "https://www.handelsblatt.com/finanzen/banken-versicherungen/banken/banken-massive-stoerungen-im-online-banking-von-ing-und-revolut/100263510.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/banken/google-grossausfall-fuehrt-zu-stoerungen-bei-banken-und-unternehmen-a-d3d6d7d5-af24-4183-abcc-be30880f6151#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/banken/google-grossausfall-fuehrt-zu-stoerungen-bei-banken-und-unternehmen-a-d3d6d7d5-af24-4183-abcc-be30880f6151#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -397,11 +443,13 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/USA-verbannen-DeepSeek-aus-allen-zivilen-Bundesbehoerden-11494370.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/USA-verbannen-DeepSeek-aus-allen-zivilen-Bundesbehoerden-11494370.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cjkgeq0k1wevo?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cjkgeq0k1wevo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -411,15 +459,18 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/KI-Wohltaeter-Battle-Anthropic-gruendet-Fund-Musk-verschenkt-Aktien-an-Kinder-11493199.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/KI-Wohltaeter-Battle-Anthropic-gruendet-Fund-Musk-verschenkt-Aktien-an-Kinder-11493199.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "SAN",
-              "link": "https://san.com/cc/elon-musk-says-hell-give-every-kid-in-america-one-share-of-spacex-stock/"
+              "link": "https://san.com/cc/elon-musk-says-hell-give-every-kid-in-america-one-share-of-spacex-stock/",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cm2kez327gdko?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cm2kez327gdko?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -429,7 +480,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/maerkte/boerse-inside/elice-ki-zulieferer-erlebt-schlechtestes-boersendebuet-der-geschichte/100263459.html"
+              "link": "https://www.handelsblatt.com/finanzen/maerkte/boerse-inside/elice-ki-zulieferer-erlebt-schlechtestes-boersendebuet-der-geschichte/100263459.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -439,7 +491,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/bosch-microsoft-ki-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/bosch-microsoft-ki-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -449,7 +502,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/technik/ki/ki-baukonzern-hochtief-plant-eigene-bewerbung-fuer-ai-gigafactory/100262865.html"
+              "link": "https://www.handelsblatt.com/technik/ki/ki-baukonzern-hochtief-plant-eigene-bewerbung-fuer-ai-gigafactory/100262865.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -465,11 +519,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/frankreich-wer-hinter-den-krawallen-vom-17.-oktober-steckt/100263360.html"
+              "link": "https://www.handelsblatt.com/politik/international/frankreich-wer-hinter-den-krawallen-vom-17.-oktober-steckt/100263360.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/frankreich-ausgangssperren-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/frankreich-ausgangssperren-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -479,7 +535,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/berliner-regierungsbildung-merz-warnt-berlin-vor-vergesellschaftung-von-wohnraum/100263664.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/berliner-regierungsbildung-merz-warnt-berlin-vor-vergesellschaftung-von-wohnraum/100263664.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -489,11 +546,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/gesundheitsreform-kassen-und-aerzten-streiten-muessen-patienten-laenger-warten/100263379.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/gesundheitsreform-kassen-und-aerzten-streiten-muessen-patienten-laenger-warten/100263379.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/gesellschaft/kassenaerzte-lange-wartezeiten-termine-100.html"
+              "link": "https://www.tagesschau.de/inland/gesellschaft/kassenaerzte-lange-wartezeiten-termine-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -503,15 +562,18 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/abstimmung-klare-mehrheit-in-alberta-gegen-unabhaengigkeit-von-kanada/100263436.html"
+              "link": "https://www.handelsblatt.com/politik/international/abstimmung-klare-mehrheit-in-alberta-gegen-unabhaengigkeit-von-kanada/100263436.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/amerika/alberta-kanada-100.html"
+              "link": "https://www.tagesschau.de/ausland/amerika/alberta-kanada-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "SAN",
-              "link": "https://san.com/cc/alberta-voters-reject-proposal-that-could-lead-to-separation-from-canada/"
+              "link": "https://san.com/cc/alberta-voters-reject-proposal-that-could-lead-to-separation-from-canada/",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -521,7 +583,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Informationsfreiheitsgesetz-Regierung-hat-keine-Belege-fuer-angebliche-Gefahren-11494684.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Informationsfreiheitsgesetz-Regierung-hat-keine-Belege-fuer-angebliche-Gefahren-11494684.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -531,7 +594,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/eu-verbrenner-klima-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/eu-verbrenner-klima-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         }

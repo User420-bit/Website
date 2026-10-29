@@ -119,7 +119,9 @@ donnerstags gegen 18 Uhr erstellt; jede Ausgabe hat zusätzlich eine eigene Seit
 (`SICHTBARE_AUSGABEN` in `src/lib/newsletter.ts`): Kommt eine neue hinzu, fällt die älteste samt
 ihrer Seite heraus. Die Datei bleibt im Repository. Wer einen alten Link aufruft, landet über `404.astro` auf
 `/newsletter/#abgelaufen`, dort erklärt ein Hinweis, warum. Je Ausgabe liegt eine Datei `src/content/newsletter/<YYYY-MM-DD>.json` im
-Repository: die Antwort von Claude im JSON-Schema des Workflows, unverändert, plus `model`. Das
+Repository: die Antwort von Claude im JSON-Schema des Workflows, unverändert, plus `model` und je
+Quelle `ausrichtung` (`links` bis `rechts`, eingestuft je Redaktion in der Tabelle `AUSRICHTUNG` des
+n8n-Nodes „Prepare Claude Request“). Unter jeder Quellenzeile steht daraus die Abdeckung. Das
 Datum der Ausgabe kommt aus dem Dateinamen, nicht aus `digestDate`. Das Schema steht in
 `src/content.config.ts`; eine Datei, die nicht passt, bricht den Build.
 

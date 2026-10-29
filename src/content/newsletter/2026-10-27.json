@@ -11,15 +11,18 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/metall-tarifrunde-arbeitgeber-bieten-13-prozent-mehr-ab-sommer-2028/100264937.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/metall-tarifrunde-arbeitgeber-bieten-13-prozent-mehr-ab-sommer-2028/100264937.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/ig-metall-wirtschaftsmeldung-oktober2026-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/ig-metall-wirtschaftsmeldung-oktober2026-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/metall-und-elektro-ig-metall-lehnt-erstes-angebot-ab-warnstreiks-kommen/100265295.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/metall-und-elektro-ig-metall-lehnt-erstes-angebot-ab-warnstreiks-kommen/100265295.html",
+          "ausrichtung": "Mitte-rechts"
         }
       ]
     },
@@ -31,7 +34,8 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/geldanlage/dws-schraenkt-ruecknahme-bei-einem-immobilienfonds-ein-a-aaedd69d-7ad3-496d-9eee-fba0b2b91f45#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/geldanlage/dws-schraenkt-ruecknahme-bei-einem-immobilienfonds-ein-a-aaedd69d-7ad3-496d-9eee-fba0b2b91f45#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -43,19 +47,23 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/trends/ki-anthropic-dreht-die-boersenstimmung-dafuer-gibt-es-drei-gruende/100265184.html"
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/trends/ki-anthropic-dreht-die-boersenstimmung-dafuer-gibt-es-drei-gruende/100265184.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "heise",
-          "link": "https://www.heise.de/news/Anthropic-vor-Boersengang-Umsatz-vervierzehnfacht-und-enorme-KI-Kosten-11500707.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+          "link": "https://www.heise.de/news/Anthropic-vor-Boersengang-Umsatz-vervierzehnfacht-und-enorme-KI-Kosten-11500707.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/unternehmen/tech/anthropic-ki-firma-meldet-boersengang-an-a-739aebf9-1c97-4eb7-954b-9cc36bd4237d#ref=rss"
+          "link": "https://www.manager-magazin.de/unternehmen/tech/anthropic-ki-firma-meldet-boersengang-an-a-739aebf9-1c97-4eb7-954b-9cc36bd4237d#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "SAN",
-          "link": "https://san.com/cc/anthropic-files-for-its-ipo-revealing-an-80b-loss-in-2026/"
+          "link": "https://san.com/cc/anthropic-files-for-its-ipo-revealing-an-80b-loss-in-2026/",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -71,11 +79,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-beiersdorf-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-beiersdorf-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/handel/beiersdorf-nivea-rueckgang-verlangsamt-sich-geschaeft-bleibt-schwierig-a-8be261ee-29e5-4faa-94be-ac42001cb5fb#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/handel/beiersdorf-nivea-rueckgang-verlangsamt-sich-geschaeft-bleibt-schwierig-a-8be261ee-29e5-4faa-94be-ac42001cb5fb#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -85,11 +95,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-die-ki-erholung-geht-weiter/100265354.html"
+              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-die-ki-erholung-geht-weiter/100265354.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/video/finanzen/handelsblatt-live-us-boersenexperte-koch-die-ki-erholung-setzt-sich-fort/100265365.html"
+              "link": "https://www.handelsblatt.com/video/finanzen/handelsblatt-live-us-boersenexperte-koch-die-ki-erholung-setzt-sich-fort/100265365.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -99,11 +111,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/finanzen/dax-aktien-handel-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/dax-aktien-handel-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/audio/today/today-deutsche-boerse-startet-24-7-handel-moegliche-folgen-der-midterms-fuers-depot/100265368.html"
+              "link": "https://www.handelsblatt.com/audio/today/today-deutsche-boerse-startet-24-7-handel-moegliche-folgen-der-midterms-fuers-depot/100265368.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -113,7 +127,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/porsche-sportwagenbauer-stabilisiert-rendite-trotz-schwachem-absatz-a-78c2a869-ff90-4a33-8bca-f757a3b773db#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/porsche-sportwagenbauer-stabilisiert-rendite-trotz-schwachem-absatz-a-78c2a869-ff90-4a33-8bca-f757a3b773db#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -123,7 +138,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/agrarkonzern-syngenta-peilt-boersenwert-von-ueber-66-milliarden-dollar-an/100265352.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/agrarkonzern-syngenta-peilt-boersenwert-von-ueber-66-milliarden-dollar-an/100265352.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -133,7 +149,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Erste-KI-Blase-geplatzt-Chinas-KI-Leitindex-40-Prozent-unter-dem-Hoechststand-11501107.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Erste-KI-Blase-geplatzt-Chinas-KI-Leitindex-40-Prozent-unter-dem-Hoechststand-11501107.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -149,7 +166,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-krise-in-china-zwingt-konzern-zu-prognosesenkung-a-3396e3c3-4b77-49b6-84fd-1ab82ebf539e#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-krise-in-china-zwingt-konzern-zu-prognosesenkung-a-3396e3c3-4b77-49b6-84fd-1ab82ebf539e#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -159,7 +177,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-mercedes-bietet-bis-zu-330.000-euro-abfindung-in-der-produktion-01/100263206.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-mercedes-bietet-bis-zu-330.000-euro-abfindung-in-der-produktion-01/100263206.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -169,11 +188,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/tech/microsoft-bietet-rund-60-000-mitarbeitern-abfindungen-an-a-51915fa4-261a-4828-ae37-1add671256a7#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/tech/microsoft-bietet-rund-60-000-mitarbeitern-abfindungen-an-a-51915fa4-261a-4828-ae37-1add671256a7#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Microsoft-bietet-60-000-Mitarbeitern-Goldenen-Handschlag-11501027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Microsoft-bietet-60-000-Mitarbeitern-Goldenen-Handschlag-11501027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -183,11 +204,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/bahnverkehr-siemens-steht-vor-milliardenauftrag-fuer-zuege-in-spanien/100265358.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/bahnverkehr-siemens-steht-vor-milliardenauftrag-fuer-zuege-in-spanien/100265358.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/siemens-mobility-moeglicher-milliardenauftrag-fuer-zuege-in-spanien-a-f20389f4-d1b8-4ab8-8107-89d535abb743#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/siemens-mobility-moeglicher-milliardenauftrag-fuer-zuege-in-spanien-a-f20389f4-d1b8-4ab8-8107-89d535abb743#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -197,7 +220,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/infineon-investition-villach-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/infineon-investition-villach-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -207,7 +231,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/warenhaeuser-galeria-vermietern-droht-finanzielles-desaster/100263295.html"
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/warenhaeuser-galeria-vermietern-droht-finanzielles-desaster/100263295.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -223,11 +248,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/pflegekommission-pflegereform-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/pflegekommission-pflegereform-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/kommission-nimmt-arbeit-auf-pflegeversicherung-in-not-welche-reformen-geplant-sind/100265341.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/kommission-nimmt-arbeit-auf-pflegeversicherung-in-not-welche-reformen-geplant-sind/100265341.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -237,11 +264,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/sparquote-deutschland-2026-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/sparquote-deutschland-2026-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/bruttosparquote-nur-die-schweizer-sparen-mehr-als-die-deutschen/100265308.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/bruttosparquote-nur-die-schweizer-sparen-mehr-als-die-deutschen/100265308.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -251,7 +280,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/fonds-etf/geldanlage-altersvorsorgedepot-duerfte-nachfrage-nach-aktiven-etfs-treiben-01/100263369.html"
+              "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/fonds-etf/geldanlage-altersvorsorgedepot-duerfte-nachfrage-nach-aktiven-etfs-treiben-01/100263369.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -261,7 +291,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/scharfer-wettbewerb-verivox-preiskampf-in-der-kfz-versicherung-ist-zurueck/100265138.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/scharfer-wettbewerb-verivox-preiskampf-in-der-kfz-versicherung-ist-zurueck/100265138.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -271,7 +302,8 @@
           "sources": [
             {
               "source": "NPR",
-              "link": "https://www.npr.org/sections/planet-money/2026/10/27/g-s1-149358/how-aldi-is-pushing-down-grocery-prices"
+              "link": "https://www.npr.org/sections/planet-money/2026/10/27/g-s1-149358/how-aldi-is-pushing-down-grocery-prices",
+              "ausrichtung": "Mitte-links"
             }
           ]
         }
@@ -287,7 +319,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/windkraft-reiche-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/windkraft-reiche-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -297,7 +330,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-schulden-image-doppelstrukturen-warum-eon-jetzt-sparen-will/100263345.html"
+              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-schulden-image-doppelstrukturen-warum-eon-jetzt-sparen-will/100263345.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -307,7 +341,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Kraftstoffknappheit-Schweiz-bereitet-Tempo-80-auf-Autobahnen-vor-11501193.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Kraftstoffknappheit-Schweiz-bereitet-Tempo-80-auf-Autobahnen-vor-11501193.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -323,11 +358,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/merz-handel-asien-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/merz-handel-asien-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/video/politik/welthandel-merz-wirbt-fuer-eu-handelsabkommen-mit-asean-staaten/100265315.html"
+              "link": "https://www.handelsblatt.com/video/politik/welthandel-merz-wirbt-fuer-eu-handelsabkommen-mit-asean-staaten/100265315.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -337,7 +374,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/airbus-usa-warnen-eu-wegen-milliardenkredits-der-eib-a-bb8b9ca9-dc26-43fe-a429-7d256dcba7de#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/airbus-usa-warnen-eu-wegen-milliardenkredits-der-eib-a-bb8b9ca9-dc26-43fe-a429-7d256dcba7de#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -347,7 +385,8 @@
           "sources": [
             {
               "source": "DW",
-              "link": "https://www.dw.com/en/what-germany-thinks-of-carmaker-audi-s-4-billion-deal-with-trump/a-79760479?maca=en-rss-en-bus-2091-rdf"
+              "link": "https://www.dw.com/en/what-germany-thinks-of-carmaker-audi-s-4-billion-deal-with-trump/a-79760479?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -363,11 +402,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/tech/elon-musk-spacex-sichert-sich-40-milliarden-dollar-fuer-ki-chips-a-efa1b6a2-18f0-4439-ba2c-2f773327d48f#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/tech/elon-musk-spacex-sichert-sich-40-milliarden-dollar-fuer-ki-chips-a-efa1b6a2-18f0-4439-ba2c-2f773327d48f#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Space-X-Vereinbarung-zur-Finanzierung-von-KI-Chips-ueber-40-Milliarden-US-Dollar-11501039.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Space-X-Vereinbarung-zur-Finanzierung-von-KI-Chips-ueber-40-Milliarden-US-Dollar-11501039.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -377,7 +418,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/OpenAI-wirbt-Anthropic-Kunden-offenbar-mit-Rabatten-ab-11500685.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/OpenAI-wirbt-Anthropic-Kunden-offenbar-mit-Rabatten-ab-11500685.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -387,7 +429,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/GPT-6-1-Terra-Guenstiges-Modell-fuer-effiziente-Computerarbeit-11501275.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/GPT-6-1-Terra-Guenstiges-Modell-fuer-effiziente-Computerarbeit-11501275.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -397,7 +440,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Apple-bringt-Siri-AI-mehr-Sprachen-bei-ausser-Deutsch-11502247.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Apple-bringt-Siri-AI-mehr-Sprachen-bei-ausser-Deutsch-11502247.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -407,7 +451,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Gegen-illegale-Waren-Temu-muss-Empfehlungs-Algorithmen-transparent-machen-11500701.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Gegen-illegale-Waren-Temu-muss-Empfehlungs-Algorithmen-transparent-machen-11500701.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }

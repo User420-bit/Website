@@ -11,11 +11,13 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/geldanlage/verstaerkter-ausverkauf-franzoesischer-anleihen-neue-demos-in-sicht-a-e40d2a72-203b-423d-9823-a03f1d60868d#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/geldanlage/verstaerkter-ausverkauf-franzoesischer-anleihen-neue-demos-in-sicht-a-e40d2a72-203b-423d-9823-a03f1d60868d#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/staatsanleihen-diese-laender-machen-investoren-neben-frankreich-ebenfalls-nervoes-a-2820166d-c503-4d30-95b9-be4fbadcd5f0#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/staatsanleihen-diese-laender-machen-investoren-neben-frankreich-ebenfalls-nervoes-a-2820166d-c503-4d30-95b9-be4fbadcd5f0#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -27,19 +29,23 @@
       "sources": [
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/inland/innenpolitik/steuerschaetzung-bund-klingbeil-100.html"
+          "link": "https://www.tagesschau.de/inland/innenpolitik/steuerschaetzung-bund-klingbeil-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/steuerschaetzung-klingbeil-steuerplus-reicht-nicht-fuer-stromsteuer-senkung/100264289.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/steuerschaetzung-klingbeil-steuerplus-reicht-nicht-fuer-stromsteuer-senkung/100264289.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/ministerpraesidentenkonferenz-laender-fordern-tempo-bei-stromsteuer-und-spritpreisdeckel/100264216.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/ministerpraesidentenkonferenz-laender-fordern-tempo-bei-stromsteuer-und-spritpreisdeckel/100264216.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/tanken-laender-dringen-auf-spritpreisdeckel-zum-1-januar/100264310.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/tanken-laender-dringen-auf-spritpreisdeckel-zum-1-januar/100264310.html",
+          "ausrichtung": "Mitte-rechts"
         }
       ]
     },
@@ -51,19 +57,23 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-vorboerslich-schwaecher-erwartet-sap-zahlen-koennen-tech-schwaeche-nicht-ausgleichen-a-fd917c52-6163-4c34-bd17-22a22542c2f0#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-vorboerslich-schwaecher-erwartet-sap-zahlen-koennen-tech-schwaeche-nicht-ausgleichen-a-fd917c52-6163-4c34-bd17-22a22542c2f0#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-tesla-meta-sap-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-tesla-meta-sap-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/meta-quartalszahlen-ki-investitionen-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/meta-quartalszahlen-ki-investitionen-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "heise",
-          "link": "https://www.heise.de/news/Tesla-Gewinn-bricht-um-43-Prozent-ein-Musk-wirbt-fuer-Optimus-11496536.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+          "link": "https://www.heise.de/news/Tesla-Gewinn-bricht-um-43-Prozent-ein-Musk-wirbt-fuer-Optimus-11496536.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -79,7 +89,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/maerkte/marktberichte/dow-jones-sp-500-nasdaq-us-boersen-notieren-im-minus-tech-werte-druecken-nasdaq/100264154.html"
+              "link": "https://www.handelsblatt.com/finanzen/maerkte/marktberichte/dow-jones-sp-500-nasdaq-us-boersen-notieren-im-minus-tech-werte-druecken-nasdaq/100264154.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -89,7 +100,8 @@
           "sources": [
             {
               "source": "SAN",
-              "link": "https://san.com/cc/international-energy-chief-no-credible-pathway-for-prices-to-normalize-in-2027/"
+              "link": "https://san.com/cc/international-energy-chief-no-credible-pathway-for-prices-to-normalize-in-2027/",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -99,11 +111,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/flughafen-saudi-arabien-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/flughafen-saudi-arabien-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/huthi-saudi-arabien-104.html"
+              "link": "https://www.tagesschau.de/ausland/asien/huthi-saudi-arabien-104.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -113,7 +127,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/israel-wirtschaft-wahl-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/israel-wirtschaft-wahl-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -129,7 +144,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/elektroautos-absatz-steigt-im-september-europaweit-um-mehr-als-70-prozent-a-5c78c5f7-a54f-415d-88ca-159e61ff3cff#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/elektroautos-absatz-steigt-im-september-europaweit-um-mehr-als-70-prozent-a-5c78c5f7-a54f-415d-88ca-159e61ff3cff#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -139,7 +155,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/E-Auto-Zulassungen-in-der-EU-steigen-deutlich-11496336.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/E-Auto-Zulassungen-in-der-EU-steigen-deutlich-11496336.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -149,7 +166,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-mercedes-skoda-wie-der-elektroauto-boom-neue-loecher-in-die-kassen-reisst-a-eb41a812-468c-45bd-b4d8-f316d5721150#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-mercedes-skoda-wie-der-elektroauto-boom-neue-loecher-in-die-kassen-reisst-a-eb41a812-468c-45bd-b4d8-f316d5721150#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -159,7 +177,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbrenner-aus-124.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbrenner-aus-124.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -169,7 +188,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Schneider-Foerdergeld-fuer-E-Autos-reicht-auch-2027-11495678.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Schneider-Foerdergeld-fuer-E-Autos-reicht-auch-2027-11495678.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -185,11 +205,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/industrie/evonik-prueft-uebernahme-von-us-rivalen-a-eec3aa5d-e4e2-42a5-842a-a23c8cc6f3de#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/evonik-prueft-uebernahme-von-us-rivalen-a-eec3aa5d-e4e2-42a5-842a-a23c8cc6f3de#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/markus-kamieth-basf-chef-wirbt-mit-jobgarantien-fuer-evonik-uebernahme/100264295.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/markus-kamieth-basf-chef-wirbt-mit-jobgarantien-fuer-evonik-uebernahme/100264295.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -199,7 +221,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/pharma/qiagen-uebernahme-finanzinvestor-eqt-einigt-sich-mit-dax-konzern-a-fc78b8c8-cbb6-4cf8-b2b0-7f5fbc3f3eb4#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/pharma/qiagen-uebernahme-finanzinvestor-eqt-einigt-sich-mit-dax-konzern-a-fc78b8c8-cbb6-4cf8-b2b0-7f5fbc3f3eb4#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -209,11 +232,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/sap-uebertrifft-erwartungen-im-cloudgeschaeft-a-79e85cdf-f9b3-4e6b-9634-d21e6e357723#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/sap-uebertrifft-erwartungen-im-cloudgeschaeft-a-79e85cdf-f9b3-4e6b-9634-d21e6e357723#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/finanzen/sap-mittags-mb-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/sap-mittags-mb-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -223,7 +248,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bosch-ordnet-konzern-neu-mobilitaetssparte-ausgegliedert-a-17f12151-921b-4db9-93f5-aa379d795e37#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bosch-ordnet-konzern-neu-mobilitaetssparte-ausgegliedert-a-17f12151-921b-4db9-93f5-aa379d795e37#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -233,7 +259,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/thyssenkrupp-wertstoffsparte-tk-accelis-geht-am-28-oktober-an-die-boerse-a-7dd2dc04-a07a-4fdd-a532-7fab72e9d77c#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/thyssenkrupp-wertstoffsparte-tk-accelis-geht-am-28-oktober-an-die-boerse-a-7dd2dc04-a07a-4fdd-a532-7fab72e9d77c#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -249,7 +276,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/reform-rechner-wie-wird-sich-das-reformpaket-auf-ihr-gehalt-auswirken-01/100260104.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/reform-rechner-wie-wird-sich-das-reformpaket-auf-ihr-gehalt-auswirken-01/100260104.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -259,7 +287,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cm4g1p347qgxo?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cm4g1p347qgxo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -269,7 +298,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/tarifstreit-schlichtung-bei-lufthansa-ohne-einigung-beendet/100264297.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/tarifstreit-schlichtung-bei-lufthansa-ohne-einigung-beendet/100264297.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -279,7 +309,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/altersvorsorgedepot-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/altersvorsorgedepot-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -289,7 +320,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/renten-reform-kapitalrente-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/renten-reform-kapitalrente-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -305,7 +337,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-die-mieten-fuer-bestandswohnungen-besonders-stark-steigen-01/100262197.html"
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-die-mieten-fuer-bestandswohnungen-besonders-stark-steigen-01/100262197.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -315,7 +348,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-in-diesen-staedten-finden-eigentuemer-am-schnellsten-einen-kaeufer-01/100260831.html"
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-in-diesen-staedten-finden-eigentuemer-am-schnellsten-einen-kaeufer-01/100260831.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -325,7 +359,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-sind-die-preise-fuer-wohnraum-am-staerksten-gestiegen-01/100170988.html"
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-sind-die-preise-fuer-wohnraum-am-staerksten-gestiegen-01/100170988.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -335,7 +370,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-kaeufer-vom-generationenwechsel-profitieren-koennten-01/100260073.html"
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-wo-kaeufer-vom-generationenwechsel-profitieren-koennten-01/100260073.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -351,19 +387,23 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/technologie/it-sicherheit-php-luecke-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/it-sicherheit-php-luecke-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/php2shell-Kritische-Sicherheitsluecken-erlauben-Codeeinschleusung-in-PHP-11492938.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/php2shell-Kritische-Sicherheitsluecken-erlauben-Codeeinschleusung-in-PHP-11492938.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/tech/php-sicherheitsluecke-cloudflare-meldet-millionen-hackerangriffe-auf-php-seiten-a-e524c922-8f07-4f7c-8eab-1bbf8e1043fb#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/tech/php-sicherheitsluecke-cloudflare-meldet-millionen-hackerangriffe-auf-php-seiten-a-e524c922-8f07-4f7c-8eab-1bbf8e1043fb#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cmly0lg3w5x2o?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cmly0lg3w5x2o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -373,7 +413,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/technik/ki/ki-tech-konzerne-sammeln-27-billionen-dollar-schattenverschuldung-an-01/100262818.html"
+              "link": "https://www.handelsblatt.com/technik/ki/ki-tech-konzerne-sammeln-27-billionen-dollar-schattenverschuldung-an-01/100262818.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -383,11 +424,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/meta-cambrigde-skandal-milliardenstrafe-100.html"
+              "link": "https://www.tagesschau.de/ausland/meta-cambrigde-skandal-milliardenstrafe-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Milliardenstrafe-fuer-Meta-Platforms-wegen-systematischer-Luegen-New-Mexico-11496252.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Milliardenstrafe-fuer-Meta-Platforms-wegen-systematischer-Luegen-New-Mexico-11496252.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -397,7 +440,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Neue-AGB-von-Meta-Verlage-fordern-EU-Stopp-wegen-KI-Scraping-11497167.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Neue-AGB-von-Meta-Verlage-fordern-EU-Stopp-wegen-KI-Scraping-11497167.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -407,7 +451,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/zahlungsmittel-vom-naechsten-sommer-an-testet-die-ezb-den-digitalen-euro/100263167.html"
+              "link": "https://www.handelsblatt.com/politik/international/zahlungsmittel-vom-naechsten-sommer-an-testet-die-ezb-den-digitalen-euro/100263167.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }

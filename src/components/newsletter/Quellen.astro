@@ -6,13 +6,20 @@
  * mehrfach, bekommt jeder weitere Link eine Nummer, damit Screenreader die
  * Links unterscheiden. Externe Links öffnen im neuen Tab und sagen das dazu,
  * wie in `MetaList`.
+ *
+ * Darunter, ebenso klein und grau, die Abdeckung: aus welchen politischen
+ * Richtungen die Redaktionen kommen. Berichten mehrere Redaktionen nur aus
+ * einer Richtung, sagt die Zeile das in Worten, nicht über Farbe.
  */
+import { abdeckung } from '@/lib/newsletter'
+
 interface Props {
-  quellen: readonly { source: string; link: string }[]
+  quellen: Parameters<typeof abdeckung>[0]
   class?: string
 }
 
 const { quellen, class: className = '' } = Astro.props
+const richtung = abdeckung(quellen)
 
 const gezaehlt = new Map<string, number>()
 const links = quellen.map(({ source, link }) => {
@@ -41,3 +48,11 @@ const links = quellen.map(({ source, link }) => {
     ))
   }
 </p>
+{
+  richtung && (
+    <p class="mt-1 mb-0 text-xs text-fg-muted">
+      Abdeckung: {richtung.richtungen.join(', ')}
+      {richtung.einseitig && ` (nur ${richtung.richtungen[0]} berichtet)`}
+    </p>
+  )
+}

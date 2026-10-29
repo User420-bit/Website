@@ -11,7 +11,8 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/politik/deutschland/notenbanken-in-der-klemme-zwischen-inflation-schuldenkrise-und-ki-risiken-a-9579731f-49ab-4ff0-9505-556103530436#ref=rss"
+          "link": "https://www.manager-magazin.de/politik/deutschland/notenbanken-in-der-klemme-zwischen-inflation-schuldenkrise-und-ki-risiken-a-9579731f-49ab-4ff0-9505-556103530436#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -23,19 +24,23 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-faellt-nach-kursrutsch-an-der-nasdaq-meta-schockt-mit-ki-investitionen-a-e75093a6-062b-4150-9e3e-8cb77ca05596#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-faellt-nach-kursrutsch-an-der-nasdaq-meta-schockt-mit-ki-investitionen-a-e75093a6-062b-4150-9e3e-8cb77ca05596#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/bundespolitik-spd-politikerin-kritisiert-auftritt-des-audi-chefs-mit-trump-scharf/100137034.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/bundespolitik-spd-politikerin-kritisiert-auftritt-des-audi-chefs-mit-trump-scharf/100137034.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/marktstudie-neuwagen-wegen-hoher-nachfrage-e-autos-werden-teurer/100264733.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/marktstudie-neuwagen-wegen-hoher-nachfrage-e-autos-werden-teurer/100264733.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/geldanlage-der-goldpreis-haengt-jetzt-vom-oelpreis-ab/100264148.html"
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/geldanlage-der-goldpreis-haengt-jetzt-vom-oelpreis-ab/100264148.html",
+          "ausrichtung": "Mitte-rechts"
         }
       ]
     },
@@ -47,11 +52,13 @@
       "sources": [
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-ig-metall-stellt-vorstand-ultimatum-und-droht-mit-arbeitskampf-a-cee12dd0-dc00-4345-9f6f-64c6108eacdd#ref=rss"
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-ig-metall-stellt-vorstand-ultimatum-und-droht-mit-arbeitskampf-a-cee12dd0-dc00-4345-9f6f-64c6108eacdd#ref=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-in-der-krise-bei-vw-beginnt-die-naechste-runde-der-sondierungen-a-ecdf761a-b4fc-4ce6-9c37-4eb75b3c83a2#ref=rss"
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-in-der-krise-bei-vw-beginnt-die-naechste-runde-der-sondierungen-a-ecdf761a-b4fc-4ce6-9c37-4eb75b3c83a2#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -67,7 +74,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/dienstleister/generali-versicherer-macht-drei-deutsche-standorte-dicht-a-a2df5727-5e6f-426a-b305-4ea41ebbd58f#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/dienstleister/generali-versicherer-macht-drei-deutsche-standorte-dicht-a-a2df5727-5e6f-426a-b305-4ea41ebbd58f#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -77,7 +85,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volvo-geely-tochter-streicht-weitere-2500-jobs-a-28d858f1-ebdc-4aec-a5a3-addff539c4d0#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volvo-geely-tochter-streicht-weitere-2500-jobs-a-28d858f1-ebdc-4aec-a5a3-addff539c4d0#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -87,7 +96,8 @@
           "sources": [
             {
               "source": "NPR",
-              "link": "https://www.npr.org/2026/10/25/nx-s1-6009274/netflix-lays-off-6-of-workforce-amidst-slowing-growth"
+              "link": "https://www.npr.org/2026/10/25/nx-s1-6009274/netflix-lays-off-6-of-workforce-amidst-slowing-growth",
+              "ausrichtung": "Mitte-links"
             }
           ]
         },
@@ -97,7 +107,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Qualcomm-plant-im-November-offenbar-weltweit-leistungsorientierte-Kuendigungen-11497644.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Qualcomm-plant-im-November-offenbar-weltweit-leistungsorientierte-Kuendigungen-11497644.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -107,7 +118,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Bosch-ordnet-Konzern-neu-Mobilitaet-bleibt-groesster-Bereich-11497706.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Bosch-ordnet-Konzern-neu-Mobilitaet-bleibt-groesster-Bereich-11497706.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -117,7 +129,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/c62kep355q02o?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/c62kep355q02o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -133,7 +146,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/industrie/basf-chemiekonzern-erhoeht-offenbar-angebot-fuer-evonik-aktie-mit-kurssprung-a-c1e1215e-b893-423e-bc19-c2a03f91832e#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/basf-chemiekonzern-erhoeht-offenbar-angebot-fuer-evonik-aktie-mit-kurssprung-a-c1e1215e-b893-423e-bc19-c2a03f91832e#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -143,11 +157,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/uebernahme-sportartikel-haendler-frasers-uebernimmt-mehrheit-bei-hugo-boss/100264800.html"
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/uebernahme-sportartikel-haendler-frasers-uebernimmt-mehrheit-bei-hugo-boss/100264800.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/handel/hugo-boss-frasers-uebernimmt-mehrheit-am-modekonzern-a-c92f85f4-a4a9-4713-a1ad-e6f5ffc759f2#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/handel/hugo-boss-frasers-uebernimmt-mehrheit-am-modekonzern-a-c92f85f4-a4a9-4713-a1ad-e6f5ffc759f2#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -157,7 +173,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/handel/gucci-flaute-bei-edelmarke-bremst-luxusgueterkonzern-kering-a-21c75f75-23d3-40f2-9793-83f05a2e02d0#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/handel/gucci-flaute-bei-edelmarke-bremst-luxusgueterkonzern-kering-a-21c75f75-23d3-40f2-9793-83f05a2e02d0#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -167,7 +184,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/tech/sk-hynix-chipriese-sagt-boersengang-seiner-chip-sparte-in-den-usa-ab-a-657a2c87-be9b-4612-9171-b2d1b7a74b2f#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/tech/sk-hynix-chipriese-sagt-boersengang-seiner-chip-sparte-in-den-usa-ab-a-657a2c87-be9b-4612-9171-b2d1b7a74b2f#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -177,7 +195,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/pharma/moderna-aktie-mit-kursrutsch-studie-zu-hautkrebs-impfstoff-enttaeuscht-anleger-a-5d000797-f746-4715-bd9e-973e47ce8e7e#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/pharma/moderna-aktie-mit-kursrutsch-studie-zu-hautkrebs-impfstoff-enttaeuscht-anleger-a-5d000797-f746-4715-bd9e-973e47ce8e7e#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -187,7 +206,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/anthropic-vorstoss-in-die-beratung-setzt-accenture-unter-druck-a-a6c0612a-737c-46f0-8b24-ee0888e87a21#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/anthropic-vorstoss-in-die-beratung-setzt-accenture-unter-druck-a-a6c0612a-737c-46f0-8b24-ee0888e87a21#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -203,7 +223,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/c6n8de1jgrdvo?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/c6n8de1jgrdvo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -213,7 +234,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/cmy56q2n1veqo?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/cmy56q2n1veqo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -223,7 +245,8 @@
           "sources": [
             {
               "source": "SAN",
-              "link": "https://san.com/cc/americans-electric-bills-are-eating-up-their-grocery-budgets/"
+              "link": "https://san.com/cc/americans-electric-bills-are-eating-up-their-grocery-budgets/",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -233,7 +256,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/abhaengigkeit-russische-energie-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/abhaengigkeit-russische-energie-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -243,11 +267,13 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Raffineriestrategie-Bundesregierung-will-deutsche-Standorte-halten-11498450.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Raffineriestrategie-Bundesregierung-will-deutsche-Standorte-halten-11498450.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/raffineriestrategie-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/raffineriestrategie-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -257,7 +283,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/technologie/erdwaerme-waermeversorgung-heizen-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/erdwaerme-waermeversorgung-heizen-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -273,7 +300,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/amerika/musk-starlink-ukraine-102.html"
+              "link": "https://www.tagesschau.de/ausland/amerika/musk-starlink-ukraine-102.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -283,7 +311,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/israel-westjordanland-lockdown-parlamentswahlen-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/israel-westjordanland-lockdown-parlamentswahlen-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -293,7 +322,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/gaza-ernaehrung-100.html"
+              "link": "https://www.tagesschau.de/ausland/gaza-ernaehrung-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -303,7 +333,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/serbien-wahl-update-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/serbien-wahl-update-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -313,7 +344,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/lateinamerika-wahllokale-geoeffnet-brasilien-waehlt-praesidenten/100264721.html"
+              "link": "https://www.handelsblatt.com/politik/international/lateinamerika-wahllokale-geoeffnet-brasilien-waehlt-praesidenten/100264721.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -323,11 +355,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/proteste-frankreich-spanien-italien-protugal-albanien-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/proteste-frankreich-spanien-italien-protugal-albanien-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/demonstrationen-ausschreitungen-bei-protesten-in-europaeischen-laendern/100264771.html"
+              "link": "https://www.handelsblatt.com/politik/international/demonstrationen-ausschreitungen-bei-protesten-in-europaeischen-laendern/100264771.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -343,19 +377,23 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/amerika/audi-usa-trump-100.html"
+              "link": "https://www.tagesschau.de/ausland/amerika/audi-usa-trump-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-trump-bestaetigt-handelsblatt-bericht-audi-baut-werk-in-den-usa/100264447.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-trump-bestaetigt-handelsblatt-bericht-audi-baut-werk-in-den-usa/100264447.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Audi-Chef-verteidigt-Werks-Plaene-in-den-USA-11499465.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Audi-Chef-verteidigt-Werks-Plaene-in-den-USA-11499465.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/audi-doellner-bricht-konzernregeln-bei-trumps-wahlkampfauftritt-in-georgia-a-7b458c84-23f5-4e98-b0f9-55372026f97b#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/audi-doellner-bricht-konzernregeln-bei-trumps-wahlkampfauftritt-in-georgia-a-7b458c84-23f5-4e98-b0f9-55372026f97b#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -365,7 +403,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/amerika/usa-trump-wahl-102.html"
+              "link": "https://www.tagesschau.de/ausland/amerika/usa-trump-wahl-102.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -375,7 +414,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/schwarz-rot-in-der-krise-umfrage-mehrheit-rechnet-mit-vorzeitigem-ende-der-koalition/100264798.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/schwarz-rot-in-der-krise-umfrage-mehrheit-rechnet-mit-vorzeitigem-ende-der-koalition/100264798.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -385,7 +425,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/csu-parteitag-merz-106.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/csu-parteitag-merz-106.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -395,7 +436,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/dobrindt-vergesellschaftung-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/dobrindt-vergesellschaftung-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -405,7 +447,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/wahlrecht-reform-104.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/wahlrecht-reform-104.html",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -421,7 +464,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/KI-Streit-in-Europa-EU-Tech-Chefs-wehren-sich-gegen-Kapitulation-11499445.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/KI-Streit-in-Europa-EU-Tech-Chefs-wehren-sich-gegen-Kapitulation-11499445.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -431,7 +475,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/OpenAI-stellt-seine-neue-Trainingsumgebung-vor-ohne-Air-Gap-11499163.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/OpenAI-stellt-seine-neue-Trainingsumgebung-vor-ohne-Air-Gap-11499163.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -441,7 +486,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/php2shell-Millionen-PHP-Dienste-in-Deutschland-verwundbar-11498464.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/php2shell-Millionen-PHP-Dienste-in-Deutschland-verwundbar-11498464.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -451,11 +497,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/tech/apple-techkonzern-mit-erfolgreichem-verkaufsstart-seines-ersten-falt-handys-a-8f812d4a-a7f5-48d2-a83c-3b549c628569#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/tech/apple-techkonzern-mit-erfolgreichem-verkaufsstart-seines-ersten-falt-handys-a-8f812d4a-a7f5-48d2-a83c-3b549c628569#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/iPhone-Duo-Verkaufsstart-Geraete-laufen-ein-geringe-Stueckzahlen-im-Apple-Store-11497588.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/iPhone-Duo-Verkaufsstart-Geraete-laufen-ein-geringe-Stueckzahlen-im-Apple-Store-11497588.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -465,7 +513,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Nvidia-CEO-nimmt-KI-Entwickler-in-die-Pflicht-Sollen-keine-Schaeden-anrichten-11498634.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Nvidia-CEO-nimmt-KI-Entwickler-in-die-Pflicht-Sollen-keine-Schaeden-anrichten-11498634.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -475,7 +524,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Project-Helix-Naechste-Xbox-soll-bis-zu-1800-US-Dollar-kosten-11497736.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Project-Helix-Naechste-Xbox-soll-bis-zu-1800-US-Dollar-kosten-11497736.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
