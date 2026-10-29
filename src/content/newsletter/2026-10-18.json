@@ -11,19 +11,23 @@
       "sources": [
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/ausland/asien/persischer-golf-tanker-angriffe-100.html"
+          "link": "https://www.tagesschau.de/ausland/asien/persischer-golf-tanker-angriffe-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "BBC",
-          "link": "https://www.bbc.co.uk/news/articles/cmde8dpg8g0no?at_medium=RSS&at_campaign=rss"
+          "link": "https://www.bbc.co.uk/news/articles/cmde8dpg8g0no?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/international/iran-krieg-erneut-explosion-an-supertanker-in-strasse-von-hormus/100136895.html"
+          "link": "https://www.handelsblatt.com/politik/international/iran-krieg-erneut-explosion-an-supertanker-in-strasse-von-hormus/100136895.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/ausland/asien/iran-hormus-angebot-drohung-100.html"
+          "link": "https://www.tagesschau.de/ausland/asien/iran-hormus-angebot-drohung-100.html",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -35,11 +39,13 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/deutschland/energie-netzentgelte-fuer-strom-und-gas-steigen-2027/100263063.html"
+          "link": "https://www.handelsblatt.com/politik/deutschland/energie-netzentgelte-fuer-strom-und-gas-steigen-2027/100263063.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/unternehmen/energie/netzentgelte-netzgebuehren-fuer-strom-und-gas-steigen-a-77145102-76b3-4214-a90d-733a444d86d2#ref=rss"
+          "link": "https://www.manager-magazin.de/unternehmen/energie/netzentgelte-netzgebuehren-fuer-strom-und-gas-steigen-a-77145102-76b3-4214-a90d-733a444d86d2#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -51,15 +57,18 @@
       "sources": [
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/politik/international/hunderttausende-demonstrieren-entsetzliche-gewalt-bei-protesten-erschuettert-frankreich/100263018.html"
+          "link": "https://www.handelsblatt.com/politik/international/hunderttausende-demonstrieren-entsetzliche-gewalt-bei-protesten-erschuettert-frankreich/100263018.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/ausland/europa/frankreich-krawalle-proteste-100.html"
+          "link": "https://www.tagesschau.de/ausland/europa/frankreich-krawalle-proteste-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/politik/deutschland/der-finanzmarkt-ist-das-staerkste-bollwerk-gegen-populisten-a-eef7ccc6-8a19-47c6-8a03-716f00d9be83#ref=rss"
+          "link": "https://www.manager-magazin.de/politik/deutschland/der-finanzmarkt-ist-das-staerkste-bollwerk-gegen-populisten-a-eef7ccc6-8a19-47c6-8a03-716f00d9be83#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -75,7 +84,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/energie-heizen-winter-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/energie-heizen-winter-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -85,7 +95,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/bilger-tankrabatt-100.html"
+              "link": "https://www.tagesschau.de/inland/bilger-tankrabatt-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -95,7 +106,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/verbraucher-wie-sich-die-stromsteuer-fuer-alle-senken-laesst/100262547.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/verbraucher-wie-sich-die-stromsteuer-fuer-alle-senken-laesst/100262547.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -105,7 +117,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/kraftstoff-china-verdreifacht-dieselexporte-hoechster-stand-seit-ueber-drei-jahren/100263049.html"
+              "link": "https://www.handelsblatt.com/politik/international/kraftstoff-china-verdreifacht-dieselexporte-hoechster-stand-seit-ueber-drei-jahren/100263049.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -115,7 +128,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/windkraft-geplanter-pachtdeckel-fuer-windraeder-in-der-kritik/100263065.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/windkraft-geplanter-pachtdeckel-fuer-windraeder-in-der-kritik/100263065.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -125,11 +139,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/e20-bundesregierung-prueft-hoehere-beimischung-von-bioethanol-im-benzin-a-245d7f71-47a0-4cd2-8055-3dc1e6333c24#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/e20-bundesregierung-prueft-hoehere-beimischung-von-bioethanol-im-benzin-a-245d7f71-47a0-4cd2-8055-3dc1e6333c24#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Aus-fuer-Verbrenner-Aus-koennte-E20-an-die-Tankstelle-bringen-11491669.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Aus-fuer-Verbrenner-Aus-koennte-E20-an-die-Tankstelle-bringen-11491669.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -145,7 +161,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/kevin-warsh-fed-chef-verbreitet-konjunkturoptimismus-kein-zeichen-fuer-zinsschritt-a-a3fe7866-da79-4194-8f9f-9423a03137aa#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/kevin-warsh-fed-chef-verbreitet-konjunkturoptimismus-kein-zeichen-fuer-zinsschritt-a-a3fe7866-da79-4194-8f9f-9423a03137aa#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -155,7 +172,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/maerkte-insight-auch-der-dax-bekommt-das-ki-beben-zu-spueren-aber-weniger-sichtbar/100262546.html"
+              "link": "https://www.handelsblatt.com/finanzen/maerkte-insight-auch-der-dax-bekommt-das-ki-beben-zu-spueren-aber-weniger-sichtbar/100262546.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -165,7 +183,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-erholung-bei-techwerten-stuetzt-dax-commerzbank-und-nordex-im-fokus-a-2c73adbf-1c28-447d-b383-8023cacf7ad9#ref=rss"
+              "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-erholung-bei-techwerten-stuetzt-dax-commerzbank-und-nordex-im-fokus-a-2c73adbf-1c28-447d-b383-8023cacf7ad9#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -175,7 +194,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/banken/unicredit-ezb-winkt-uebernahme-der-commerzbank-durch-a-d4489eb2-1a0b-4768-8177-337fd35a97a4#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/banken/unicredit-ezb-winkt-uebernahme-der-commerzbank-durch-a-d4489eb2-1a0b-4768-8177-337fd35a97a4#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -185,7 +205,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/lufthansa-prueft-teilverkauf-von-it-tochter-a-c7c3a003-489b-4386-ac0f-c0c7528f7436#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/lufthansa-prueft-teilverkauf-von-it-tochter-a-c7c3a003-489b-4386-ac0f-c0c7528f7436#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -201,7 +222,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/eurowings-prueft-kurzarbeit-und-streicht-fluege-sowie-weihnachtsfeier-a-c1700ca6-d261-41d4-8c5d-0e2d154ee812#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/eurowings-prueft-kurzarbeit-und-streicht-fluege-sowie-weihnachtsfeier-a-c1700ca6-d261-41d4-8c5d-0e2d154ee812#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -211,7 +233,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/weber-magdeburg-erneut-rutscht-ein-autozulieferer-in-die-insolvenz-a-2636431b-4c8e-46ec-9763-f6ba300b94f3#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/weber-magdeburg-erneut-rutscht-ein-autozulieferer-in-die-insolvenz-a-2636431b-4c8e-46ec-9763-f6ba300b94f3#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -221,11 +244,13 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/deutschland-und-frankreich-wollen-verbrenner-aus-aufweichen-a-4d764dcd-bfcb-4d1f-b0a5-0ee55fdd70a3#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/deutschland-und-frankreich-wollen-verbrenner-aus-aufweichen-a-4d764dcd-bfcb-4d1f-b0a5-0ee55fdd70a3#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Ende-des-Verbrenners-Deutschland-und-Frankreich-fuer-Lockerungen-11490190.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Ende-des-Verbrenners-Deutschland-und-Frankreich-fuer-Lockerungen-11490190.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -235,7 +260,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/ruestung-airbus-dringt-auf-fairen-anteil-bei-neuem-kampfjet-fuer-deutschland/100261837.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/ruestung-airbus-dringt-auf-fairen-anteil-bei-neuem-kampfjet-fuer-deutschland/100261837.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -245,7 +271,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/industrie/investitionen-in-gefahr-unternehmenschefs-kritisieren-deutsche-industriepolitik/100261824.html"
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/investitionen-in-gefahr-unternehmenschefs-kritisieren-deutsche-industriepolitik/100261824.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -255,7 +282,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/kfw-chef-afd-erfolge-werfen-fragen-zur-standortstabilitaet-auf/100263067.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/kfw-chef-afd-erfolge-werfen-fragen-zur-standortstabilitaet-auf/100263067.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -271,11 +299,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/berlin-sondierungsvereinbarung-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/berlin-sondierungsvereinbarung-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-das-plant-rot-gruen-rot-fuer-die-hauptstadt/100263061.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-das-plant-rot-gruen-rot-fuer-die-hauptstadt/100263061.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -285,11 +315,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/soeder-junge-union-102.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/soeder-junge-union-102.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-die-rote-front-steht-soeder-fordert-brandmauer-nach-links/100262770.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/berlin-die-rote-front-steht-soeder-fordert-brandmauer-nach-links/100262770.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -299,7 +331,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/merz-junge-union-104.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/merz-junge-union-104.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -309,7 +342,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/schweitzer-rente-kompromiss-100.html"
+              "link": "https://www.tagesschau.de/inland/schweitzer-rente-kompromiss-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -319,7 +353,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/handel/tabaksteuer-steigt-12-euro-pro-packung-mit-20-zigaretten-a-6b11cf77-0261-4d6c-b600-af3cb822a2cc#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/handel/tabaksteuer-steigt-12-euro-pro-packung-mit-20-zigaretten-a-6b11cf77-0261-4d6c-b600-af3cb822a2cc#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -329,7 +364,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/regionalbahnen-verkehrsminister-bund-muss-mehr-fuer-regionalverkehr-zahlen/100263071.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/regionalbahnen-verkehrsminister-bund-muss-mehr-fuer-regionalverkehr-zahlen/100263071.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -345,11 +381,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/amerika/usa-russland-ukraine-sanktionen-100.html"
+              "link": "https://www.tagesschau.de/ausland/amerika/usa-russland-ukraine-sanktionen-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-sanktionen-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-usa-sanktionen-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -359,11 +397,13 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/litauen-drohne-absturz-ukraine-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/litauen-drohne-absturz-ukraine-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-drohnen-alarm-an-nato-ostflanke-flugobjekt-kam-offenbar-ueber-polen/27982126.html"
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-krieg-drohnen-alarm-an-nato-ostflanke-flugobjekt-kam-offenbar-ueber-polen/27982126.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -373,11 +413,13 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Musks-geopolitischer-Hebel-Gedrosseltes-Starlink-ruettelt-Europa-auf-11491703.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Musks-geopolitischer-Hebel-Gedrosseltes-Starlink-ruettelt-Europa-auf-11491703.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Starlink-in-der-Ukraine-Anordnung-zur-Beschraenkung-kam-wohl-aus-dem-Weissen-Haus-11490146.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Starlink-in-der-Ukraine-Anordnung-zur-Beschraenkung-kam-wohl-aus-dem-Weissen-Haus-11490146.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -387,7 +429,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/europa/ukraine-krieg-angriffe-st-petersburg-100.html"
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-krieg-angriffe-st-petersburg-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -397,7 +440,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/ausland/asien/iran-minab-schule-angriff-100.html"
+              "link": "https://www.tagesschau.de/ausland/asien/iran-minab-schule-angriff-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -407,7 +451,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/angespanntes-verhaeltnis-trump-spricht-wahlempfehlung-fuer-netanjahu-aus/100263085.html"
+              "link": "https://www.handelsblatt.com/politik/international/angespanntes-verhaeltnis-trump-spricht-wahlempfehlung-fuer-netanjahu-aus/100263085.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }
@@ -423,11 +468,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/china-neue-exportkontrollen-fuer-schluesseltechnologien-geplant/100263058.html"
+              "link": "https://www.handelsblatt.com/politik/international/china-neue-exportkontrollen-fuer-schluesseltechnologien-geplant/100263058.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/china-peking-plant-neue-exportkontrollen-fuer-schluesseltechnologien-wie-ki-a-934d9c8c-7092-4e81-9905-9aae499f8498#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/china-peking-plant-neue-exportkontrollen-fuer-schluesseltechnologien-wie-ki-a-934d9c8c-7092-4e81-9905-9aae499f8498#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -437,7 +484,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Bau-von-KI-Rechenzentren-kommt-in-den-USA-ins-Stocken-11491833.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Bau-von-KI-Rechenzentren-kommt-in-den-USA-ins-Stocken-11491833.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -447,7 +495,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Bundesregierung-plant-Kooperation-mit-US-Chiphersteller-Nvidia-11490926.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Bundesregierung-plant-Kooperation-mit-US-Chiphersteller-Nvidia-11490926.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -457,7 +506,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/TSMC-schreibt-weiter-Rekordzahlen-blickt-aber-vorsichtig-in-die-Zukunft-11490124.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/TSMC-schreibt-weiter-Rekordzahlen-blickt-aber-vorsichtig-in-die-Zukunft-11490124.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -467,7 +517,8 @@
           "sources": [
             {
               "source": "DW",
-              "link": "https://www.dw.com/en/eu-promotes-sovereign-trusted-ai-as-it-struggles-to-catch-us-and-china/a-79667770?maca=en-rss-en-bus-2091-rdf"
+              "link": "https://www.dw.com/en/eu-promotes-sovereign-trusted-ai-as-it-struggles-to-catch-us-and-china/a-79667770?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -477,7 +528,8 @@
           "sources": [
             {
               "source": "InformationWeek",
-              "link": "https://www.informationweek.com/it-staffing-careers/2026-tech-company-layoffs"
+              "link": "https://www.informationweek.com/it-staffing-careers/2026-tech-company-layoffs",
+              "ausrichtung": "Mitte"
             }
           ]
         }

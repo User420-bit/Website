@@ -11,19 +11,23 @@
       "sources": [
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/ezb-570.html"
+          "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/ezb-570.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Handelsblatt",
-          "link": "https://www.handelsblatt.com/finanzen/geldpolitik/ezb-notenbank-steuert-auf-dritte-zinserhoehung-im-dezember-zu/100265320.html"
+          "link": "https://www.handelsblatt.com/finanzen/geldpolitik/ezb-notenbank-steuert-auf-dritte-zinserhoehung-im-dezember-zu/100265320.html",
+          "ausrichtung": "Mitte-rechts"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/finanzen/lagarde-ezb-ruecktritt-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/lagarde-ezb-ruecktritt-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/finanzen/boerse/ezb-notenbank-wird-leitzins-wohl-nicht-erhoehen-zinspause-a-2faf7096-4411-4618-98a2-02d290f5069f#ref=rss"
+          "link": "https://www.manager-magazin.de/finanzen/boerse/ezb-notenbank-wird-leitzins-wohl-nicht-erhoehen-zinspause-a-2faf7096-4411-4618-98a2-02d290f5069f#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -35,19 +39,23 @@
       "sources": [
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/volkswagen-milliardenverlust-102.html"
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/volkswagen-milliardenverlust-102.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "DW",
-          "link": "https://www.dw.com/en/volkswagen-logs-q3-operating-loss-of-€5-86-billion-on-porsche-writedown/a-79793796?maca=en-rss-en-bus-2091-rdf"
+          "link": "https://www.dw.com/en/volkswagen-logs-q3-operating-loss-of-€5-86-billion-on-porsche-writedown/a-79793796?maca=en-rss-en-bus-2091-rdf",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "heise",
-          "link": "https://www.heise.de/news/Volkswagen-meldet-5-82-Milliarden-Euro-Quartalsverlust-11504313.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+          "link": "https://www.heise.de/news/Volkswagen-meldet-5-82-Milliarden-Euro-Quartalsverlust-11504313.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Manager Magazin",
-          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-meldet-5-8-milliarden-verlust-a-b8dfcbcd-8aee-4bfd-ba12-60afc4343a6b#ref=rss"
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-meldet-5-8-milliarden-verlust-a-b8dfcbcd-8aee-4bfd-ba12-60afc4343a6b#ref=rss",
+          "ausrichtung": "Mitte"
         }
       ]
     },
@@ -59,11 +67,13 @@
       "sources": [
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/tankrabatt-entlastung-bilanz-100.html"
+          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/tankrabatt-entlastung-bilanz-100.html",
+          "ausrichtung": "Mitte"
         },
         {
           "source": "Tagesschau",
-          "link": "https://www.tagesschau.de/kommentar/tankrabatt-ein-monat-100.html"
+          "link": "https://www.tagesschau.de/kommentar/tankrabatt-ein-monat-100.html",
+          "ausrichtung": "Mitte"
         }
       ]
     }
@@ -79,15 +89,18 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/finanzen/geldpolitik/inflation-anleihemarkt-preist-die-naechste-zinserhoehung-in-den-usa-ein/100265841.html"
+              "link": "https://www.handelsblatt.com/finanzen/geldpolitik/inflation-anleihemarkt-preist-die-naechste-zinserhoehung-in-den-usa-ein/100265841.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "NPR",
-              "link": "https://www.npr.org/2026/10/28/nx-s1-6020425/federal-reserve-interest-rates-inflation"
+              "link": "https://www.npr.org/2026/10/28/nx-s1-6020425/federal-reserve-interest-rates-inflation",
+              "ausrichtung": "Mitte-links"
             },
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/us-notenbank-fed-entscheidet-ueber-zinsen-anleger-erwarten-zinspause-a-5f15c672-d29b-4960-b41e-15bd5e39b0c1#ref=rss"
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/us-notenbank-fed-entscheidet-ueber-zinsen-anleger-erwarten-zinspause-a-5f15c672-d29b-4960-b41e-15bd5e39b0c1#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -97,7 +110,8 @@
           "sources": [
             {
               "source": "NPR",
-              "link": "https://www.npr.org/2026/10/29/nx-s1-6021008/economy-gdp-inflation-midterms-voters-affordability"
+              "link": "https://www.npr.org/2026/10/29/nx-s1-6021008/economy-gdp-inflation-midterms-voters-affordability",
+              "ausrichtung": "Mitte-links"
             }
           ]
         },
@@ -107,7 +121,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/finanzen/dws-offene-immobilienfonds-der-deutsche-bank-tochter-stuerzen-an-der-boerse-ab-a-20b019e2-a1cd-40f4-a069-2b5d887ce3f4#ref=rss"
+              "link": "https://www.manager-magazin.de/finanzen/dws-offene-immobilienfonds-der-deutsche-bank-tochter-stuerzen-an-der-boerse-ab-a-20b019e2-a1cd-40f4-a069-2b5d887ce3f4#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -117,7 +132,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/industrie/vonovia-senkt-prognose-und-setzt-geplante-investitionen-aus-a-636c6174-32db-4f69-bfc8-cac016256680#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/vonovia-senkt-prognose-und-setzt-geplante-investitionen-aus-a-636c6174-32db-4f69-bfc8-cac016256680#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -133,7 +149,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-wie-ola-kaellenius-seine-aufsichtsraete-irritierte-suche-nach-zukuntsstrategie-a-49defe38-49eb-43cd-ad3e-fbade85e6684#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-wie-ola-kaellenius-seine-aufsichtsraete-irritierte-suche-nach-zukuntsstrategie-a-49defe38-49eb-43cd-ad3e-fbade85e6684#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -143,7 +160,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/ford-steigert-gewinn-waehrend-andere-autobauer-leiden-a-64588422-97a4-454c-ab4d-50005505cfdd#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/ford-steigert-gewinn-waehrend-andere-autobauer-leiden-a-64588422-97a4-454c-ab4d-50005505cfdd#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -153,7 +171,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/stellantis-opel-mutter-rutscht-nach-gewinnphase-wieder-in-die-roten-zahlen-a-73672da6-cef2-449d-b905-d96f4158c73c#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/stellantis-opel-mutter-rutscht-nach-gewinnphase-wieder-in-die-roten-zahlen-a-73672da6-cef2-449d-b905-d96f4158c73c#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -163,7 +182,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/VW-startet-Demontage-von-verbrauchten-Autos-11503549.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/VW-startet-Demontage-von-verbrauchten-Autos-11503549.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -173,7 +193,8 @@
           "sources": [
             {
               "source": "DW",
-              "link": "https://www.dw.com/en/eu-s-made-in-europe-push-unnerves-global-auto-suppliers/a-79732579?maca=en-rss-en-bus-2091-rdf"
+              "link": "https://www.dw.com/en/eu-s-made-in-europe-push-unnerves-global-auto-suppliers/a-79732579?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -183,7 +204,8 @@
           "sources": [
             {
               "source": "NPR",
-              "link": "https://www.npr.org/2026/10/29/nx-s1-6008066/automakers-inflation-tariffs-chips-diesel-earnings"
+              "link": "https://www.npr.org/2026/10/29/nx-s1-6008066/automakers-inflation-tariffs-chips-diesel-earnings",
+              "ausrichtung": "Mitte-links"
             }
           ]
         }
@@ -199,7 +221,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-netzausbau-koennte-laut-studie-66-milliarden-euro-guenstiger-erfolgen/100265379.html"
+              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-netzausbau-koennte-laut-studie-66-milliarden-euro-guenstiger-erfolgen/100265379.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -209,7 +232,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-netanjahu-lager-spricht-von-wahlbetrug-ohne-beweise/100136895.html"
+              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-netanjahu-lager-spricht-von-wahlbetrug-ohne-beweise/100136895.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -219,7 +243,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/finanzen/mittags-mb-autoreparaturen-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/mittags-mb-autoreparaturen-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -229,7 +254,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Der-naechste-Engpass-fuer-Elektronik-in-Europa-Leiterplatten-werden-knapp-11503725.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Der-naechste-Engpass-fuer-Elektronik-in-Europa-Leiterplatten-werden-knapp-11503725.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -245,7 +271,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/unternehmen/dienstleister/tarifrunde-condor-piloten-akzeptieren-verzicht-auf-gehaltserhoehung-bis-2028/100265959.html"
+              "link": "https://www.handelsblatt.com/unternehmen/dienstleister/tarifrunde-condor-piloten-akzeptieren-verzicht-auf-gehaltserhoehung-bis-2028/100265959.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -255,7 +282,8 @@
           "sources": [
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/inland/innenpolitik/linnemann-kuerzungen-pflegeleistungen-100.html"
+              "link": "https://www.tagesschau.de/inland/innenpolitik/linnemann-kuerzungen-pflegeleistungen-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -265,7 +293,8 @@
           "sources": [
             {
               "source": "BBC",
-              "link": "https://www.bbc.co.uk/news/articles/c6m24klyjr8no?at_medium=RSS&at_campaign=rss"
+              "link": "https://www.bbc.co.uk/news/articles/c6m24klyjr8no?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -275,7 +304,8 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/weil-gotshal-manges-warum-die-us-grosskanzlei-vor-der-abwicklung-steht-a-ea839d3a-2082-4df8-93a2-fd8266c0e154#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/weil-gotshal-manges-warum-die-us-grosskanzlei-vor-der-abwicklung-steht-a-ea839d3a-2082-4df8-93a2-fd8266c0e154#ref=rss",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -291,19 +321,23 @@
           "sources": [
             {
               "source": "Manager Magazin",
-              "link": "https://www.manager-magazin.de/unternehmen/alphabet-hohe-ki-ausgaben-belasten-ergebnis-aktie-faellt-zweistellig-a-cfde9073-28f4-401f-91ae-318f15124eb6#ref=rss"
+              "link": "https://www.manager-magazin.de/unternehmen/alphabet-hohe-ki-ausgaben-belasten-ergebnis-aktie-faellt-zweistellig-a-cfde9073-28f4-401f-91ae-318f15124eb6#ref=rss",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Microsoft-mit-erneut-deutlich-gesteigerten-Einnahmen-Aktie-macht-kleinen-Sprung-11503905.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Microsoft-mit-erneut-deutlich-gesteigerten-Einnahmen-Aktie-macht-kleinen-Sprung-11503905.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-alphabet-kuenstliche-intelligenz-cloud-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-alphabet-kuenstliche-intelligenz-cloud-100.html",
+              "ausrichtung": "Mitte"
             },
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-alphabet-enttaeuscht-microsoft-ueberzeugt-mit-starkem-azure-wachstum/100265970.html"
+              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-alphabet-enttaeuscht-microsoft-ueberzeugt-mit-starkem-azure-wachstum/100265970.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -313,7 +347,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Samsung-erzielt-Rekordgewinn-dank-KI-Boom-11503953.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Samsung-erzielt-Rekordgewinn-dank-KI-Boom-11503953.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -323,7 +358,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/technik/it-internet/kuenstliche-intelligenz-schwarz-gruppe-investiert-gross-in-ki-start-up-cohere/100265983.html"
+              "link": "https://www.handelsblatt.com/technik/it-internet/kuenstliche-intelligenz-schwarz-gruppe-investiert-gross-in-ki-start-up-cohere/100265983.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -333,7 +369,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/technik/ki/ki-briefing/ki-briefing-diese-zahl-im-anthropic-prospekt-zeigt-das-dilemma-der-branche/100264906.html"
+              "link": "https://www.handelsblatt.com/technik/ki/ki-briefing/ki-briefing-diese-zahl-im-anthropic-prospekt-zeigt-das-dilemma-der-branche/100264906.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -343,7 +380,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Gemini-Argon-war-gestern-jetzt-kommt-Carbon-11503849.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Gemini-Argon-war-gestern-jetzt-kommt-Carbon-11503849.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -353,7 +391,8 @@
           "sources": [
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Mistral-Large-4-Modellgewichte-veroeffentlicht-Coding-Leistung-verbessert-11504965.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Mistral-Large-4-Modellgewichte-veroeffentlicht-Coding-Leistung-verbessert-11504965.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         }
@@ -369,7 +408,8 @@
           "sources": [
             {
               "source": "SAN",
-              "link": "https://san.com/cc/trump-weighs-new-iran-strikes-as-hegseth-fires-pentagons-top-military-planner/"
+              "link": "https://san.com/cc/trump-weighs-new-iran-strikes-as-hegseth-fires-pentagons-top-military-planner/",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -379,7 +419,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/verteidigung-wie-der-mangel-an-patriot-flugkoerpern-die-ukraine-bedroht/100265699.html"
+              "link": "https://www.handelsblatt.com/politik/international/verteidigung-wie-der-mangel-an-patriot-flugkoerpern-die-ukraine-bedroht/100265699.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         },
@@ -389,11 +430,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/deutschland/sabotage-zwei-deutsche-nach-starlink-anschlag-in-auslieferungshaft/100265978.html"
+              "link": "https://www.handelsblatt.com/politik/deutschland/sabotage-zwei-deutsche-nach-starlink-anschlag-in-auslieferungshaft/100265978.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "heise",
-              "link": "https://www.heise.de/news/Litauen-Mutmassliche-Starlink-Saboteure-in-Deutschland-in-Haft-11505027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+              "link": "https://www.heise.de/news/Litauen-Mutmassliche-Starlink-Saboteure-in-Deutschland-in-Haft-11505027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -403,11 +446,13 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/eu-kanada-gipfel-allianz-ja-assoziierte-mitgliedschaft-nein/100265054.html"
+              "link": "https://www.handelsblatt.com/politik/international/eu-kanada-gipfel-allianz-ja-assoziierte-mitgliedschaft-nein/100265054.html",
+              "ausrichtung": "Mitte-rechts"
             },
             {
               "source": "Tagesschau",
-              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/kanada-eu-allianz-folgen-verbraucher-100.html"
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/kanada-eu-allianz-folgen-verbraucher-100.html",
+              "ausrichtung": "Mitte"
             }
           ]
         },
@@ -417,7 +462,8 @@
           "sources": [
             {
               "source": "Handelsblatt",
-              "link": "https://www.handelsblatt.com/politik/international/verteidigung-litauen-will-2032-wieder-allgemeine-wehrpflicht-einfuehren/100265971.html"
+              "link": "https://www.handelsblatt.com/politik/international/verteidigung-litauen-will-2032-wieder-allgemeine-wehrpflicht-einfuehren/100265971.html",
+              "ausrichtung": "Mitte-rechts"
             }
           ]
         }

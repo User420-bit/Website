@@ -273,7 +273,9 @@ const contact = defineCollection({
 /**
  * Newsletter: je Ausgabe eine Datei `src/content/newsletter/<YYYY-MM-DD>.json`.
  * Angelegt vom n8n-Workflow „Digest“ nach jedem Lauf, mit der Antwort von
- * Claude im Schema dieses Workflows, unverändert, plus `model`. Das Datum der
+ * Claude im Schema dieses Workflows, unverändert, plus `model` und je Quelle
+ * `ausrichtung`. Die Ausrichtung stuft der Workflow je Redaktion ein, nicht je
+ * Artikel; Ausgaben vor dem 2026-10-29 tragen sie nachträglich. Das Datum der
  * Ausgabe kommt aus dem Dateinamen (`ausgabeDatum` in `src/lib/site.ts`), nicht
  * aus `digestDate`: Das schreibt das Modell als freien Text.
  * `emoji` wird gelesen, aber nicht gezeigt (DESIGN.md, Hausschrift ohne Emojis).
@@ -281,6 +283,7 @@ const contact = defineCollection({
 const quelle = z.object({
   source: z.string().min(1),
   link: z.url({ protocol: /^https?$/ }),
+  ausrichtung: z.enum(['links', 'Mitte-links', 'Mitte', 'Mitte-rechts', 'rechts']).optional(),
 })
 
 const newsletter = defineCollection({
