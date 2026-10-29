@@ -1,0 +1,427 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Donnerstag, 29. Oktober 2026",
+  "summary": "Die EZB hält den Leitzins bei 2,5 Prozent, Christine Lagarde deutet aber schon eine Erhöhung im Dezember an. Zugleich bringen die Quartalszahlen Milliardenverluste bei VW und Enttäuschung bei Alphabet.",
+  "topThree": [
+    {
+      "title": "EZB lässt Leitzins bei 2,5 Prozent – Lagarde geht im Februar",
+      "briefing": "Die Europäische Zentralbank (EZB) hält den Leitzins (Zins, zu dem sich Banken bei der Notenbank Geld leihen) wie erwartet bei 2,5 Prozent. Laut Handelsblatt deutet EZB-Chefin Christine Lagarde ungewohnt deutlich eine dritte Zinserhöhung im Dezember an. Zugleich verlässt Lagarde die Notenbank vorzeitig im Februar 2027, statt wie geplant im Oktober 2027.",
+      "impact": "Wer einen Kredit mit variablem Zins hat, zahlt nach einer Erhöhung mehr, Bauzinsen folgen den Markterwartungen. Anleihekurse fallen bei steigenden Zinsen in der Regel.",
+      "tag": "Geldpolitik",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/ezb-570.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/geldpolitik/ezb-notenbank-steuert-auf-dritte-zinserhoehung-im-dezember-zu/100265320.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/lagarde-ezb-ruecktritt-100.html"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/ezb-notenbank-wird-leitzins-wohl-nicht-erhoehen-zinspause-a-2faf7096-4411-4618-98a2-02d290f5069f#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Volkswagen verbucht 5,8 Milliarden Euro Verlust im dritten Quartal",
+      "briefing": "Volkswagen meldet für das dritte Quartal einen Konzernverlust von rund 5,8 Milliarden Euro. Ursachen sind eine Porsche-Abschreibung (Wertberichtigung auf den Buchwert), schwache China-Geschäfte und Kosten für den Konzernumbau. DW nennt es das schwächste Quartal seit dem Dieselskandal 2015, die Aktie stieg trotzdem.",
+      "impact": "Für Beschäftigte und Zulieferer bleibt der Sanierungskurs umstritten, der Streit um den Umbau geht weiter. Anleger reagierten mit Kursgewinnen, weil der Verlust teils angekündigt war.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/volkswagen-milliardenverlust-102.html"
+        },
+        {
+          "source": "DW",
+          "link": "https://www.dw.com/en/volkswagen-logs-q3-operating-loss-of-€5-86-billion-on-porsche-writedown/a-79793796?maca=en-rss-en-bus-2091-rdf"
+        },
+        {
+          "source": "heise",
+          "link": "https://www.heise.de/news/Volkswagen-meldet-5-82-Milliarden-Euro-Quartalsverlust-11504313.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-meldet-5-8-milliarden-verlust-a-b8dfcbcd-8aee-4bfd-ba12-60afc4343a6b#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Tankrabatt: Ob die Ersparnis an der Zapfsäule ankommt, ist umstritten",
+      "briefing": "Seit dem 1. Oktober gilt die Neuauflage des Tankrabatts, ein staatlicher Preisnachlass auf Kraftstoffe an der Zapfsäule. Laut Experten geben die Mineralölkonzerne die Ersparnis nur zum Teil an Autofahrer weiter, der Branchenverband widerspricht. Eine Tagesschau-Kommentierung sieht darin eine Beruhigungspille vor der Wahl.",
+      "impact": "Pendler und Lieferverkehr spüren die Entlastung nur, wenn der Rabatt an der Tankstelle sichtbar weitergegeben wird. Die hohen Spritpreise bleiben damit ein Kostenfaktor für Mobilität und Logistik.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/verbraucher/tankrabatt-entlastung-bilanz-100.html"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/kommentar/tankrabatt-ein-monat-100.html"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Märkte & Geldanlage",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Fed hält Zinsen, Markt rechnet mit Erhöhung im Dezember",
+          "oneLine": "US-Notenbank lässt Leitzins trotz hoher Inflation stehen, Anleihemarkt preist die nächste Erhöhung ein.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/geldpolitik/inflation-anleihemarkt-preist-die-naechste-zinserhoehung-in-den-usa-ein/100265841.html"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/28/nx-s1-6020425/federal-reserve-interest-rates-inflation"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/politik/weltwirtschaft/us-notenbank-fed-entscheidet-ueber-zinsen-anleger-erwarten-zinspause-a-5f15c672-d29b-4960-b41e-15bd5e39b0c1#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "US-Wirtschaft wächst um 3,4 Prozent – Lebenskosten drücken",
+          "oneLine": "Das BIP stieg im dritten Quartal annualisiert um 3,4 Prozent, viele Haushalte kämpfen trotzdem mit Preisen.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/29/nx-s1-6021008/economy-gdp-inflation-midterms-voters-affordability"
+            }
+          ]
+        },
+        {
+          "title": "Offene Immobilienfonds der DWS stürzen an der Börse ab",
+          "oneLine": "Anlegervertrauen in offene Immobilienfonds schwindet, laut Finanztip-Daten ist die Lage kritisch.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/dws-offene-immobilienfonds-der-deutsche-bank-tochter-stuerzen-an-der-boerse-ab-a-20b019e2-a1cd-40f4-a069-2b5d887ce3f4#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Vonovia senkt Ziele bis 2028 und setzt Investitionen aus",
+          "oneLine": "Der Zinsanstieg ist der Grund, die Vonovia-Aktie fiel nach der Prognosesenkung.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/vonovia-senkt-prognose-und-setzt-geplante-investitionen-aus-a-636c6174-32db-4f69-bfc8-cac016256680#ref=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auto & Industrie",
+      "emoji": "🚗",
+      "items": [
+        {
+          "title": "Mercedes-Chef droht mit Werksschließungen, Aufsichtsrat irritiert",
+          "oneLine": "Der Konzern steckt in der Krise, Källenius sprach im Aufsichtsrat vor allem über Zukunftsvisionen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-benz-wie-ola-kaellenius-seine-aufsichtsraete-irritierte-suche-nach-zukuntsstrategie-a-49defe38-49eb-43cd-ad3e-fbade85e6684#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Ford übertrifft Gewinnerwartungen und hebt Prognose an",
+          "oneLine": "Trotz höherer Rohstoffkosten steigt der Gewinn im dritten Quartal, Ford setzt sich von Konkurrenten ab.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/ford-steigert-gewinn-waehrend-andere-autobauer-leiden-a-64588422-97a4-454c-ab4d-50005505cfdd#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Stellantis rutscht im dritten Quartal wieder in die Verluste",
+          "oneLine": "Die Abkehr vom Elektrokurs in den USA belastet den Opel-Mutterkonzern deutlich.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/stellantis-opel-mutter-rutscht-nach-gewinnphase-wieder-in-die-roten-zahlen-a-73672da6-cef2-449d-b905-d96f4158c73c#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "VW startet Demontage verbrauchter Autos im Werk Zwickau",
+          "oneLine": "Das Werk zerlegt ältere Fahrzeuge, offen ist, ob das den bedrohten Standort sichert.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/VW-startet-Demontage-von-verbrauchten-Autos-11503549.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "EU-„Made in Europe“ verunsichert globale Autozulieferer",
+          "oneLine": "Der Schutz vor chinesischer Konkurrenz trifft Partner von der Türkei bis Südkorea, Milliarden Euro Handel stehen auf dem Spiel.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/eu-s-made-in-europe-push-unnerves-global-auto-suppliers/a-79732579?maca=en-rss-en-bus-2091-rdf"
+            }
+          ]
+        },
+        {
+          "title": "Zölle, Diesel und Chips verteuern Autoproduktion in den USA",
+          "oneLine": "US-Hersteller zahlen mehr für Chips, Stahl, Kupfer und Transportdiesel als zuvor.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/29/nx-s1-6008066/automakers-inflation-tariffs-chips-diesel-earnings"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Energie & Preise",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Netzausbau könnte laut Studie 66 Milliarden Euro günstiger werden",
+          "oneLine": "Eine Untersuchung für das Handelsblatt zeigt Sparpotenzial bei der Energiewende, Netzanschlüsse werden knapp.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/energie/energie-netzausbau-koennte-laut-studie-66-milliarden-euro-guenstiger-erfolgen/100265379.html"
+            }
+          ]
+        },
+        {
+          "title": "Iran meldet brennende Tanker in der Straße von Hormus",
+          "oneLine": "Die Meerenge ist ein zentraler Engpass für Öltransporte, die USA loten laut Bericht Verhandlungen aus.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-netanjahu-lager-spricht-von-wahlbetrug-ohne-beweise/100136895.html"
+            }
+          ]
+        },
+        {
+          "title": "Autoreparaturen werden teurer: Ersatzteile und Werkstattlöhne steigen",
+          "oneLine": "Versicherer erhöhen regelmäßig die Preise, auch wenn Autofahrer unfallfrei unterwegs sind.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/mittags-mb-autoreparaturen-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Leiterplatten werden in Europa knapp",
+          "oneLine": "Wenige Hersteller in Europa, dazu drohen Engpässe bei Epoxidharz und Glasgewebe als Vorprodukten.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Der-naechste-Engpass-fuer-Elektronik-in-Europa-Leiterplatten-werden-knapp-11503725.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arbeit & Soziales",
+      "emoji": "👷",
+      "items": [
+        {
+          "title": "Condor-Piloten verzichten auf Gehaltserhöhung bis Oktober 2028",
+          "oneLine": "Der neue Vertrag bringt dauerhafte Verbesserungen, setzt aber einen Kontrast zu den Lufthansa-Verhandlungen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/dienstleister/tarifrunde-condor-piloten-akzeptieren-verzicht-auf-gehaltserhoehung-bis-2028/100265959.html"
+            }
+          ]
+        },
+        {
+          "title": "Linnemann schließt Kürzungen bei der Pflegeversicherung nicht aus",
+          "oneLine": "Angesichts steigender Kosten müssten rund zehn Prozent eingespart werden, Patientenschützer warnen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/linnemann-kuerzungen-pflegeleistungen-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Microsoft bietet 60.000 Beschäftigten Abfindungen an",
+          "oneLine": "Der Konzern will Kosten senken, kurz nach Ankündigung von Stellenstreichungen steigt der Gewinn dennoch.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/c6m24klyjr8no?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "US-Großkanzlei Weil Gotshal steht vor der Abwicklung",
+          "oneLine": "Die Kanzlei verlor den Kampf um Talente, Gehaltsanreize gelten als mitverantwortlich.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/weil-gotshal-manges-warum-die-us-grosskanzlei-vor-der-abwicklung-steht-a-ea839d3a-2082-4df8-93a2-fd8266c0e154#ref=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech & KI",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Alphabet und Microsoft: Zwei Seiten des KI-Booms",
+          "oneLine": "Alphabet verfehlt Erwartungen wegen hoher KI-Ausgaben, Microsoft steigert Gewinn dank Cloud-Geschäft.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/alphabet-hohe-ki-ausgaben-belasten-ergebnis-aktie-faellt-zweistellig-a-cfde9073-28f4-401f-91ae-318f15124eb6#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Microsoft-mit-erneut-deutlich-gesteigerten-Einnahmen-Aktie-macht-kleinen-Sprung-11503905.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-alphabet-kuenstliche-intelligenz-cloud-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-alphabet-enttaeuscht-microsoft-ueberzeugt-mit-starkem-azure-wachstum/100265970.html"
+            }
+          ]
+        },
+        {
+          "title": "Samsung erzielt Rekordgewinn dank KI-Boom",
+          "oneLine": "Der Betriebsgewinn hat sich fast verneunfacht, Anleger reagierten dennoch enttäuscht.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Samsung-erzielt-Rekordgewinn-dank-KI-Boom-11503953.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Schwarz-Gruppe investiert groß in KI-Start-up Cohere",
+          "oneLine": "Cohere setzt auf Unternehmenskunden statt Massenmarkt, die Beteiligung soll weltweites Wachstum finanzieren.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/technik/it-internet/kuenstliche-intelligenz-schwarz-gruppe-investiert-gross-in-ki-start-up-cohere/100265983.html"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic-Prospekt zeigt Dilemma der KI-Branche",
+          "oneLine": "Hoffnung auf KI-Gewinne steht gegen Zweifel an den Milliardeninvestitionen, wie Googles Zahlen zeigen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/technik/ki/ki-briefing/ki-briefing-diese-zahl-im-anthropic-prospekt-zeigt-das-dilemma-der-branche/100264906.html"
+            }
+          ]
+        },
+        {
+          "title": "Google startet Sprachmodell Gemini 4 Carbon",
+          "oneLine": "Nur vier Wochen nach Gemini Argon, das Modell wird als starker Exploit-Experte beschrieben.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Gemini-Argon-war-gestern-jetzt-kommt-Carbon-11503849.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Mistral veröffentlicht Gewichte seines Modells Large 4",
+          "oneLine": "Das europäische KI-Flaggschiff soll nach drei Wochen Training beim Programmieren besser geworden sein.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Mistral-Large-4-Modellgewichte-veroeffentlicht-Coding-Leistung-verbessert-11504965.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Sicherheit",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Trump erwägt neue Iran-Angriffe nach den Midterms",
+          "oneLine": "Laut Bericht prüft die US-Regierung weitere Militärschläge, zugleich wurde der oberste Militärplaner entlassen.",
+          "sources": [
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/trump-weighs-new-iran-strikes-as-hegseth-fires-pentagons-top-military-planner/"
+            }
+          ]
+        },
+        {
+          "title": "Mangel an Patriot-Flugkörpern bedroht die Ukraine",
+          "oneLine": "Russland greift täglich mit Raketen an, nur zwei Länder bauen die nötigen Abwehrflugkörper.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/verteidigung-wie-der-mangel-an-patriot-flugkoerpern-die-ukraine-bedroht/100265699.html"
+            }
+          ]
+        },
+        {
+          "title": "Starlink-Anschläge: Zwei Deutsche in Auslieferungshaft",
+          "oneLine": "Zwei 19-Jährige sitzen nach dem Brandanschlag auf acht Starlink-Antennen bei Sofia in Haft.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/sabotage-zwei-deutsche-nach-starlink-anschlag-in-auslieferungshaft/100265978.html"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Litauen-Mutmassliche-Starlink-Saboteure-in-Deutschland-in-Haft-11505027.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "EU und Kanada verzichten vorerst auf assoziierte Mitgliedschaft",
+          "oneLine": "Mehrere EU-Regierungen stoppten von der Leyens Vorstoß, die Zusammenarbeit bei Handel und Militär läuft weiter.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/eu-kanada-gipfel-allianz-ja-assoziierte-mitgliedschaft-nein/100265054.html"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/kanada-eu-allianz-folgen-verbraucher-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Litauen will 2032 wieder allgemeine Wehrpflicht einführen",
+          "oneLine": "Alle jungen Männer sollen eine militärische Grundausbildung erhalten, 2015 gab es bereits eine Teilwiedereinführung.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/verteidigung-litauen-will-2032-wieder-allgemeine-wehrpflicht-einfuehren/100265971.html"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
