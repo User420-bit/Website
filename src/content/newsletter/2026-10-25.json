@@ -1,0 +1,485 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Sonntag, 25. Oktober 2026",
+  "summary": "Die Notenbanken Fed und EZB entscheiden diese Woche über Zinsen, während hohe Ölpreise Dax und Dow belasten. Dazu kommen Stellenabbau bei Konzernen, ein Tarifstreit bei VW und Energiekosten, die Haushalte vor dem Winter spüren.",
+  "topThree": [
+    {
+      "title": "Fed und EZB entscheiden diese Woche über weitere Zinsschritte",
+      "briefing": "Die US-Notenbank Fed (Federal Reserve) und die Europäische Zentralbank (EZB) treffen diese Woche ihre Zinsentscheidungen. Im Raum steht, ob die Zinsen weiter steigen, vor dem Hintergrund von Inflation, Schuldenkrise und KI-Risiken.",
+      "impact": "Steigende Leitzinsen verteuern Baukredite und Dispo, Tagesgeld und Festgeld bringen dafür mehr Zinsen.",
+      "tag": "Geldpolitik",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/politik/deutschland/notenbanken-in-der-klemme-zwischen-inflation-schuldenkrise-und-ki-risiken-a-9579731f-49ab-4ff0-9505-556103530436#ref=rss"
+        }
+      ]
+    },
+    {
+      "title": "Ölpreise belasten Börse, Bundesregierung gibt weitere Ölreserve frei",
+      "briefing": "Hohe Ölpreise und Sorgen über KI-Investitionen drückten am Freitag auf Dax und Dow Jones. Die Bundesregierung gibt einen weiteren Teil der Ölreserve (staatlich gehaltene Vorräte für Krisenfälle) frei. Steigende Spritpreise machen E-Autos gefragter, wie eine Handelsblatt-Marktstudie zeigt.",
+      "impact": "Höhere Sprit- und Heizölkosten belasten den Alltag, E-Autos werden durch die Nachfrage teurer. Der Goldpreis hängt laut Handelsblatt inzwischen am Ölpreis, obwohl Anleger in sichere Anlagen flüchten.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-faellt-nach-kursrutsch-an-der-nasdaq-meta-schockt-mit-ki-investitionen-a-e75093a6-062b-4150-9e3e-8cb77ca05596#ref=rss"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/bundespolitik-spd-politikerin-kritisiert-auftritt-des-audi-chefs-mit-trump-scharf/100137034.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/marktstudie-neuwagen-wegen-hoher-nachfrage-e-autos-werden-teurer/100264733.html"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/anlagestrategie/kolumnen/geldanlage-der-goldpreis-haengt-jetzt-vom-oelpreis-ab/100264148.html"
+        }
+      ]
+    },
+    {
+      "title": "VW-Vorstand unter Druck: IG Metall droht mit Arbeitskampf",
+      "briefing": "Die IG Metall verlangt von Volkswagen, die Kündigung von zehn Tarifverträgen zurückzunehmen, und stellt dem Vorstand ein Ultimatum. VW will Kosten weiter senken und über Transfergesellschaften (Auffanggesellschaften für Beschäftigte) verhandeln. Die Gewerkschaft erteilt diesem Plan eine Absage.",
+      "impact": "Wer VW-Aktien hält, muss mit Unsicherheit über Kosten, Stellen und Produktion rechnen. Ein Arbeitskampf würde auch Zulieferer und Lieferketten treffen.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-ig-metall-stellt-vorstand-ultimatum-und-droht-mit-arbeitskampf-a-cee12dd0-dc00-4345-9f6f-64c6108eacdd#ref=rss"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-in-der-krise-bei-vw-beginnt-die-naechste-runde-der-sondierungen-a-ecdf761a-b4fc-4ce6-9c37-4eb75b3c83a2#ref=rss"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Jobs und Konzernumbau",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Generali macht drei deutsche Standorte dicht",
+          "oneLine": "Der Versicherer streicht in Deutschland 800 Stellen, Abbau über Rente und natürliche Fluktuation.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/dienstleister/generali-versicherer-macht-drei-deutsche-standorte-dicht-a-a2df5727-5e6f-426a-b305-4ea41ebbd58f#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Volvo: Aktie nach Quartalsverlust auf Rekordtief",
+          "oneLine": "Volvo rutscht im dritten Quartal in die Verlustzone und streicht weitere 2500 Jobs.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volvo-geely-tochter-streicht-weitere-2500-jobs-a-28d858f1-ebdc-4aec-a5a3-addff539c4d0#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Netflix streicht sechs Prozent der Belegschaft",
+          "oneLine": "Das Streamingunternehmen reagiert auf geringeres Umsatzwachstum und baut sein Programmgeschäft um.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/25/nx-s1-6009274/netflix-lays-off-6-of-workforce-amidst-slowing-growth"
+            }
+          ]
+        },
+        {
+          "title": "Qualcomm plant leistungsorientierte Kündigungen im November",
+          "oneLine": "Der Chiphersteller hat Mitarbeitende über weltweite Stellenstreichungen informiert, das Ausmaß ist offen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Qualcomm-plant-im-November-offenbar-weltweit-leistungsorientierte-Kuendigungen-11497644.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Bosch: 62.500 Beschäftigte wechseln in neue Tochtergesellschaften",
+          "oneLine": "Der Konzernumbau soll die Arbeitsbedingungen gleich lassen, Mobilität bleibt größter Bereich.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Bosch-ordnet-Konzern-neu-Mobilitaet-bleibt-groesster-Bereich-11497706.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Firmen halten Neueinstellungen vor UK-Budget zurück",
+          "oneLine": "Britische Unternehmen wollen sinkende Arbeitskosten im Oktober-Budget sehen, bevor sie neu einstellen.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/c62kep355q02o?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Märkte und Übernahmen",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "BASF erhöht laut Berichten Gebot für Evonik auf elf Milliarden",
+          "oneLine": "Der Chemiekonzern will Evonik übernehmen, die Evonik-Aktie springt nach den Berichten deutlich nach oben.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/basf-chemiekonzern-erhoeht-offenbar-angebot-fuer-evonik-aktie-mit-kurssprung-a-c1e1215e-b893-423e-bc19-c2a03f91832e#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Frasers übernimmt Mehrheit bei Hugo Boss",
+          "oneLine": "Die britische Frasers Group hält nach gescheitertem Übernahmeangebot nun mehr als die Hälfte der Aktien.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/uebernahme-sportartikel-haendler-frasers-uebernimmt-mehrheit-bei-hugo-boss/100264800.html"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/hugo-boss-frasers-uebernimmt-mehrheit-am-modekonzern-a-c92f85f4-a4a9-4713-a1ad-e6f5ffc759f2#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Gucci-Flaute bremst Luxuskonzern Kering",
+          "oneLine": "Gucci verliert Kunden vor allem in China, Kering schließt bis Jahresende 125 Filialen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/gucci-flaute-bei-edelmarke-bremst-luxusgueterkonzern-kering-a-21c75f75-23d3-40f2-9793-83f05a2e02d0#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "SK Hynix legt US-Börsengang seiner Chipsparte auf Eis",
+          "oneLine": "Der südkoreanische Chipriese reagiert auf Sorgen über hohe KI-Investitionen im Sektor.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/sk-hynix-chipriese-sagt-boersengang-seiner-chip-sparte-in-den-usa-ab-a-657a2c87-be9b-4612-9171-b2d1b7a74b2f#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Moderna-Aktie fällt nach enttäuschenden Impfstoffdaten",
+          "oneLine": "Vorab veröffentlichte Studiendaten zum Hautkrebs-Impfstoff bleiben hinter den hohen Erwartungen zurück.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/pharma/moderna-aktie-mit-kursrutsch-studie-zu-hautkrebs-impfstoff-enttaeuscht-anleger-a-5d000797-f746-4715-bd9e-973e47ce8e7e#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic gründet Beratung in Europa, Accenture unter Druck",
+          "oneLine": "Der KI-Anbieter steigt ins Beratungsgeschäft ein, das bislang Accenture bei Industriekunden dominiert.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/anthropic-vorstoss-in-die-beratung-setzt-accenture-unter-druck-a-a6c0612a-737c-46f0-8b24-ee0888e87a21#ref=rss"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Energie und Kosten",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Heizölkosten in Großbritannien steigen vor dem Winter stark",
+          "oneLine": "Orte ohne Gasnetz zahlen laut BBC mehr als das Doppelte für Heizöl, was Haushalte belastet.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/c6n8de1jgrdvo?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "Britischer Netzbetreiber sichert Stromversorgung im Winter zu",
+          "oneLine": "Der National Energy System Operator erklärt nach Bedenken seiner Ingenieure, die Lichter bleiben an.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cmy56q2n1veqo?at_medium=RSS&at_campaign=rss"
+            }
+          ]
+        },
+        {
+          "title": "US-Haushalte: Stromrechnung frisst Lebensmittelbudget",
+          "oneLine": "Fast 60 Prozent der Amerikaner mussten laut Consumer Reports bei anderen Ausgaben sparen, um Strom zu zahlen.",
+          "sources": [
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/americans-electric-bills-are-eating-up-their-grocery-budgets/"
+            }
+          ]
+        },
+        {
+          "title": "Europa bei Energie noch abhängig von Russland",
+          "oneLine": "Die Abkopplung ist teilweise gelungen, bei Öl und Uran bestehen alte Abhängigkeiten fort.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/abhaengigkeit-russische-energie-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Raffinerien: Regierung startet Dialog ohne Zeitplan",
+          "oneLine": "Wirtschaftsministerin Reiche will Raffineriekapazität sichern, konkrete Summen oder Maßnahmen fehlen bislang.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Raffineriestrategie-Bundesregierung-will-deutsche-Standorte-halten-11498450.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/raffineriestrategie-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Potsdam bohrt über einen Kilometer tief für Erdwärme",
+          "oneLine": "Das Projekt soll künftig Tausende Haushalte mit Wärme versorgen, birgt aber technische Risiken.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/technologie/erdwaerme-waermeversorgung-heizen-100.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik und Krisen",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Ukraine: Starlink läuft wieder stabil, Streit um Nutzung",
+          "oneLine": "Kiew meldet stabile Satellitenverbindung, Musk wirft der Ukraine Missbrauch für Angriffe vor.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/amerika/musk-starlink-ukraine-102.html"
+            }
+          ]
+        },
+        {
+          "title": "Israel riegelt Westjordanland am Wahltag ab",
+          "oneLine": "Die Armee schließt vor der Parlamentswahl alle Übergänge zum Palästinensergebiet, wie das Militär mitteilt.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/israel-westjordanland-lockdown-parlamentswahlen-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Gaza: Welternährungsprogramm kürzt Lebensmittellieferungen",
+          "oneLine": "Weniger Geld der Geber zwingt das WFP zu Kürzungen, eine neue Ernährungskrise droht.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/gaza-ernaehrung-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Serbien: Hohe Wahlbeteiligung und Manipulationsvorwürfe",
+          "oneLine": "Die Studentenbewegung fordert Präsident Vucic heraus, der Ausgang der Parlamentswahl ist offen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/serbien-wahl-update-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Brasilien wählt: Lula gegen Flávio Bolsonaro",
+          "oneLine": "Die Stichwahl entscheidet über den Kurs der größten Volkswirtschaft Lateinamerikas.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/lateinamerika-wahllokale-geoeffnet-brasilien-waehlt-praesidenten/100264721.html"
+            }
+          ]
+        },
+        {
+          "title": "Proteste in Europa: Ausschreitungen trotz friedlicher Demos",
+          "oneLine": "Demonstranten fordern bessere Bildung und wehren sich gegen hohe Lebenshaltungskosten, es gibt Festnahmen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/proteste-frankreich-spanien-italien-protugal-albanien-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/demonstrationen-ausschreitungen-bei-protesten-in-europaeischen-laendern/100264771.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Politik und Wahlen",
+      "emoji": "🏛️",
+      "items": [
+        {
+          "title": "Audi baut erstes US-Werk, Döllner tritt bei Trump auf",
+          "oneLine": "Audi kündigt ein Werk in Georgia an, die IG Metall spricht von Wahlkampfhilfe für Trump.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/amerika/audi-usa-trump-100.html"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-trump-bestaetigt-handelsblatt-bericht-audi-baut-werk-in-den-usa/100264447.html"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Audi-Chef-verteidigt-Werks-Plaene-in-den-USA-11499465.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/audi-doellner-bricht-konzernregeln-bei-trumps-wahlkampfauftritt-in-georgia-a-7b458c84-23f5-4e98-b0f9-55372026f97b#ref=rss"
+            }
+          ]
+        },
+        {
+          "title": "Obama kritisiert Trump vor den Midterms",
+          "oneLine": "Der frühere Präsident wirft Trump Korruption vor, die Demokraten hoffen auf einen Sieg bei den Zwischenwahlen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/amerika/usa-trump-wahl-102.html"
+            }
+          ]
+        },
+        {
+          "title": "Umfrage: Mehrheit erwartet vorzeitiges Ende der Koalition",
+          "oneLine": "Streit um Reformen, Haushalt und den Umgang mit Linken und AfD belastet Schwarz-Rot.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/schwarz-rot-in-der-krise-umfrage-mehrheit-rechnet-mit-vorzeitigem-ende-der-koalition/100264798.html"
+            }
+          ]
+        },
+        {
+          "title": "CSU-Parteitag: Merz lässt Präsidentinnen-Frage offen",
+          "oneLine": "Der Kanzler begrüßt Aigner herzlich, eine Antwort zur möglichen Kandidatur bleibt aber aus.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/csu-parteitag-merz-106.html"
+            }
+          ]
+        },
+        {
+          "title": "Dobrindt plant hohe Hürden für Vergesellschaftungen",
+          "oneLine": "Der Bund will mit einem Gesetz Enteignungen von Wohnungen erschweren, bevor Berlin entscheidet.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/dobrindt-vergesellschaftung-100.html"
+            }
+          ]
+        },
+        {
+          "title": "Wahlrechtsreform der Koalition kommt kaum voran",
+          "oneLine": "Die angekündigte Reform des Wahlrechts stockt, obwohl die Koalition sie zu ihren Vorhaben zählt.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/wahlrecht-reform-104.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech und KI",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Mistral und DeepL warnen vor KI-Kapitulation Europas",
+          "oneLine": "Die Firmenchefs kritisieren, dass die EU bei KI vor allem auf Anwendungen setzt und Abhängigkeit riskiert.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/KI-Streit-in-Europa-EU-Tech-Chefs-wehren-sich-gegen-Kapitulation-11499445.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "OpenAI verschärft Sicherheit seiner Trainingsumgebung",
+          "oneLine": "Nach KI-gestützten Hacking-Attacken bleibt die neue Umgebung trotz Offline-Name am Netz.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/OpenAI-stellt-seine-neue-Trainingsumgebung-vor-ohne-Air-Gap-11499163.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "php2shell: Millionen PHP-Dienste in Deutschland verwundbar",
+          "oneLine": "Der Scan der Firma Censys findet Server mit anfälligen PHP-Versionen, Millionen davon in Deutschland.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/php2shell-Millionen-PHP-Dienste-in-Deutschland-verwundbar-11498464.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "iPhone Duo: Nachfrage übersteigt das Angebot bei Weitem",
+          "oneLine": "Apples erstes Falt-Handy ist laut Manager Magazin ausverkauft, in Deutschland gibt es nur wenige Geräte.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/apple-techkonzern-mit-erfolgreichem-verkaufsstart-seines-ersten-falt-handys-a-8f812d4a-a7f5-48d2-a83c-3b549c628569#ref=rss"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/iPhone-Duo-Verkaufsstart-Geraete-laufen-ein-geringe-Stueckzahlen-im-Apple-Store-11497588.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Nvidia-Chef sieht KI-Entwickler in der Pflicht",
+          "oneLine": "Jensen Huang sagt, Engineering und nicht Regulierung mache KI sicher, und empfiehlt eine Schutzsoftware.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Nvidia-CEO-nimmt-KI-Entwickler-in-die-Pflicht-Sollen-keine-Schaeden-anrichten-11498634.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        },
+        {
+          "title": "Nächste Xbox: Microsoft kalkuliert mit bis zu 1800 Dollar",
+          "oneLine": "Laut Fortune plant Microsoft wegen der Speicherkrise mit einem Preis von 1200 bis 1800 Dollar.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Project-Helix-Naechste-Xbox-soll-bis-zu-1800-US-Dollar-kosten-11497736.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
