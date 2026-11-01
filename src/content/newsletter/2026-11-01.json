@@ -1,0 +1,664 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Sonntag, 1. November 2026",
+  "summary": "Die Inflation fällt dank Tankrabatt auf 2,8 Prozent, doch Gasspeicher und Metall-Warnstreiks setzen den Herbst unter Druck. Parallel belasten KI-Zweifel die Techbörsen, und der Binance-Hack erschüttert die Krypto-Branche.",
+  "topThree": [
+    {
+      "title": "Inflation sinkt auf 2,8 Prozent – Tankrabatt wirkt",
+      "briefing": "Die Inflationsrate (allgemeiner Anstieg der Verbraucherpreise) ist im Oktober auf 2,8 Prozent gefallen, melden Welt und Manager Magazin. Hauptgrund ist der Tankrabatt, der Benzin und Diesel vorübergehend verbilligt. Nach dessen Ende erwartet die Bundesbank wieder eine höhere Teuerungsrate.",
+      "impact": "Wer tankt, zahlt an der Zapfsäule vorerst weniger. Nach dem Auslaufen des Rabatts rechnet die Bundesbank mit höherer Teuerung, die Gehälter und Ersparnisse wieder schmälert.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/tankrabatt-inflation-im-oktober-gesunken-a-1334be70-9cd6-4182-a5a9-d58c29f0571d#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/politik/deutschland/inflation-tankrabatt-senkt-deutsche-inflationsrate-deutlich-auf-2-8-prozent-a-a85f3182-608c-48fd-9b08-cf21956449d4#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6ae49557b942b25dc412b15f/inflationsrate-in-deutschland-sinkt-im-oktober-auf-2-8-prozent.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "IG Metall beginnt Warnstreiks: 5 Prozent mehr Lohn gefordert",
+      "briefing": "Die IG Metall hat Warnstreiks in der Metall- und Elektroindustrie begonnen, direkt nach Ende der Friedenspflicht (Zeit, in der laut Tarifvertrag nicht gestreikt werden darf). Sie fordert 5 Prozent mehr Lohn für rund 3,7 Millionen Beschäftigte. Bertram Brossardt, Chef der bayerischen Metall-Arbeitgeber, hält Streiks für unpassend und bringt längere Arbeitszeiten ins Spiel.",
+      "impact": "Ein Abschluss nahe der Forderung erhöht die Einkommen von rund 3,7 Millionen Beschäftigten und stützt die Kaufkraft. Länger andauernde Streiks bremsen dagegen Produktion und Auslieferungen in den Betrieben.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/politik/deutschland/warnstreiks-der-ig-metall-haben-begonnen-a-fe500ffe-ed17-4f44-8eec-786cf5c00fa9#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/metall-und-elektroindustrie-warnstreiks-der-ig-metall-sind-angelaufen-a-4e8ae251-bec3-4e9a-a09b-b32b0eca149c#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/ig-metall-warnstreiks-autobau-maschinenbau-elektronik-metall-li.3572277",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/tarifkonflikt-metaller-warnstreiks-nehmen-fahrt-auf/100266377.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/metall-tarifrunde-bertram-brossardt-ig-metall-streiks-lohnerhoehung-li.3570117",
+          "ausrichtung": "Mitte-links"
+        }
+      ]
+    },
+    {
+      "title": "Gasspeicher nur zu 61 Prozent gefüllt – Ziel verfehlt",
+      "briefing": "Die Gasspeicher (unterirdische Erdgaslager für den Winter) waren zum 1. November nur zu rund 61,2 Prozent gefüllt. Ziel waren faktisch 70 Prozent; der Speicherverband spricht von einem „ernst zu nehmenden Warnsignal“. Ministerium und Bundesnetzagentur sehen dagegen laut Welt und taz keine Gefahr.",
+      "impact": "Fehlt im Winter Gas in den Speichern, muss nachgekauft werden, was Gaspreise und Heizkosten treiben kann. Auch energieintensive Produktion könnte davon betroffen sein.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "taz",
+          "link": "https://taz.de/Gasspeicher-nicht-gut-gefuellt/!6226382/",
+          "ausrichtung": "links"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6ae7368a6a5ed9f21313484f/keine-gefahr-laut-ministerium-ernst-zu-nehmendes-warnsignal-deutschlands-gasspeicher-nur-zu-61-prozent-gefuellt.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/gasversorgung-vorgaben-bei-gasspeichern-verfehlt-was-bedeutet-das/100266387.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Märkte & Tech-Aktien",
+      "emoji": "📉",
+      "items": [
+        {
+          "title": "Nasdaq erlebt größten Tagesverlust seit Juni",
+          "oneLine": "Intel-Kurssturz und schwache Zahlen von Amazon und Alphabet drücken die Techbörse; Anleger zweifeln am KI-Boom.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/boerse/nasdaq-mit-groesstem-tagesverlust-seit-5-monaten-a-6e26de14-d14c-4590-a7a9-c14fa42e9110#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cvwy72e0n72yo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Alphabet verliert fast 500 Milliarden Dollar Börsenwert",
+          "oneLine": "Schwächeres Wachstum im Google-Kerngeschäft und Zweifel an KI-Ausgaben lösen einen der größten Kursverluste aller Zeiten aus.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/alphabet-aktie-schwaecheres-wachstum-in-google-kerngeschaeft-alarmiert-us-markt-a-8e293b1a-a30b-431c-bf1c-684bf9fa4645#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Intel und Amazon vernichten 200 Milliarden Dollar Börsenwert",
+          "oneLine": "Intel-Aktie bricht um über 25 Prozent ein, weil das PC-Geschäft unter teuren Speicherchips leidet; Amazon belastet hohe KI-Investitionen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/intel-aktie-bricht-um-mehr-als-25-prozent-ein-prognose-enttaeuscht-a-71c4017d-36ab-446b-b1c9-468a34fcd554#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/ki-investitionen-unter-druck-google-und-amazon-enttaeuschen-maerkte-201636860.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Dax rutscht unter 26.000 Punkte",
+          "oneLine": "Der Leitindex dreht nach dem Hoch des Vortags seit Anfang September ins Minus; Tech-Bilanzen dämpfen Europas Börsen.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/dax-amazon-intel-kuenstliche-intelligenz-aktienmaerkte-li.3571813",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-faellt-intel-aktie-bricht-ein-bayer-aktie-steigt-a-b9b6ed95-2f9a-423a-87fc-684b2f85dfbb#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Platzt die KI-Blase oder sind Anleger nur nervös?",
+          "oneLine": "Die NZZ fragt, ob die Blase platzt oder nur die US-Zwischenwahlen Investoren verunsichern; Tech-Kurse fallen seit drei Wochen.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/platzt-gerade-die-ki-blase-oder-sind-investoren-bloss-nervoes-wegen-der-zwischenwahlen-in-den-usa-ld.10049378",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Konjunktur & Zinsen",
+      "emoji": "📊",
+      "items": [
+        {
+          "title": "Deutsche Wirtschaft wächst im dritten Quartal leicht",
+          "oneLine": "Das Bruttoinlandsprodukt steigt überraschend, trotz Trockenheit und hoher Energiepreise; auch der private Konsum überrascht.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/bip-in-deutschland-wirtschaftsleistung-legt-im-dritten-quartal-leicht-zu-a-fd34e9f5-40ab-41c2-bc12-2c34fb488c3f#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6ae4973fb942b25dc412b1a9/wirtschaftswachstum-deutschlands-comeback-der-aufschwung-trotzt-sogar-der-energiekrise.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/deutschlands-wirtschaft-waechst-trotz-gegenwind-frankreich-schrumpft-201636905.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Frankreichs Wirtschaft schrumpft im dritten Quartal",
+          "oneLine": "Hohe Preise und Proteste belasten; die Ratingagentur Fitch stellt den Ausblick für Frankreich auf negativ.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/frankreichs-wirtschaft-schrumpft-im-dritten-quartal-a-50efa359-3e3d-4196-a8b0-639fedbe29c1#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6ae5270f4db6c62483ec2bc1/us-ratingagentur-zinslast-von-80-milliarden-fitch-aendert-den-ausblick-fuer-frankreich-auf-negativ.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "US-Notenbank lässt Zinsen unverändert",
+          "oneLine": "Die Wirtschaft wächst, doch auch die Preise steigen; für Kreditnehmer und Sparer ändert sich vorerst nichts.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cr15jxzv4w24o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/31/nx-s1-6022285/mixed-economic-forecast-weighs-heavy-ahead-of-midterms",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Private Credit (Nicht-Bank-Kredite) unter Zinsdruck",
+          "oneLine": "Schattenbanken profitieren von höheren Zinsen, ihre Kreditnehmer geraten jedoch unter Druck; Steuerzahler könnten Risiken tragen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/banken-versicherungen/zinsanstieg-auswirkungen-auf-private-credit-und-schuldner/100263351.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Arbeitslosenzahl sinkt im Oktober auf 2,95 Millionen",
+          "oneLine": "Der Rückgang ist saisonbedingt; 654.000 offene Stellen zeigen weiter geringe Nachfrage nach Arbeitskräften.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/arbeitsmarkt-zahl-der-arbeitslosen-sinkt-im-oktober-auf-2-95-millionen-a-b7c98379-0fbd-4b82-bbae-bb21315098af#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Ifo: Unter 200.000 neue Wohnungen 2027 und 2028",
+          "oneLine": "Hohe Zinsen erschweren die Finanzierung genehmigter Projekte, trotz des Gesetzes für den Gebäudetyp E.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/ifo-rechnet-mit-weniger-als-200-000-neuen-wohnungen-2027-und-2028-a-8024980f-47d0-482d-9fb3-9082cc764e11#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Konzerne & Standorte",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Vishay investiert rund eine Milliarde Euro in Itzehoe",
+          "oneLine": "Der US-Chiphersteller baut sein Werk in Schleswig-Holstein aus; das Land fördert den Standort mit rund 215 Millionen Euro.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/vishay-investiert-eine-milliarde-dollar-in-itzehoe-accg-201639375.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6ae4ead8620ae24e998578f8/halbleiterproduzent-land-bekommt-hochtechnologie-vishay-kuendigt-grossinvestition-in-schleswig-holstein-an.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Foerderung-fuer-300mm-Wafer-in-Itzehoe-an-Vishay-uebergeben-11507214.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "VW setzt Entwicklung des ID.Golf aus",
+          "oneLine": "Wegen Sparzwangs ruhen die Arbeiten am vollelektrischen Golf, bis die Kosten gesenkt sind.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6ae4c7482222e5e68793de9d/sparmassnahmen-koennen-wir-uns-nicht-leisten-vw-setzt-entwicklung-des-neuen-e-golfs-aus.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-autobauer-stoppt-entwicklung-des-id-golf-a-1a5d31d3-e881-41b3-a893-4b77489bb3b9#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Audi: Quartalsgewinn sinkt erneut",
+          "oneLine": "Die Krise trifft Audi weniger hart als die Konzernmutter VW, doch der Gewinn im dritten Quartal schrumpft weiter.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/audi-quartalsgewinn-bricht-ein-a-edfe8bb4-0644-46b3-b428-044141fe70d3#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "USA sollen Audi Zehn-Prozent-Zoll angeboten haben",
+          "oneLine": "Im Gegenzug für ein geplantes Werk in Georgia; Autos aus Europa zahlen derzeit 15 Prozent Einfuhrzoll.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/usa-sollen-audi-zehn-prozent-zoll-fuer-einfuhren-angeboten-haben-a-dc3287f0-503e-4f6e-ac10-6cbf6c2adbad#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Bayer gewinnt erneut Glyphosat-Prozess in den USA",
+          "oneLine": "Das Urteil stärkt Bayer vor einem angestrebten Milliardenvergleich; die Aktie legt zu.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/streit-ueber-pestizid-glyphosat-bayer-siegt-erneut-vor-us-gericht-a-bf6f80e4-d0a9-449a-bc00-ca46ba189e4b#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/pharma/bayer-gewinnt-ersten-glyphosat-prozess-a-cfdc1fd9-d137-45b1-83d4-bc42e853be30#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Commerzbank-Kunden nervös vor Unicredit-Übernahme",
+          "oneLine": "Unicredit-Chef Orcel verspricht Firmenkunden mehr Kredite, während die Übernahme noch läuft.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/commerzbank-unicredit-uebernahme-firmenkunden-andrea-orcel-li.3571581",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Preise & Verbraucher",
+      "emoji": "🛒",
+      "items": [
+        {
+          "title": "EU-Paketgebühr: Zwei Euro pro Warenposition ab November",
+          "oneLine": "Importe aus Nicht-EU-Ländern wie China werden teurer; die Gebühr soll die Flut von Billigpaketen eindämmen.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/paketgebuehr-nicht-eu-laender-onlinehandel-china-temu-li.3572439",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/neue-paketgebuehr-faq-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Importpakete-2-Euro-zusaetzliche-Gebuehr-pro-Warenposition-11507130.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Tankrabatt kommt bei Verbrauchern nur teilweise an",
+          "oneLine": "Ifo und DIW sehen deutliche Lücken, das Kartellamt keine vollständige Weitergabe der Entlastung an Autofahrer.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/abzocke-bei-tankrabatt-wie-oelkonzerne-sich-die-taschen-fuellen-a-38a07bb3-dcb8-4dd0-ae78-606c3d698408#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Ölkonzerne melden Milliardengewinne – Spritpreise steigen",
+          "oneLine": "ExxonMobil und Chevron profitieren vom Konflikt im Nahen Osten; US-Benzinpreise liegen 34,2 Prozent über dem Vorjahr.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/31/nx-s1-6008072/oil-company-profits-gasoline-diesel-prices",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/economy/oil-giants-post-billions-profits-americans-feel-pain-pump",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/as-gas-prices-soar-american-oil-companies-report-massive-profit-gains/",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Neue Regeln im November: Gebühren, PayPal, Bahn",
+          "oneLine": "Strengere Vorgaben bei PayPal und Klarna, teurere Temu-Pakete sowie Neuerungen bei Bahn und Airbnb.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6ae0bff567fc5d0d0ce677ac/neue-regeln-und-gesetze-steuern-bahn-euro-7-oekodesign-gesetz-das-aendert-sich-fuer-verbraucher-im-november.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Schweiz: Winterstrom knapp, Reservekraftwerk erst ab Februar",
+          "oneLine": "Das alte Reservekraftwerk wurde abgerissen; das neue liefert weniger Leistung und ist erst ab Februar bereit.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/strommangel-im-winter-neues-reservekraftwerk-ist-erst-ab-februar-bereit-ld.10048129",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Süßwaren in den USA binnen Jahresfrist 7,7 Prozent teurer",
+          "oneLine": "Schokolade treibt den Anstieg; Verbraucher suchen für Halloween nach Sparmöglichkeiten.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/10/30/nx-s1-6018566/halloween-candy-prices-chocolate",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cr0qk25p1yeno?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Proteste",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Golfstaaten rüsten auf – Sorge vor neuer Eskalation im Iran-Krieg",
+          "oneLine": "Auf einer Konferenz beraten Politiker der Region über Aufrüstung; auch Deutschland ist vertreten.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/golfstaaten-midterms-usa-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Polen: Streit um das Verfassungsgericht eskaliert",
+          "oneLine": "Tusk spricht von einem Angriff auf den Rechtsstaat, Handelsblatt fragt: Staatsstreich oder Rückkehr zur Rechtmäßigkeit?",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/polen-streit-um-polens-verfassungsgericht-eskaliert/100266434.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/polen-eskalation-verfassungsgericht-102.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/polen-verfassungsgericht-eu-kommission-102.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "USA sagen Ukraine 500 Patriot-Abfangraketen zu",
+          "oneLine": "Die Auslieferung dauert, daher sucht Präsident Selenskyj eine Zwischenlösung über einen Ringtausch.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/verteidigung-selenskyj-hofft-auf-ringtausch-mit-patriot-flugkoerpern/100266429.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Beschlagnahmte Russen-Jachten werden für den Staat teuer",
+          "oneLine": "Liegeplätze in Triest und auf einer Bremer Werft verursachen hohe Kosten; die Rechtslage ist kompliziert.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/russland-sanktionen-was-stillgelegte-russische-jachten-den-steuerzahler-kosten-a-41f8f7e7-7cbe-46b1-880f-158cd1caaa23#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Gen-Z-Proteste: Friedlich am Tag, Krawalle am Abend",
+          "oneLine": "Zehntausende demonstrieren für Bildung und Wohnraum; in Frankfurt zählt die Polizei 54 Festnahmen und Plünderungen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/ausschreitungen-frankfurt-koeln-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/regional/hessen/krawalle-frankfurt-polizei-bilanz-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/gesellschaft/demonstration-protest-genz-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/gewalt-bei-ausschreitungen-was-zu-den-krawallen-in-frankfurt-bekannt-ist/100266371.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Frankreich: Dritter Protest-Samstag in Folge",
+          "oneLine": "Laut Handelsblatt gingen 320.000 Menschen auf die Straße, 779 wurden festgenommen; die Protestwelle erfasst mehrere Länder.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/ausland-320.000menschen-bei-protesten-in-frankreich-779-festgenommen/100266355.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/soziales-krawalle-bei-protesten-in-europa-neue-blockaden-geplant/100266456.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/frankreich-proteste-242.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Krypto, KI & Technik",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "FBI: Nordkorea hinter 6,3-Milliarden-Raub bei Binance",
+          "oneLine": "Die Hackergruppe TraderTraitor soll den bislang größten Krypto-Diebstahl verübt haben; Binance will den Großteil des Schadens selbst tragen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/hack-binance-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/FBI-Nordkorea-steckt-hinter-Milliarden-Kryptodiebstahl-bei-Binance-11507160.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/fbi-bestaetigt-nordkorea-steckt-hinter-milliardenschwerem-krypto-diebstahl-bei-binance-ld.10050756",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/maerkte/devisen-rohstoffe/binance-fbi-sieht-nordkoreanische-hacker-hinter-krypto-diebstahl/100266403.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/ckpdg3ql4169o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/technology/north-korea-responsible-6-billion-binance-cryptocurrency-hack-fbi-says",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Binance nimmt Auszahlungen wieder auf",
+          "oneLine": "Kunden können schrittweise wieder abheben; die Deckung des Verlusts wird je nach Quelle mit 90 oder 95 Prozent angegeben.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/binance-kryptoboerse-nordkorea-fbi-geldwaesche-li.3572353",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/binance-krypto-diebstahl-nordkorea-fbi-bitcoin-li.3572395",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/boerse/binance-ersetzt-nach-cyberangriff-90-prozent-der-beute-a-2b06b883-1e70-46bd-83d4-01e22ea24029#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Speicherpreise steigen weiter – Altman sieht keine schnelle Lösung",
+          "oneLine": "Die Preise für Arbeitsspeicher (DRAM) klettern weiter; OpenAI-Chef Altman nennt privat genutzten Speicher „schrecklich“.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Sam-Altman-Privat-genutztes-DRAM-ist-schrecklich-11507338.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Apple legt am Montag Quartalszahlen vor",
+          "oneLine": "Anleger wollen sehen, wie der neue Konzernchef teure Speicherchips und eine schwächere Konsumlaune meistert.",
+          "sources": [
+            {
+              "source": "MarketWatch",
+              "link": "https://www.marketwatch.com/story/apples-new-earnings-era-begins-at-a-critical-time-for-big-tech-2236a44e?mod=mw_rss_topstories",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic listet 94 Seiten Risikofaktoren",
+          "oneLine": "Im Prospekt für den Börsengang (S-1-Unterlagen) des KI-Unternehmens stechen zwei Risiken besonders hervor.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/sections/planet-money/2026/10/30/nx-s1-6022515/the-two-most-interesting-risks-to-anthropic",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Frankreich plant Internetsteuer von 5,5 Cent pro Gigabyte",
+          "oneLine": "Ein Antrag im Parlament sieht eine Abgabe auf Datenverkehr vor; erste Unternehmen wehren sich dagegen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Frankreich-plant-Internetsteuer-5-5-Cent-pro-Gigabyte-11507164.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
