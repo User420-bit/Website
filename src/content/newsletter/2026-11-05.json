@@ -1,0 +1,740 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Donnerstag, 5. November 2026",
+  "summary": "Der Dax springt nach der US-Wahl auf Rekordhoch, KI-Aktien stürzen ab, und die Inflation im Euroraum klettert auf 4 Prozent. Für Ihr Depot, Ihre Zinsen und Ihren Arbeitsplatz zählen heute vor allem Energiepreise und der Stellenabbau in der Autoindustrie.",
+  "topThree": [
+    {
+      "title": "Inflation im Euroraum steigt auf 4,0 Prozent",
+      "briefing": "Die Inflation im Euroraum, also der allgemeine Preisanstieg, lag im Oktober bei 4,0 Prozent und damit so hoch wie seit mehr als drei Jahren nicht. Haupttreiber sind Tanken, Heizen und Strom, die wegen des Iran-Kriegs teurer geworden sind. Das erhöht den Druck auf die EZB (Europäische Zentralbank) vor ihrer Sitzung im Dezember.",
+      "impact": "Wer Geld unverzinst auf dem Konto liegen hat, verliert bei 4 Prozent Teuerung spürbar Kaufkraft. Steigt der Leitzins der EZB, werden Baukredite und Dispozinsen teurer.",
+      "tag": "Geldpolitik",
+      "sources": [
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/hohe-energiepreise-inflation-im-euroraum-steigt-auf-vier-prozent-a-6aa49e04-4639-4134-acf6-08d84917b500#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6aeb0c521a1d431301d468cf/energiekrise-treibt-inflation-eurozone-erreicht-drei-jahres-hoch.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/ezb-christine-lagarde-inflation-frankreich-schuldenkrise-li.3574356",
+          "ausrichtung": "Mitte-links"
+        }
+      ]
+    },
+    {
+      "title": "Dax erreicht Rekordhoch, Chipwerte brechen nach US-Wahl ein",
+      "briefing": "Nach dem Sieg der Demokraten bei den US-Zwischenwahlen (Kongresswahlen zur Mitte der Amtszeit) erreichte der Dax am Donnerstag ein Rekordhoch von 26.626 Punkten. Anleger fürchten, dass strengere Aufsicht den KI-Ausbau bremst, deshalb brachen Chip- und KI-Aktien ein und die Nasdaq gab stark nach. Der Dax schloss nach diesem Einbruch im Minus.",
+      "impact": "Wer Welt-ETFs mit hohem Techanteil hält, spürt die Kursschwankungen bei Chip- und KI-Werten direkt. Deutsche Aktien profitieren zugleich von der Umschichtung aus US-Tech, was den Dax stützt.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/marktberichte/dax-aktuell-dax-schliesst-nach-us-boerseneinbruch-im-minus/100267493.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/dax-rekord-warum-deutsche-aktien-besonders-stark-von-den-midterms-profitieren/100267495.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/video/finanzen/handelsblatt-live-us-boersenexperte-koch-tech-aktien-geben-deutlich-nach/100267676.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-dax-rekord-rueckt-naeher-rheinmetall-aktie-mit-kursrutsch-a-8c2bbcbb-9576-4f60-bb6a-1405bc577ab7#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-zwischenwahlen-100.html",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/unternehmen/dax-springt-auf-rekordhoch-a-c3ac80a4-d033-4cc7-9e19-d76b8f9874be#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6aec445209e0301c03e80280/boerse-dax-steigt-auf-rekordhoch.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/video6aec71e0c7da7601aa4f88da/26-626-zaehler-dax-erreicht-rekordhoch-wir-sind-schon-mittendrin-in-der-jahresendrallye.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/dax-rekordhoch-us-wahl-rheinmetall-iran-krieg-li.3574816",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/cmn04705rd8jo?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "MarketWatch",
+          "link": "https://www.marketwatch.com/story/micron-sandisk-and-other-ai-stocks-are-falling-hard-investors-dont-like-uncertainty-94d2a3b9?mod=mw_rss_topstories",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "MarketWatch",
+          "link": "https://www.marketwatch.com/story/the-years-most-successful-stock-market-trades-are-unraveling-perhaps-for-good-45f7a0dd?mod=mw_rss_topstories",
+          "ausrichtung": "Mitte"
+        }
+      ]
+    },
+    {
+      "title": "Autokrise: Bosch streicht über 30.000 Stellen, Bundesagentur braucht Geld",
+      "briefing": "Bosch erhöht den konzernweiten Stellenabbau auf mehr als 30.000 Stellen, in Abstatt fallen bis Ende 2029 weitere 750 weg. Der Konzern verweist auf sinkende Nachfrage in Europa und Konkurrenz aus Asien. Die Bundesagentur für Arbeit (BA, zuständig für Arbeitslosengeld) braucht fünf Milliarden Euro mehr, weil die erwartete Erholung am Arbeitsmarkt ausbleibt.",
+      "impact": "Der Zuschuss belastet den Bundeshaushalt, für Beschäftigte in Industrie und Zulieferern steigt das Arbeitsplatzrisiko.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "FAZ",
+          "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/bosch-baut-ueber-30-000-stellen-ab-jetzt-trifft-es-abstatt-201654821.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/unternehmen/bosch-streicht-in-abstatt-weitere-750-arbeitsplaetze-a-bf826fae-4ad6-4e20-9577-f6f6065346b3#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bosch-autozulieferer-streicht-weitere-750-arbeitsplaetze-a-a3b39644-3bba-4af9-b54d-4ab627eadeb4#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6aec1c82eca9cecdd5d4745a/krise-der-autoindustrie-bosch-streicht-750-stellen-an-deutschem-standort.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6aec6bd7c7da7601aa4f87d3/staatshaushalt-unvorhergesehene-entwicklung-bundesagentur-fuer-arbeit-benoetigt-fuenf-milliarden-euro-mehr.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Energie und Tanken",
+      "emoji": "⛽",
+      "items": [
+        {
+          "title": "Ölpreise fallen, Diesel bleibt teuer",
+          "oneLine": "Rohöl wird billiger und Benzin folgt, Diesel bleibt teuer, Anleger hoffen auf Entspannung im Iran-Krieg.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/oelpreise-sinken-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6aeb33a609e0301c03e7f34e/boerse-am-mittag-iran-krieg-und-oelpreis-die-hoffnung-ist-natuerlich-deeskalation.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Zwei Öltanker in der Straße von Hormus in Brand",
+          "oneLine": "Laut Iran brennen zwei Tanker in der Meerenge, die Teheran seit Kriegsbeginn weitgehend blockiert.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/iran-hormus-oeltanker-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Kartellamt: Steuersenkung bei Benzin kommt nur teils an",
+          "oneLine": "Laut Bundeskartellamt gaben Tankstellen im Oktober bei Benzin deutlich weniger der Steuersenkung weiter als bei Diesel.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Kartellamt-Rund-60-Prozent-der-Steuersenkung-bei-Benzin-weitergegeben-11513742.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Spritpreisdeckel: SPD fordert Nachbesserung von Reiche",
+          "oneLine": "Wirtschaftsministerin Reiche legt einen Spritpreisdeckel mit hohen Hürden vor, die SPD setzt ihr eine Frist.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/soziales/katherina-reiche-spd-setzt-wirtschaftsministerin-frist-bei-spritpreisdeckel-a-3798c7f9-3ff9-4f47-a946-ab6fdfa06371#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Reiches-Entwurf-fuer-Spritpreisdeckel/!6226946/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Gaspreise in Europa zehnmal höher als in den USA",
+          "oneLine": "Die europäischen Gaspreise liegen laut Welt etwa zehnmal über dem US-Niveau, Washington drängt auf russisches Gas.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6aeaff0aedb44911fb21ed1c/hohe-heizkosten-europas-energiepreis-schock-warum-die-usa-russisches-gas-zurueck-in-die-eu-bringen-wollen.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Deutsche kaufen 38 Prozent weniger Heizöl",
+          "oneLine": "Private Haushalte halten sich zurück, der Energieverbrauch in Deutschland dürfte 2026 insgesamt sinken.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/energiepreise-deutsche-kaufen-38-prozent-weniger-heizoel-a-0eef58fb-5baa-4c21-8938-98aca25e9769#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geld und Konjunktur",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Bank of England erhöht Leitzins auf 4 Prozent",
+          "oneLine": "Die britische Notenbank hebt den Zins von 3,75 auf 4 Prozent, was Baukredite und Sparzinsen beeinflusst.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/grossbritannien-pfund-leitzins-li.3574900",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/ck5ynw45jrgqo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cx4g1q3vlp62o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/videos/c9kgjvmn4vlno?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Pfund auf höchstem Stand seit dem Brexit-Referendum",
+          "oneLine": "Das Pfund steigt gegenüber einem Währungskorb auf das höchste Niveau seit dem Brexit-Referendum vor zehn Jahren.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/c6lykq2qjn2vo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "KI-Anleihen der US-Konzerne könnten Staatskredite verteuern",
+          "oneLine": "Milliardenanleihen von US-Techkonzernen konkurrieren laut DW mit Staatsanleihen aus Frankreich, Deutschland und Italien.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/could-the-ai-boom-make-borrowing-more-expensive-in-europe/a-79511985?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "DIHK: Stimmung etwas besser, keine echte Erholung",
+          "oneLine": "Die DIHK-Umfrage zeigt eine etwas bessere Lage, eine nachhaltige Wiederbelebung der Wirtschaft sieht die Kammer aber nicht.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/wirtschaftsstimmung-deutschland-dihk-umfrage-2026-li.3574917",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6aec615ad913494ed7629ecd/deutsche-wirtschaft-unter-druck-von-einer-nachhaltigen-wiederbelebung-kann-noch-keine-rede-sein.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Auftragseingang steigt im September um 4,4 Prozent",
+          "oneLine": "Die Industrie erhält im September 4,4 Prozent mehr Aufträge, nach schwankenden Monaten ein Lichtblick.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/auftragseingang-steigt-im-september-um-4-4-prozent-accg-201654896.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Konten in Paraguay nach Pleite der Digitalbank Ueno eingefroren",
+          "oneLine": "Rund 60 Prozent der erwachsenen Paraguayer sind Kunden der Bank, viele fürchten nun um ihre Ersparnisse.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aec5a2109e0301c03e8055d/bankkonten-eingefroren-bankenpleite-loest-staatskrise-in-paraguay-aus-millionen-menschen-fuerchten-um-ihr-geld.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/bankenkrise-paraguay-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Autoindustrie im Umbruch",
+      "emoji": "🚗",
+      "items": [
+        {
+          "title": "BMW-Gewinn im dritten Quartal um 15 Prozent gesunken",
+          "oneLine": "BMW verliert 15 Prozent Gewinn wegen schwachem China-Geschäft, laut Handelsblatt brechen die Gewinne der Autobauer ein.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/bmw-macht-15-prozent-weniger-gewinn-es-duerfte-noch-schlimmer-werden-a-c122d2d7-a0c6-48a1-97ca-043d5fef46cd#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/bmw-reports-lower-q3-earnings-as-china-woes-mount/a-79850847?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/autobauer-die-elektrowelle-ueberrollt-vw-bmw-und-mercedes/100265334.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6aeb1296b1907deb6c941781/bmw-wagt-die-elektro-wette.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Schaeffler streicht über 3.000 Stellen",
+          "oneLine": "Der Zulieferer schließt mehrere deutsche Standorte, die meisten der über 3.000 wegfallenden Stellen liegen in Deutschland.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/automobilzulieferer-schaeffler-baut-tausende-weitere-jobs-ab-viele-davon-in-deutschland-ld.10052678",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Autoindustrie-in-der-Krise/!6226993/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Autohaus König und Wahl-Group gehen pleite",
+          "oneLine": "Zwei der größten deutschen Autohändler sind binnen weniger Tage insolvent, der Handel gerät unter Extremdruck.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/autohaus-koenig-und-wahl-group-pleite-was-ist-los-im-deutschen-autohandel-a-51ce5476-7143-4fc6-8bd1-fbfa8a62ce5e#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Toyota hebt Gewinnprognose an, Aktie springt",
+          "oneLine": "Der weltgrößte Autobauer hebt trotz starker China-Konkurrenz seine Gewinnprognose an, deutsche Hersteller leiden.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/toyota-weltgroesster-autobauer-erhoeht-prognose-aktie-springt-a-2407d087-8dae-4bdb-9012-37c190de42d8#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Umweltausschuss stimmt für Lockerung beim Verbrenner-Aus",
+          "oneLine": "Der Ausschuss befürwortet lockere CO₂-Regeln, neue Verbrenner könnten damit auch nach 2035 zugelassen werden.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/verbrenner-aus-umweltausschuss-im-eu-parlament-stimmt-fuer-lockerung-a-d9d0cbdd-960d-4e26-8724-57efdd989357#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Abkehr-vom-Verbrenner-Aus/!6227245/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Autoindustrie kürzt Forschungsbudgets",
+          "oneLine": "Die Autoindustrie fährt ihre Forschungsausgaben zurück, das Ziel der Bundesregierung rückt damit in weite Ferne.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/automobilindustrie-kuerzt-forschungsbudgets-ziel-der-bundesregierung-rueckt-in-weite-ferne-accg-201650418.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unternehmen und Übernahmen",
+      "emoji": "🏢",
+      "items": [
+        {
+          "title": "Bund steigt mit 50 Prozent bei KNDS ein",
+          "oneLine": "Der Bund übernimmt laut Einigung die Hälfte am Panzerbauer KNDS, der Kaufpreis liegt unter dem ursprünglichen Plan.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/unternehmen/knds-bundesregierung-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/knds-bund-einigt-sich-mit-eigentuemerfamilien-ueber-einstieg-beim-panzerbauer-a-b950e8e0-46a6-43d3-86a9-01d61fa4f9e3#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/knds-bund-einigt-sich-mit-eigentuemerfamilien-auf-einstieg-beim-panzerbauer-a-4f279626-2f96-4d48-b788-4f204a0a4094#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/knds-panzerbauer-bundesregierung-kauf-anteile-ruestungsindustrie-li.3574834",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Rheinmetall senkt Prognose erneut, Aktie fällt zweistellig",
+          "oneLine": "Der Rüstungskonzern kappt seine Prognose zum zweiten Mal, die Aktie verliert zeitweise bis zu 18 Prozent.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/rheinmetall-senkt-prognose-erneut-aktie-bricht-um-17-prozent-ein-201654721.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/rheinmetall-aktie-faellt-zeitweise-18-prozent-dax-konzern-schockt-anleger-mit-gewinnwarnung-a-786cc52b-806b-45a3-9b99-b5cd2c97a23e#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/rheinmetall-senkt-prognose-2026-erneut-a-8650a9f5-56f5-4d99-94c4-26b1614787a2#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6ae5c9e6aedea8cd9ffbf37d/ende-des-ruestungswunders-jetzt-zeigen-sich-die-grenzen-des-rheinmetall-aufstieges.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Commerzbank mit bestem Quartal der Geschichte",
+          "oneLine": "Die Commerzbank erzielt ihr bestes Ergebnis der Konzerngeschichte, vor der UniCredit-Übernahme bleibt die Zukunft offen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/banken/commerzbank-dax-konzern-bleibt-mit-gewinnsprung-auf-rekordkurs-a-657a8de3-5d13-4673-bdde-cbd499f4f024#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/wirtschaft-die-neuesten-meldungen-ld.10053841",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/commerzbank-quartalszahlen-bettina-orlopp-unicredit-uebernahme-li.3573086",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Evonik wehrt sich gegen BASF-Übernahmeangebot",
+          "oneLine": "Evonik-Chef Rettig will mit eigenem Wachstum bestehen und setzt dem milliardenschweren BASF-Angebot Widerstand entgegen.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/evonik-chef-claus-rettig-wir-brauchen-keine-giftpillen-201654901.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Telekom erhöht Dividende, Aktie sinkt trotzdem",
+          "oneLine": "Die Dividende steigt um 10 Prozent, Rückkäufe bis zwei Milliarden Euro folgen, doch Fusionsspekulationen belasten.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/deutsche-telekom-tim-hoettges-schuettet-mehr-geld-aus-aktie-sinkt-dennoch-a-d8b5c352-f312-4491-b965-9816d5171ac0#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Aumovio-Aktie fällt auf Tief seit Conti-Abspaltung",
+          "oneLine": "Schwache Quartalszahlen drücken die Aktie des Autozulieferers auf den tiefsten Stand seit der Abspaltung im September 2025.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/aumovio-aktie-faellt-nach-quartalszahlen-auf-tief-seit-conti-abspaltung-a-b0ad91ad-26a1-4fc9-b2b6-aac68be6e1ab#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech, KI und Cyber",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Google weitet freiwillige Abfindungen auf fünf Länder aus",
+          "oneLine": "Google erweitert Abfindungsprogramme auf fünf Länder, darunter Deutschland, weil hohe KI-Ausgaben Kosten treiben.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/technology/google-expands-voluntary-buyouts-5-countries-ai-spending-fuels-cost-cuts",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Canva restrukturiert, 22 Prozent der Belegschaft betroffen",
+          "oneLine": "Die Design-Plattform streicht Stellen und verlangt von über 1.000 Beschäftigten einen Rollenwechsel, weil das Wachstum nachlässt.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/economy/canva-restructuring-affect-22-workforce-growth-slows",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cw77pg7neydmo?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Apple kürzt interne KI-Budgets um ein Drittel",
+          "oneLine": "Die KI-Ausgabenlimits der Beschäftigten sinken deutlich, in manchen Teams auf 25 US-Dollar pro Tag.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Apple-kuerzt-interne-KI-Budgets-fuer-Beschaeftigte-deutlich-11513091.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "OpenAI verspricht anwohnerfreundlichere Rechenzentren",
+          "oneLine": "Zwei Tage nach den Wahlen kündigt OpenAI neue Regeln an, lokale Volksentscheide gegen Rechenzentren fielen klar aus.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Nach-US-Zwischenwahlen-OpenAI-verspricht-anwohnerfreundliche-Rechenzentren-11513473.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/politics/data-centers-ballot-voters-sent-unmistakable-message",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Binance meldet Kryptodiebstahl von 6,3 Milliarden Dollar",
+          "oneLine": "Ein Ingenieur fiel auf fingierte Jobgespräche herein, die Angreifer erbeuteten laut Binance 6,3 Milliarden Dollar.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/ck5ynwz9gy67o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/fox-news-tech/binance-details-how-fake-job-interview-led-6-3b-crypto-heist",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/11/03/nx-s1-6027799/binance-crypto-exchange-cyber-heist",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/nach-binance-raub-das-crypto-valley-ruestet-sich-gegen-weitere-cyberangriffe-ld.10051936",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Hacker manipulieren Kühlsysteme in europäischen Supermärkten",
+          "oneLine": "In Hunderten Supermärkten verdarb Ware, Hinweise deuten auf russische Täter, vieles bleibt laut NZZ ungeklärt.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Cyber-Angriffe-auf-Supermaerkte/!6226940/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Cyberangriff-auf-Kuehlanlagen/!6227226/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/pro/russische-aktivistengruppen-bekennen-sich-zum-cyberangriff-auf-kuehlregale-in-europa-doch-stimmt-das-vieles-bleibt-raetselhaft-ld.10054961",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/technology/france-blood-bank-cyberattack-targets-refrigeration-systems-european-supermarkets-hit",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/us-supermarket-refrigerators-among-thousands-vulnerable-to-cyberattacks/",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Politik und Steuern",
+      "emoji": "🏛️",
+      "items": [
+        {
+          "title": "Pflegereform: Linnemann verwässert Entwurf weiter",
+          "oneLine": "Linnemann verzichtet auf Kürzungen bei Rentenbeiträgen und Verhinderungspflege, Patientenschützer sprechen von Mogelpackung.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/pflegereform-linnemann-darf-nicht-noch-mehr-verwaessern-201655781.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/carsten-linnemann-schwaecht-pflegereform-weiter-ab-201655253.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/bundestag-pflegeversicherung-linnemann-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Führerschein-Reform: Bundestag beschließt ersten Teil",
+          "oneLine": "Der Verkehrsminister peilt bis zu 1.000 Euro Ersparnis an, der Bundestag billigte einen ersten Reformteil.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Reform-fuer-den-Fuehrerschein/!6227707/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/bundestag-fuehrerschein-reform-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Reichensteuer: Experten bezweifeln Milliardeneinnahmen",
+          "oneLine": "Schwarz-Rot will den Reichensteuersatz auf 47 Prozent anheben, Finanzwissenschaftler halten die Mehreinnahmen für eine Illusion.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6ae9e913de8ceb64689bb882/einkommensteuerreform-die-reichensteuer-falle-der-neue-spitzensteuersatz-droht-zum-desaster-zu-werden.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Großerben zahlen auf Firmenvermögen kaum Steuern",
+          "oneLine": "Wer mehrere hundert Millionen Euro Firmenvermögen erbt, zahlt wegen einer Sonderregel nur wenig Erbschaftsteuer.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/soziales/erbschaftsteuer-grosserben-zahlen-auf-firmenvermoegen-kaum-steuern-a-f63369a2-47ad-4c64-8606-13d8792ea603#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Paketgebühr: Zwei Euro für Pakete aus Drittstaaten",
+          "oneLine": "Die neue EU-Bearbeitungsgebühr von zwei Euro pro Paket verteuert Bestellungen aus Drittstaaten wie bei Temu und Shein.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/neue-eu-gebuehr-wie-teuer-wird-shopping-bei-temu-und-shein-201655162.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Was die US-Midterms für Wirtschaft und Zölle bedeuten",
+          "oneLine": "Ob Demokraten Zölle und KI-Ausbau bremsen können, ist offen, denn Trump behält sein Vetorecht.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/sieben-prognosen-zur-wirtschaft-nach-den-midterm-wahlen-und-wie-plausibel-sie-sind-ld.10053933",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/what-the-democrats-midterms-win-means-for-the-us-economy-and-trump/a-79853716?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/politics/what-midterm-elections-could-mean-markets-debt",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Midterms-und-die-EU/!6227259/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
