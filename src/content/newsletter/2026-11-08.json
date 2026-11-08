@@ -1,0 +1,720 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Sonntag, 8. November 2026",
+  "summary": "Die Ausgabe steht im Zeichen des KI-Ausverkaufs nach der US-Zwischenwahl und einer angespannten Energielage in Deutschland. Dazu kommen ein Metall-Tarifstreit vor einer Vorentscheidung am Montag und Frankreichs wachsende Schuldenlast.",
+  "topThree": [
+    {
+      "title": "KI-Ausverkauf nach US-Wahl: Tech-Werte verlieren Billionen",
+      "briefing": "Nach dem Wahlsieg der Demokraten bei den US-Zwischenwahlen fürchten Anleger strengere Regeln für KI und Rechenzentren. Am Donnerstag verlor der Nasdaq (US-Technologiebörse) über fünf Prozent, rund 2,5 Billionen Dollar Börsenwert gingen verloren. Am Freitag erholten sich Chipwerte, doch die Erholung gilt laut NZZ als zu zaghaft für Entwarnung.",
+      "impact": "Wer global über einen MSCI-World-ETF investiert, hält viele dieser Tech-Werte mit im Depot. Der Nasdaq-Rückgang ist laut NZZ der stärkste seit dem Jahr 2000.",
+      "tag": "Märkte",
+      "sources": [
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/absturz-an-der-nasdaq-warnschuss-oder-anfang-vom-ende-des-ki-booms-ld.10054992",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/die-boersen-erleben-einen-kurssturz-nach-dem-triumph-der-demokraten-werden-die-ki-investitionen-infrage-gestellt-ld.10056047",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/kuenstliche-intelligenz-an-der-boerse-boom-oder-blase-aktienmaerkte-unter-druck-ld.10056132",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "NPR",
+          "link": "https://www.npr.org/2026/11/06/nx-s1-6032695/this-was-the-week-the-ai-trade-cracked-so-whats-next",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "NPR",
+          "link": "https://www.npr.org/2026/11/05/nx-s1-6031987/stock-markets-ai-midterm-elections",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/markets/stocks-nov-5-2026",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/politics/trump-blames-democrats-stock-market-plunge-after-sweeping-midterm-victories",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/economy/wall-street-stocks-tech-sell-off-november-5-2026",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/markets/asian-stock-markets-plunge-japan-nikkei-south-korea-kospi-taiwan-stocks-fall",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/markets/whats-fueling-wall-streets-growing-concerns-about-ai",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/markets/stocks-11-6-2026",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/c35ynnpzdq51o?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/crlykkzwwpydo?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "DW",
+          "link": "https://www.dw.com/en/european-shares-join-a-global-sell-off-as-ai-spending-fears-rattle-wall-street-and-asian-markets/a-79871504?maca=en-rss-en-bus-2091-rdf",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/service/boerse-beben-an-der-wall-street-ist-das-jetzt-der-ki-crash-a-0317ec61-e5b3-4fcc-8613-ec7f576866ae#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/unternehmen/midterms-siege-der-demokraten-furcht-vor-ki-regulierung-laesst-us-tech-aktien-einbrechen-a-c9e7a367-2287-429f-95d3-b3651ecdbb04#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/globaler-tech-ausverkauf-setzt-boersenkurse-unter-druck-a-8d5f2ecd-b9a8-4d71-9ee2-67250b5ed9d5#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-tech-sektor-erholt-sich-etwas-nach-ausverkauf-halbleiter-aktien-mit-gewinnen-a-fa811459-51b0-4ecc-861e-e9c49efbca11#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/finanzen/boerse/ki-crash-an-der-boerse-nasdaq-mit-kurssturz-dax-unter-druck-a-c43201b3-8ddf-402e-99b5-b1877ecba77f#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/video6aedac85320931eb80f5bea8/ausverkauf-an-der-wall-street-die-sorgen-im-ki-sektor-sind-auf-jeden-fall-begruendet.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "Heizöl-Engpässe drohen, Bund öffnet Kerosin-Pflichtlager",
+      "briefing": "Der Bund muss seine Pflichtlager (staatliche Reservebestände) für Kerosin öffnen, weil Händler Engpässe beim Heizöl befürchten. Niedrigwasser auf dem Rhein bremst den Nachschub, viele Hauseigentümer haben ihre Tanks wegen hoher Preise nicht ausreichend gefüllt. Die Gasspeicher gelten laut FAZ als leer, Wirtschaftsministerin Reiche habe sich zu lange nicht gekümmert.",
+      "impact": "Hauseigentümer mit Ölheizung müssen mit knapperen Lieferungen rechnen, wenn ihre Tanks spät befüllt werden. Für Autofahrer bleibt der Spritpreis Thema, weil die Politik um einen Preisdeckel streitet.",
+      "tag": "Energie",
+      "sources": [
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/der-bund-muss-seine-pflichtlager-fuer-kerosin-oeffnen-nun-drohen-auch-beim-heizoel-engpaesse-ld.10055054",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "FAZ",
+          "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/katherina-reiche-und-die-leeren-gasspeicher-deutschlands-riskante-wette-201646419.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "Metall-Tarifstreit: Vorentscheidung in Düsseldorf am Montag",
+      "briefing": "Die IG Metall hat das Lohnangebot der Arbeitgeber zurückgewiesen und kurz darauf eigene Lösungsvorschläge eingebracht. Am Montag fällt in Düsseldorf wohl eine Vorentscheidung. Metall-NRW-Präsident Arndt Kirchhoff warnt vor weiter steigenden Lohnkosten und verweist auf rund 10.000 verlorene Industriejobs pro Monat.",
+      "impact": "Der Ausgang bestimmt, wie stark die Löhne in der Metall- und Elektroindustrie steigen und wie teuer die Produktion für Betriebe wird. Bei Streiks drohen Produktionsausfälle, die Zulieferer und die Auftragslage treffen.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "FAZ",
+          "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/ig-metall-vorentscheidung-im-tarifstreit-faellt-in-duesseldorf-201663094.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/plus6aedc926320931eb80f5c2b7/westmetall-praesident-wir-verlieren-in-der-industrie-erdrutschartig-arbeitsplaetze.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "KI & Tech-Konzerne",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "OpenAI sammelt offenbar nur elf statt 30 Milliarden Dollar ein",
+          "oneLine": "Wegen des KI-Ausverkaufs bekommt OpenAI deutlich weniger Geld von Investoren als geplant.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/openai-sam-altman-sammelt-offenbar-elf-statt-30-milliarden-dollar-ein-a-fe2f5775-0959-4adf-8488-248f87ed21ab#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Anthropic sichert sich 1,7 Gigawatt Gasgeneratoren",
+          "oneLine": "Die KI-Firma investiert rund 3,4 Milliarden Dollar, um ihren wachsenden Strombedarf zu decken.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/dienstleister/ki-anthropic-steckt-34-milliarden-dollar-in-stromgeneratoren/100268219.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Nvidia-Chef Huang soll Verbindung zu chinesischer Spionin haben",
+          "oneLine": "US-Abgeordnete verlangen Aufklärung, weil Nvidia im KI-Wettrennen zwischen USA und China steht.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/jensen-huang-nvidia-affaere-china-spionin-li.3576581",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Jensen-Huang-soll-Beziehung-zu-chinesischer-Spionin-gehabt-haben-11516677.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/politics/house-republicans-demand-answers-from-nvidia-ceo-over-reported-chinese-spy-ties",
+              "ausrichtung": "rechts"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/nvidia-jen-hsun-huang-soll-affaere-mit-chinesischer-agentin-gehabt-haben-a-8b6c5163-b475-4478-a335-3aeaeccdca48#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/nvidia-jensen-huang-affaere-soll-affaere-mit-chinesischer-agentin-gehabt-haben-a-a4b61523-42a1-4fd3-b1b3-c490656ee632#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "KI-Boom verteuert Laptops und Handys vor Weihnachten",
+          "oneLine": "Knappe Speicherchips lassen Preise laut FAZ teils um bis zu 40 Prozent steigen.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/vor-weihnachten-ki-chips-verteuern-elektronik-deutlich-accg-201662259.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Sorgen-um-Weihnachtsgeschaeft-wegen-teurer-Elektronik-11516579.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "KI-Entlassungswelle bislang ausgeblieben, Einstieg wird schwerer",
+          "oneLine": "Für eine Gruppe von Jobsuchenden wird der Weg in den Beruf laut Welt deutlich schwieriger.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6ac4bd376a0860be6e207e99/technologiewandel-die-ki-nimmt-allen-die-arbeit-weg-so-einfach-ist-es-nicht.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Greenpeace warnt vor Wasserverbrauch neuer Rechenzentren",
+          "oneLine": "Geplante Anlagen könnten so viel Wasser wie eine Kleinstadt verbrauchen und gefährden die Versorgung.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/rechenzentren-wasserverbrauch-greenpeace-kuenstliche-intelligenz-deutschland-li.3575568",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Greenpeace-warnt-fuer-Deutschland/!6228179/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Konjunktur & Unternehmen",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Industrieproduktion im September überraschend gewachsen",
+          "oneLine": "Die Industrie legte stärker zu als erwartet, während die Bauproduktion zurückging.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/industrieproduktion-deutschland-september-wirtschaftswachstum-automobilindustrie-li.3575489",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/konjunktur-industrieproduktion-in-deutschland-waechst-im-september-ueberraschend-a-8d411263-f61e-4531-84b8-20b764fe2ec3#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "USA schaffen 165.000 Stellen, Arbeitslosenquote bei 4,1 Prozent",
+          "oneLine": "Die Oktober-Zahl übertrifft die Erwartungen und zeigt einen anziehenden US-Arbeitsmarkt.",
+          "sources": [
+            {
+              "source": "SAN",
+              "link": "https://san.com/cc/us-adds-165000-jobs-in-october-blowing-past-expectations-and-bringing-unemployment-down-to-4-1/",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/11/06/nx-s1-6030867/jobs-labor-market-economy-wages-inflation",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/economy/us-jobs-report-october-2026",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Daimler Truck steigert Quartalsgewinn um 73 Prozent",
+          "oneLine": "Das Konzernergebnis stieg von 407 auf 702 Millionen Euro, vor allem dank Nordamerika.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6aedc340a389bc337cfc7ed0/nutzfahrzeuge-daimler-truck-steigert-quartalsgewinn-um-73-prozent.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aed7d571d9d38d6d601adfd/daimler-truck-gewinn-schiesst-um-73-prozent-hoch-doch-der-sparkurs-bleibt.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Tesla beendet Cybertruck-Produktion Mitte 2027",
+          "oneLine": "Musk setzt auf autonome Cybercabs, nachdem der Pick-up laut NPR zu wenig Nachfrage fand.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/teslas-cybertruck-vor-dem-aus-nun-kommt-das-cybercab-a-2e68ac5f-c9cc-4373-bd86-e084ca4ec108#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/11/06/nx-s1-6032607/the-cybertrucks-cause-of-death-insufficient-demand",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/tesla-to-wind-down-production-of-flop-cybertruck/a-79877759?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cq1j33w7d232o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Firmen investieren erstmals weniger in neue Produkte",
+          "oneLine": "Die IHK-Erhebung seit 2008 zeigt sinkende Ausgaben für Innovationen, Chemie und Pharma klagen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/innovationen-unternehmen-investieren-erstmals-weniger-in-neue-produkte-und-verfahren/100262848.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Insolventer Discounter Mäc Geiz plant harte Schrumpfkur",
+          "oneLine": "Das Sanierungsprogramm sieht die Schließung zahlreicher Filialen vor, Spiegel nennt 60 betroffene Standorte.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/handel/maec-geiz-insolventer-discounter-plant-harte-schrumpfkur-a-06885e0a-38f2-4083-bd33-5da4ef48f3f4#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/maec-geiz-insolventer-discounter-plant-harte-schrumpfkur-60-filialen-vor-der-schliessung-a-55e5a7aa-c9c7-434c-a08d-53b178b06540#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Sicherheit",
+      "emoji": "🌐",
+      "items": [
+        {
+          "title": "US-Militär feuert auf Handelsschiff im Golf von Oman",
+          "oneLine": "Das Schiff soll die US-Seeblockade verletzt haben, Iran meldet Brände an zwei Frachtern in Hormus.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/usa-iran-seeblockade-angriff-handelsschiff-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Golfstaaten treiben gemeinsames Eisenbahnnetz voran",
+          "oneLine": "Iran-Krieg und Risiken in der Straße von Hormus geben einem seit den 1980ern diskutierten Projekt neuen Schub.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/logistik-in-golflaendern-golfstaaten-treiben-gemeinsames-schienennetz-voran/100268232.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/iran-krieg-golfstaaten-treiben-gemeinsames-schienennetz-voran/100136895.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Huthi greifen Wolkenkratzer im Zentrum von Riad an",
+          "oneLine": "Die fast täglichen Angriffe kratzen am Image Saudi-Arabiens als sicherer Standort für Geschäfte.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/konflikt-mit-saudi-arabien-huthi-greifen-wolkenkratzer-im-zentrum-von-riad-an/100268197.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Ukraine-Gespräche in Abu Dhabi: Europa will mitreden",
+          "oneLine": "Ab Dienstag verhandeln Ukraine, Russland und die USA, Frankreich will laut Barrot teilnehmen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-verhandlungen-abu-dhabi-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/verhandlungen-in-abu-dhabi-paris-pocht-auf-europas-beteiligung-an-ukraine-gespraechen/100268228.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Russische Luftangriffe: Hunderttausende Ukrainer ohne Strom",
+          "oneLine": "In der Region Dnipropetrowsk sind 600.000 Menschen ohne Strom, das AKW Saporischschja braucht Notstrom.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-stromausfall-120.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Sabotage an Supermarkt-Kühlsystemen: Geheimdienste ermitteln",
+          "oneLine": "Die Täter nutzen Schwachstellen bei Fernwartungszugängen, Verfassungsschutz und BND sind eingeschaltet.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Supermarkt-Kuehlsysteme-Deutsche-Geheimdienste-ermitteln-nach-Sabotageakten-11516390.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geld & Zinsen",
+      "emoji": "💶",
+      "items": [
+        {
+          "title": "Lagarde verlässt EZB vorzeitig, Rennen um Nachfolge startet",
+          "oneLine": "Spanien und die Niederlande melden Ansprüche an, Deutschland bleibt laut Spiegel ohne Spitzenposten.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/banken/christine-lagarde-ezb-praesidentin-geht-vorzeitig-rennen-um-nachfolge-startet-a-aef7e7bb-102a-43b6-b347-87ed911617e6#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/ezb-welche-chancen-deutschland-bei-der-nachfolge-von-christine-lagarde-hat-a-ddb505b8-589a-42ba-b36a-41a19ce63a68#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Frankreich: Zinslast steigt, Schuldenregel oft verfehlt",
+          "oneLine": "Frankreich hat die Drei-Prozent-Defizitgrenze in 28 Jahren 21-mal verletzt, nun steigen die Zinskosten.",
+          "sources": [
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/amid-protests-france-s-rising-debt-costs-threaten-stability/a-79865654?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/frankreich-und-die-dreiprozentregel-21-verstoesse-in-28-jahren-accg-201656778.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Großbritannien: Steigende Zinsen verteuern Hypotheken",
+          "oneLine": "Mit steigenden Leitzinsen werden Hypotheken, Kreditkarten und Kredite für Millionen Briten teurer.",
+          "sources": [
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/c617kjqjvk12o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Offene Immobilienfonds: Millionen Anleger bangen um ihr Erspartes",
+          "oneLine": "Die Fonds können schließen, Anleger kommen dann jahrelang nicht an ihr Geld.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/offene-immobilienfonds-geldanlage-volksbank-betongold-grundbesitz-europa-li.3573118",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Goldpreis fällt von knapp 5.600 auf unter 4.000 Dollar",
+          "oneLine": "Gold verliert seit Januar rund 30 Prozent, obwohl es in unsicheren Zeiten als Krisenanlage gilt.",
+          "sources": [
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/sections/planet-money/2026/11/06/nx-s1-6030995/why-gold-prices-are-surprisingly-low",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "EU muss wohl neue Schulden für die Ukraine aufnehmen",
+          "oneLine": "Eine Tranche von 46 Milliarden Euro steht im Raum, Zinsen aus russischem Vermögen reichen nicht aus.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aede7e6320931eb80f5c710/hilfszahlungen-geringe-ertraege-aus-russischem-vermoegen-eu-muss-wohl-neue-schulden-fuer-ukraine-aufnehmen.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Politik & Sozialstaat",
+      "emoji": "🏛️",
+      "items": [
+        {
+          "title": "IG BCE signalisiert Kompromiss bei Rente ab 63",
+          "oneLine": "Die Gewerkschaft lehnt eine Begrenzung der abschlagsfreien Frührente nicht mehr kategorisch ab.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/rentenreform-ig-bce-signalisiert-kompromissbereitschaft-bei-rente-ab-63-accg-201662599.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Spritpreisdeckel: SPD und Wirtschaftsministerin uneins",
+          "oneLine": "Die SPD hält Reiches Entwurf für zu schwach, Reiche warnt vor Versorgungsengpässen an Tankstellen.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6aed9ca547b5fce02f879dca/tankpreise-spritpreisdeckel-entzweit-schwarz-rot-reiche-warnt-vor-versorgungsengpaessen.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Folgen-des-Kriegs-in-Nahost/!6228489/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "CDU nennt Steuerreform inakzeptabel und droht mit Blockade",
+          "oneLine": "Je nach Rechtsform könnte die Steuerbelastung für Firmen um 7 Prozentpunkte auseinanderliegen.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aee3071a389bc337cfc876c/einkommensteuer-cdu-nennt-steuerreform-inakzeptabel-und-droht-spd-mit-blockade.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Führerscheinreform: Bundestag beschließt ersten Teil",
+          "oneLine": "Theorieunterricht soll online möglich werden, Fahrschüler könnten bis zu 1.000 Euro sparen.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6aed72f247b5fce02f879b28/fuehrerscheinreform-fuehrerschein-soll-bis-zu-1-000-euro-guenstiger-werden.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Demokraten-Sieg: Was er für Trumps Wirtschaftskurs bedeutet",
+          "oneLine": "Ökonom Richard Baldwin erwartet laut NZZ, dass Trumps Handelskrieg bald zum Erliegen kommt.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/midterms-usa-donald-trump-demokraten-wirtschaft-li.3574769",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/donald-trump-und-die-wirtschaft-wo-die-demokraten-seinen-kurs-korrigieren-koennten-a-ad25686b-5dca-498e-9239-e1e7a131cf4a#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/trumps-zoelle-sind-toxisch-geworden-ld.10055292",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aeeecf75c7ccdedbffd2958/us-zoelle-im-zweifel-gegen-deutschland-warum-america-first-seinen-schrecken-nicht-verliert.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Scout24-Chef warnt vor wachsendem Wohnungs-Graumarkt",
+          "oneLine": "Freie Wohnungen werden zunehmend außerhalb öffentlicher Plattformen angeboten, Mieterschutzregeln bremsen den Zugang.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aede3bc47b5fce02f87a5e2/regulierung-scout24-chef-warnt-vor-wachsendem-graumarkt-fuer-wohnungen.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Klima & Energie",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Reiche verschärft Kriterien für Gaskraftwerk-Ausschreibung",
+          "oneLine": "Gebote sollen auf echte Neuinvestitionen zielen, nachdem auch Kohlestandorte in der ersten Runde zum Zuge kamen.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/katherina-reiche-verschaerft-kriterien-fuer-gaskraftwerk-ausschreibung-accg-201663255.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Die-Klima-News-der-Woche/!6172016/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Bestandskunden beim Strom systematisch benachteiligt",
+          "oneLine": "Laut taz zahlen Bestandskunden mehr, das Wirtschaftsministerium will dagegen nichts unternehmen.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Hoehere-Stromkosten/!6227221/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Nur gut die Hälfte der Gebäude gegen Starkregen versichert",
+          "oneLine": "Überschwemmungsschäden werden häufiger und teurer, Experten sehen laut Tagesschau Handlungsbedarf.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/klimaschaeden-versicherungen-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Weltklimakonferenz in Antalya: Klimaschutz unter Druck",
+          "oneLine": "Trumps Ölpolitik verunsichert laut Handelsblatt, Irankrieg und Energiekrise machen Erneuerbare aber attraktiver.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/klimakonferenz-wie-der-us-praesident-unfreiwillig-die-erneuerbaren-antreibt/100262559.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Potenzial-der-COP-31/!6228032/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Vor-der-Weltklimakonferenz/!6224192/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Klimapolitik-vor-der-COP31/!6227177/",
+              "ausrichtung": "links"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/klima-nachhaltigkeit/umweltminister-carsten-schneider-privat-fahren-wir-einen-13-jahre-alten-diesel-accg-201653839.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "1,5-Grad-Grenze 2026 wohl erneut überschritten",
+          "oneLine": "Der Oktober war weltweit der heißeste aller Zeiten, die Pariser Zielmarke wird laut taz wohl gerissen.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Bad-news-vor-der-UN-Klimakonferenz/!6228269/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Foodwatch kritisiert günstiges Grundwasser für Firmen",
+          "oneLine": "Verbraucher zahlen laut taz deutlich mehr für Grundwasser als Getränkehersteller.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Wasserstress-in-Deutschland/!6228160/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
