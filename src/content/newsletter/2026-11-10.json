@@ -1,0 +1,639 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Dienstag, 10. November 2026",
+  "summary": "Die US-Inflation liegt über den Erwartungen und belastet die Börse, während Anthropic mit niedrigerer Bewertung an die Nasdaq geht. Für Ehepaare bedeuten die Steuerpläne von Klingbeil zunächst weniger Netto, die Nvidia-Affäre belastet Chipwerte.",
+  "topThree": [
+    {
+      "title": "Steuerklassen III und V sollen wegfallen – Ehepaare hätten weniger Netto",
+      "briefing": "Finanzminister Lars Klingbeil (SPD) will die Steuerklassen III und V abschaffen und durch das automatische Faktorverfahren ersetzen. Das Faktorverfahren verteilt die Lohnsteuer nach dem Einkommensanteil beider Partner und soll die Steuererklärung vereinfachen. Laut Welt hätten Millionen Ehepaare dadurch zunächst weniger Geld im Monat, Spiegel berichtet von einem Start bis Jahresende.",
+      "impact": "Ehepaare in der Kombination III/V hätten bei der Umstellung zunächst weniger Netto im Monat. Die Steuererklärung soll für viele Paare einfacher werden.",
+      "tag": "Politik",
+      "sources": [
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/plus6af30a0642c2bfde5b9929d5/klingbeils-heikler-plan-steuerklassen-iii-und-v-weg-weniger-netto-fuer-millionen-ehepaare.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/finanzminister-lars-klingbeil-plant-abschaffung-von-steuerklassen-iii-und-v-a-4022a7cf-5aac-4d8e-a708-de7811a7c183#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/politik/deutschland/steuern-klingbeil-will-steuerklassen-iii-und-v-abschaffen/100268862.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6af3083842c2bfde5b99298b/steuererklaerung-klingbeil-will-laut-bericht-steuerklassen-iii-und-v-streichen.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "US-Inflation über Erwartung – Fed-Vertreter bringt Zinserhöhung ins Spiel",
+      "briefing": "Die US-Verbraucherpreise stiegen im Oktober stärker als erwartet, um 0,4 Prozent zum Vormonat, getrieben von Mieten, Lebensmitteln und Energie. Fed-Vertreter Waller von der US-Notenbank (Federal Reserve) hat im Dezember eine Zinserhöhung um 0,5 Prozentpunkte ins Spiel gebracht. Die Rendite zehnjähriger US-Staatsanleihen steigt nach dem Bericht wieder nahe 5 Prozent.",
+      "impact": "Steigende US-Renditen drücken auf Anleihen-ETFs, Tech-Werte wie Nvidia verloren am Dienstag laut Handelsblatt. Die Fed-Entscheidung im Dezember ist damit ein Termin für Depots mit US-Anteil.",
+      "tag": "Geldpolitik",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/marktberichte/dow-jones-sp-500-nasdaq-inflationsdaten-belasten-wall-street-nvidia-aktien-verlieren/100268787.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "MarketWatch",
+          "link": "https://www.marketwatch.com/story/why-stocks-are-falling-and-10-year-yields-are-climbing-back-near-5-after-tuesdays-inflation-report-389b8392?mod=mw_rss_topstories",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "MarketWatch",
+          "link": "https://www.marketwatch.com/story/feds-waller-puts-half-point-rate-hike-into-the-mix-for-december-1bebdffc?mod=mw_rss_topstories",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/economy/cpi-inflation-october-2026",
+          "ausrichtung": "rechts"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "NPR",
+          "link": "https://www.npr.org/2026/11/10/nx-s1-6034518/inflation-consumer-prices-economy-gas-prices",
+          "ausrichtung": "Mitte-links"
+        }
+      ]
+    },
+    {
+      "title": "Anthropic geht mit niedrigerer Bewertung an die Börse",
+      "briefing": "Der KI-Anbieter Anthropic (Claude) will noch im November an die Nasdaq. Je nach Quelle liegt die Bewertung bei rund einer bis 1,4 Billionen Dollar, die Aktien sollen 70 bis 78 Dollar kosten. Das liegt deutlich unter den einst angepeilten zwei Billionen Dollar, weil Wall Street die KI-Kosten neu bewertet.",
+      "impact": "Die Bewertung zeigt, wie viel Anleger KI-Wachstum derzeit zutrauen. Für Depots mit KI-Schwerpunkt, etwa bei Nvidia oder Infineon, ist das ein Stimmungstest.",
+      "tag": "Tech",
+      "sources": [
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/finanzen/maerkte/aktien/anthropic-die-antworten-auf-die-zehn-wichtigsten-fragen-zum-mega-ipo/100258657.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/anthropic-boerse-kuenstliche-intelligenz-100.html",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/anthropic-will-an-die-boerse-mit-einer-bewertung-von-bis-zu-14-billionen-dollar-ld.10059797",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/unternehmen/anthropic-ki-firma-peilt-billionenbewertung-beim-boersengang-an-a-01ee7304-2fb0-45da-a9c9-1afec33f201f#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/markets/anthropic-targets-valuation-around-1t-blockbuster-ai-ipo-below-initial-expectation",
+          "ausrichtung": "rechts"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Tech & KI-Markt",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Huang-Affäre: Verdacht auf Chipschmuggel nach China im Milliardenwert",
+          "oneLine": "Laut Bericht soll Alice Huang Nvidia-Chips für 7,5 Milliarden Dollar nach China gebracht haben.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/nvidia-affaere-china-chips-huang-li.3578431",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/nvidia-neue-details-zu-jensen-huangs-affaere-mit-alice-huang-aus-china-a-7457a7e9-89e6-40a8-9f1c-6e12c55b84f4#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "DW",
+              "link": "https://www.dw.com/en/megaspeed-and-the-battle-to-go-high-end-nvidia-chips-into-china/a-79909129?maca=en-rss-en-bus-2091-rdf",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Nvidia-Aktie verliert über 4 Prozent nach Affäre des CEO",
+          "oneLine": "Nach Bekanntwerden der Affäre sinkt der Börsenwert um rund 230 Milliarden Dollar.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/nvidia-aktie-mit-kursrutsch-affaere-von-jensen-und-alice-huang-kostet-230-milliarden-dollar-boersenwert-a-5a3f5ad1-e2c1-4236-aa6f-4bf93e7dc9ce#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "NPR",
+              "link": "https://www.npr.org/2026/11/09/nx-s1-6034478/nvidia-shares-tumble-as-the-company-says-its-investigating-ceo-jensen-huang",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "FBI ermittelt laut Trump, erste Sammelklage gegen Nvidia und Huang",
+          "oneLine": "Trump bestätigt FBI-Ermittlungen, Aktionäre werfen Nvidia vor, Anleger über die Affäre getäuscht zu haben.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/nvidia-fbi-ermittelt-im-fall-jensen-huang-und-mutmasslicher-china-spionin-sammelklage-eingereicht-a-e3d716b4-b173-4dd9-b968-a01c5c4dacde#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af2b48bd0fb1ac9ce0ed52b/nvidia-affaere-mit-mutmasslicher-spionin-sammelklage-gegen-konzern-chef-jensen-huang.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "BBC",
+              "link": "https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&at_campaign=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Huang war gegen Exportkontrollen – nun drohen schärfere Regeln",
+          "oneLine": "Der Nvidia-Chef stellte sich gegen Kontrollen für KI-Chip-Exporte nach China, nun droht eine Verschärfung.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/nvidia-affaere-jensen-huang-kaempfte-fuer-lockerere-chipexporte-nach-china-doch-nun-drohen-schaerfere-kontrollen-ld.10059482",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Verfassungsschutz warnt Topmanager vor Honigfallen",
+          "oneLine": "Der Verfassungsschutz warnt nach dem Nvidia-Fall auch den Mittelstand vor Liebesspionen.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/nvidia-verfassungsschutz-warnt-deutsche-topmanager-vor-honigfallen-a-8a0ae4dd-e04b-4e1a-8338-81b0d0d1449a#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Telekom erweitert KI-Rechenzentrum in München",
+          "oneLine": "In München sollen unter anderem KI-Modelle trainiert werden, die wachsende Nachfrage treibt den Ausbau.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Digitale-Infrastruktur-in-Deutschland/!6228691/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Märkte & Unternehmen",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Infineon meldet Rekordumsatz und will weiter zweistellig wachsen",
+          "oneLine": "Der Chipkonzern profitiert vom KI-Ausbau, die Aktie steigt nach dem Gewinnsprung.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-infineon-ki-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/infineon-chiphersteller-meldet-gewinnsprung-dank-ki-nachfrage-a-4da51613-042a-493e-98d9-b938e7187eb5#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/infineon-kroent-2026-mit-rekordquartal-so-soll-es-weitergehen-accg-201667114.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Dax nähert sich Rekordhoch",
+          "oneLine": "Der Dax steigt in Richtung seines Rekords, getragen von sinkenden Ölpreisen und Infineon.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-nvidia-104.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/finanzen/boerse/boerse-infineon-rallye-schiebt-dax-an-sinkender-oelpreis-stuetzt-nvidia-unter-druck-a-787a536a-b48c-439f-aec3-c0bb71221876#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Porsche SE rutscht wegen VW-Abschreibung in Milliardenverlust",
+          "oneLine": "Konzernverlust von knapp 3 Milliarden Euro nach neun Monaten, Hauptgrund ist die Lage bei Volkswagen.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/porsche-se-milliardenabschreibung-drueckt-vw-grossaktionaer-tief-in-die-verlustzone-a-4ad197d5-d358-4a0d-b4e5-bede62ec0cc5#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "VW darf Europcar vollständig übernehmen",
+          "oneLine": "Brüssel hat keine Bedenken, Europcar kommt komplett unter die Kontrolle des Volkswagenkonzerns.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/VW-darf-Europcar-vollstaendig-uebernehmen-11519650.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Henkel bleibt nach Zukäufen auf Einkaufstour",
+          "oneLine": "Der Konsumgüterkonzern will weiter zukaufen, und die Börse reagiert positiv darauf.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/henkel-bleibt-in-kauflaune-201669566.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Private Credit: Mehr als jeder zweite Investor fürchtet Kreditausfälle",
+          "oneLine": "Laut Goldman-Sachs-Umfrage rechnen viele Investoren mit mehr Ausfällen bei Krediten von Nicht-Banken.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/banken-versicherungen/banken/private-credit-mehr-als-jeder-zweite-investor-fuerchtet-hoehere-kreditausfaelle/100267959.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Energie & Versorgung",
+      "emoji": "⚡",
+      "items": [
+        {
+          "title": "Gasspeicher so leer wie nie um diese Zeit des Jahres",
+          "oneLine": "Betreiber warnen vor Engpässen bei extremer Kälte, das Wirtschaftsministerium sieht noch keinen Anlass zur Unruhe.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/die-deutschen-speicher-sind-so-leer-wie-noch-nie-um-diese-zeit-im-winter-koennte-das-gas-knapp-werden-ld.10059510",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/energie/gas-betreiber-von-speichern-warnen-vor-engpaessen-bei-extremer-kaelte-a-c4dd57ee-8f9b-4502-a556-ebade2ec614b#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Uniper sieht sich für einen kalten Winter gerüstet",
+          "oneLine": "Uniper meldet einen höheren Speicherstand als der Durchschnitt und bereitet die Reprivatisierung vor.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/uniper-gas-speicher-fuellstaende-winter-li.3578357",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Ölpreis fällt erstmals seit August unter 90 Euro",
+          "oneLine": "Hoffnung auf ein Ende des Iran-Kriegs drückt den Preis, die Lage am Golf bleibt unklar.",
+          "sources": [
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/oelpreis-boerse-dax-tanken-sprit-li.3578241",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Stromsteuersenkung: Union sieht Gegenfinanzierung gefunden",
+          "oneLine": "Die Union sieht offenbar eine Gegenfinanzierung, möglich wären Einnahmen aus erneuerbaren Energien.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/soziales/bundeshaushalt-2027-union-gegenfinanzierung-fuer-die-stromsteuersenkung-gefunden-haben-a-84521b50-da4c-471c-b043-a833f3d85180#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Merz dringt auf pünktlichen Start des europäischen CO2-Preises",
+          "oneLine": "Ab 2028 soll ein EU-Emissionshandel für Sprit und Heizöl den deutschen CO2-Preis ablösen.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/service/friedrich-merz-dringt-auf-puenktlichen-start-des-europaeischen-co2-preises-mit-hintergedanken-a-a3a13ddb-615a-4830-8202-e5b1064901d6#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Umrüstung alter Kohlemeiler könnte möglich bleiben",
+          "oneLine": "Das Wirtschaftsministerium klärt die Regeln für die zweite Runde der Gaskraftwerks-Ausschreibung.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/klima-nachhaltigkeit/umruestung-alter-kohlemeiler-koennte-moeglich-bleiben-201666527.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arbeitsmarkt & Industrie",
+      "emoji": "🏭",
+      "items": [
+        {
+          "title": "Nahles erwartet durch KI den Wegfall von 800.000 Jobs",
+          "oneLine": "Die Chefin der Bundesagentur für Arbeit hofft, dass ähnlich viele neue Stellen entstehen.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/kuenstliche-intelligenz-andrea-nahles-rechnet-mit-verlust-von-800-000-jobs-a-64556960-bdcf-4d85-becc-93ef14bb937e#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af2cfb90caaf73de09f9929/bundesagentur-fuer-arbeit-800-000-jobs-werden-aufgrund-von-ki-wegfallen-warnt-andrea-nahles.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Jede dritte Firma rechnet 2027 mit Stellenabbau",
+          "oneLine": "Laut IW-Umfrage wollen viele Firmen 2027 weniger investieren, die Konjunkturerholung sei ein Strohfeuer.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af302a442c2bfde5b9928b9/iw-umfrage-strohfeuer-der-konjunktur-erlischt-schon-wieder-jede-dritte-firma-rechnet-2027-mit-stellenabbau.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Warsteiner Braugruppe trennt sich von mehr als 330 Mitarbeitern",
+          "oneLine": "Marken und Anlagen wandern nach Warstein, in Paderborn bangen Beschäftigte weiter um ihre Jobs.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/handel-konsumgueter/stellenabbau-warsteiner-braugruppe-trennt-sich-von-hunderten-mitarbeitern/100268860.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "VDMA: Bundesregierung blockiert Reformen, Industrie fassungslos",
+          "oneLine": "Der Maschinenbauverband wirft der Koalition Streit und Reformstau vor, viele Firmen überdenken Investitionen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af2e0c27b39f8e546bbfda1/standort-d-wir-sind-fassungslos-maschinenbauer-rechnen-mit-bundesregierung-ab.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "BMW lässt in drei Werken Schichten ausfallen",
+          "oneLine": "Fehlende Teile von Zulieferern treffen Regensburg, Leipzig und Oxford, der Umfang bleibt offen.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/bmw-laesst-wegen-fehlender-teile-schichten-ausfallen-a-66f93bec-da2a-4d6d-91fb-ba416decf035#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/drei-bmw-werke-von-schichtausfaellen-wegen-teilemangels-betroffen-a-56e0b0b3-8c59-476b-b3e3-c5a7490aee1b#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "ASML-Streit um Stellenabbau: Gespräche mit Gewerkschaften abgebrochen",
+          "oneLine": "Laut Gewerkschaften verschiebt ASML Fristen beim Abbau von 1000 Stellen zum Nachteil der Mitarbeiter.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/asml-streit-um-stellenabbau-eskaliert-gespraeche-mit-gewerkschaften-abgebrochen-a-ca0d3de4-9fa2-4adb-a41d-0f26e5f0a36d#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Handel",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Cyberangriffe auf Kühlanlagen: Frankreich macht Iran verantwortlich",
+          "oneLine": "Paris beschuldigt Iran, Teheran weist es zurück, Wadephul warnt vor weiteren hybriden Angriffen.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/wadephul-iran-102.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6af2cf4ce39746b7b04be332/hacking-kuehltruhen-blutbanken-pharmalager-die-neue-front-des-hybriden-krieges.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Frankreich-sieht-Iran-hinter-Angriff-auf-Kuehlanlagen/!6228832/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Russland und Ukraine verhandeln wieder in Abu Dhabi",
+          "oneLine": "Die USA vermitteln, ein Gefangenenaustausch steht auf der Agenda, Wadephul fordert Beteiligung Europas.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/international/ukraine-friedensgespraeche-in-abu-dhabi-werden-am-mittwoch-fortgesetzt/27982126.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/asien/ukraine-verhandlungen-abu-dhabi-104.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/deutschland-rolle-ukraine-gespraeche-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Merz droht mit Blockade des EU-Haushalts wegen Ukraine-Hilfe",
+          "oneLine": "Ungarn und andere fordern EU-Gelder, beteiligen sich aber nicht an der Ukraine-Finanzierung, Merz will das nicht hinnehmen.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/friedrich-merz-verknuepft-eu-haushalt-mit-ukraine-finanzierung-accg-201668590.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "China meldet erneut Handelsüberschuss von über einer Billion Dollar",
+          "oneLine": "Exporte von Technologiegütern und Elektroautos treiben den Überschuss, die chinesische Wirtschaft wächst langsamer.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/china-export-handel-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af28e51e39746b7b04be0b2/starke-exporte-china-praesentiert-handelsueberschuss-von-mehr-als-einer-billion-dollar.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "KNDS: Bund plant 6,6 Milliarden Euro für 50-Prozent-Anteil",
+          "oneLine": "Der Panzerbauer soll nach dem Airbus-Vorbild zu einem deutsch-französischen Rüstungskonzern werden.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/knds-bundesregierung-plant-6-6-milliarden-euro-fuer-50-prozent-anteil-a-a08bf6e5-f3cc-4552-ab7a-8a4fe2472010#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Staat, Rente, Wohnen",
+      "emoji": "🏠",
+      "items": [
+        {
+          "title": "Rentenkasse rutscht ins Defizit – Beitrag 2027 bleibt bei 18,6 Prozent",
+          "oneLine": "Die Rentenkasse muss 2027 rund 20 Milliarden Euro mehr zahlen als sie einnimmt, 2028 droht ein Beitragsanstieg.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/rentenkasse-droht-2027-eine-beitragserhoehung-201669168.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af2fe36f0b67a4b24663f42/rente-rentner-koennen-voraussichtlich-auch-2027-mit-deutlichem-plus-rechnen.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "E-Auto-Prämie 2027: Bund stockt Förderung um 917 Millionen auf",
+          "oneLine": "Der Etat steigt auf 1,7 Milliarden Euro und wird damit mehr als verdoppelt, weil die Nachfrage hoch ist.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/bund-will-kaufpraemie-fuer-e-autos-um-917-millionen-euro-erhoehen-a-780fe7ad-b2b3-4c62-863a-35e62142cbca#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6aedf955a389bc337cfc8485/kaufpraemie-ansturm-auf-e-autos-sprengt-die-foerderplanung-des-bundes-deutlich.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/e-autos-kaufpraemie-bundesregierung-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Grüne werfen Klingbeil vor, den Verkehrsetat zu leeren",
+          "oneLine": "Die Grünen sehen Milliarden aus dem Verkehrsetat abgezogen und befürchten eine Pkw-Maut.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/haushalt-er-raeumt-den-etat-leer-gruene-rechnen-mit-klingbeil-ab/100268711.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/auto-verkehr/haushalt-klingbeil-und-die-autobahn-erpressung-201669350.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Ifo kritisiert Verwendung neuer Sonderschulden",
+          "oneLine": "Von 21,6 Milliarden Euro neuen Krediten fließen laut Ifo nur 10,1 Milliarden in zusätzliche Investitionen.",
+          "sources": [
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af2ed38f0b67a4b246631c5/haushalt-ifo-institut-wirft-bund-zweckentfremdung-von-mehr-als-der-haelfte-der-neuen-sonderschulden-vor.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Neue Mieten steigen deutlich, Käufer zahlen höhere Zinsen",
+          "oneLine": "Laut Verband der Pfandbriefbanken steigen die Neuvertragsmieten, Immobilienkäufer kämpfen mit höheren Zinsen.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/service/immobilien-mieten-ziehen-deutlich-an-lage-spitzt-sich-laut-banken-zu-a-e867587b-e01c-4898-94e4-81961204d4d4#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Kapitalanleger kehren an den Immobilienmarkt zurück",
+          "oneLine": "Nach deutlichen Rückzügen im zweiten Quartal trauen sich Kapitalanleger wieder an den Immobilienmarkt.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/finanzen/immobilien/immobilien-kapitalanleger-kehren-an-den-immobilienmarkt-zurueck/100268646.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
