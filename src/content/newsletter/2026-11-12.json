@@ -1,0 +1,649 @@
+{
+  "model": "claude-haiku-5-5",
+  "digestDate": "Donnerstag, 12. November 2026",
+  "summary": "Nvidia-Chef Huangs Rücktritt bewegt die Märkte, während der Dax erstmals über 27.000 Punkte steigt. Bei Löhnen, Steuern und Haushalt geht es um Summen, die in den kommenden Monaten direkt bei Beschäftigten, Steuerzahlern und Depots ankommen.",
+  "topThree": [
+    {
+      "title": "Kalte Progression: Steuerzahler zahlen 2026/27 gut 23 Milliarden Euro mehr",
+      "briefing": "Der Ausgleich der kalten Progression, also der schleichenden Steuermehrbelastung durch Inflation, fällt ab 2027 weg. Laut Spiegel zahlen Steuerzahler 2026 und 2027 zusammen gut 23 Milliarden Euro mehr. Welt spricht von einer versteckten Steuererhöhung, Ökonomen sogar von einer realen Steuererhöhung für fast alle.",
+      "impact": "Wer trotz Lohnplus real weniger verdient, merkt das im Geldbeutel. Ein Ausgleich durch den Staat ist für die meisten nicht mehr in Sicht.",
+      "tag": "Politik",
+      "sources": [
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/kalte-progression-steuerzahler-zahlen-2026-und-2027-gut-23-milliarden-euro-drauf-a-5755f76a-dd16-42d4-ba29-2cb4db616fa2#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/plus6af57de1c45061d752ba73d6/kalte-progression-die-versteckte-steuererhoehung-so-teuer-wird-2027-fuer-sie.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "IG Metall ruft zu ganztägigen Warnstreiks auf – erstmals seit 2018",
+      "briefing": "Nach drei ergebnislosen Verhandlungsrunden ruft die IG Metall zu ganztägigen Warnstreiks auf (kurze Arbeitsniederlegungen während laufender Tarifverhandlungen). Die Gewerkschaft fordert laut taz fünf Prozent mehr Geld für ein Jahr, die Arbeitgeber reagieren nach SZ „fassungslos“.",
+      "impact": "Stillstand in Autowerken und Maschinenbau kann Lieferketten und Aufträge treffen. Ein Abschluss mit fünf Prozent mehr Lohn würde Beschäftigten mehr Geld bringen, belastet aber die Kostenseite der Betriebe.",
+      "tag": "Konjunktur",
+      "sources": [
+        {
+          "source": "taz",
+          "link": "https://taz.de/IG-Metall-kuendigt-Warnstreiks-an/!6229550/",
+          "ausrichtung": "links"
+        },
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/ig-metall-streiks-100.html",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Manager Magazin",
+          "link": "https://www.manager-magazin.de/unternehmen/ig-metall-gewerkschaft-beschliesst-ganztaegige-warnstreiks-a-3588c5e3-6234-43ce-bd13-93fffb230e70#ref=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6af5847fd2f851d14ad0052b/ig-metall-plant-ganztaegige-warnstreiks-in-hunderten-betrieben.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/ig-metall-tarifverhandlungen-metall-und-elektroindustrie-streiks-lohnerhoehung-li.3575612",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "FAZ",
+          "link": "https://www.faz.net/aktuell/wirtschaft/ig-metall-ruft-erstmals-seit-2018-zu-ganztaegigen-streiks-auf-201676389.html",
+          "ausrichtung": "Mitte-rechts"
+        }
+      ]
+    },
+    {
+      "title": "Nvidia-Chef Jensen Huang tritt nach Affären zurück",
+      "briefing": "Jensen Huang tritt als Nvidia-Chef zurück, nachdem Berichte über eine Affäre mit einer mutmaßlichen chinesischen Spionin und eine zweite Beziehung bekannt wurden. Finanzchefin Colette Kress übernimmt interimistisch, der Verwaltungsrat sucht eine dauerhafte Lösung. Die Aktie gab zeitweise zweistellig nach (Welt), Markus Koch (Handelsblatt) nennt den Rücktritt keinen Schock.",
+      "impact": "Wer Nvidia über Welt- oder Technologie-ETFs hält, trägt die Kursschwankung anteilig mit. Die Debatte über China-Exportregeln für Chips ist mit dem Rücktritt wieder offen.",
+      "tag": "Tech",
+      "sources": [
+        {
+          "source": "Tagesschau",
+          "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-ruecktritt-100.html",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "Handelsblatt",
+          "link": "https://www.handelsblatt.com/technik/ki/nvidia-jensen-huang-tritt-nach-mehreren-affaeren-zurueck/100269321.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Spiegel",
+          "link": "https://www.spiegel.de/wirtschaft/jensen-huang-nvidia-chef-tritt-nach-spionageaffaere-zurueck-a-776bb012-48a6-4c08-9939-a77fad020e47#ref=rss",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Süddeutsche",
+          "link": "https://www.sueddeutsche.de/wirtschaft/nvidia-huang-affaere-aktie-absturz-nachfolgerin-li.3579215",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "NZZ",
+          "link": "https://www.nzz.ch/wirtschaft/jensen-huang-tritt-als-firmenchef-von-nvidia-zurueck-ld.10061334",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "Welt",
+          "link": "https://www.welt.de/wirtschaft/article6af5c4b75596369bf0edd3ee/nvidia-chef-jensen-huang-tritt-nach-spionageaffaere-zurueck.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "FAZ",
+          "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/nvidia-chef-jensen-huang-tritt-nach-spionageaffaere-zurueck-201677697.html",
+          "ausrichtung": "Mitte-rechts"
+        },
+        {
+          "source": "BBC",
+          "link": "https://www.bbc.co.uk/news/articles/ckgel338xql3o?at_medium=RSS&at_campaign=rss",
+          "ausrichtung": "Mitte"
+        },
+        {
+          "source": "NPR",
+          "link": "https://www.npr.org/2026/11/12/nx-s1-6037833/jensen-huang-nvidia-stepped-down",
+          "ausrichtung": "Mitte-links"
+        },
+        {
+          "source": "Fox Business",
+          "link": "https://www.foxbusiness.com/business-leaders/nvidia-ceo-jensen-huang-resigns-amid-investigation-relationship-alleged-chinese-spy",
+          "ausrichtung": "rechts"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Autoindustrie im Umbruch",
+      "emoji": "🚗",
+      "items": [
+        {
+          "title": "Mercedes stoppt Investitionen in Deutschland, prüft Werksschließungen",
+          "oneLine": "Der Konzern prüft, welche deutschen Werke er sich noch leisten kann, und nennt die Arbeitskosten zu hoch.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/mercedes-autohersteller-stoppt-alle-investitionen-in-deutschland/100269485.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/in-deutschland-mercedes-prueft-moegliche-werksschliessungen-in-deutschland/100269503.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/article6af5e2add2f851d14ad018e3/mercedes-stoppt-offenbar-alle-weiteren-investitionen-in-deutschland-werksschliessungen-werden-geprueft.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/mercedes-prueft-werksschliessungen-in-deutschland-a-00a4d8e4-42bb-4b6f-b3f2-91f8a6c412dd#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "VW verdient offenbar nur noch zwölf Euro pro verkauftem Auto",
+          "oneLine": "Sonderbelastungen drücken die Marge laut einer Studie praktisch auf null, und ohne sie steht VW auch nicht gut da.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/vw-verdient-offenbar-nur-noch-zwoelf-euro-pro-verkauftem-auto-a-0ac7334b-310b-4179-9a69-4ba1d62ddf7b#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "VW will viele Zulieferer aussortieren",
+          "oneLine": "Einkaufsvorstand Karsten Schnake hat den Zulieferern seine Pläne offengelegt, das Sparprogramm trifft viele hart.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/volkswagen-viele-zulieferer-sollen-aussortiert-werden-a-e2d96c4f-045f-42ce-9b97-b35998718187#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "VW stoppt Projekt „Gamechanger“, Betriebsrat protestiert",
+          "oneLine": "Der Autobauer streicht aus Kostengründen die Modernisierung der Produktion, der Betriebsrat spricht von einem Tarifbruch.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/volkswagen-betriebsrat-protestiert-gegen-aus-fuer-produktionsprojekt-gamechanger-a-80446762-6c08-4591-b237-076df75afa88#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Was, wenn VW geht? Die große Frage von Zwickau",
+          "oneLine": "Seit 122 Jahren prägt das Auto die Stadt, der Niedergang der Autobauer trifft Familien und Regionen in ganz Deutschland.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/was-wenn-vw-geht-die-grosse-frage-von-zwickau-ld.10056615",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Gea bekommt mit Klaus Stojentin einen neuen Vorstandschef",
+          "oneLine": "Der interne Nachfolger übernimmt den Anlagenbauer, die Aktie gibt nach, weil Anleger den Abschied nervös sehen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/unternehmen/industrie/technologie-gea-bekommt-neuen-vorstandsvorsitzenden-aktie-rutscht-ab/100269496.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/industrie/gea-klaus-stojentin-wird-neuer-chef-aktie-gibt-nach-a-f095be64-8660-4277-86c4-09aa876b7b83#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nvidia-Nachbeben",
+      "emoji": "🤖",
+      "items": [
+        {
+          "title": "Trump nennt Tim Cook als möglichen Huang-Nachfolger",
+          "oneLine": "Der US-Präsident hält den Apple-Chef für den richtigen Mann, Nvidia führt bislang nur eine Interimschefin.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/markets/trump-jensen-huang-nvidia-ceo-replacement",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Baird stuft Nvidia-Aktie ab – seltene Herabstufung",
+          "oneLine": "Die Analysten sehen den Chipkonzern wegen der Affäre und der Untersuchung nur noch neutral.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/markets/nvidia-stock-faces-rare-downgrades-board-investigates-ceo-jensen-huangs-admitted-affair",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "US-Kongress bringt schärfere China-Exportregeln für Chips ins Spiel",
+          "oneLine": "Demokraten bereiten laut Spiegel eine Untersuchung vor, ein früherer US-Botschafter erwartet ein Verbot fortgeschrittener Chips.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/nvidia-affaere-sprecher-des-us-repraesentantenhauses-bringt-nach-aus-von-jensen-huang-exportbeschraenkungen-nach-china-ins-spiel-a-57708f11-fca9-4140-ae71-495c4c9b1781#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "MarketWatch",
+              "link": "https://www.marketwatch.com/story/nvidia-is-spending-more-than-ever-on-washington-lobbying-it-still-may-not-be-able-to-stop-congress-from-limiting-its-china-chip-sales-now-d4c34c66?mod=mw_rss_topstories",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Leerverkäufer warnte schon vor Monaten vor Huang-Verbindung",
+          "oneLine": "Culper Research nannte Huangs enge Beziehung zu Alice Huang lange vor dem Geständnis, die Warnung blieb ungehört.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/nvidia-der-leerverkaeufer-der-das-china-problem-vor-allen-anderen-kommen-sah-a-a4e07ef3-93f2-49ae-ab68-dc51187a1eb2#ref=rss",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/markets/short-seller-flagged-jensen-huangs-uncomfortably-close-ties-alleged-chinese-spy-months-ago",
+              "ausrichtung": "rechts"
+            }
+          ]
+        },
+        {
+          "title": "Megaspeed äußert sich erstmals zum Nvidia-Skandal",
+          "oneLine": "Das singapurische Unternehmen steht im Zentrum der Affäre und meldete sich am Donnerstag erstmals öffentlich zu Wort.",
+          "sources": [
+            {
+              "source": "MarketWatch",
+              "link": "https://www.marketwatch.com/story/heres-what-megaspeed-the-company-at-the-forefront-of-the-nvidia-scandal-is-now-saying-b73f8d0b?mod=mw_rss_topstories",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Demokraten fordern Nvidia-Unterlagen von der US-Regierung",
+          "oneLine": "Zwei Senatoren verlangen, Nvidia-Akten zu möglichen Spionage-Verbindungen des Chefs zu sichern.",
+          "sources": [
+            {
+              "source": "Fox Business",
+              "link": "https://www.foxbusiness.com/politics/democratic-senators-demand-nvidia-records-from-trump-administration-over-alleged-chinese-spy-ties",
+              "ausrichtung": "rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KI & Digitalregeln",
+      "emoji": "🧠",
+      "items": [
+        {
+          "title": "Anthropic-Aktien ab 19. November im Handel",
+          "oneLine": "Der Preis je Aktie wird einen Tag vorher festgelegt, die Bewertung könnte laut Handelsblatt über 1,5 Billionen Dollar liegen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Datum-offiziell-Anthropic-Aktien-ab-19-November-im-Handel-11522895.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/audio/wall-street/wall-street-ruecktritt-von-jensen-huang-kein-schock-fuer-wall-street/100269506.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Musk bereitet Fusion von Tesla und SpaceX vor",
+          "oneLine": "Was aus Autos, Robotaxis und Robotern würde, ist offen, Musk bereitet die Öffentlichkeit bereits darauf vor.",
+          "sources": [
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/mobilitaet/tesla-spacex-fusion-was-aus-autos-robotaxis-und-robotern-werden-koennte-a-c8d34312-833e-4977-a8dd-1e3636ecf4fa#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Coreweave überrascht mit starken Zahlen trotz hoher Schulden",
+          "oneLine": "Der Rechenzentrumsbetreiber steigert den Umsatz deutlich, die Strategie bleibt laut NZZ aber sehr aggressiv.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/coreweave-das-schwaechste-glied-der-ki-branche-ueberrascht-mit-starken-zahlen-und-einem-neuen-finanzierungsmodell-ld.10060263",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Agile Robots steigt auf 8,5 Milliarden Dollar Bewertung",
+          "oneLine": "Der Münchner Roboterbauer sammelt 500 Millionen Dollar ein, unter anderem mit Investoren aus Japan und den USA.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/start-up-agile-robots-ist-8-5-milliarden-dollar-wert-accg-201676518.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Manager Magazin",
+              "link": "https://www.manager-magazin.de/unternehmen/tech/agile-robots-bewertung-steigt-nach-finanzierungsrunde-auf-8-5-milliarden-dollar-a-fb166536-616b-4f4b-96a1-29fc54c2f0a5#ref=rss",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "Länder wollen Big Tech und KI streng regulieren",
+          "oneLine": "Ein Digital-Staatsvertrag soll journalistische Inhalte in Feeds bevorzugen und KI-Systeme stärker in die Pflicht nehmen.",
+          "sources": [
+            {
+              "source": "heise",
+              "link": "https://www.heise.de/news/Digitale-Medienordnung-Laender-wollen-Big-Tech-und-KI-streng-regulieren-11523302.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "EU-Kommission will Verbraucherrechte im Netz stärken",
+          "oneLine": "Mehr Rechte bei Abos, Kündigungen und Spielekäufen, neue Regeln sollen auch Händler und Influencer erfassen.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/mehr-wirtschaft/abos-kuendigen-im-internet-einkaufen-wie-die-eu-verbraucherrechte-staerken-will-201672887.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/EU-Kommission-stellt-Digitalgesetz-vor/!6229205/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Haushalt & Steuern",
+      "emoji": "🏛️",
+      "items": [
+        {
+          "title": "Haushalt 2027: Union-Unmut nach Kompromiss mit der SPD",
+          "oneLine": "Sozialausgaben bleiben hoch, Entlastungen für Fachkräfte und Unternehmen fallen laut FAZ aus.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-union-spd-102.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/streit-um-den-haushalt-fuer-die-cdu-ist-dieses-ergebnis-ein-desaster-201676036.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/cdu-csu-und-spd-einigen-sich-im-haushalt-auf-kosten-kuenftiger-jahre-201676865.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Plastiksteuer gestrichen, Zuckersteuer erst ab 2028",
+          "oneLine": "Die Koalition zieht mehrere Vorhaben vor den Haushaltsberatungen zurück, auch die Erhöhung der Schaumweinsteuer entfällt.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/video/politik/haushalt-bundesregierung-streicht-plastiksteuer-zuckersteuer-kommt-spaeter/100269438.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Stromsteuer-Senkung fällt vorerst aus, Wirtschaft verärgert",
+          "oneLine": "Trotz anderslautender Versprechen kommt die Senkung wohl nicht, Wirtschaftsvertreter sprechen von herber Enttäuschung.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-kompromisse-stromsteuer-reaktionen-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/stromsteuer-wirtschaft-kritisiert-schlingerkurs-der-regierung-a-1b53162b-b41a-4462-9e5c-896a8a327156#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "taz",
+              "link": "https://taz.de/Kehrtwende-bei-Steuerpolitik/!6229581/",
+              "ausrichtung": "links"
+            }
+          ]
+        },
+        {
+          "title": "Wirtschaftsweise: Schuldenquote steuert auf 100 Prozent zu",
+          "oneLine": "Die Experten fordern Kürzungen bei Subventionen und Sozialausgaben und Verteidigung aus dem regulären Haushalt.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/sachverstaendigenrat-deutschland-steuert-auf-schuldenquote-von-100-prozent-zu-ld.10060577",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/wirtschaftsweise-warnen-merz-und-klingbeil-heilige-kuehe-opfern-201673025.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Autobahn GmbH soll sich selbst verschulden",
+          "oneLine": "Experten warnen, dass die Entlastung des Bundeshaushalts über eigene Schulden der Gesellschaft nicht aufgeht.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/autobahn-gmbh-experten-warnen-vor-risiken-eigener-verschuldung-a-615f1c60-95ee-4a6b-8efb-359ae69265a1#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Märkte & Geld",
+      "emoji": "📈",
+      "items": [
+        {
+          "title": "Dax knackt erstmals 27.000 Punkte",
+          "oneLine": "Sinkende Ölpreise und gute Firmenbilanzen treiben den Leitindex auf ein Rekordhoch von 27.001,67 Punkten.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktbericht-dax-rekord-siemens-ki-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/neuer-rekord-dax-knackt-erstmals-marke-von-27-000-punkten-a-dc114850-1845-407a-9ed4-981f12b936db#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/dax-rekord-punkte-boerse-nvidia-siemens-li.3579446",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6af58b66c45061d752ba7529/neuer-rekordwert-dax-knackt-erstmals-marke-von-27-000-punkten.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Allianz hebt Gewinnprognose nach Rekord-Quartal an",
+          "oneLine": "Der Versicherer verdiente in neun Monaten 14 Milliarden Euro, Welt nennt vor allem die breit gestreuten Kapitalerträge.",
+          "sources": [
+            {
+              "source": "FAZ",
+              "link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/allianz-hebt-gewinnprognose-an-rekordergebnis-ueberrascht-analysten-accg-201673860.html",
+              "ausrichtung": "Mitte-rechts"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/video6af5afd450175c81de7a392d/allianz-das-ist-es-wo-investoren-jetzt-mal-genauer-drauf-schauen-sollten.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "EU-Parlament lehnt neue Schutzregeln für Kleinanleger ab",
+          "oneLine": "Die geplanten Informationspflichten zu Finanzprodukten scheitern, Abgeordnete sehen zu viel Bürokratie und zu wenig Schutz.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/politik/deutschland/kapitalmaerkte-eu-parlament-stimmt-gegen-neue-schutzregeln-fuer-kleinanleger/100269489.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Bundesbank warnt vor Risiken für Banken und Aktienmarkt",
+          "oneLine": "Geringes Wachstum, hohe Staatsschulden und Immobilienrisiken setzen Banken unter Druck, die Bundesbank sieht Rückschlagpotenzial bei Aktien.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/unternehmen/bundesbank-warnt-vor-wachsenden-risiken-fuer-deutschlands-banken-a-b53aea9b-ff04-4b9f-a3e5-59f07fd19cdc#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Süddeutsche",
+              "link": "https://www.sueddeutsche.de/wirtschaft/bundesbank-warnung-risiken-immobilien-schattenbank-aktienmarkt-li.3578224",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "US-Notenbank: Zinsschritt von 0,5 Prozentpunkten im Gespräch",
+          "oneLine": "Ein Vertreter der Fed bringt diesen Schritt ins Spiel, weil die Inflation hartnäckiger ist als gedacht.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/wirtschaft/in-den-usa-droht-ein-grosser-zinssprung-die-verantwortlichen-der-notenbank-sind-nervoes-wegen-der-hartnaeckigen-inflation-ld.10060483",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Jeder zehnte Erwachsene in Deutschland ist überschuldet",
+          "oneLine": "Über sieben Millionen Menschen gelten als überschuldet, häufigste Auslöser sind Krankheit, Sucht, Unfälle und Arbeitslosigkeit.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/wirtschaft/verbraucher/mehr-menschen-ueberschuldet-schuldneratlas-100.html",
+              "ausrichtung": "Mitte"
+            },
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/schulden-in-deutschland-jeder-zehnte-erwachsene-ist-ueberschuldet-a-6c3851b7-fc55-4574-bae8-71344e0ff43b#ref=rss",
+              "ausrichtung": "Mitte-links"
+            },
+            {
+              "source": "Welt",
+              "link": "https://www.welt.de/wirtschaft/plus6af4eeffc45061d752ba6ef6/schuldneratlas-2026-jetzt-erreicht-die-schuldenkrise-auch-deutschlands-leistungstraeger.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Geopolitik & Energie",
+      "emoji": "🌍",
+      "items": [
+        {
+          "title": "Merz will Ukraine-Hilfe als gemeinsame EU-Aufgabe",
+          "oneLine": "Der Kanzler will die Finanzierungslücke für 2027 schließen und alle EU-Staaten an der Unterstützung beteiligen.",
+          "sources": [
+            {
+              "source": "Handelsblatt",
+              "link": "https://www.handelsblatt.com/video/politik/ukraine-krieg-merz-fordert-ukraine-hilfen-von-allen-eu-mitgliedsstaaten/100269501.html",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Putin beharrt auf Gebietsansprüchen in der Ukraine",
+          "oneLine": "Beim Treffen mit Witkoff und Kushner schloss Putin eine europäische Beteiligung an Friedensgesprächen nicht aus.",
+          "sources": [
+            {
+              "source": "Tagesschau",
+              "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-putin-witkoff-kushner-100.html",
+              "ausrichtung": "Mitte"
+            }
+          ]
+        },
+        {
+          "title": "VAE umgehen Hormus-Route über den Hafen Fujairah",
+          "oneLine": "Die Emirate exportieren wieder so viel Erdöl wie vor dem Iran-Krieg, möglich macht das die Hafenstadt Fujairah.",
+          "sources": [
+            {
+              "source": "NZZ",
+              "link": "https://www.nzz.ch/international/dubais-trister-rettungsanker-wie-die-emirate-die-strasse-von-hormuz-umgehen-ld.10059686",
+              "ausrichtung": "Mitte-rechts"
+            }
+          ]
+        },
+        {
+          "title": "Kabinett beschließt strategische Gasreserve",
+          "oneLine": "Der Aufbau kostet laut Gesetzentwurf 1,2 bis 1,8 Milliarden Euro, bezahlen sollen das die Verbraucher.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/soziales/gas-bundeskabinett-beschliesst-strategische-gasreserve-a-34fe2f8d-246c-404c-aad4-5c48b79618bd#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "EU zahlte 2026 schon rund 8,7 Milliarden für russisches LNG",
+          "oneLine": "Europäische Konzerne kauften bereits LNG aus dem Jamal-Projekt, Spiegel-Berechnungen zufolge fließt das Geld nach Russland.",
+          "sources": [
+            {
+              "source": "Spiegel",
+              "link": "https://www.spiegel.de/wirtschaft/soziales/russlands-lng-exporte-eu-zahlte-2026-schon-rund-8-7-milliarden-euro-a-7dad7d60-31c6-4076-aa1b-3583b472013c#ref=rss",
+              "ausrichtung": "Mitte-links"
+            }
+          ]
+        },
+        {
+          "title": "Bundestag gibt 16,5 Milliarden Euro für Stromnetze frei",
+          "oneLine": "Das Geld fließt an die Netzbetreiber, Experten fordern parallel die Vergesellschaftung der Energieinfrastruktur.",
+          "sources": [
+            {
+              "source": "taz",
+              "link": "https://taz.de/Zuschuesse-fuer-Stromnetze/!6229526/",
+              "ausrichtung": "links"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
